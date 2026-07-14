@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,13 +17,13 @@ interface Teacher {
 }
 
 @Component({
-  selector: 'app-teachers',
-  standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule,],
-  templateUrl: './teachers.html',
-  styleUrls: ['./teachers.css']
+  selector: 'app-courses-book-trainer',
+    imports: [CommonModule, MatIconModule, MatButtonModule,],
+  templateUrl: './courses-book-trainer.html',
+  styleUrl: './courses-book-trainer.css',
 })
-export class Teachers {
+export class CoursesBookTrainer {
+
   featuredTeacher = {
     name: 'Suhani Rathod',
     photo: 'assets/teachers/suhani-rathod.jpg',

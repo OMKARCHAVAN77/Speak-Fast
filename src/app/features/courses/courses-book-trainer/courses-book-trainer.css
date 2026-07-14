@@ -3,6 +3,10 @@
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .hero-wrapper {
   max-width: 1200px;
   margin: 0 auto;
@@ -28,6 +32,8 @@
   display: flex;
   gap: 14px;
   align-items: flex-start;
+  min-width: 0;
+  flex: 1 1 260px;
 }
 
 .profile-photo {
@@ -38,11 +44,16 @@
   flex-shrink: 0;
 }
 
+.profile-details {
+  min-width: 0;
+}
+
 .profile-name {
   font-size: 18px;
   font-weight: 700;
   color: #1a1a1a;
   margin: 0 0 6px 0;
+  word-break: break-word;
 }
 
 .profile-rating {
@@ -77,6 +88,7 @@
 
 .about-section {
   max-width: 340px;
+  flex: 1 1 240px;
 }
 
 .about-heading {
@@ -106,6 +118,11 @@
   flex-wrap: wrap;
 }
 
+.booking-text {
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
 .booking-title {
   font-size: 15px;
   font-weight: 700;
@@ -130,6 +147,7 @@
   line-height: 40px !important;
   border-radius: 6px !important;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Other teachers */
@@ -152,6 +170,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .card-header {
@@ -174,6 +193,7 @@
   color: #ffffff;
   font-size: 15px;
   font-weight: 700;
+  word-break: break-word;
 }
 
 .card-body {
@@ -267,16 +287,28 @@
 }
 
 /* Responsive */
+
+/* Tablet: tighten spacing, 2-up grid, stack profile top */
 @media (max-width: 900px) {
+  .hero-wrapper {
+    padding: 20px 24px 32px;
+  }
+
   .teacher-grid {
     grid-template-columns: 1fr 1fr;
   }
 
   .profile-top {
     flex-direction: column;
+    gap: 20px;
+  }
+
+  .about-section {
+    max-width: 100%;
   }
 }
 
+/* Small tablet / large phone: single column grid, banner stacks */
 @media (max-width: 600px) {
   .teacher-grid {
     grid-template-columns: 1fr;
@@ -286,12 +318,63 @@
     padding: 16px;
   }
 
-  .slots-grid {
-    grid-template-columns: repeat(4, 1fr);
+  .profile-card {
+    padding: 18px;
   }
 
   .booking-banner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
+    padding: 16px 18px;
+  }
+
+  .grammar-btn {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .book-btn {
+    width: 100%;
+  }
+}
+
+/* Phone: reduce chip density and touch targets */
+@media (max-width: 420px) {
+  .hero-wrapper {
+    padding: 12px;
+  }
+
+  .profile-card {
+    padding: 14px;
+  }
+
+  .profile-photo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .profile-name {
+    font-size: 16px;
+  }
+
+  .slots-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .card-header {
+    padding: 12px 14px;
+  }
+
+  .card-body {
+    padding: 14px;
+  }
+
+  .tag-list {
+    gap: 6px;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 10px;
   }
 }
