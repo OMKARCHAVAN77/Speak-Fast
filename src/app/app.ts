@@ -5,9 +5,11 @@ import { Footer } from './core/layout/footer/footer';
 import { Teachers } from './features/teachers/teachers';
 import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 import { Questions } from './features/grammer/questions/questions';
+import { Home } from './features/dashboard/home/home';
 
 @Component({
   selector: 'app-root',
+  imports: [RouterOutlet,GrammerAssignment,Questions,Home],
   imports: [RouterOutlet,Navbar,Footer,Teachers,GrammerAssignment,Questions],
   templateUrl: './app.html',
   styleUrl: './app.css'
