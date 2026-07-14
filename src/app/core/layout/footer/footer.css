@@ -26,6 +26,8 @@
 .brand-logo {
   font-size: 20px;
   font-weight: 800;
+  width: 140px;
+  height: auto;
   font-style: italic;
   margin-bottom: 10px;
 }
