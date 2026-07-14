@@ -1,10 +1,14 @@
 import { Component, signal } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { Navbar } from './core/layout/navbar/navbar';
+import { Footer } from './core/layout/footer/footer';
+import { Teachers } from './features/teachers/teachers';
 import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 import { Questions } from './features/grammer/questions/questions';
 
 @Component({
   selector: 'app-root',
-  imports: [GrammerAssignment,Questions],
+  imports: [RouterOutlet,Navbar,Footer,Teachers,GrammerAssignment,Questions],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
