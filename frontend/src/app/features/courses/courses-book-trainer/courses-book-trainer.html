@@ -1,0 +1,80 @@
+<section class="hero-wrapper">
+
+  <!-- Featured teacher card -->
+  <div class="profile-card">
+    <div class="profile-top">
+
+      <div class="profile-info">
+        <img [src]="featuredTeacher.photo" [alt]="featuredTeacher.name" class="profile-photo" />
+        <div class="profile-details">
+          <h2 class="profile-name">{{ featuredTeacher.name }}</h2>
+          <div class="profile-rating">
+            <mat-icon class="star-icon">star</mat-icon>
+            <span>{{ featuredTeacher.studentCount }} students</span>
+          </div>
+          <div class="tag-list">
+            <span class="tag" *ngFor="let tag of featuredTeacher.tags">{{ tag }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-section">
+        <h3 class="about-heading">About</h3>
+        <p class="about-text">{{ featuredTeacher.about }}</p>
+      </div>
+
+    </div>
+
+    <div class="booking-banner">
+      <div class="booking-text">
+        <h4 class="booking-title">First Time Booking?</h4>
+        <p class="booking-desc">
+          For practice classes, you'll need to complete a quick grammar assessment to ensure the best learning experience.
+        </p>
+      </div>
+      <button mat-flat-button class="grammar-btn" (click)="onTakeGrammarTest()">
+        Take Grammar Text
+      </button>
+    </div>
+  </div>
+
+  <!-- Other teachers -->
+  <div class="other-teachers-section">
+    <h3 class="section-heading">Perfect match other Techers</h3>
+
+    <div class="teacher-grid">
+      <div class="teacher-card" *ngFor="let teacher of otherTeachers">
+
+        <div class="card-header">
+          <img [src]="teacher.photo" [alt]="teacher.name" class="card-photo" />
+          <span class="card-name">{{ teacher.name }}</span>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">{{ teacher.description }}</p>
+
+          <span class="slots-label">Available Time Slots</span>
+          <div class="slots-grid">
+            <span class="slot-chip" *ngFor="let slot of teacher.timeSlots">{{ slot.time }}</span>
+          </div>
+
+          <div class="upcoming-slot" *ngIf="teacher.upcomingSlot">
+            <span class="upcoming-title">Upcoming slot</span>
+            <div class="upcoming-detail">
+              <mat-icon class="upcoming-icon">schedule</mat-icon>
+              <span>{{ teacher.upcomingSlot }}</span>
+            </div>
+          </div>
+
+          <button mat-flat-button class="book-btn" (click)="onBookSeat(teacher)">
+            <mat-icon class="book-icon">add</mat-icon>
+            Book Seat
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+

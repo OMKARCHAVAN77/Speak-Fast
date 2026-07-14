@@ -1,1 +1,151 @@
-<p>home works!</p>
+<!-- ============ HERO / STATS BANNER ============ -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-chip">Our Courses</span>
+
+    <h1 class="hero-title">Choose Your Perfect Course</h1>
+    <p class="hero-subtitle">
+      Expert-led courses designed to help you achieve your English learning goals
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-value">₹{{ perCourseMonthly | number }}</div>
+        <div class="stat-label">Per Course/Month</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">₹{{ allCoursesPrice | number }}</div>
+        <div class="stat-label">All 3 Courses</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-value">
+          <mat-icon class="star-icon">star</mat-icon>{{ averageRating }}
+        </div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURE STRIP ============ -->
+<section class="feature-strip">
+  <div class="feature-grid">
+    <mat-card class="feature-card" *ngFor="let feature of features">
+      <div class="feature-icon">
+        <mat-icon>{{ feature.icon }}</mat-icon>
+      </div>
+      <h3 class="feature-title">{{ feature.title }}</h3>
+      <p class="feature-desc">{{ feature.description }}</p>
+    </mat-card>
+  </div>
+</section>
+
+<!-- ============ COURSE CARDS ============ -->
+<section class="courses-section">
+  <div class="courses-grid">
+    <mat-card class="course-card" *ngFor="let course of courses">
+      <div class="course-header">
+        <div class="course-icon">
+          <mat-icon>{{ course.icon }}</mat-icon>
+        </div>
+        <span class="level-chip" [ngClass]="course.levelClass">{{ course.level }}</span>
+      </div>
+
+      <h3 class="course-title">{{ course.title }}</h3>
+      <p class="course-desc">{{ course.description }}</p>
+
+      <div class="course-meta">
+        <div class="meta-item">
+          <span class="meta-label">Duration</span>
+          <span class="meta-value">
+            <mat-icon class="meta-icon">schedule</mat-icon>{{ course.duration }}
+          </span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Live Session's</span>
+          <span class="meta-value">
+            <mat-icon class="meta-icon">schedule</mat-icon>{{ course.liveSessions }}
+          </span>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="course-learn">
+        <p class="learn-title">What you'll learn:</p>
+        <ul class="learn-list">
+          <li *ngFor="let point of course.learningPoints">
+            <mat-icon class="check-icon">check_circle</mat-icon>
+            <span>{{ point }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="course-price-row">
+        <div>
+          <p class="price-label">Course Price</p>
+          <p class="price-value">
+            ₹{{ course.price | number }}<span class="price-suffix">/mo</span>
+          </p>
+        </div>
+        <span class="badge-chip">{{ course.badge }}</span>
+      </div>
+
+      <button
+        mat-flat-button
+        class="enroll-btn"
+        color="warn"
+        (click)="onEnroll(course)"
+      >
+        <mat-icon>add</mat-icon>
+        Enroll Now
+      </button>
+    </mat-card>
+  </div>
+
+  <!-- ============ COMPLETE PACKAGE CARD ============ -->
+  <mat-card class="package-card">
+    <span class="package-chip">All In One</span>
+
+    <div class="package-icon">
+      <mat-icon>emoji_events</mat-icon>
+    </div>
+
+    <h3 class="package-title">Complete Package</h3>
+    <p class="package-desc">
+      Join all three courses (Basic + Advanced + Practice) and save!
+    </p>
+
+    <div class="package-price-box">
+      <span class="package-old-price">{{ packageOriginalPrice | number }}</span>
+      <span class="package-new-price">₹{{ packagePrice | number }}</span>
+      <span class="package-price-note">All 3 courses for 3 months</span>
+    </div>
+
+    <button mat-flat-button class="package-btn" color="warn" (click)="onGetPackage()">
+      <mat-icon>add</mat-icon>
+      Get Complete Package
+    </button>
+  </mat-card>
+</section>
+
+<!-- ============ CTA BANNER ============ -->
+<section class="cta-banner">
+  <h2 class="cta-title">Not Sure Which Course to Choose?</h2>
+  <p class="cta-subtitle">
+    Take our free grammar test to find the perfect course for your level
+  </p>
+
+  <div class="cta-buttons">
+    <button mat-flat-button class="cta-btn-white" (click)="onTakeFreeTest()">
+      Take Free Test
+    </button>
+    <button mat-stroked-button class="cta-btn-outline" (click)="onTalkToTeachers()">
+      Talk to our Teacher's
+    </button>
+  </div>
+</section>
