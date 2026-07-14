@@ -9,8 +9,7 @@ import { Home } from './features/dashboard/home/home';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,GrammerAssignment,Questions,Home],
-  imports: [RouterOutlet,Navbar,Footer,Teachers,GrammerAssignment,Questions],
+  imports: [RouterOutlet,Navbar,Footer,Teachers,GrammerAssignment,Questions,Home],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
