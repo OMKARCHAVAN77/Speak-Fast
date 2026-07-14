@@ -1,0 +1,40 @@
+<mat-toolbar class="navbar">
+  <div class="navbar-container">
+
+    <!-- Logo -->
+    <div class="logo-section">
+      <span class="logo-text">
+        <span class="logo-speak">speak</span><span class="logo-fast">fast</span>
+        <sup class="logo-reg">®</sup>
+      </span>
+      <span class="logo-tagline">English Academy</span>
+    </div>
+
+    <!-- Nav Links -->
+    <nav class="nav-links">
+      <a
+        *ngFor="let link of navLinks"
+        class="nav-link"
+        [class.active]="link.active"
+        (click)="onNavClick(link)"
+      >
+        {{ link.label }}
+      </a>
+    </nav>
+
+    <!-- Actions -->
+    <div class="actions-section">
+      <button mat-stroked-button class="call-btn" (click)="onCallNow()">
+        <mat-icon class="call-icon">call</mat-icon>
+        Call Now
+      </button>
+
+      <button mat-flat-button class="login-btn" (click)="onLogIn()">
+        Log In
+      </button>
+    </div>
+
+  </div>
+
+  <div class="bottom-bar"></div>
+</mat-toolbar>

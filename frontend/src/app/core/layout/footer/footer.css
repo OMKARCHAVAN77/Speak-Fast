@@ -1,0 +1,191 @@
+:host {
+  display: block;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.footer {
+  background-color: #1a2338;
+  color: #c9cedb;
+  padding: 40px 32px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 32px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Brand column */
+.brand-logo {
+  font-size: 20px;
+  font-weight: 800;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.logo-speak {
+  color: #4d7ff0;
+}
+
+.logo-fast {
+  color: #e14b4b;
+}
+
+.logo-reg {
+  font-size: 9px;
+  color: #4d7ff0;
+  margin-left: 1px;
+}
+
+.brand-title {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.brand-desc {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #9aa1b4;
+  margin: 0;
+  max-width: 260px;
+}
+
+/* Column headings */
+.col-heading {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 16px 0;
+}
+
+/* Link lists */
+.link-list,
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-link {
+  color: #c9cedb;
+  text-decoration: none;
+  font-size: 13.5px;
+  transition: color 0.2s ease;
+  word-break: break-word;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-text {
+  color: #c9cedb;
+  font-size: 13.5px;
+  word-break: break-word;
+}
+
+/* Contact list */
+.contact-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.contact-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  color: #7c88a8;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Responsive */
+
+/* Tablet: 2-up grid, brand column spans full width so the tagline
+   isn't squeezed into a narrow column */
+@media (max-width: 900px) {
+  .footer {
+    padding: 32px 24px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 32px;
+    column-gap: 24px;
+  }
+
+  .brand-col {
+    grid-column: 1 / -1;
+  }
+
+  .brand-desc {
+    max-width: 420px;
+  }
+}
+
+/* Small tablet / large phone: still 2-up, but tighten further */
+@media (max-width: 640px) {
+  .footer {
+    padding: 28px 20px;
+  }
+
+  .footer-container {
+    row-gap: 28px;
+    column-gap: 20px;
+  }
+}
+
+/* Phone: single column, stacked */
+@media (max-width: 560px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    row-gap: 28px;
+  }
+
+  .brand-col {
+    grid-column: auto;
+  }
+
+  .brand-desc {
+    max-width: 100%;
+  }
+
+  .col-heading {
+    margin-bottom: 12px;
+  }
+}
+
+/* Small phone: trim padding and font sizes */
+@media (max-width: 400px) {
+  .footer {
+    padding: 24px 16px;
+  }
+
+  .brand-logo,
+  .brand-title {
+    font-size: 18px;
+  }
+
+  .footer-link,
+  .footer-text {
+    font-size: 13px;
+  }
+}
