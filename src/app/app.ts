@@ -6,10 +6,11 @@ import { Teachers } from './features/teachers/teachers';
 import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 import { Questions } from './features/grammer/questions/questions';
 import { CoursesBookTrainer } from './features/courses/courses-book-trainer/courses-book-trainer';
+import { Home } from './features/dashboard/home/home';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer],
+  imports: [RouterOutlet,Navbar,Footer,Teachers,GrammerAssignment,Questions,CoursesBookTrainer,Home],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
