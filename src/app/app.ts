@@ -9,7 +9,7 @@ import { CoursesBookTrainer } from './features/courses/courses-book-trainer/cour
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer,Teachers,GrammerAssignment,Questions,CoursesBookTrainer],
+  imports: [RouterOutlet,Navbar,Footer],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
