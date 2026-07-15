@@ -18,7 +18,7 @@ interface Teacher {
 
 @Component({
   selector: 'app-courses-book-trainer',
-    imports: [CommonModule, MatIconModule, MatButtonModule,],
+    imports: [CommonModule, MatIconModule, MatButtonModule,RouterLink],
   templateUrl: './courses-book-trainer.html',
   styleUrl: './courses-book-trainer.css',
 })
