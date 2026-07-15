@@ -1,96 +1,58 @@
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
-
-interface TimeSlot {
-  time: string;
-}
-
-interface Teacher {
-  name: string;
-  photo: string;
-  description: string;
-  timeSlots: TimeSlot[];
-  upcomingSlot?: string;
-}
 
 @Component({
   selector: 'app-teachers',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatButtonModule,],
+  imports: [CommonModule],
   templateUrl: './teachers.html',
-  styleUrls: ['./teachers.css']
+  styleUrl: './teachers.css'
 })
 export class Teachers {
-  featuredTeacher = {
-    name: 'Suhani Rathod',
-    photo: 'assets/teachers/suhani-rathod.jpg',
-    studentCount: 312,
-    tags: ['Academic english', 'Grammar', '+2 More'],
-    about:
-      'PhD in English Literature with a decade of experience helping students excel in academic.'
-  };
 
-  otherTeachers: Teacher[] = [
+  teachers = [
     {
-      name: 'Mohini Shetty',
-      photo: 'assets/teachers/mohini-shetty.jpg',
+      name: 'Anita Rathod',
+      image: 'https://i.pravatar.cc/100?img=1',
       description:
-        'PhD in English Literature with a decade of experience helping students excel in academic.',
-      timeSlots: [
-        { time: '07:00am' },
-        { time: '08:00am' },
-        { time: '10:00am' },
-        { time: '11:00am' },
-        { time: '12:00pm' },
-        { time: '02:00pm' },
-        { time: '04:00pm' },
-        { time: '05:00pm' }
-      ],
-      upcomingSlot: 'New available slot from 8 March at 9:00am'
+        'PhD in English Literature with a decade of experience helping students excel in academics.',
+      slots: ['07:00am','08:00am','10:00am','11:00am','12:00pm','02:00pm']
+    },
+    {
+      name: 'Chandani Kulkarni',
+      image: 'https://i.pravatar.cc/100?img=5',
+      description:
+        'PhD in English Literature with a decade of experience helping students excel in academics.',
+      slots: ['07:00am','08:00am','10:00am','11:00am','12:00pm','02:00pm','04:00pm']
     },
     {
       name: 'Dinesh Deshmukh',
-      photo: 'assets/teachers/dinesh-deshmukh.jpg',
+      image: 'https://i.pravatar.cc/100?img=12',
       description:
-        'PhD in English Literature with a decade of experience helping students excel in academic.',
-      timeSlots: [
-        { time: '07:00am' },
-        { time: '08:00am' },
-        { time: '10:00am' },
-        { time: '11:00am' },
-        { time: '12:00pm' },
-        { time: '02:00pm' },
-        { time: '04:00pm' },
-        { time: '05:00pm' }
-      ]
+        'PhD in English Literature with a decade of experience helping students excel in academics.',
+      slots: ['07:00am','08:00am','10:00am','11:00am','12:00pm']
     },
     {
-      name: 'Suhani Patil',
-      photo: 'assets/teachers/suhani-patil.jpg',
+      name: 'Ganesh Chouhan',
+      image: 'https://i.pravatar.cc/100?img=13',
       description:
-        'PhD in English Literature with a decade of experience helping students excel in academic.',
-      timeSlots: [
-        { time: '07:00am' },
-        { time: '08:00am' },
-        { time: '10:00am' },
-        { time: '11:00am' },
-        { time: '12:00pm' },
-        { time: '02:00pm' },
-        { time: '04:00pm' },
-        { time: '05:00pm' }
-      ]
+        'PhD in English Literature with a decade of experience helping students excel in academics.',
+      slots: ['07:00am','08:00am','10:00am','11:00am','12:00pm','02:00pm']
+    },
+    {
+      name: 'Kamlesh Patil',
+      image: 'https://i.pravatar.cc/100?img=15',
+      description:
+        'PhD in English Literature with a decade of experience helping students excel in academics.',
+      slots: ['07:00am','08:00am','10:00am','11:00am','12:00pm']
+    },
+    {
+      name: 'Mohini Shetty',
+      image: 'https://i.pravatar.cc/100?img=9',
+      description:
+        'PhD in English Literature with a decade of experience helping students excel in academics.',
+      slots: ['07:00am','08:00am','10:00am','12:00pm','04:00pm','05:00pm']
     }
   ];
 
-  onTakeGrammarTest(): void {
-    console.log('Take Grammar Test clicked');
-  }
-
-  onBookSeat(teacher: Teacher): void {
-    console.log('Book Seat clicked for', teacher.name);
-  }
 }
