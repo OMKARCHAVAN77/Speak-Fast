@@ -97,18 +97,6 @@
   gap: 20px;
 }
 
-@media (max-width: 900px) {
-  .feature-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 560px) {
-  .feature-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .feature-card {
   border: 1px solid var(--primary-blue);
   border-radius: 8px;
@@ -156,12 +144,6 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
   margin-bottom: 32px;
-}
-
-@media (max-width: 992px) {
-  .courses-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .course-card {
@@ -472,4 +454,204 @@ mat-divider {
   padding: 0 28px;
   font-weight: 600;
   border-radius: 8px;
+}
+
+/* ================================================================
+   RESPONSIVE — TABLET (≤ 992px)
+   ================================================================ */
+@media (max-width: 992px) {
+  .courses-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 48px 20px 56px;
+  }
+
+  .hero-title {
+    font-size: 34px;
+  }
+
+  .hero-stats {
+    gap: 36px;
+  }
+
+  .package-btn {
+    width: 100%;
+    max-width: 325px;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — TABLET / SMALL TABLET (≤ 900px)
+   ================================================================ */
+@media (max-width: 900px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — MOBILE LANDSCAPE / LARGE PHONE (≤ 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 16px 48px;
+  }
+
+  .hero-title {
+    font-size: 28px;
+  }
+
+  .hero-subtitle {
+    font-size: 14.5px;
+    margin-bottom: 32px;
+  }
+
+  .hero-stats {
+    gap: 28px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .courses-section {
+    padding: 36px 16px;
+  }
+
+  .course-card {
+    padding: 22px !important;
+  }
+
+  .course-title {
+    font-size: 20px;
+  }
+
+  .course-meta {
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .package-card {
+    padding: 36px 20px !important;
+  }
+
+  .package-title {
+    font-size: 21px;
+  }
+
+  .package-price-box {
+    padding: 12px 20px;
+  }
+
+  .package-new-price {
+    font-size: 22px;
+  }
+
+  .cta-banner {
+    padding: 44px 20px;
+  }
+
+  .cta-title {
+    font-size: 26px;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-btn-white,
+  .cta-btn-outline {
+    width: 100%;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — MOBILE (≤ 560px)
+   ================================================================ */
+@media (max-width: 560px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-chip {
+    font-size: 12px;
+    padding: 5px 16px;
+  }
+
+  .hero-stats {
+    gap: 20px 32px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+  }
+
+  .course-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .course-desc {
+    min-height: 0;
+  }
+
+  .course-price-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .badge-chip {
+    align-self: flex-start;
+  }
+
+  .package-price-box {
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 20px;
+  }
+
+  .package-old-price {
+    text-decoration: line-through;
+  }
+
+  .cta-title {
+    font-size: 22px;
+  }
+
+  .cta-subtitle {
+    font-size: 14px;
+  }
+}
+
+/* ================================================================
+   RESPONSIVE — SMALL MOBILE (≤ 400px)
+   ================================================================ */
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 21px;
+  }
+
+  .course-title {
+    font-size: 18px;
+  }
+
+  .price-value {
+    font-size: 20px;
+  }
+
+  .package-new-price {
+    font-size: 20px;
+  }
 }
