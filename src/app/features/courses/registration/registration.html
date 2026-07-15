@@ -1,0 +1,205 @@
+<!-- Hero Section -->
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <h1>Complete Your Registration</h1>
+
+    <p>
+      Just one more step to start your English learning journey!
+    </p>
+
+  </div>
+
+</section>
+
+<!-- Registration Form -->
+
+<section class="registration-section">
+
+  <div class="registration-card">
+
+    <form
+      [formGroup]="registrationForm"
+      (ngSubmit)="onSubmit()">
+
+      <!-- Full Name -->
+
+      <div class="form-group">
+
+        <label>Full Name *</label>
+
+        <input
+          type="text"
+          placeholder="Type your Full Name"
+          formControlName="fullName">
+
+        <small
+          class="error"
+          *ngIf="f['fullName'].touched && f['fullName'].invalid">
+
+          Full Name is required
+
+        </small>
+
+      </div>
+
+      <!-- Row -->
+
+      <div class="row">
+
+        <div class="form-group">
+
+          <label>Phone Number *</label>
+
+          <input
+            type="text"
+            placeholder="e.g. 9876543210"
+            formControlName="mobile">
+
+          <small
+            class="error"
+            *ngIf="f['mobile'].touched && f['mobile'].invalid">
+
+            Enter valid mobile number
+
+          </small>
+
+        </div>
+
+        <div class="form-group">
+
+          <label>Email</label>
+
+          <input
+            type="email"
+            placeholder="@gmail.com"
+            formControlName="email">
+
+          <small
+            class="error"
+            *ngIf="f['email'].touched && f['email'].invalid">
+
+            Enter valid email
+
+          </small>
+
+        </div>
+
+      </div>
+
+      <!-- Row -->
+
+      <div class="row">
+
+        <div class="form-group">
+
+          <label>Date of Birth *</label>
+
+          <input
+            type="date"
+            formControlName="dob">
+
+        </div>
+
+        <div class="form-group">
+
+          <label>City *</label>
+
+          <select formControlName="city">
+
+            <option value="">
+              Select City
+            </option>
+
+            <option
+              *ngFor="let city of cities"
+              [value]="city">
+
+              {{ city }}
+
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+      <!-- Qualification -->
+
+      <div class="form-group">
+
+        <label>Qualification</label>
+
+        <select formControlName="qualification">
+
+          <option value="">
+            Select Qualification
+          </option>
+
+          <option
+            *ngFor="let q of qualifications"
+            [value]="q">
+
+            {{ q }}
+
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- Occupation -->
+
+      <div class="form-group">
+
+        <label>Occupation</label>
+
+        <select formControlName="occupation">
+
+          <option value="">
+            Select Occupation
+          </option>
+
+          <option
+            *ngFor="let item of occupations"
+            [value]="item">
+
+            {{ item }}
+
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- Buttons -->
+
+      <div class="button-group">
+
+        <button
+          type="button"
+          class="back-btn"
+          (click)="back()">
+
+          ← Back
+
+        </button>
+
+        <button
+          type="submit"
+          class="dashboard-btn">
+
+          Dashboard →
+
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</section>
