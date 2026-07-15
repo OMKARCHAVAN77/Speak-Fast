@@ -4,7 +4,10 @@
     box-sizing:border-box;
     font-family:Arial, Helvetica, sans-serif;
 }
-
+:host {
+  --primary-blue: #0c4a9e;
+  --primary-blue-dark: #0a3d84;
+}
 body{
     background:#f5f7fb;
 }
@@ -12,7 +15,7 @@ body{
 /* ================= Hero ================= */
 
 .hero{
-    background:#0f57a5;
+    background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
     color:#fff;
     text-align:center;
     padding:60px 20px 90px;
