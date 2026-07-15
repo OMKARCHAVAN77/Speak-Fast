@@ -26,7 +26,7 @@ export class CoursesBookTrainer {
 
   featuredTeacher = {
     name: 'Suhani Rathod',
-    photo: 'assets/teachers/suhani-rathod.jpg',
+    photo: 'assets/suhani-rathod.jpg',
     studentCount: 312,
     tags: ['Academic english', 'Grammar', '+2 More'],
     about:
@@ -36,7 +36,7 @@ export class CoursesBookTrainer {
   otherTeachers: Teacher[] = [
     {
       name: 'Mohini Shetty',
-      photo: 'assets/teachers/mohini-shetty.jpg',
+      photo: 'assets/suhani-rathod.jpg',
       description:
         'PhD in English Literature with a decade of experience helping students excel in academic.',
       timeSlots: [
@@ -53,7 +53,7 @@ export class CoursesBookTrainer {
     },
     {
       name: 'Dinesh Deshmukh',
-      photo: 'assets/teachers/dinesh-deshmukh.jpg',
+      photo: 'assets/dinesh.jpg',
       description:
         'PhD in English Literature with a decade of experience helping students excel in academic.',
       timeSlots: [
@@ -69,7 +69,7 @@ export class CoursesBookTrainer {
     },
     {
       name: 'Suhani Patil',
-      photo: 'assets/teachers/suhani-patil.jpg',
+      photo: 'assets/suhani-rathod.jpg',
       description:
         'PhD in English Literature with a decade of experience helping students excel in academic.',
       timeSlots: [
