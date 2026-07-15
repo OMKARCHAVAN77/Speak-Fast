@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 
 interface NavLink {
   label: string;
@@ -12,6 +13,9 @@ interface NavLink {
 @Component({
   selector: 'app-navbar',
   imports: [
+    RouterLink,
+    RouterModule,
+    RouterLinkActive,
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
@@ -25,16 +29,7 @@ interface NavLink {
 export class Navbar {
 
   
-  navLinks: NavLink[] = [
-    { label: 'Home', active: true },
-    { label: 'Teachers', active: false },
-    { label: 'Courses', active: false },
-    { label: 'Grammar Test', active: false }
-  ];
-
-  onNavClick(clicked: NavLink): void {
-    this.navLinks.forEach(link => (link.active = link === clicked));
-  }
+  
 
   onCallNow(): void {
     window.location.href = 'tel:+10000000000';
