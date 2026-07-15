@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface FeatureItem {
   title: string;
@@ -14,6 +15,7 @@ interface FeatureItem {
   styleUrls: ['./grammer-assignment.css']
 })
 export class GrammerAssignment {
+  constructor(private router:Router){}
   features: FeatureItem[] = [
     {
       title: '25 Questions',
@@ -32,6 +34,11 @@ export class GrammerAssignment {
   onStartTest(): void {
     // Hook up navigation / API call here
     console.log('Start Test clicked');
+    this.router.navigate(['/grammerQuestions'])
+  }
+
+  navigateToGrammerTest(){
+      
   }
 }
 

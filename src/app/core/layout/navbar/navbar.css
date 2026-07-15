@@ -76,17 +76,18 @@
   cursor: pointer;
   font-weight: 400;
   transition: color 0.2s ease;
+  text-decoration: none;
 }
 
-.nav-link:hover {
+.nav-link a:hover {
   color: #e13b3b;
 }
 
-.nav-link.active {
+/* .nav-link.active {
   color: #e13b3b;
   text-decoration: underline;
   font-weight: 500;
-}
+} */
 
 /* Actions */
 .actions-section {
