@@ -10,5 +10,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./teachers.css']
 })
 export class Teachers {
-  
+  teacher:String= "nothing changes " //only for checking purpose
 }
