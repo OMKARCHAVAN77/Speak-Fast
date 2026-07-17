@@ -21,7 +21,7 @@ export class RegistrationComponent {
 
   registrationForm: FormGroup;
 
-  cities = [
+  districts = [
     'Pune',
     'Mumbai',
     'Kolhapur',
@@ -54,7 +54,15 @@ export class RegistrationComponent {
 
     this.registrationForm = this.fb.group({
 
-      fullName: [
+      firstname: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3)
+        ]
+      ],
+
+      lastname: [
         '',
         [
           Validators.required,
@@ -78,12 +86,12 @@ export class RegistrationComponent {
         ]
       ],
 
-      dob: [
-        '',
-        Validators.required
-      ],
+      // dob: [
+      //   '',
+      //   Validators.required
+      // ],
 
-      city: [
+      district: [
         '',
         Validators.required
       ],
