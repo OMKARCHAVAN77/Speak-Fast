@@ -13,7 +13,7 @@ import { registerAppScopedDispatcher } from '@angular/core/primitives/event-disp
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer,StudentAchievement],
+  imports: [RouterOutlet,Navbar,Footer,],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
