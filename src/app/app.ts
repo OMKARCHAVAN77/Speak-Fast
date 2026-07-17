@@ -4,6 +4,7 @@ import { Navbar } from './core/layout/navbar/navbar';
 import { Footer } from './core/layout/footer/footer';
 import { StudentProcess } from './features/students/student-achievement/student-process/student-process';
 import { StudentAchievement } from './features/students/student-achievement/student-achievement';
+import { registerAppScopedDispatcher } from '@angular/core/primitives/event-dispatch';
 // import { Teachers } from './features/teachers/teachers';
 // import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 // import { Questions } from './features/grammer/questions/questions';
@@ -12,7 +13,7 @@ import { StudentAchievement } from './features/students/student-achievement/stud
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer,StudentAchievement],
+  imports: [RouterOutlet,Navbar,Footer,],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
