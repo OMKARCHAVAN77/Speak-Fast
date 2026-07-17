@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { StudentProcess } from './student-process/student-process';
-import { StudentAssignment } from './student-assignment/student-assignment';
+import { StudentMyClasess } from './student-my-clasess/student-my-clasess';
 
 export interface StatCard {
   icon: string;
@@ -23,7 +23,7 @@ export type TabKey = 'classes' | 'progress' | 'assignments';
 
 @Component({
   selector: 'app-student-achievement',
-    imports: [CommonModule, MatIconModule, MatButtonModule,StudentProcess,StudentAssignment],
+    imports: [CommonModule, MatIconModule, MatButtonModule,StudentProcess,StudentMyClasess],
   templateUrl: './student-achievement.html',
   styleUrl: './student-achievement.css',
 })

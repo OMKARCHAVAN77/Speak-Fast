@@ -28,8 +28,15 @@ interface NavLink {
 
 export class Navbar {
 
-  
-  
+  isMenuOpen = false;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu(): void {
+    this.isMenuOpen = false;
+  }
 
   onCallNow(): void {
     window.location.href = 'tel:+10000000000';
@@ -40,8 +47,3 @@ export class Navbar {
   }
 
 }
-
-
-
-
-
