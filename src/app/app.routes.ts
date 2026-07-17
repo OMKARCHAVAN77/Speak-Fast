@@ -7,7 +7,7 @@ import { Teachers } from './features/teachers/teachers';
 import { CoursesBookTrainer } from './features/courses/courses-book-trainer/courses-book-trainer';
 import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 import { Questions } from './features/grammer/questions/questions';
-import { RegistrationComponent } from './features/courses/registration/registration';
+import { RegistrationComponent } from './features/courses/admitionsRegistration/registration';
 import { LandingPage } from './features/auth/landing-page/landing-page';
 
 export const routes: Routes = [
