@@ -8,7 +8,7 @@ import { RegistrationComponent } from './features/courses/registration/registrat
 import { LandingPage } from './features/auth/landing-page/landing-page';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
+    { path: '', redirectTo: 'landingPage', pathMatch: 'full' },
     { path: 'home', component: Home },
     { path: 'teachers', component: Teachers },
     { path: 'courses', component: CoursesBookTrainer },
