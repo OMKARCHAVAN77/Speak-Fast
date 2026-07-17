@@ -1,3 +1,4 @@
+
 /* ===== Tokens ===== */
 :host {
   --navy: #0a4b9e;
@@ -79,7 +80,7 @@
 /* ===== Stats ===== */
 .stats-section {
   padding: 50px 40px;
-  
+  background-color: #eaf2fc;
 }
 
 .stats-grid {
@@ -156,6 +157,10 @@
 }
 
 /* ===== Tabs ===== */
+.tabs{
+  background-color: #fff;
+  padding: 10px;
+}
 .tabs-bar {
   margin: 32px 40px 0;
   background: #fff;
@@ -180,6 +185,16 @@
 
 a{
   text-decoration: none;
+}
+
+.active{
+  width: 238px;
+  height: 38px;
+  border-radius: 50px;
+  background-color: #004D9B;
+  display: flex;
+  justify-content: center;
+
 }
 
 .tab-pill {
@@ -214,182 +229,6 @@ a{
   padding: 28px;
 }
 
-.content-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.content-heading h2 {
-  font-size: 24px;
-  margin: 0 0 4px;
-  font-weight: 700;
-}
-
-.content-heading p {
-  font-size: 14px;
-  color: var(--text-muted);
-  margin: 0;
-}
-
-.content-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.search-field {
-  width: 260px;
-}
-
-.search-field ::ng-deep .mat-mdc-text-field-wrapper {
-  border-radius: 10px;
-}
-
-.date-btn {
-  border-radius: 10px !important;
-  color: var(--text-dark) !important;
-  border-color: var(--border-soft) !important;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 44px;
-}
-
-.day-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin: 0 0 14px;
-}
-
-/* ===== Enrollment list ===== */
-.enrollment-list {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.enrollment-card {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 20px !important;
-  border-radius: 12px !important;
-  border: 1px solid var(--border-soft) !important;
-  box-shadow: none !important;
-}
-
-.enrollment-main {
-  display: flex;
-  gap: 16px;
-  flex: 1;
-  min-width: 0;
-}
-
-.avatar {
-  flex: 0 0 auto;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--navy);
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.enrollment-body {
-  min-width: 0;
-  flex: 1;
-}
-
-.enrollment-name-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.student-name {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text-dark);
-}
-
-.status-chip {
-  font-size: 12px;
-  font-weight: 600;
-  padding: 3px 12px;
-  border-radius: 12px;
-  background: var(--red-chip);
-  color: #fff;
-}
-
-.info-row {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 6px;
-  column-gap: 20px;
-  margin-bottom: 6px;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.info-item mat-icon {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
-  color: var(--text-muted);
-}
-
-.info-item.fee {
-  color: var(--text-dark);
-  font-weight: 600;
-}
-
-.details-btn {
-  flex: 0 0 auto;
-  border-radius: 10px !important;
-  border-color: var(--border-soft) !important;
-  color: var(--text-dark) !important;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  height: 38px;
-}
-
-.empty-state {
-  text-align: center;
-  color: var(--text-muted);
-  padding: 32px 0;
-}
-
-.placeholder-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 60px 0;
-  color: var(--text-muted);
-}
-
 /* ===== Tablet (<=1024px) ===== */
 @media (max-width: 1024px) {
   .dashboard-header {
@@ -409,10 +248,6 @@ a{
 
   .header-title {
     font-size: 36px;
-  }
-
-  .search-field {
-    width: 220px;
   }
 }
 
@@ -443,40 +278,6 @@ a{
 
   .content-card {
     padding: 18px;
-  }
-
-  .content-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .content-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-field {
-    width: 100%;
-  }
-
-  .date-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .enrollment-card {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .details-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .info-row {
-    flex-direction: column;
-    gap: 6px;
   }
 
   .admin-panel-btn span {
