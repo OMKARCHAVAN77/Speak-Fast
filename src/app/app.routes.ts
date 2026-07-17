@@ -9,10 +9,10 @@ import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer
 import { Questions } from './features/grammer/questions/questions';
 import { RegistrationComponent } from './features/courses/admitionsRegistration/registration';
 import { LandingPage } from './features/auth/landing-page/landing-page';
-import { StudentAchievement } from './features/students/student-achievement/student-achievement';
+import { Login } from './features/auth/login/login';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'home', component: Home },
     { path: 'admin', component: Admin, children: adminRoutes },
     { path: 'teachers', component: Teachers },
