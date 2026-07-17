@@ -22,5 +22,4 @@ export const routes: Routes = [
     { path: 'registration', component: RegistrationComponent},
     { path: 'landing-page', component: LandingPage},
     { path: 'student-achievement', component: StudentAchievement },
-
 ];
