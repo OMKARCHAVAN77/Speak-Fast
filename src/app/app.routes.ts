@@ -1,3 +1,6 @@
+import { adminRoutes } from './features/admin/admin-route.routes';
+import { Children } from './../../node_modules/path-scurry/dist/commonjs/index.d';
+import { Admin } from './features/admin/admin';
 import { Routes } from '@angular/router';
 import { Home } from './features/dashboard/home/home';
 import { Teachers } from './features/teachers/teachers';
@@ -10,6 +13,7 @@ import { LandingPage } from './features/auth/landing-page/landing-page';
 export const routes: Routes = [
     { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
     { path: 'home', component: Home },
+    { path: 'admin', component: Admin, children: adminRoutes },
     { path: 'teachers', component: Teachers },
     { path: 'courses', component: CoursesBookTrainer },
     { path: 'grammer', component: GrammerAssignment },

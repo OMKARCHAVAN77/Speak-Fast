@@ -1,1 +1,60 @@
-<p>admin works!</p>
+<div class="dashboard">
+
+  <!-- ===== Header ===== -->
+  <header class="dashboard-header">
+    <div class="header-top">
+      <button mat-stroked-button class="admin-panel-btn">
+        <mat-icon>settings</mat-icon>
+        <span>Admin Panel</span>
+      </button>
+
+      <button mat-icon-button class="notif-btn" matTooltip="Notifications">
+        <mat-icon>notifications_none</mat-icon>
+      </button>
+    </div>
+
+    <h1 class="header-title">Agency Dashboard</h1>
+    <p class="header-subtitle">Manage your teaching agency efficiently</p>
+  </header>
+
+  <!-- ===== Stats ===== -->
+  <section class="stats-section" >
+    <div class="stats-grid">
+      @for (stat of stats; track stat.label) {
+      <mat-card class="stat-card">
+        <div class="stat-card-top">
+          <div class="stat-icon-wrap">
+            <mat-icon>{{ stat.icon }}</mat-icon>
+          </div>
+          <div class="stat-trend">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+        </div>
+        <p class="stat-label">{{ stat.label }}</p>
+        <p class="stat-value">{{ stat.value }}</p>
+        <p class="stat-sublabel">{{ stat.sublabel }}</p>
+      </mat-card>
+      }
+    </div>
+  </section>
+
+  <!-- ===== Tabs ===== -->
+  <section style="background-color: #eaf2fc;padding: 10px;">
+    <nav class="tabs-bar" >
+      <div class="tabs-scroll">
+  
+        <a routerLink="recentEnrollments" class="tab-pill" >recent enrollments</a>
+        <a routerLink="upcomingBatches" class="tab-pill">upcoming batches</a>
+        <a routerLink="adminTeachers" class="tab-pill">teachers</a>
+        <a routerLink="AllStudents" class="tab-pill">all students</a>
+      </div>
+    </nav>
+
+    <!-- ===== Content ===== -->
+    <section class="content-card" style="border:4px dotted black;"  >
+      <router-outlet></router-outlet>
+ 
+
+    </section>
+  </section>
+</div>
