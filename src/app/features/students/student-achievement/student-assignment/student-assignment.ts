@@ -21,8 +21,8 @@ interface Assignment {
   daysLeft: number;
   progress: number;
   feedback?: {
-    comment: string;
-    grade: string;
+  comment: string;
+  grade: string;
   };
 }
 

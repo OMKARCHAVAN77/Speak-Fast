@@ -14,7 +14,7 @@
 
 .panel {
   width: 100%;
-  max-width: 1180px;
+  /* max-width: 1180px; */
   background: #ffffff;
   border-radius: 20px;
   padding: 32px 15px;
@@ -28,17 +28,19 @@
   margin: 0 0 22px 0;
 }
 
-/* Filters row */
+/* ===========================
+   Filters Row
+=========================== */
+
 .filters-row {
   display: flex;
   gap: 16px;
   margin-bottom: 26px;
+  align-items: center;
 }
 
 .search-field {
   flex: 1;
-  border-radius: 15px ;
-  border: 1px solid rgb(205, 201, 201);
 }
 
 .filter-field {
@@ -46,39 +48,69 @@
   flex-shrink: 0;
 }
 
-.filters-row ::ng-deep .mdc-notched-outline__leading {
-  border-color: #dfe3e8 !important;
-  border-top-left-radius: 12px !important;
-  border-bottom-left-radius: 12px !important;
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+/* Hide hint/error space */
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
 
-.filters-row ::ng-deep .mdc-notched-outline__notch {
-  border-color: #dfe3e8 !important;
-  border-top-left-radius: 12px !important;
-  border-bottom-left-radius: 12px !important;
+/* Rounded wrapper */
+::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: 28px !important;
 }
 
-.filters-row ::ng-deep .mdc-notched-outline__trailing {
-  border-color: #dfe3e8 !important;
-  border-top-right-radius: 12px !important;
-  border-bottom-right-radius: 12px !important;
-  border-top-left-radius: 0 !important;
-  border-bottom-left-radius: 0 !important;
+::ng-deep .search-field .mat-mdc-input-element {
+  padding-left: 12px !important;
 }
 
-.filters-row ::ng-deep .mat-mdc-text-field-wrapper {
-  border-radius: 12px !important;
+/* Move filter selected value / placeholder to the right */
+::ng-deep .filter-field .mat-mdc-select-value {
+  padding-left: 16px !important;
 }
 
-.filters-row ::ng-deep .mat-mdc-form-field-infix {
-  min-height: 46px;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  font-size: 16px;
+/* Angular Material 20 */
+::ng-deep .filter-field .mat-mdc-select-trigger {
+  padding-left: 16px !important;
 }
 
+/* Input height */
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 56px !important;
+  display: flex;
+  align-items: center;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Rounded outline */
+::ng-deep .mdc-notched-outline__leading {
+  border-radius: 28px 0 0 28px !important;
+  width: 28px !important;
+  border-color: #d0d5dd !important;
+}
+
+::ng-deep .mdc-notched-outline__notch {
+  border-color: #d0d5dd !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+  border-radius: 0 28px 28px 0 !important;
+  border-color: #d0d5dd !important;
+}
+
+/* Hover */
+::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #1554b3 !important;
+}
+
+/* Focus */
+::ng-deep .mat-focused .mdc-notched-outline__leading,
+::ng-deep .mat-focused .mdc-notched-outline__notch,
+::ng-deep .mat-focused .mdc-notched-outline__trailing {
+  border-color: #1554b3 !important;
+  border-width: 2px !important;
+}
 .filters-row ::ng-deep .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
@@ -243,16 +275,92 @@
 }
 
 /* Progress row */
+.progress-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-top:16px;
+}
+
+.progress-container{
+    flex:1;
+    height:14px;
+    background:#e7f6ec;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    border-radius:999px;
+    transition:width .3s ease;
+}
+
+/* Colors */
+
+.status-reviewed{
+    background:#1ba34a;
+}
+
+.status-pending{
+    background:#1565c0;
+}
+
+.status-overdue{
+    background:#d32f2f;
+}
+
+.progress-percent{
+    font-size:20px;
+    font-weight:700;
+    color:#101828;
+    min-width:60px;
+    text-align:right;
+}
+
+
+
+/* Progress row */
 .progress-row {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 10px;
+  margin-top: 16px;
 }
 
 .progress-row mat-progress-bar {
   flex: 1;
-  height: 12px;
+}
+
+/* Increase progress bar height */
+::ng-deep .progress-row .mat-mdc-progress-bar {
+  height: 16px !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Track (background) */
+::ng-deep .progress-row .mdc-linear-progress__buffer-bar {
+  height: 16px !important;
+  border-radius: 10px;
+}
+
+/* Filled progress */
+::ng-deep .progress-row .mdc-linear-progress__bar-inner {
+  border-top-width: 16px !important;
+}
+
+/* Percentage text */
+.progress-percent {
+  font-weight: 700;
+  font-size: 22px;
+  color: #101828;
+  min-width: 60px;
+  text-align: right;
+}
+.progress-row mat-progress-bar {
+  flex: 1;
+  height: 20px;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -263,6 +371,10 @@
   color: #101828;
   min-width: 54px;
   text-align: right;
+}
+
+::ng-deep .filter-field .mat-mdc-select-arrow-wrapper {
+  transform: translateX(-16px) !important;
 }
 
 ::ng-deep .progress-reviewed .mdc-linear-progress__bar-inner {
@@ -285,6 +397,8 @@
 ::ng-deep .progress-overdue .mdc-linear-progress__buffer-bar {
   background-color: #fad8d8 !important;
 }
+
+
 
 /* Empty state */
 .empty-state {

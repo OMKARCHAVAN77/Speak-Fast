@@ -7,14 +7,14 @@
       <p class="subtitle">Total: {{ totalEnrollments }} New Enrollments</p>
     </div>
 
-    <div class="actions-block">
-      <mat-form-field appearance="outline" class="search-field">
+    <div class="actions-block" >
+      <mat-form-field appearance="outline" class="search-field" style="" >
         <mat-icon matPrefix class="search-icon">search</mat-icon>
         <input
           matInput
           type="text"
           placeholder="Search Students..."
-          [(ngModel)]="searchText"
+          [(ngModel)]="searchText" style=" " 
         />
         <mat-icon matSuffix class="filter-icon">tune</mat-icon>
       </mat-form-field>
