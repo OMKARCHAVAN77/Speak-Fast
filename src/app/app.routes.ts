@@ -19,5 +19,5 @@ export const routes: Routes = [
     { path: 'grammer', component: GrammerAssignment },
     { path: 'grammerQuestions', component: Questions },
     { path: 'registration', component: RegistrationComponent},
-    { path: 'landingPage', component: LandingPage}
+    { path: 'landing-page', component: LandingPage}
 ];
