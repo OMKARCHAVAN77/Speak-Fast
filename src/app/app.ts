@@ -2,6 +2,8 @@ import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './core/layout/navbar/navbar';
 import { Footer } from './core/layout/footer/footer';
+import { StudentProcess } from './features/students/student-achievement/student-process/student-process';
+import { StudentAchievement } from './features/students/student-achievement/student-achievement';
 // import { Teachers } from './features/teachers/teachers';
 // import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 // import { Questions } from './features/grammer/questions/questions';
@@ -10,7 +12,7 @@ import { Footer } from './core/layout/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer,],
+  imports: [RouterOutlet,Navbar,Footer,StudentAchievement],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

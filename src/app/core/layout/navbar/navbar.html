@@ -3,19 +3,17 @@
 
     <!-- Logo -->
 <div class="logo-section">
-  <img 
-    src="assets/speakfast.png" 
-    alt="Speak Fast Logo" 
-    class="logo-image"
-  />
+  <a routerLink="/home" class="logo-section">
+      <img src="assets/speakfast.png" alt="Speak Fast Logo" class="logo-image">
+  </a>
 </div>
 
     <!-- Nav Links -->
-    <nav class="nav-links">
-  <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Home</a>
-  <a routerLink="/teachers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Teachers</a>
-  <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Courses</a>
-  <a routerLink="/grammer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Grammar Test</a>
+    <nav class="nav-links" [class.open]="isMenuOpen">
+  <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Home</a>
+  <a routerLink="/teachers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Teachers</a>
+  <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Courses</a>
+  <a routerLink="/grammer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Grammar Test</a>
 </nav>
 
     <!-- Actions -->
@@ -27,6 +25,10 @@
 
       <button mat-flat-button class="login-btn" (click)="onLogIn()">
         Log In
+      </button>
+
+      <button class="menu-toggle-btn" (click)="toggleMenu()" aria-label="Toggle menu">
+        <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
       </button>
     </div>
 
