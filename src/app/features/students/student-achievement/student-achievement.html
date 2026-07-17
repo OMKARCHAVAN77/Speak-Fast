@@ -1,0 +1,95 @@
+<div class="dashboard">
+
+  <!-- ===== Header banner ===== -->
+  <header class="hero">
+    <div class="hero-text">
+      <h1>Welcome back, {{ studentName }}!</h1>
+      <p>Continue your English learning journey</p>
+    </div>
+
+    <div class="hero-actions">
+      <button
+        type="button"
+        mat-stroked-button
+        class="icon-btn"
+        aria-label="Notifications"
+        (click)="onNotifications()">
+        <mat-icon>notifications</mat-icon>
+      </button>
+
+      <button
+        type="button"
+        mat-stroked-button
+        class="leave-btn"
+        (click)="onRequestLeave()">
+        <mat-icon>person_outline</mat-icon>
+        Request Leave
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== Stats strip ===== -->
+  <section class="stats-strip">
+    <div class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-icon">
+        <mat-icon>{{ stat.icon }}</mat-icon>
+      </div>
+      <div class="stat-text">
+        <div class="stat-value">{{ stat.value }}</div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Tabs + content ===== -->
+  <div class="page-body">
+
+    <!-- Pure CSS pill nav — clicking a tab only swaps the content pane
+         below, nothing here re-renders and there is no navigation/reload -->
+    <div class="tab-bar" role="tablist" aria-label="Section">
+      <button
+        type="button"
+        role="tab"
+        class="tab-btn"
+        *ngFor="let tab of tabs"
+        [class.active]="activeTab === tab.key"
+        [attr.aria-selected]="activeTab === tab.key"
+        (click)="selectTab(tab.key)">
+        {{ tab.label }}
+      </button>
+    </div>
+
+    <div class="content-card">
+
+      <ng-container [ngSwitch]="activeTab">
+
+        <!-- MY CLASSES -->
+        <section *ngSwitchCase="'classes'" class="panel">
+          <h2 class="panel-title">My Classes</h2> 
+
+          <!-- paste the selector of given tap -->
+           <app-student-process></app-student-process>
+        </section>
+
+        <!-- PROGRESS -->
+        <section *ngSwitchCase="'progress'" class="panel">
+          <h2 class="panel-title">Progress</h2>
+          <p class="empty-state">Your progress overview will show up here.</p>
+           <!-- paste the selector of given tap -->
+        
+        </section>
+
+        <!-- ASSIGNMENTS -->
+        <section *ngSwitchCase="'assignments'" class="panel">
+          <!-- <h2 class="panel-title">Assignments</h2>
+          <p class="empty-state">Your assignments will show up here.</p> -->
+          <app-student-assignment></app-student-assignment>
+           <!-- paste the selector of given tap -->
+            
+        </section>
+
+      </ng-container>
+
+    </div>
+  </div>
+</div>
