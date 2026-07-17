@@ -21,5 +21,5 @@ export const routes: Routes = [
     { path: 'grammerQuestions', component: Questions },
     { path: 'registration', component: RegistrationComponent},
     { path: 'landing-page', component: LandingPage},
-    {path : 'login', component : Login}
+    { path: 'student-achievement', component: StudentAchievement },
 ];
