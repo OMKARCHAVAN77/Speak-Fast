@@ -4,6 +4,7 @@ import { Navbar } from './core/layout/navbar/navbar';
 import { Footer } from './core/layout/footer/footer';
 import { StudentProcess } from './features/students/student-achievement/student-process/student-process';
 import { StudentAchievement } from './features/students/student-achievement/student-achievement';
+import { Payment } from './features/payment/payment';
 // import { Teachers } from './features/teachers/teachers';
 // import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 // import { Questions } from './features/grammer/questions/questions';
@@ -12,7 +13,7 @@ import { StudentAchievement } from './features/students/student-achievement/stud
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,Navbar,Footer,StudentAchievement],
+  imports: [Navbar,Footer,Payment],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
