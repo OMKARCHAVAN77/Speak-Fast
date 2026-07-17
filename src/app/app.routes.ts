@@ -10,6 +10,7 @@ import { Questions } from './features/grammer/questions/questions';
 import { RegistrationComponent } from './features/courses/admitionsRegistration/registration';
 import { LandingPage } from './features/auth/landing-page/landing-page';
 import { Login } from './features/auth/login/login';
+import { StudentAchievement } from './features/students/student-achievement/student-achievement';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -22,4 +23,5 @@ export const routes: Routes = [
     { path: 'registration', component: RegistrationComponent},
     { path: 'landing-page', component: LandingPage},
     { path: 'student-achievement', component: StudentAchievement },
+    {path: 'login', component: Login}
 ];
