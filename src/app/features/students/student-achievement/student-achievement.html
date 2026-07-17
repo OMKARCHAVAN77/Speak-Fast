@@ -73,16 +73,16 @@
 
         <!-- PROGRESS -->
         <section *ngSwitchCase="'progress'" class="panel">
-          <h2 class="panel-title">Progress</h2>
-          <p class="empty-state">Your progress overview will show up here.</p>
+          <app-student-my-clasess></app-student-my-clasess>
            <!-- paste the selector of given tap -->
         
         </section>
 
         <!-- ASSIGNMENTS -->
         <section *ngSwitchCase="'assignments'" class="panel">
-          <h2 class="panel-title">Assignments</h2>
-          <p class="empty-state">Your assignments will show up here.</p>
+          <!-- <h2 class="panel-title">Assignments</h2>
+          <p class="empty-state">Your assignments will show up here.</p> -->
+          <app-student-assignment></app-student-assignment>
            <!-- paste the selector of given tap -->
             
         </section>
