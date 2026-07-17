@@ -9,9 +9,10 @@ import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer
 import { Questions } from './features/grammer/questions/questions';
 import { RegistrationComponent } from './features/courses/admitionsRegistration/registration';
 import { LandingPage } from './features/auth/landing-page/landing-page';
+import { Login } from './features/auth/login/login';
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'landing-page', pathMatch: 'full' },
+    { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'home', component: Home },
     { path: 'admin', component: Admin, children: adminRoutes },
     { path: 'teachers', component: Teachers },
@@ -19,5 +20,6 @@ export const routes: Routes = [
     { path: 'grammer', component: GrammerAssignment },
     { path: 'grammerQuestions', component: Questions },
     { path: 'registration', component: RegistrationComponent},
-    { path: 'landing-page', component: LandingPage}
+    { path: 'landing-page', component: LandingPage},
+    {path : 'login', component : Login}
 ];
