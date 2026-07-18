@@ -1,182 +1,145 @@
 :host {
-  --md-primary: #1a3c6e;
-  --md-surface: #ffffff;
-  --md-bg: #f2f4f7;
-  --md-outline: #e3e6eb;
-  --md-text: #1c1f24;
-  --md-text-secondary: #6b7280;
-  --md-success-bg: #1e8e3e;
-  --md-danger-bg: #b3261e;
-  --md-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
-  --md-elevation-2: 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
-
   display: block;
-  font-family: 'Roboto', Arial, sans-serif;
-  color: var(--md-text);
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-.page {
-  /* max-width: 820px; */
+.teacher-schedules {
+  max-width: 1100px;
   margin: 0 auto;
-  background: var(--md-surface);
-  /* border-radius: 16px;
-  box-shadow: var(--md-elevation-1);
-  padding: 28px 28px 20px; */
+  padding: 32px 24px 64px;
+  background: #f7f8fa;
 }
 
-.page-header {
+/* ---------- Header ---------- */
+.header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
   flex-wrap: wrap;
   gap: 16px;
+  margin-bottom: 28px;
 }
 
-.page-title {
-  font-size: 22px;
-  font-weight: 700;
-  margin: 0 0 4px;
-  letter-spacing: 0.1px;
-}
-
-.page-subtitle {
-  font-size: 13px;
-  color: var(--md-text-secondary);
+.header__title h1 {
   margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
 }
 
-/* ======================================================================
-   Search field — flatten mat-form-field down to the plain pill input
-   from the original design (its default "outline" look is not what we
-   want, so we hide the notched outline and draw our own border/bg).
-   ====================================================================== */
-
-.search-field {
-  width: 260px;
-  font-size: 14px;
+.header__subtitle {
+  display: block;
+  margin-top: 2px;
+  font-size: 13px;
+  color: #8a8f99;
 }
 
-::ng-deep .search-field .mdc-notched-outline {
-  display: none;
-}
-
-::ng-deep .search-field .mat-mdc-text-field-wrapper {
-  background: var(--md-bg);
-  border: 1px solid var(--md-outline);
-  border-radius: 10px;
-  padding: 0 12px;
-  height: 40px;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-::ng-deep .search-field.mat-focused .mat-mdc-text-field-wrapper {
-  border-color: var(--md-primary);
-  box-shadow: 0 0 0 3px rgba(26, 60, 110, 0.12);
-}
-
-::ng-deep .search-field .mat-mdc-form-field-flex {
-  height: 100%;
-  align-items: center;
-}
-
-::ng-deep .search-field .mat-mdc-form-field-infix {
-  padding: 0;
-  min-height: 0;
+.header__actions {
   display: flex;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-::ng-deep .search-field .mat-mdc-form-field-subscript-wrapper {
-  display: none;
+.search-field {
+  width: 240px;
 }
 
-::ng-deep .search-field input.mat-mdc-input-element {
+.search-field ::ng-deep .mat-mdc-text-field-wrapper {
+  height: 44px;
+  background: #ffffff;
+}
+
+.search-field ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 44px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.search-field ::ng-deep .mdc-notched-outline__leading,
+.search-field ::ng-deep .mdc-notched-outline__notch,
+.search-field ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #e2e4e9 !important;
+}
+
+.search-field input {
   font-size: 14px;
-  color: var(--md-text);
 }
 
-.search-field mat-icon[matPrefix] {
-  font-size: 19px;
-  width: 19px;
-  height: 19px;
-  color: var(--md-text-secondary);
-  margin-right: 8px;
+.search-field ::ng-deep .mat-mdc-form-field-icon-suffix {
+  padding-right: 8px;
 }
 
-.filter-icon {
-  font-size: 19px;
-  width: 19px;
-  height: 19px;
-  color: var(--md-text-secondary);
-  cursor: pointer;
-  border-left: 1px solid var(--md-outline);
-  padding-left: 10px;
-  margin-left: 4px;
+.search-field [matSuffix] {
+  color: #9a9fa8;
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
 }
 
-/* ======================================================================
-   Teacher list / cards
-   ====================================================================== */
-
+/* ---------- Teacher list ---------- */
 .teacher-list {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
+/* Card hugs its content height - no stretching */
 .teacher-card {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 16px;
-  padding: 16px 18px !important;
-  border-radius: 14px !important;
-  border: 1px solid var(--md-outline) !important;
-  background: var(--md-surface) !important;
-  box-shadow: none !important;
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  align-self: stretch;
+  background: #ffffff;
+  border: 1px solid #eceef1;
+  border-radius: 10px;
+  padding: 16px 20px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.03);
 }
 
-.teacher-card:hover {
-  box-shadow: var(--md-elevation-2) !important;
-  transform: translateY(-1px);
-}
-
-.teacher-left {
+.teacher-card__row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.teacher-card__main {
+  display: flex;
+  align-items: center;
   gap: 14px;
   min-width: 0;
 }
 
-.avatar {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--md-primary);
+.teacher-card__actions {
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-shrink: 0;
 }
 
+.avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #17356d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .avatar mat-icon {
-  color: #fff;
-  font-size: 24px;
-  width: 24px;
-  height: 24px;
+  color: #ffffff;
+  font-size: 22px;
+  height: 22px;
+  width: 22px;
 }
 
 .teacher-info {
+  display: flex;
+  flex-direction: column;
   min-width: 0;
 }
 
-.teacher-name-row {
+.teacher-info__name-row {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -186,125 +149,181 @@
 .teacher-name {
   font-size: 15px;
   font-weight: 700;
-  margin: 0;
-  color: var(--md-text);
+  color: #1a1a1a;
 }
 
-/* --- Status chip: flatten mat-chip to a plain solid pill ------------- */
-
-.status-chip {
-  min-height: 0 !important;
-  height: auto !important;
-}
-
-::ng-deep .status-chip.mat-mdc-chip {
-  padding: 0 !important;
-  background: transparent !important;
-}
-
-::ng-deep .status-chip .mdc-evolution-chip__cell,
-::ng-deep .status-chip .mdc-evolution-chip__action {
-  height: auto;
+.available-badge {
+  display: inline-block;
   padding: 2px 10px;
-  background: var(--md-success-bg);
-  border-radius: 999px;
-}
-
-::ng-deep .status-chip .mdc-evolution-chip__text-label {
-  color: #fff !important;
+  border-radius: 12px;
+  background-color: #1fa259;
+  color: #fff;
   font-size: 11px;
-  font-weight: 500;
-  line-height: 1.6;
-}
-
-::ng-deep .status-chip--unavailable .mdc-evolution-chip__cell,
-::ng-deep .status-chip--unavailable .mdc-evolution-chip__action {
-  background: var(--md-danger-bg);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .teacher-subjects {
-  font-size: 13px;
-  color: var(--md-text-secondary);
-  margin: 2px 0 6px;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: #8a8f99;
 }
 
-.teacher-meta {
+.teacher-upcoming {
   display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #8a8f99;
+}
+
+.teacher-upcoming mat-icon {
+  font-size: 14px;
+  height: 14px;
+  width: 14px;
+}
+
+/* Upcoming Classes toggle button */
+.upcoming-btn {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12.5px;
-  color: var(--md-text-secondary);
-}
-
-.teacher-meta mat-icon {
-  font-size: 15px;
-  width: 15px;
-  height: 15px;
-}
-
-/* --- Upcoming Classes button: flatten mat-stroked-button -------------- */
-
-.upcoming-btn.mat-mdc-outlined-button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-  border-radius: 8px !important;
-  border-color: var(--md-outline) !important;
-  background: #fff !important;
-  color: var(--md-text) !important;
+  height: 38px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: 1px solid #d9dbe1;
+  background: #ffffff;
+  color: #3a3f47;
   font-size: 13px;
   font-weight: 500;
-  line-height: 1;
-  padding: 0 14px !important;
-  height: 38px;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.upcoming-btn.mat-mdc-outlined-button:hover {
-  background: var(--md-bg) !important;
-  border-color: #c9cdd5 !important;
-}
-
-::ng-deep .upcoming-btn .mdc-button__label {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.upcoming-btn:hover {
+  background-color: #f5f6f8;
 }
 
 .upcoming-btn mat-icon {
   font-size: 18px;
-  width: 18px;
   height: 18px;
-  color: var(--md-text-secondary);
+  width: 18px;
   transition: transform 0.15s ease;
 }
 
-.upcoming-btn mat-icon.rotated {
+.upcoming-btn--open {
+  border-color: #17356d;
+  color: #17356d;
+}
+
+.upcoming-btn--open mat-icon {
   transform: rotate(180deg);
 }
 
-.empty-state {
-  text-align: center;
-  color: var(--md-text-secondary);
-  font-size: 14px;
-  padding: 24px 0;
+/* Expanded panel */
+.upcoming-panel {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #eceef1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-@media (max-width: 560px) {
-  .teacher-card {
-    flex-wrap: wrap;
+.upcoming-panel__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #4a4f57;
+}
+
+.upcoming-panel__item mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  color: #8a8f99;
+}
+
+.upcoming-panel__subject {
+  flex: 1 1 auto;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.upcoming-panel__time {
+  color: #8a8f99;
+  white-space: nowrap;
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 0;
+  color: #9a9fa8;
+}
+
+.empty-state mat-icon {
+  font-size: 32px;
+  height: 32px;
+  width: 32px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .teacher-schedules {
+    padding: 24px 16px 48px;
   }
 
-  .upcoming-btn.mat-mdc-outlined-button {
+  .search-field {
+    width: 200px;
+  }
+
+  .teacher-card {
+    padding: 14px 16px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .header__actions {
     width: 100%;
-    justify-content: center;
   }
 
   .search-field {
     width: 100%;
   }
 
-  .page-header {
+  .teacher-card__row {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .teacher-card__main {
+    width: 100%;
+  }
+
+  .teacher-card__actions {
+    width: 100%;
+  }
+
+  .upcoming-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .upcoming-panel__item {
+    flex-wrap: wrap;
   }
 }

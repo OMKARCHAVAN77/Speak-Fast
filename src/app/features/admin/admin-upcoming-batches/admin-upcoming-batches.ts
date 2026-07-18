@@ -1,106 +1,139 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 
+interface UpcomingClass {
+  subject: string;
+  time: string;
+}
+ 
 interface Teacher {
+  id: number;
   name: string;
   subjects: string;
-  classes: number;
-  status: 'Available' | 'Unavailable';
+  available: boolean;
+  upcomingCount: number;
+  upcomingClasses: UpcomingClass[];
+  expanded: boolean;
 }
 
 @Component({
   selector: 'app-admin-upcoming-batches',
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatButtonModule,
+  imports: [CommonModule,FormsModule,
     MatCardModule,
-    MatChipsModule,
-    MatFormFieldModule,
+    MatButtonModule,
     MatIconModule,
+    MatMenuModule,
+    MatFormFieldModule,
     MatInputModule,
-  ],
+    MatChipsModule,
+    MatDividerModule,],
   templateUrl: './admin-upcoming-batches.html',
   styleUrl: './admin-upcoming-batches.css',
 })
 export class AdminUpcomingBatches {
+ searchTerm = '';
+ 
   teachers: Teacher[] = [
     {
+      id: 1,
       name: 'Anita Rathod',
       subjects: 'Business English, Interview Preparation, Presentation Skills',
-      classes: 2,
-      status: 'Available',
+      available: true,
+      upcomingCount: 2,
+      expanded: false,
+      upcomingClasses: [
+        { subject: 'Business English', time: 'Mon, 10:00 AM' },
+        { subject: 'Interview Preparation', time: 'Wed, 2:00 PM' }
+      ]
     },
     {
+      id: 2,
       name: 'Dinesh Deshmukh',
       subjects: 'Conversation Practice, Pronunciation, American Accent',
-      classes: 2,
-      status: 'Available',
+      available: true,
+      upcomingCount: 2,
+      expanded: false,
+      upcomingClasses: [
+        { subject: 'Conversation Practice', time: 'Tue, 11:00 AM' },
+        { subject: 'Pronunciation', time: 'Thu, 4:00 PM' }
+      ]
     },
     {
+      id: 3,
       name: 'Chandani Kulkarni',
       subjects: 'Grammar, Beginner English, Conversation',
-      classes: 2,
-      status: 'Available',
+      available: true,
+      upcomingCount: 2,
+      expanded: false,
+      upcomingClasses: [
+        { subject: 'Grammar', time: 'Mon, 1:00 PM' },
+        { subject: 'Beginner English', time: 'Fri, 9:00 AM' }
+      ]
     },
     {
+      id: 4,
       name: 'Anita Rathod',
       subjects: 'Business English, Interview Preparation, Presentation Skills',
-      classes: 2,
-      status: 'Available',
+      available: true,
+      upcomingCount: 2,
+      expanded: false,
+      upcomingClasses: [
+        { subject: 'Presentation Skills', time: 'Wed, 3:00 PM' },
+        { subject: 'Business English', time: 'Fri, 10:00 AM' }
+      ]
     },
     {
+      id: 5,
       name: 'Kamlesh Patil',
       subjects: 'Conversation Practice, Grammar, Vocabulary Building',
-      classes: 2,
-      status: 'Available',
+      available: true,
+      upcomingCount: 2,
+      expanded: false,
+      upcomingClasses: [
+        { subject: 'Grammar', time: 'Tue, 9:00 AM' },
+        { subject: 'Vocabulary Building', time: 'Thu, 11:00 AM' }
+      ]
     },
     {
+      id: 6,
       name: 'Suredh Patil',
       subjects: 'Conversation Practice, Grammar, Vocabulary Building',
-      classes: 2,
-      status: 'Available',
-    },
+      available: true,
+      upcomingCount: 2,
+      expanded: false,
+      upcomingClasses: [
+        { subject: 'Conversation Practice', time: 'Mon, 4:00 PM' },
+        { subject: 'Grammar', time: 'Wed, 5:00 PM' }
+      ]
+    }
   ];
-
-  searchTerm = '';
-
-  /** Which teacher rows currently have their "Upcoming Classes" panel open */
-  expanded = new Set<number>();
-
+ 
   get filteredTeachers(): Teacher[] {
-    const q = this.searchTerm.trim().toLowerCase();
-    if (!q) {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (!term) {
       return this.teachers;
     }
     return this.teachers.filter(
-      (t) =>
-        t.name.toLowerCase().includes(q) ||
-        t.subjects.toLowerCase().includes(q)
+      t =>
+        t.name.toLowerCase().includes(term) ||
+        t.subjects.toLowerCase().includes(term)
     );
   }
-
-  get totalCount(): number {
+ 
+  get totalTeachers(): number {
     return this.teachers.length;
   }
-
-  toggleExpanded(index: number): void {
-    if (this.expanded.has(index)) {
-      this.expanded.delete(index);
-    } else {
-      this.expanded.add(index);
-    }
-  }
-
-  isExpanded(index: number): boolean {
-    return this.expanded.has(index);
+ 
+  toggleUpcoming(teacher: Teacher): void {
+    teacher.expanded = !teacher.expanded;
   }
 }
