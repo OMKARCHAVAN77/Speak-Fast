@@ -105,13 +105,15 @@
             Practice <strong>{{ student.progress }}%</strong>
           </span>
         </div>
-        <mat-progress-bar
+        <!-- <mat-progress-bar
           mode="determinate"
           [value]="student.progress"
           class="student-progress"
-        ></mat-progress-bar>
-      </div>
+        ></mat-progress-bar> -->
 
+        
+      </div>
+      
     </div>
 
     <div class="no-results" *ngIf="filteredStudents.length === 0">

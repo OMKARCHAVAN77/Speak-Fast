@@ -99,7 +99,8 @@
         mat-flat-button
         class="enroll-btn"
         color="warn"
-        (click)="onEnroll(course)"
+        (click)="onEnroll(course)" 
+        routerLink="/teachers"
       >
         <mat-icon>add</mat-icon>
         Enroll Now
@@ -126,7 +127,7 @@
       <span class="package-price-note">All 3 courses for 3 months</span>
     </div>
 
-    <button mat-flat-button class="package-btn" color="warn" (click)="onGetPackage()">
+    <button mat-flat-button class="package-btn" color="warn" (click)="onGetPackage()" >
       <mat-icon>add</mat-icon>
       Get Complete Package
     </button>

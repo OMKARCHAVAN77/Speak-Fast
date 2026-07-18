@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 
 interface Availability {
   date: string;      // 'yyyy-MM-dd'
@@ -17,7 +17,7 @@ interface Teacher {
 @Component({
   selector: 'app-teachers',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterModule],
   templateUrl: './teachers.html',
   styleUrl: './teachers.css'
 })

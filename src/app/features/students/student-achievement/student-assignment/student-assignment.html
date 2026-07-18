@@ -104,14 +104,7 @@
                 [ngClass]="statusClass(assignment.status)">
               </div>
             </div>
-
-            <span class="progress-percent">
-              {{ assignment.progress }}%
-            </span>
-
-        </div>
-        <mat-progress-bar mode="determinate" [value]="assignment.progress"
-          [ngClass]="progressClass(assignment.status)"></mat-progress-bar>
+           </div>
         <span class="progress-percent">{{ assignment.progress }}%</span>
  
     </mat-card>
