@@ -11,29 +11,30 @@ type UserType = 'student' | 'teacher' | 'admin';
   styleUrl: './login.css',
 })
 export class Login {
-userType: UserType = 'teacher';
+// userType: UserType = 'teacher';
+currentTitle : string = 'Login Page';
   email: string = '';
   password: string = '';
   rememberMe: boolean = false;
 
-  userTypeConfig = {
-    student: { title: 'Student Login', icon: 'student' },
-    teacher: { title: 'Teacher Login', icon: 'teacher' },
-    admin: { title: 'Admin Login', icon: 'admin' }
-  };
+  // userTypeConfig = {
+  //   student: { title: 'Student Login', icon: 'student' },
+  //   teacher: { title: 'Teacher Login', icon: 'teacher' },
+  //   admin: { title: 'Admin Login', icon: 'admin' }
+  // };
 
-  get currentTitle(): string {
-    return this.userTypeConfig[this.userType].title;
-  }
+  // get currentTitle(): string {
+  //   return this.userTypeConfig[this.userType].title;
+  // }
 
-  selectUserType(type: UserType): void {
-    this.userType = type;
-  }
+  // selectUserType(type: UserType): void {
+  //   this.userType = type;
+  // }
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
       console.log('Login submitted', {
-        userType: this.userType,
+        // userType: this.userType,
         email: this.email,
         password: this.password,
         rememberMe: this.rememberMe

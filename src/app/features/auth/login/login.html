@@ -17,7 +17,7 @@
     <h2 class="card-title">{{ currentTitle }}</h2>
     <p class="card-subtitle">Enter your credentials to continue</p>
 
-    <div class="user-type-row">
+    <!-- <div class="user-type-row">
       <label class="radio-option">
         <input type="radio" name="userType" value="student" [(ngModel)]="userType" />
         <span>Student</span>
@@ -32,7 +32,7 @@
         <input type="radio" name="userType" value="admin" [(ngModel)]="userType" />
         <span>Admin</span>
       </label>
-    </div>
+    </div> -->
 
     <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
 
