@@ -35,6 +35,19 @@ body {
 
 /* ================= FORM ================= */
 
+.form-group select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  
+  /* custom arrow icon */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center; /* 👈 controls spacing from right */
+  background-size: 14px;
+  
+  padding-right: 32px; /* leave room so text doesn't overlap the icon */
+}
 .registration-section {
   display: flex;
   justify-content: center;

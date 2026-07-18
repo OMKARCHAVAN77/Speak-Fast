@@ -85,6 +85,21 @@ export class RegistrationComponent {
           Validators.email
         ]
       ],
+      
+      password:[
+        '',
+        [
+          Validators.required
+
+        ]
+      ],
+      confirmPassword:[
+        '',
+        [
+          Validators.required
+
+        ]
+      ],
 
       // dob: [
       //   '',
