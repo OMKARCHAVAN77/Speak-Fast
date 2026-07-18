@@ -74,7 +74,7 @@ export class Home {
       icon: 'school',
       level: 'Beginner',
       levelClass: 'level-beginner',
-      title: 'Basic Course',
+      title: 'Basic Plan',
       description:
         'Foundation level English speaking course covering basic conversation and grammar',
       duration: '1 Month',
@@ -92,7 +92,7 @@ export class Home {
       icon: 'school',
       level: 'Intermediate',
       levelClass: 'level-intermediate',
-      title: 'Advanced Course',
+      title: 'Premium Plan',
       description:
         'Intermediate level course for improving fluency and advanced grammar concepts',
       duration: '1 Month',
@@ -110,7 +110,7 @@ export class Home {
       icon: 'school',
       level: 'Advanced',
       levelClass: 'level-advanced',
-      title: 'Practice Course',
+      title: 'Vip Plan',
       description:
         'Complete mastery course with intensive practice and real-world application',
       duration: '1 Month',

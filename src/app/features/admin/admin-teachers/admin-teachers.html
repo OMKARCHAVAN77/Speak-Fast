@@ -1,0 +1,101 @@
+<div class="manage-teachers">
+  <!-- Header -->
+  <div class="header">
+    <div class="header__title">
+      <h1>Manage Teachers</h1>
+      <span class="header__subtitle">Total: {{ totalTeachers }} teachers</span>
+    </div>
+
+    <div class="header__actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <input
+          matInput
+          type="text"
+          placeholder="Search Teachers..."
+          [(ngModel)]="searchTerm"
+        />
+        <mat-icon matSuffix>tune</mat-icon>
+      </mat-form-field>
+
+      <!-- <button mat-flat-button color="primary" class="add-btn" (click)="openDrawer()">
+        <mat-icon>add</mat-icon>
+        Add Teacher
+      </button> -->
+    <div class="page-wrapper">
+        <button class="add-teacher-btn" (click)="openDrawer()">+ Add Teacher</button>
+    
+        <app-add-teacher-dialog [isOpen]="drawerOpen" (closeDrawer)="onDrawerClose()"
+            (addTeacher)="onTeacherAdded($event)"></app-add-teacher-dialog>
+    </div>
+    </div>
+  </div>
+
+  <!-- Teacher List -->
+  <div class="teacher-list">
+    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
+      <div class="teacher-card__main">
+        <div class="avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+
+        <div class="teacher-info">
+          <div class="teacher-info__name-row">
+            <span class="teacher-name">{{ teacher.name }}</span>
+            <span
+              class="leave-badge"
+              *ngIf="teacher.leave.status === 'onLeave'"
+            >
+              On Leave for {{ teacher.leave.range }}
+            </span>
+          </div>
+          <span class="teacher-subjects">{{ teacher.subjects }}</span>
+        </div>
+      </div>
+
+      <div class="teacher-card__actions">
+        <ng-container *ngIf="teacher.leave.status === 'requested'">
+          <span class="leave-request-label">Request for Leave</span>
+          <button
+            mat-flat-button
+            color="primary"
+            class="accept-btn"
+            (click)="onAcceptLeave(teacher)"
+          >
+            Accept
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            class="cancel-btn"
+            (click)="onCancelLeave(teacher)"
+          >
+            Cancel
+          </button>
+        </ng-container>
+
+        <button
+          mat-stroked-button
+          class="details-btn"
+          (click)="onViewDetails(teacher)"
+        >
+          <mat-icon>info</mat-icon>
+          Details
+        </button>
+
+        <button
+          mat-icon-button
+          class="delete-btn"
+          matTooltip="Delete teacher"
+          (click)="onDeleteTeacher(teacher)"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredTeachers.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>No teachers match your search.</p>
+    </div>
+  </div>
+</div>

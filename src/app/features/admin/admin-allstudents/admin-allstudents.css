@@ -1,0 +1,341 @@
+:host {
+  display: block;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+}
+
+.students-page {
+  padding: 20px 24px;
+  background: #f7f8fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ---------- Header ---------- */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.header-title h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.total-count {
+  font-size: 13px;
+  color: #8a8a8a;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 6px 10px;
+  min-width: 220px;
+  flex: 1;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  padding: 4px 8px;
+  flex: 1;
+  background: transparent;
+  color: #333;
+}
+
+.search-icon {
+  color: #9a9a9a;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.filter-btn {
+  color: #6a6a6a;
+}
+
+.add-student-btn {
+  background-color: #e8453c !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.add-student-btn mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Student list ---------- */
+.students-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.student-card {
+  background: #fff;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  padding: 14px 18px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.student-info {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  min-width: 240px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #1e2a5e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatar mat-icon {
+  color: #fff;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.student-name {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: #1a1a1a;
+}
+
+.leave-badge {
+  background: #e8453c;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 12px;
+  white-space: nowrap;
+}
+
+.contact-row,
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 12.5px;
+  color: #6b6b6b;
+}
+
+.contact-item,
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.mini-icon {
+  font-size: 15px;
+  width: 15px;
+  height: 15px;
+  color: #9a9a9a;
+}
+
+/* ---------- Actions ---------- */
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.whatsapp-btn {
+  border-radius: 20px !important;
+  font-size: 12.5px;
+  color: #4a4a4a !important;
+  border-color: #d8d8d8 !important;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 12px !important;
+  height: 34px;
+  line-height: 34px;
+}
+
+.whatsapp-btn mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #25d366;
+}
+
+.card-actions button[mat-icon-button] {
+  color: #7a7a7a;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+}
+
+.card-actions button[mat-icon-button] mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ---------- Progress ---------- */
+.progress-section {
+  margin-top: 12px;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #8a8a8a;
+  margin-bottom: 4px;
+}
+
+.practice-label strong {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.student-progress {
+  height: 6px !important;
+  border-radius: 4px;
+}
+
+::ng-deep .student-progress .mdc-linear-progress__bar-inner {
+  border-color: #2b6bff !important;
+}
+
+::ng-deep .student-progress .mdc-linear-progress__buffer-bar {
+  background-color: #dff3e8 !important;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: #9a9a9a;
+}
+
+.no-results mat-icon {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .students-page {
+    padding: 16px;
+  }
+
+  .card-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .meta-row {
+    gap: 10px;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .add-student-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .student-info {
+    flex-wrap: wrap;
+  }
+
+  .card-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .card-actions {
+    justify-content: space-between;
+  }
+
+  .contact-row,
+  .meta-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .whatsapp-btn span {
+    display: none;
+  }
+
+  .whatsapp-btn {
+    padding: 0 8px !important;
+    width: 34px;
+  }
+}

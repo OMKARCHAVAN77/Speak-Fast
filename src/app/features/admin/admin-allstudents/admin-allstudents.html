@@ -1,0 +1,123 @@
+<div class="students-page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-title">
+      <h1>All Students</h1>
+      <span class="total-count">Total: {{ students.length }} students</span>
+    </div>
+
+    <div class="header-actions">
+      <div class="search-box">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input
+          type="text"
+          placeholder="Search Students..."
+          [(ngModel)]="searchTerm"
+        />
+        <button mat-icon-button class="filter-btn" (click)="onFilter()">
+          <mat-icon>tune</mat-icon>
+        </button>
+      </div>
+
+      <button mat-flat-button class="add-student-btn" (click)="onAddStudent()">
+        <mat-icon>add</mat-icon>
+        <span>Add Student</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Student Cards -->
+  <div class="students-list">
+    <div class="student-card" *ngFor="let student of filteredStudents">
+
+      <div class="card-top">
+        <div class="student-info">
+          <div class="avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <div class="details">
+            <div class="name-row">
+              <span class="student-name">{{ student.name }}</span>
+              <span class="leave-badge" *ngIf="student.onLeave">
+                {{ student.onLeave }}
+              </span>
+            </div>
+
+            <div class="contact-row">
+              <span class="contact-item">
+                <mat-icon class="mini-icon">mail_outline</mat-icon>
+                {{ student.email }}
+              </span>
+              <span class="contact-item">
+                <mat-icon class="mini-icon">call</mat-icon>
+                {{ student.phone }}
+              </span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-item">Course: {{ student.course }}</span>
+              <span class="meta-item">
+                <mat-icon class="mini-icon">event</mat-icon>
+                Enrolled: {{ student.enrolled }}
+              </span>
+              <span class="meta-item">
+                <mat-icon class="mini-icon">event</mat-icon>
+                End: {{ student.end }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button
+            mat-stroked-button
+            class="whatsapp-btn"
+            (click)="onWhatsApp(student)"
+          >
+            <mat-icon>chat</mat-icon>
+            <span>WhatsApp</span>
+          </button>
+          <button
+            mat-icon-button
+            matTooltip="Edit"
+            (click)="onEdit(student)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            matTooltip="Delete"
+            (click)="onDelete(student)"
+          >
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="progress-section">
+        <div class="progress-labels">
+          <span>Basic</span>
+          <span>Advance</span>
+          <span class="practice-label">
+            Practice <strong>{{ student.progress }}%</strong>
+          </span>
+        </div>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="student.progress"
+          class="student-progress"
+        ></mat-progress-bar>
+      </div>
+
+    </div>
+
+    <div class="no-results" *ngIf="filteredStudents.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>No students found</p>
+    </div>
+  </div>
+
+</div>
