@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { Router, RouterModule } from '@angular/router';
 
 interface Feature {
   icon: string;
@@ -34,11 +35,15 @@ interface Course {
     MatChipsModule,
     MatDividerModule,
     MatIconModule,
+    RouterModule
   ],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
 export class Home {
+  constructor (private router : Router ){
+
+  }
    perCourseMonthly = 5000;
   allCoursesPrice = 15000;
   averageRating = 4.9;
@@ -131,6 +136,7 @@ export class Home {
   }
  
   onGetPackage(): void {
+    this.router.navigate(['courses'])
     console.log('Get Complete Package clicked');
   }
  

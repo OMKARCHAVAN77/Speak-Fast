@@ -8,6 +8,8 @@ import { RegistrationComponent } from './features/courses/admitionsRegistration/
 import { LandingPage } from './features/auth/landing-page/landing-page';
 import { Login } from './features/auth/login/login';
 import { StudentAchievement } from './features/students/student-achievement/student-achievement';
+import { CourseRecommendation } from './features/courses/course-recommendation/course-recommendation';
+import { Payment } from './features/payment/payment';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,5 +19,7 @@ export const routes: Routes = [
     { path: 'registration', component: RegistrationComponent},
     { path: 'landing-page', component: LandingPage},
     { path: 'student-achievement', component: StudentAchievement },
-    { path: 'login', component: Login}
+    { path: 'login', component: Login},
+    { path : 'courses', component : CourseRecommendation},
+    { path : 'payment', component : Payment}
 ];
