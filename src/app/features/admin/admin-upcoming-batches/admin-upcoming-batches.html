@@ -1,1 +1,60 @@
-<p>admin-upcoming-batches works!</p>
+<div class="page">
+  <div class="page-header">
+    <div>
+      <p class="page-title">Teacher Schedules</p>
+      <p class="page-subtitle">Total: {{ totalCount }} teachers</p>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        type="text"
+        placeholder="Search Teachers..."
+        [(ngModel)]="searchTerm"
+      />
+      <mat-icon matSuffix class="filter-icon">tune</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="teacher-list">
+    <mat-card
+      appearance="outlined"
+      class="teacher-card"
+      *ngFor="let teacher of filteredTeachers; let i = index"
+    >
+      <div class="teacher-left">
+        <div class="avatar">
+          <mat-icon>person</mat-icon>
+        </div>
+
+        <div class="teacher-info">
+          <div class="teacher-name-row">
+            <p class="teacher-name">{{ teacher.name }}</p>
+            <mat-chip
+              class="status-chip"
+              [class.status-chip--unavailable]="teacher.status === 'Unavailable'"
+              disableRipple
+            >
+              {{ teacher.status }}
+            </mat-chip>
+          </div>
+          <p class="teacher-subjects">{{ teacher.subjects }}</p>
+          <div class="teacher-meta">
+            <mat-icon>event</mat-icon>
+            <span>upcoming {{ teacher.classes }} Classes</span>
+          </div>
+        </div>
+      </div>
+
+      <button mat-stroked-button class="upcoming-btn" type="button" (click)="toggleExpanded(i)">
+        Upcoming Classes
+        <mat-icon [class.rotated]="isExpanded(i)">expand_more</mat-icon>
+      </button>
+    </mat-card>
+
+    <p class="empty-state" *ngIf="filteredTeachers.length === 0">
+      No teachers match "{{ searchTerm }}".
+    </p>
+  </div>
+</div>
