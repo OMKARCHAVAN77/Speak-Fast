@@ -6,12 +6,8 @@ import { Home } from './features/dashboard/home/home';
 import { Teachers } from './features/teachers/teachers';
 import { RegistrationComponent } from './features/courses/admitionsRegistration/registration';
 import { LandingPage } from './features/auth/landing-page/landing-page';
-<<<<<<< HEAD
-import { Payment } from './features/payment/payment';
-=======
 import { Login } from './features/auth/login/login';
 import { StudentAchievement } from './features/students/student-achievement/student-achievement';
->>>>>>> bf1a7b81a7869d9a128b5c30b576c235dc273af8
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -19,12 +15,7 @@ export const routes: Routes = [
     { path: 'admin', component: Admin, children: adminRoutes },
     { path: 'teachers', component: Teachers },
     { path: 'registration', component: RegistrationComponent},
-<<<<<<< HEAD
-    { path: 'landingPage', component: LandingPage},
-    { path: 'payment', component: Payment}
-=======
     { path: 'landing-page', component: LandingPage},
     { path: 'student-achievement', component: StudentAchievement },
     { path: 'login', component: Login}
->>>>>>> bf1a7b81a7869d9a128b5c30b576c235dc273af8
 ];
