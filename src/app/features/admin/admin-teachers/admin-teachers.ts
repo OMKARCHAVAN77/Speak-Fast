@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
 
 
 
@@ -34,7 +35,9 @@ interface Teacher {
     MatFormFieldModule,
     MatInputModule,
     MatTooltipModule,
-    MatSnackBarModule,],
+    MatSnackBarModule,
+    AddTeacherDialog  
+  ],
   templateUrl: './admin-teachers.html',
   styleUrl: './admin-teachers.css',
 })
@@ -113,7 +116,18 @@ export class AdminTeachers {
     this.teachers = this.teachers.filter(t => t.id !== teacher.id);
   }
  
-  onAddTeacher(): void {
-    console.log('Add teacher clicked');
+  drawerOpen = false;
+
+  openDrawer(): void {
+    this.drawerOpen = true;
+  }
+
+  onDrawerClose(): void {
+    this.drawerOpen = false;
+  }
+
+  onTeacherAdded(teacher: any): void {
+    console.log('New teacher:', teacher);
+    // call your API service here
   }
 }

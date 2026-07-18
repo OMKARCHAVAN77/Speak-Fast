@@ -17,10 +17,16 @@
         <mat-icon matSuffix>tune</mat-icon>
       </mat-form-field>
 
-      <button mat-flat-button color="primary" class="add-btn" (click)="onAddTeacher()">
+      <!-- <button mat-flat-button color="primary" class="add-btn" (click)="openDrawer()">
         <mat-icon>add</mat-icon>
         Add Teacher
-      </button>
+      </button> -->
+    <div class="page-wrapper">
+        <button class="add-teacher-btn" (click)="openDrawer()">+ Add Teacher</button>
+    
+        <app-add-teacher-dialog [isOpen]="drawerOpen" (closeDrawer)="onDrawerClose()"
+            (addTeacher)="onTeacherAdded($event)"></app-add-teacher-dialog>
+    </div>
     </div>
   </div>
 
