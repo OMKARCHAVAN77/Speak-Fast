@@ -20,7 +20,5 @@ export const routes: Routes = [
     { path: 'student-achievement', component: StudentAchievement },
     { path: 'login', component: Login},
     { path : 'courses', component : CourseRecommendation},
-    { path : 'payment', component : Payment},
-    { path: 'login', component: Login},
-    { path: 'recommended-course', component : CourseRecommendation},
+    { path : 'payment', component : Payment}
 ];
