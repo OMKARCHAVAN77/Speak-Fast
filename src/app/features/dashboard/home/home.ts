@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { Router, RouterModule } from '@angular/router';
 
 interface Feature {
   icon: string;
@@ -34,11 +35,15 @@ interface Course {
     MatChipsModule,
     MatDividerModule,
     MatIconModule,
+    RouterModule
   ],
   templateUrl: './home.html',
   styleUrls: ['./home.css'],
 })
 export class Home {
+  constructor (private router : Router ){
+
+  }
    perCourseMonthly = 5000;
   allCoursesPrice = 15000;
   averageRating = 4.9;
@@ -74,7 +79,7 @@ export class Home {
       icon: 'school',
       level: 'Beginner',
       levelClass: 'level-beginner',
-      title: 'Basic Course',
+      title: 'Basic Plan',
       description:
         'Foundation level English speaking course covering basic conversation and grammar',
       duration: '1 Month',
@@ -92,7 +97,7 @@ export class Home {
       icon: 'school',
       level: 'Intermediate',
       levelClass: 'level-intermediate',
-      title: 'Advanced Course',
+      title: 'Premium Plan',
       description:
         'Intermediate level course for improving fluency and advanced grammar concepts',
       duration: '1 Month',
@@ -110,7 +115,7 @@ export class Home {
       icon: 'school',
       level: 'Advanced',
       levelClass: 'level-advanced',
-      title: 'Practice Course',
+      title: 'Vip Plan',
       description:
         'Complete mastery course with intensive practice and real-world application',
       duration: '1 Month',
@@ -131,6 +136,7 @@ export class Home {
   }
  
   onGetPackage(): void {
+    this.router.navigate(['courses'])
     console.log('Get Complete Package clicked');
   }
  

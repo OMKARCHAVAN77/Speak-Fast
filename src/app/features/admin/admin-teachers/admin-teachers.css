@@ -36,7 +36,7 @@
 
 .header__actions {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 12px;
   
  
@@ -95,7 +95,24 @@
   flex: 1;
 }
 
-.add-btn {
+/* .page-wrapper {
+  padding: 24px;
+} */
+
+.add-teacher-btn {
+  background-color: #DB2C24;
+  color: #fff;
+  border: none;
+  height: 44px;
+  padding: 0 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+
+/* .add-btn {
   height: 44px;
   border-radius: 8px;
   background-color: #c0182b !important;
@@ -111,7 +128,7 @@
   height: 18px;
   width: 18px;
   vertical-align: middle;
-}
+} */
 
 /* ---------- Teacher list ---------- */
 .teacher-list {

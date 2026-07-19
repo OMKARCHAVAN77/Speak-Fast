@@ -17,29 +17,20 @@
   <h2>Filter & Search</h2>
 
   <div class="filter-box">
-
-    <input type="date">
-
+    <input
+      type="date"
+      #dateInput
+      (change)="onDateChange(dateInput.value)">
   </div>
 
   <div class="time-slots">
-
-    <button>07:00am</button>
-    <button>08:00am</button>
-    <button>09:00am</button>
-    <button>10:00am</button>
-    <button>11:00am</button>
-    <button>12:00pm</button>
-    <button>01:00pm</button>
-    <button>02:00pm</button>
-    <button>03:00pm</button>
-    <button>04:00pm</button>
-    <button>05:00pm</button>
-    <button>06:00pm</button>
-    <button>07:00pm</button>
-    <button>08:00pm</button>
-    <button>09:00pm</button>
-
+    <button
+      *ngFor="let slot of timeSlots"
+      type="button"
+      [class.selected]="isSlotSelected(slot)"
+      (click)="toggleSlot(slot)">
+      {{ slot }}
+    </button>
   </div>
 
 </section>
@@ -49,9 +40,19 @@
 
   <h3>All Teacher's</h3>
 
-  <div class="teacher-grid">
+  <!-- shown until both date + at least one slot are selected -->
+  <p *ngIf="!showResults" class="hint-text">
+    Please select a date and at least one time slot to view available teachers.
+  </p>
 
-    <div class="teacher-card" *ngFor="let teacher of teachers">
+  <!-- shown when both are selected but nobody matches -->
+  <p *ngIf="showResults && filteredTeachers.length === 0" class="hint-text">
+    No teachers available on this date for the selected time slots.
+  </p>
+
+  <div class="teacher-grid" *ngIf="showResults">
+
+    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
 
       <div class="card-header">
 
@@ -59,35 +60,28 @@
           [src]="teacher.image"
           [alt]="teacher.name">
 
-        <h2>{{teacher.name}}</h2>
+        <h2>{{ teacher.name }}</h2>
 
       </div>
 
       <div class="card-body">
 
-        <p>
-          {{teacher.description}}
-        </p>
+
 
         <span class="label">
-          Available Time Slots
+          Available Time Slots ({{ selectedDate }})
         </span>
 
         <div class="slots">
-
           <button
-            *ngFor="let slot of teacher.slots">
-
-            {{slot}}
-
+            *ngFor="let slot of slotsForSelectedDate(teacher)"
+            [class.highlight]="isSlotSelected(slot)">
+            {{ slot }}
           </button>
-
         </div>
 
         <button class="book-btn" routerLink="/courses">
-
           + Book Seat
-
         </button>
 
       </div>
@@ -96,4 +90,4 @@
 
   </div>
 
-</section> 
+</section>
