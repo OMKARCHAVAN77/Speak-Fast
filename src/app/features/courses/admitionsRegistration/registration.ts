@@ -6,14 +6,16 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-registration',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule,
+    RouterLink
+],
   templateUrl: './registration.html',
   styleUrl: './registration.css'
 })
@@ -85,6 +87,14 @@ export class RegistrationComponent {
           Validators.email
         ]
       ],
+<<<<<<< HEAD
+
+      // dob: [
+      //   '',
+      //   Validators.required
+      // ],
+
+=======
       
       password:[
         '',
@@ -106,6 +116,7 @@ export class RegistrationComponent {
       //   Validators.required
       // ],
 
+>>>>>>> f48539379e6637734ea08ab149b59851f76a9045
       district: [
         '',
         Validators.required

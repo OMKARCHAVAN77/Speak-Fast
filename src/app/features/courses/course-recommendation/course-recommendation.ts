@@ -1,15 +1,9 @@
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-course-recommendation',
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    MatDividerModule,
-  ],
+  imports: [RouterLink],
   templateUrl: './course-recommendation.html',
   styleUrl: './course-recommendation.css',
 })

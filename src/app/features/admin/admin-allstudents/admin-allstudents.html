@@ -7,22 +7,21 @@
       <span class="total-count">Total: {{ students.length }} students</span>
     </div>
 
-    <div class="header-actions">
-      <div class="search-box">
-        <mat-icon class="search-icon">search</mat-icon>
+    <div class="header__actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix class="search-icon">search</mat-icon>
         <input
+          matInput
           type="text"
           placeholder="Search Students..."
           [(ngModel)]="searchTerm"
         />
-        <button mat-icon-button class="filter-btn" (click)="onFilter()">
-          <mat-icon>tune</mat-icon>
-        </button>
-      </div>
+        <mat-icon matSuffix class="filter-icon">tune</mat-icon>
+      </mat-form-field>
 
-      <button mat-flat-button class="add-student-btn" (click)="onAddStudent()">
+      <button mat-flat-button color="primary" class="add-btn" (click)="onAddStudent()">
         <mat-icon>add</mat-icon>
-        <span>Add Student</span>
+        Add student
       </button>
     </div>
   </div>
@@ -110,8 +109,10 @@
           [value]="student.progress"
           class="student-progress"
         ></mat-progress-bar>
-      </div>
 
+        
+      </div>
+      
     </div>
 
     <div class="no-results" *ngIf="filteredStudents.length === 0">

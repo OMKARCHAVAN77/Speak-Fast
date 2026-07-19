@@ -4,8 +4,8 @@
 }
 
 .students-page {
-  padding: 20px 24px;
-  background: #f7f8fa;
+  /* padding: 20px 24px; */
+ 
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -32,60 +32,85 @@
   color: #8a8a8a;
 }
 
-.header-actions {
+.header__actions {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  
+ 
+  
 }
 
-.search-box {
-  display: flex;
-  align-items: center;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  padding: 6px 10px;
-  min-width: 220px;
-  flex: 1;
-}
-
-.search-box input {
-  border: none;
-  outline: none;
-  font-size: 14px;
-  padding: 4px 8px;
-  flex: 1;
-  background: transparent;
-  color: #333;
+.search-field {
+  width: 260px;
 }
 
 .search-icon {
-  color: #9a9a9a;
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
+  color: #6b7280;
+  margin-right: 4px;
 }
 
-.filter-btn {
-  color: #6a6a6a;
+.filter-icon {
+  color: #6b7280;
+  cursor: pointer;
 }
 
-.add-student-btn {
-  background-color: #e8453c !important;
+.search-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+.search-field ::ng-deep .mat-mdc-text-field-wrapper {
+   min-height: 44px;
+  background: #ffffff;
+
+}
+
+.search-field ::ng-deep .mat-mdc-form-field-infix {
+  min-height: 44px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 6px;
+ flex: 1;
+} 
+  
+
+.search-field ::ng-deep .mdc-notched-outline__leading {
+  border-radius: 8px 0 0 8px !important;
+  width: 12px !important;
+}
+
+.search-field ::ng-deep .mdc-notched-outline__trailing {
+  border-radius: 0 8px 8px 0 !important;
+  flex: 1 0 auto !important;
+}
+
+.search-field ::ng-deep .mdc-notched-outline__notch {
+  border-radius: 0 !important;
+  max-width: calc(100% - 24px) !important;
+}
+
+.search-field input {
+  font-size: 16px;
+ 
+}
+
+.add-btn {
+  height: 44px;
+  border-radius: 8px;
+  background-color: #c0182b !important;
   color: #fff !important;
   border-radius: 8px !important;
   font-weight: 600;
   white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  
 }
 
-.add-student-btn mat-icon {
+.add-btn mat-icon {
+  margin-right: 4px;
   font-size: 18px;
   width: 18px;
   height: 18px;
+  width: 18px;
+  vertical-align: middle;
 }
 
 /* ---------- Student list ---------- */

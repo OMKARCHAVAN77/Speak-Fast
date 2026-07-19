@@ -1,288 +1,127 @@
 <div class="container-fluid p-0">
-
   <!-- Payment Banner -->
   <div class="payment-banner text-center">
-
     <h1>Complete Your Payment Securely</h1>
 
-    <p>
-      Complete your payment securely to access your personalized English course.
-    </p>
-
+    <p>Complete your payment securely to access your personalized English course.</p>
   </div>
 
-
   <div class="payment-container mb-2">
-
-
     <!-- QR Title -->
     <mat-card class="qr-title-card mb-4">
-
       <mat-card-header>
+        <mat-card-title> Scan QR Code to Pay </mat-card-title>
 
-        <mat-card-title>
-          Scan QR Code to Pay
-        </mat-card-title>
-
-        <mat-card-subtitle>
-          Pay using any UPI app
-        </mat-card-subtitle>
-
+        <mat-card-subtitle> Pay using any UPI app </mat-card-subtitle>
       </mat-card-header>
-
     </mat-card>
-
-
 
     <!-- QR Section -->
 
     <mat-card class="text-center qr-card mb-4">
+      <img src="assets/qr-code.png" class="qr-image" alt="QR Code" />
 
+      <h2 class="mt-3">₹5,900</h2>
 
-      <img 
-      src="assets/qr-code.png"
-      class="qr-image"
-      alt="QR Code">
-
-
-      <h2 class="mt-3">
-        ₹5,900
-      </h2>
-
-
-      <h1>
-        Scan to pay with any UPI app
-      </h1>
-
-
+      <p>Scan to pay with any UPI app</p>
     </mat-card>
-
-
-
 
     <!-- UPI Apps -->
 
-    <mat-card class="mb-4">
+   <mat-card class="mb-4">
+  <mat-card-content>
+    <h3 class="card-title">
+      <span class="upi-icon" aria-hidden="true">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M32 6.5H16C14.08 6.5 12.5 8.08 12.5 10V38C12.5 39.92 14.08 41.5 16 41.5H32C33.92 41.5 35.5 39.92 35.5 38V10C35.5 8.08 33.92 6.5 32 6.5ZM32.5 38C32.5 38.28 32.28 38.5 32 38.5H16C15.72 38.5 15.5 38.28 15.5 38V10C15.5 9.72 15.72 9.5 16 9.5H32C32.28 9.5 32.5 9.72 32.5 10V38ZM26 32C26 33.1 25.1 34 24 34C22.9 34 22 33.1 22 32C22 30.9 22.9 30 24 30C25.1 30 26 30.9 26 32Z" fill="#334155"/>
+        </svg>
+      </span>
+      Supported UPI Apps
+    </h3>
 
-
-      <mat-card-content>
-
-
-        <h3>
-          <mat-icon>
-            phone_android
-          </mat-icon>
-
-          Supported UPI Apps
-        </h3>
-
-
-        <p>
-          Google Pay, PhonePe, Paytm, BHIM,
-          Amazon Pay, or any UPI-enabled banking app
-        </p>
-
-
-      </mat-card-content>
-
-
-    </mat-card>
-
-
-
+    <span>Google Pay, PhonePe, Paytm, BHIM, Amazon Pay, or any UPI-enabled banking app</span>
+  </mat-card-content>
+</mat-card>
 
     <!-- Order Summary -->
 
     <mat-card class="mb-4">
-
-
-      <mat-card-title>
-        Order Summary
-      </mat-card-title>
-
+      <mat-card-title> Order Summary </mat-card-title>
 
       <mat-card-content>
-
-
         <p>Teacher</p>
 
-        <h3>
-          Priya Sharma
-        </h3>
-
+        <h4>Priya Sharma</h4>
 
         <p>Course</p>
 
-        <h3>
-          Advance Course
-        </h3>
-
+        <h4>Advance Course</h4>
 
         <!-- <span class="badge bg-danger">
           1 Month
         </span> -->
         <span class="badge bg-danger text-white">1 Month</span>
 
-
         <div class="row mt-4">
-
           <div class="col">
+            <p>Course Fee</p>
 
-            <p>
-              Course Fee
-            </p>
-
-            <h3>
-              Total Amount
-            </h3>
-
+            <h3>Total Amount</h3>
           </div>
-
-
 
           <div class="col text-end">
+            <h3>₹5,000</h3>
 
-            <p>
-              ₹5,000
-            </p>
-
-            <h2>
-              ₹5,900
-            </h2>
-
-
+           
           </div>
-
-
         </div>
-
-
       </mat-card-content>
-
-
     </mat-card>
-
-
-
-
 
     <!-- How To Pay -->
 
     <mat-card class="mb-4">
-
-
-      <mat-card-title>
-        How to Pay:
-      </mat-card-title>
-
+      <mat-card-title> How to Pay: </mat-card-title>
 
       <mat-card-content>
-
-
         <ol>
+          <li>Open any UPI app on your phone</li>
 
-          <li>
-            Open any UPI app on your phone
-          </li>
+          <li>Tap on Scan QR Code option</li>
 
-          <li>
-            Tap on Scan QR Code option
-          </li>
+          <li>Scan QR code displayed above</li>
 
-          <li>
-            Scan QR code displayed above
-          </li>
+          <li>Verify amount and complete payment</li>
 
-          <li>
-            Verify amount and complete payment
-          </li>
-
-          <li>
-            Click Payment Done button
-          </li>
-
+          <li>Click Payment Done button</li>
         </ol>
-
-
       </mat-card-content>
-
-
     </mat-card>
-
-
-
 
     <!-- Success -->
 
     <mat-card class="success-card mb-4">
-
-
       <div>
-
-        <mat-icon class="success-icon">
-          check_circle
-        </mat-icon>
-
+        <mat-icon class="success-icon"> check_circle </mat-icon>
 
         <span>
+          <h2>Payment Successful!</h2>
 
-          <h2>
-            Payment Successful!
-          </h2>
-
-
-          <p>
-            Transaction ID: TXN1703078824652
-          </p>
-
-
+          <p>Transaction ID: TXN1703078824652</p>
         </span>
-
-
       </div>
 
-      <button class="viewrecipt"
-      mat-stroked-button
-      color="primary">
-
-        View Receipt
-
-      </button>
+      <button class="viewrecipt" mat-stroked-button color="primary">View Receipt</button>
 
       <!-- <button type="button" class="btn btn-outline-primary btn-lg">View Recipt</button> -->
-
     </mat-card>
 
     <!-- Buttons -->
 
     <div class="d-flex justify-content-between mb-4">
+      <button mat-stroked-button color="warn">← Back</button>
 
-
-      <button 
-      mat-stroked-button
-      color="warn">
-
-        ← Back
-
-      </button>
-
-
-
-      <button 
-      mat-raised-button
-      color="primary">
-
-        Payment Done →
-
-      </button>
-
-
-
+      <button mat-raised-button color="primary" routerLink="/registration">Payment Done →</button>
     </div>
-
-
-
   </div>
-
-
 </div>

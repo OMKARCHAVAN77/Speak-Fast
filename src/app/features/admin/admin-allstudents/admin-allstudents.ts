@@ -38,7 +38,9 @@ interface Student {
     MatButtonModule,
     MatProgressBarModule,
     MatTooltipModule,
-    MatChipsModule],
+    MatChipsModule,
+  MatFormFieldModule,
+MatInputModule],
   templateUrl: './admin-allstudents.html',
   styleUrl: './admin-allstudents.css',
 })
