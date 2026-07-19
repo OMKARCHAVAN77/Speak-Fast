@@ -1,5 +1,3 @@
-import { adminRoutes } from './features/admin/admin-route.routes';
-import { Children } from './../../node_modules/path-scurry/dist/commonjs/index.d';
 import { Admin } from './features/admin/admin';
 import { Routes } from '@angular/router';
 import { Home } from './features/dashboard/home/home';
@@ -8,6 +6,8 @@ import { RegistrationComponent } from './features/courses/admitionsRegistration/
 import { LandingPage } from './features/auth/landing-page/landing-page';
 import { Login } from './features/auth/login/login';
 import { StudentAchievement } from './features/students/student-achievement/student-achievement';
+import { adminRoutes } from './features/admin/admin-route.routes';
+import { CourseRecommendation } from './features/courses/course-recommendation/course-recommendation';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -17,5 +17,6 @@ export const routes: Routes = [
     { path: 'registration', component: RegistrationComponent},
     { path: 'landing-page', component: LandingPage},
     { path: 'student-achievement', component: StudentAchievement },
-    { path: 'login', component: Login}
+    { path: 'login', component: Login},
+    { path: 'recommended-course', component : CourseRecommendation},
 ];
