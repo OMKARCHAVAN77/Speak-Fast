@@ -1,4 +1,8 @@
 /* Banner */
+*{
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+}
+
 .payment-banner {
   background: #0757a8;
   color: white;
@@ -8,12 +12,13 @@
 
 .payment-banner h1 {
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .payment-banner p {
   font-size: 16px;
   margin-top: -10px;
+  font-weight: 300;
 }
 
 
@@ -39,14 +44,17 @@ mat-card {
 
 /* Card Title */
 mat-card-title {
-  font-size: 22px !important;
-  font-weight: 700 !important;
+  font-size: 20px !important;
+  font-weight:500 !important;
   color: #172033;
+  padding: 5px;
 }
 
 
 mat-card-subtitle {
   color: #64748b !important;
+  font-size:smaller;
+  padding: 5px;
 }
 .qr-title-card {
   margin-top: -30px;
@@ -78,19 +86,36 @@ mat-card-subtitle {
 }
 
 
-.qr-card h1 {
-  font-size: 28px;
-  margin-top: 20px;
+.qr-card p {
+  font-size: 27px;
+  font-weight: 400;
 }
 
 
 
 /* UPI */
-mat-icon {
-  vertical-align: middle;
-  margin-right: 10px;
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px;
+ 
 }
 
+.upi-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: large;
+}
+
+.upi-icon svg {
+  display: block;
+}
+/* p{
+   color: rgba(71, 85, 105, 1);
+} */
 
 
 /* Badge */
