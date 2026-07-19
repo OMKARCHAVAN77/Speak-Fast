@@ -17,7 +17,7 @@ body {
 /* ================= HERO ================= */
 
 .hero {
-    background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+  background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
   color: white;
   text-align: center;
   padding: 70px 20px 120px;
@@ -39,15 +39,15 @@ body {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  
-  /* custom arrow icon */
+
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'><path d='M7 10l5 5 5-5z'/></svg>");
   background-repeat: no-repeat;
-  background-position: right 12px center; /* 👈 controls spacing from right */
+  background-position: right 12px center;
   background-size: 14px;
-  
-  padding-right: 32px; /* leave room so text doesn't overlap the icon */
+
+  padding-right: 32px;
 }
+
 .registration-section {
   display: flex;
   justify-content: center;
