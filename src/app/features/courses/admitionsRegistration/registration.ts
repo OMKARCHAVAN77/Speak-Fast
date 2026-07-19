@@ -87,14 +87,6 @@ export class RegistrationComponent {
           Validators.email
         ]
       ],
-<<<<<<< HEAD
-
-      // dob: [
-      //   '',
-      //   Validators.required
-      // ],
-
-=======
       
       password:[
         '',
@@ -116,7 +108,6 @@ export class RegistrationComponent {
       //   Validators.required
       // ],
 
->>>>>>> f48539379e6637734ea08ab149b59851f76a9045
       district: [
         '',
         Validators.required
