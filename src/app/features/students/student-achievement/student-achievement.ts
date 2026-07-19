@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { StudentProcess } from './student-process/student-process';
 import { StudentMyClasess } from './student-my-clasess/student-my-clasess';
+import { StudentAssignment } from './student-assignment/student-assignment';
 
 export interface StatCard {
   icon: string;
@@ -23,7 +24,7 @@ export type TabKey = 'classes' | 'progress' | 'assignments';
 
 @Component({
   selector: 'app-student-achievement',
-    imports: [CommonModule, MatIconModule, MatButtonModule,StudentProcess,StudentMyClasess],
+    imports: [CommonModule, MatIconModule, MatButtonModule,StudentProcess,StudentMyClasess,StudentAssignment],
   templateUrl: './student-achievement.html',
   styleUrl: './student-achievement.css',
 })

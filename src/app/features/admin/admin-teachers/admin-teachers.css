@@ -4,10 +4,10 @@
 }
 
 .manage-teachers {
-  max-width: 1100px;
+  /* max-width: 1100px; */
   margin: 0 auto;
-  padding: 32px 24px 64px;
-  background: #f7f8fa;
+   /* padding: 32px 24px 25px; */
+ 
 }
 
 /* ---------- Header ---------- */
@@ -38,32 +38,61 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  
+ 
+  
 }
 
 .search-field {
-  width: 240px;
+  width: 260px;
 }
 
+.search-icon {
+  color:  #6b7280;
+  margin-right: 4px;
+}
+
+.filter-icon {
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.search-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
 .search-field ::ng-deep .mat-mdc-text-field-wrapper {
-  height: 44px;
+   min-height: 44px;
   background: #ffffff;
+
 }
 
 .search-field ::ng-deep .mat-mdc-form-field-infix {
   min-height: 44px;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-left: 6px;
+ flex: 1;
+} 
+  
+
+.search-field ::ng-deep .mdc-notched-outline__leading {
+  border-radius: 8px 0 0 8px !important;
+  width: 12px !important;
 }
 
-.search-field ::ng-deep .mdc-notched-outline__leading,
-.search-field ::ng-deep .mdc-notched-outline__notch,
 .search-field ::ng-deep .mdc-notched-outline__trailing {
-  border-color: #e2e4e9 !important;
+  border-radius: 0 8px 8px 0 !important;
+  flex: 1 0 auto !important;
+}
+
+.search-field ::ng-deep .mdc-notched-outline__notch {
+  border-radius: 0 !important;
+  max-width: calc(100% - 24px) !important;
 }
 
 .search-field input {
-  font-size: 14px;
+  font-size: 16px;
+  flex: 1;
 }
 
 .add-btn {
@@ -73,6 +102,7 @@
   color: #fff !important;
   font-weight: 600;
   white-space: nowrap;
+  
 }
 
 .add-btn mat-icon {

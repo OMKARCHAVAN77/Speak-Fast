@@ -8,13 +8,14 @@
 
     <div class="header__actions">
       <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix class="search-icon">search</mat-icon>
         <input
           matInput
           type="text"
           placeholder="Search Teachers..."
           [(ngModel)]="searchTerm"
         />
-        <mat-icon matSuffix>tune</mat-icon>
+        <mat-icon matSuffix class="filter-icon">tune</mat-icon>
       </mat-form-field>
 
       <button mat-flat-button color="primary" class="add-btn" (click)="onAddTeacher()">
