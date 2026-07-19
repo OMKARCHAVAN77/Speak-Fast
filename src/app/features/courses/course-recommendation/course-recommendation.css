@@ -48,16 +48,32 @@
   flex: 1;
 }
 
-.score-icon-container {
+/* .score-icon-container {
   display: flex;
   align-items: center;
-}
+} */
 
-.score-icon {
+/* .score-icon {
   font-size: 2.5rem;
   width: 2.5rem;
   height: 2.5rem;
   color: #190344;
+} */
+
+.score-icon-container {
+  width: 64px;
+  height: 64px;
+  background-color: #0D5DB8;   /* Blue */
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
 
 .score-title {

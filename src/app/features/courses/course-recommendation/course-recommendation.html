@@ -1,9 +1,3 @@
-<p>course-recommendation works!</p>
-
-<button routerLink="/payment" style="background-color: rgb(19, 200, 10);"> Enroll Now</button>
-
-
-
 <div class="course-recommendation-page">
 
   <!-- Course-Header Section -->
@@ -26,7 +20,12 @@
         <div class="score-left">
 
           <div class="score-icon-container">
-            <mat-icon class="score-icon">workspace_premium</mat-icon>
+            <!-- <mat-icon class="score-icon">workspace_premium</mat-icon> -->
+            <img
+              src="assets/test-score.png"
+              alt="Test Score"
+              class="score-icon" 
+            />
           </div>
 
           <div class="score-text-container">
@@ -73,7 +72,12 @@
         <div class="card-header">
 
           <div class="card-icon">
-            <mat-icon>school</mat-icon>
+            <!-- <mat-icon>school</mat-icon>  -->
+            <img
+              src= {{course.img}}
+              alt="Test Score"
+              class="score-icon" 
+            />
           </div>
 
           <div class="recommended-chip">
@@ -150,6 +154,7 @@
 
         <!-- Button -->
         <button
+          routerLink="/payment"
           mat-flat-button
           color="primary"
           class="enroll-button">
@@ -178,6 +183,7 @@
     </button>
 
     <button
+      routerLink="/payment"
       mat-flat-button
       color="primary"
       class="action-button-forward">

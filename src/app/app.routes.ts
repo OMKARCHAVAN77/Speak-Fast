@@ -9,7 +9,6 @@ import { StudentAchievement } from './features/students/student-achievement/stud
 import { CourseRecommendation } from './features/courses/course-recommendation/course-recommendation';
 import { Payment } from './features/payment/payment';
 import { adminRoutes } from './features/admin/admin-route.routes';
-import { CourseRecommendation } from './features/courses/course-recommendation/course-recommendation';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
