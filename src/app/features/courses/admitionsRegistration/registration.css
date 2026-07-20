@@ -133,7 +133,7 @@ body {
   color: white;
 }
 
-.dashboard-btn {
+.submit-btn {
   flex: 1;
   padding: 14px;
   background: #0d5cab;
@@ -146,7 +146,7 @@ body {
   transition: .3s;
 }
 
-.dashboard-btn:hover {
+.submit-btn:hover {
   background: #084c8d;
 }
 
@@ -179,7 +179,7 @@ body {
 }
 
 .back-btn,
-.dashboard-btn{
+.submit-btn {
   width:100%;
 }
 
