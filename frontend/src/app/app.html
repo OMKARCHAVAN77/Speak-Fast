@@ -1,5 +1,5 @@
 
-<app-navbar *ngIf="'false'"></app-navbar>
+<app-navbar *ngIf="isNavbarOn"></app-navbar>
 <router-outlet ></router-outlet>
 <!-- <app-quiz-question></app-quiz-question> -->
 <!-- <app-grammar-assessment></app-grammar-assessment> -->
@@ -12,4 +12,4 @@
 <!-- <app-payment></app-payment> -->
 
  <!-- <app-student-achievement></app-student-achievement> -->
-<app-footer *ngIf="'false'"></app-footer>
+<app-footer *ngIf="isNavbarOn"></app-footer>
