@@ -106,6 +106,83 @@ body {
   font-size: 13px;
 }
 
+/* ================= PASSWORD TOGGLE ================= */
+
+.password-field {
+  position: relative;
+}
+
+.password-field input {
+  padding-right: 44px; /* leave room so text doesn't sit under the icon */
+}
+
+.toggle-password-btn {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.toggle-password-btn:hover {
+  background: #f2f4f7;
+}
+
+.toggle-password-btn:focus-visible {
+  outline: 2px solid #0d5cab;
+  outline-offset: 2px;
+}
+
+/* ================= SEARCHABLE DROPDOWN ================= */
+
+.searchable-dropdown {
+  position: relative;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  background: white;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  max-height: 220px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 6px 0;
+  z-index: 20;
+}
+
+.dropdown-list li {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background: #f2f6fc;
+}
+
+.dropdown-list li.no-results {
+  color: #98a2b3;
+  cursor: default;
+}
+
+.dropdown-list li.no-results:hover {
+  background: none;
+}
+
 /* ================= BUTTONS ================= */
 
 .button-group {
@@ -133,7 +210,7 @@ body {
   color: white;
 }
 
-.dashboard-btn {
+.submit-btn {
   flex: 1;
   padding: 14px;
   background: #0d5cab;
@@ -146,7 +223,7 @@ body {
   transition: .3s;
 }
 
-.dashboard-btn:hover {
+.submit-btn:hover {
   background: #084c8d;
 }
 
@@ -179,7 +256,7 @@ body {
 }
 
 .back-btn,
-.dashboard-btn{
+.submit-btn{
   width:100%;
 }
 
