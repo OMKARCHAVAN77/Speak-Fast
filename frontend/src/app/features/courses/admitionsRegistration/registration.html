@@ -18,24 +18,24 @@
     <div class="row">
       <div class="form-group">
         <label>First Name *</label>
-        <input type="text" placeholder="e.g. Alex" formControlName="firstname" />
+        <input type="text" placeholder="e.g. Alex" formControlName="firstName" />
 
-        <small class="error" *ngIf="f['firstname'].touched && f['firstname'].errors?.['required']">
+        <small class="error" *ngIf="f['firstName'].touched && f['firstName'].errors?.['required']">
           First name is required
         </small>
-        <small class="error" *ngIf="f['firstname'].touched && f['firstname'].errors?.['minlength']">
+        <small class="error" *ngIf="f['firstName'].touched && f['firstName'].errors?.['minlength']">
           First name must be at least 3 characters
         </small>
       </div>
 
       <div class="form-group">
         <label>Last Name *</label>
-        <input type="text" placeholder="e.g. Johnson" formControlName="lastname" />
+        <input type="text" placeholder="e.g. Johnson" formControlName="lastName" />
 
-        <small class="error" *ngIf="f['lastname'].touched && f['lastname'].errors?.['required']">
+        <small class="error" *ngIf="f['lastName'].touched && f['lastName'].errors?.['required']">
           Last name is required
         </small>
-        <small class="error" *ngIf="f['lastname'].touched && f['lastname'].errors?.['minlength']">
+        <small class="error" *ngIf="f['lastName'].touched && f['lastName'].errors?.['minlength']">
           Last name must be at least 3 characters
         </small>
       </div>
@@ -45,12 +45,12 @@
     <div class="row">
       <div class="form-group">
         <label>Phone Number *</label>
-        <input type="text" placeholder="e.g. 9876543210" formControlName="mobile" />
+        <input type="text" placeholder="e.g. 9876543210" formControlName="contactNumber" />
 
-        <small class="error" *ngIf="f['mobile'].touched && f['mobile'].errors?.['required']">
+        <small class="error" *ngIf="f['contactNumber'].touched && f['contactNumber'].errors?.['required']">
           Phone number is required
         </small>
-        <small class="error" *ngIf="f['mobile'].touched && f['mobile'].errors?.['pattern']">
+        <small class="error" *ngIf="f['contactNumber'].touched && f['contactNumber'].errors?.['pattern']">
           Enter a valid 10-digit mobile number
         </small>
       </div>
