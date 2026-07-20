@@ -1,52 +1,56 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule,     FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatIconModule,],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-// userType: UserType = 'teacher';
-currentTitle : string = 'Login Page';
   email: string = '';
   password: string = '';
-  rememberMe: boolean = false;
-
-  // userTypeConfig = {
-  //   student: { title: 'Student Login', icon: 'student' },
-  //   teacher: { title: 'Teacher Login', icon: 'teacher' },
-  //   admin: { title: 'Admin Login', icon: 'admin' }
-  // };
-
-  // get currentTitle(): string {
-  //   return this.userTypeConfig[this.userType].title;
-  // }
-
-  // selectUserType(type: UserType): void {
-  //   this.userType = type;
-  // }
-
-  onSubmit(form: NgForm): void {
-    if (form.valid) {
-      console.log('Login submitted', {
-        // userType: this.userType,
-        email: this.email,
-        password: this.password,
-        rememberMe: this.rememberMe
-      });
-      // TODO: call your auth service here
-    } else {
-      Object.values(form.controls).forEach(control => control.markAsTouched());
-    }
+  rememberMe: boolean = true;
+  hidePassword: boolean = true;
+  showPassword = false;
+  
+togglePassword() {
+  this.showPassword = !this.showPassword;
+}
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
-  goBack(): void {
-    console.log('Back to user type selection');
-    // TODO: navigate back
+  onLogin(): void {
+    if (!this.email || !this.password) {
+      console.warn('Please enter both email and password.');
+      return;
+    }
+
+    console.log('Login attempt:', {
+      email: this.email,
+      rememberMe: this.rememberMe
+    });
+
+    // TODO: Call your authentication service here
+    // this.authService.login(this.email, this.password).subscribe(...)
+  }
+
+  onForgotPassword(): void {
+    console.log('Forgot password clicked');
+    // TODO: Navigate to forgot password page/flow
   }
 }
