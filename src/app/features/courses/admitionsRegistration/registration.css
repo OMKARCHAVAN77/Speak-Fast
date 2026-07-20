@@ -61,7 +61,7 @@ body {
   background: white;
   padding: 35px;
   border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
 }
 
 .row {
@@ -96,7 +96,7 @@ body {
 .form-group input:focus,
 .form-group select:focus {
   border-color: #0d5cab;
-  box-shadow: 0 0 5px rgba(13,92,171,.25);
+  box-shadow: 0 0 5px rgba(13, 92, 171, .25);
 }
 
 .error {
@@ -113,7 +113,8 @@ body {
 }
 
 .password-field input {
-  padding-right: 44px; /* leave room so text doesn't sit under the icon */
+  padding-right: 44px;
+  /* leave room so text doesn't sit under the icon */
 }
 
 .toggle-password-btn {
@@ -210,6 +211,7 @@ body {
   color: white;
 }
 
+
 .submit-btn {
   flex: 1;
   padding: 14px;
@@ -224,40 +226,42 @@ body {
 }
 
 .submit-btn:hover {
-  background: #084c8d;
-}
+  .submit-btn:hover {
+    background: #084c8d;
+  }
 
-/* ================= RESPONSIVE ================= */
+  /* ================= RESPONSIVE ================= */
 
-@media(max-width:768px){
+  @media(max-width:768px) {
 
-.hero{
-  padding:60px 20px 100px;
-}
+    .hero {
+      padding: 60px 20px 100px;
+    }
 
-.hero h1{
-  font-size:30px;
-}
+    .hero h1 {
+      font-size: 30px;
+    }
 
-.hero p{
-  font-size:15px;
-}
+    .hero p {
+      font-size: 15px;
+    }
 
-.registration-card{
-  padding:25px;
-}
+    .registration-card {
+      padding: 25px;
+    }
 
-.row{
-  grid-template-columns:1fr;
-}
+    .row {
+      grid-template-columns: 1fr;
+    }
 
-.button-group{
-  flex-direction:column;
-}
+    .button-group {
+      flex-direction: column;
+    }
 
-.back-btn,
-.submit-btn{
-  width:100%;
-}
+    .back-btn,
+    .submit-btn {
+      width: 100%;
+    }
 
+  }
 }
