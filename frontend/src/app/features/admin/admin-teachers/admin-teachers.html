@@ -42,18 +42,18 @@
         <div class="teacher-info">
           <div class="teacher-info__name-row">
             <span class="teacher-name">{{ teacher.name }}</span>
-            <span
+            <!-- <span
               class="leave-badge"
               *ngIf="teacher.leave.status === 'onLeave'"
             >
               On Leave for {{ teacher.leave.range }}
-            </span>
+            </span> -->
           </div>
           <span class="teacher-subjects">{{ teacher.subjects }}</span>
         </div>
       </div>
 
-      <div class="teacher-card__actions">
+      <!-- <div class="teacher-card__actions">
         <ng-container *ngIf="teacher.leave.status === 'requested'">
           <span class="leave-request-label">Request for Leave</span>
           <button
@@ -91,7 +91,7 @@
         >
           <mat-icon>delete_outline</mat-icon>
         </button>
-      </div>
+      </div> -->
     </div>
 
     <div class="empty-state" *ngIf="filteredTeachers.length === 0">
