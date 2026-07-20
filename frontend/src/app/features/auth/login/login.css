@@ -1,229 +1,114 @@
-:host {
-  display: block;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+/* ============================================================
+   SpeakFast Login — layout, card, form and background blobs
+   Background blob geometry is derived from the supplied spec
+   (472/386/288/218px circles, nested, 100px blur) and converted
+   to relative units so it scales across breakpoints.
+   ============================================================ */
+
+.login-page{
+  background-color: white;
+   background-image: url('../../../../assets/login-page-bg-gradient.png');
+    width: 100%; height: 100vh;  
+     background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    font-family: "Quicksand", sans-serif;
+
 }
 
-.page {
-  max-width: 460px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+.login-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  width: 100%;
+  max-width: 560px;
+  height: fit-content;
+      opacity: 0.9; border: 2px solid #D3D2D2; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-.brand-badge {
-  border: 1px solid #d9dce1;
-  border-radius: 20px;
-  padding: 6px 16px;
-  font-size: 13px;
-  color: #444;
-  background: #fff;
-  margin-bottom: 24px;
+.login-card h1{
+  font-family: Quicksand;
+      font-weight: 700;
+      font-style: Bold;
+      font-size: 28px;
+      line-height: 100%;
 }
 
-.welcome-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 8px 0;
+.login-card p{
+  font-size: 16px;
+}
+
+.logo-wrap {
   text-align: center;
-}
-
-.welcome-subtitle {
-  font-size: 14px;
-  color: #6b7280;
-  margin: 0 0 28px 0;
-  text-align: center;
-}
-
-.card {
-  width: 100%;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
-  padding: 32px 28px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.icon-circle {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  background: #1d4ed8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-}
-
-.card-title {
-  font-size: 20px;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 6px 0;
-}
-
-.card-subtitle {
-  font-size: 13px;
-  color: #6b7280;
-  margin: 0 0 20px 0;
-}
-
-.user-type-row {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 24px;
-}
-
-.radio-option {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  color: #374151;
-  cursor: pointer;
-}
-
-.radio-option input[type='radio'] {
-  width: 16px;
-  height: 16px;
-  accent-color: #1d4ed8;
-  cursor: pointer;
-}
-
-form {
-  width: 100%;
-}
-
-.form-group {
-  width: 100%;
-  margin-bottom: 16px;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #1a1a1a;
-  margin-bottom: 6px;
-}
-
-.text-input {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 10px 12px;
-  border: 1px solid #d9dce1;
-  border-radius: 8px;
-  font-size: 14px;
-  color: #1a1a1a;
-  outline: none;
-  transition: border-color 0.15s ease;
-}
-
-.text-input:focus {
-  border-color: #1d4ed8;
-}
-
-.field-error {
-  margin-top: 4px;
-  font-size: 12px;
-  color: #dc2626;
-}
-
-.options-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-bottom: 20px;
 }
-
-.remember-me {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  color: #374151;
-  cursor: pointer;
-}
-
-.remember-me input[type='checkbox'] {
-  width: 15px;
-  height: 15px;
-  accent-color: #1d4ed8;
-  cursor: pointer;
-}
-
-.forgot-link {
-  font-size: 13px;
-  color: #4b5563;
-  text-decoration: none;
-}
-
-.forgot-link:hover {
-  text-decoration: underline;
-}
-
-.sign-up-btn {
+ 
+.logo-wrap img {
+  max-width: 150px;
   width: 100%;
-  background: #e5482f;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  margin-bottom: 14px;
-  transition: background 0.15s ease;
+  height: auto;
+  margin-bottom: 40px;
 }
 
-.sign-up-btn:hover {
-  background: #d63d26;
+.email-wrapper {
+  margin-bottom: 24px;
 }
 
-.sign-up-btn .plus {
-  font-weight: 700;
+.email-wrapper label {
+  font-size: 18px; 
+}
+input[type="text"],[type="password"]{
+  margin-top: 10px;width: 100%; height: 48px; 
+  border-radius: 8px; box-sizing: border-box;
+   background-color:  #F1F1F1;
+    ; font-size: 16px; padding-left: 10px ; border:none
+}
+ 
+.password-wrapper div i {
+          position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 20px;
+        color: #6c757d;
 }
 
-.back-btn {
-  width: 100%;
-  background: none;
-  border: none;
-  color: #4b5563;
-  font-size: 13px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 6px;
+.check-out-wrapper {
+  margin-top: 16px;
 }
 
-.back-btn:hover {
-  color: #1a1a1a;
+.check-out-wrapper div{
+  display: inline-block;
 }
 
-.footer-text {
-  margin-top: 24px;
-  font-size: 13px;
-  color: #4b5563;
+.check-out-wrapper a{
+  text-decoration: none;float: right;
 }
 
-.footer-link {
-  color: #1a1a1a;
-  font-weight: 600;
-  text-decoration: none;
+button{
+  background: linear-gradient(to right, #4687FB, #9050E0); width: 100%; margin-top: 42px; 
+        border-radius: 50px; height: 60px; font-size: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-.footer-link:hover {
-  text-decoration: underline;
+button div{
+  display: flex; align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 20px;
+    border-radius: 18px;
+  }
+  .welcome-heading {
+    font-size: 1.5rem;
+  }
 }
