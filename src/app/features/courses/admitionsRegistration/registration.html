@@ -72,7 +72,27 @@
     <div class="row">
       <div class="form-group">
         <label>Password *</label>
-        <input type="password" placeholder="Enter password" formControlName="password" />
+
+        <div class="password-field">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter password"
+            formControlName="password" />
+
+          <button
+            type="button"
+            class="toggle-password-btn"
+            (click)="togglePasswordVisibility()"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'">
+            <svg *ngIf="!showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5C7 5 2.73 8.11 1 12C2.73 15.89 7 19 12 19C17 19 21.27 15.89 23 12C21.27 8.11 17 5 12 5ZM12 16.5C9.51 16.5 7.5 14.49 7.5 12C7.5 9.51 9.51 7.5 12 7.5C14.49 7.5 16.5 9.51 16.5 12C16.5 14.49 14.49 16.5 12 16.5ZM12 9.5C10.62 9.5 9.5 10.62 9.5 12C9.5 13.38 10.62 14.5 12 14.5C13.38 14.5 14.5 13.38 14.5 12C14.5 10.62 13.38 9.5 12 9.5Z" fill="#667085"/>
+            </svg>
+            <svg *ngIf="showPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 5L22 19" stroke="#667085" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M12 5C7 5 2.73 8.11 1 12C1.68 13.5 2.68 14.83 3.9 15.94M7.36 17.06C8.79 17.66 10.36 18 12 18C17 18 21.27 14.89 23 11C22.27 9.37 21.15 7.94 19.76 6.8M9.9 9.9C9.35 10.45 9 11.19 9 12C9 13.66 10.34 15 12 15C12.81 15 13.55 14.65 14.1 14.1" stroke="#667085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
 
         <small class="error" *ngIf="f['password'].touched && f['password'].errors?.['required']">
           Password is required
@@ -81,41 +101,96 @@
 
       <div class="form-group">
         <label>Confirm Password *</label>
-        <input type="password" placeholder="Confirm password" formControlName="confirmPassword" />
+
+        <div class="password-field">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            placeholder="Confirm password"
+            formControlName="confirmPassword" />
+
+          <button
+            type="button"
+            class="toggle-password-btn"
+            (click)="toggleConfirmPasswordVisibility()"
+            [attr.aria-label]="showConfirmPassword ? 'Hide password' : 'Show password'">
+            <svg *ngIf="!showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 5C7 5 2.73 8.11 1 12C2.73 15.89 7 19 12 19C17 19 21.27 15.89 23 12C21.27 8.11 17 5 12 5ZM12 16.5C9.51 16.5 7.5 14.49 7.5 12C7.5 9.51 9.51 7.5 12 7.5C14.49 7.5 16.5 9.51 16.5 12C16.5 14.49 14.49 16.5 12 16.5ZM12 9.5C10.62 9.5 9.5 10.62 9.5 12C9.5 13.38 10.62 14.5 12 14.5C13.38 14.5 14.5 13.38 14.5 12C14.5 10.62 13.38 9.5 12 9.5Z" fill="#667085"/>
+            </svg>
+            <svg *ngIf="showConfirmPassword" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 5L22 19" stroke="#667085" stroke-width="1.6" stroke-linecap="round"/>
+              <path d="M12 5C7 5 2.73 8.11 1 12C1.68 13.5 2.68 14.83 3.9 15.94M7.36 17.06C8.79 17.66 10.36 18 12 18C17 18 21.27 14.89 23 11C22.27 9.37 21.15 7.94 19.76 6.8M9.9 9.9C9.35 10.45 9 11.19 9 12C9 13.66 10.34 15 12 15C12.81 15 13.55 14.65 14.1 14.1" stroke="#667085" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
 
         <small class="error" *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors?.['required']">
           Please confirm your password
         </small>
+        <small class="error" *ngIf="f['confirmPassword'].touched && f['confirmPassword'].errors?.['mismatch']">
+          Passwords do not match
+        </small>
       </div>
     </div>
 
-    <!-- District -->
-    <div class="form-group">
+    <!-- District (searchable) -->
+    <div class="form-group searchable-dropdown">
       <label>District *</label>
-      <select formControlName="district">
-        <option value="">Select District</option>
-        <option *ngFor="let district of districts" [value]="district">
+      <input
+        type="text"
+        placeholder="Search district..."
+        autocomplete="off"
+        formControlName="district"
+        (focus)="onDistrictFocus()"
+        (input)="onDistrictInput()"
+        (blur)="onDistrictBlur()" />
+
+      <ul class="dropdown-list" *ngIf="showDistrictDropdown">
+        <li
+          *ngFor="let district of filteredDistricts"
+          (mousedown)="selectDistrict(district)">
           {{ district }}
-        </option>
-      </select>
+        </li>
+        <li class="no-results" *ngIf="filteredDistricts.length === 0">
+          No matches found
+        </li>
+      </ul>
 
       <small class="error" *ngIf="f['district'].touched && f['district'].errors?.['required']">
         Please select a district
       </small>
+      <small class="error" *ngIf="f['district'].touched && f['district'].errors?.['notInList']">
+        Please pick a district from the list
+      </small>
     </div>
 
-    <!-- Qualification -->
-    <div class="form-group">
+    <!-- Qualification (searchable) -->
+    <div class="form-group searchable-dropdown">
       <label>Qualification *</label>
-      <select formControlName="qualification">
-        <option value="">Select Qualification</option>
-        <option *ngFor="let q of qualifications" [value]="q">
+      <input
+        type="text"
+        placeholder="Search qualification..."
+        autocomplete="off"
+        formControlName="qualification"
+        (focus)="onQualificationFocus()"
+        (input)="onQualificationInput()"
+        (blur)="onQualificationBlur()" />
+
+      <ul class="dropdown-list" *ngIf="showQualificationDropdown">
+        <li
+          *ngFor="let q of filteredQualifications"
+          (mousedown)="selectQualification(q)">
           {{ q }}
-        </option>
-      </select>
+        </li>
+        <li class="no-results" *ngIf="filteredQualifications.length === 0">
+          No matches found
+        </li>
+      </ul>
 
       <small class="error" *ngIf="f['qualification'].touched && f['qualification'].errors?.['required']">
         Please select a qualification
+      </small>
+      <small class="error" *ngIf="f['qualification'].touched && f['qualification'].errors?.['notInList']">
+        Please pick a qualification from the list
       </small>
     </div>
 
@@ -136,8 +211,8 @@
 
     <!-- Buttons -->
     <div class="button-group">
-      <button type="button" class="back-btn" (click)="back()">← Back</button>
-      <button type="submit" class="submit-btn" routerLink="/student-achievement">Submit →</button>
+      <button type="button" class="back-btn" (click)="back()">Back</button>
+      <button type="submit" class="submit-btn">Submit</button>
     </div>
 
   </form>
