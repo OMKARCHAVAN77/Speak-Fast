@@ -84,42 +84,42 @@
 
   <label class="field-label">Google Meet Link</label>
   <div class="field-box">
-    <input type="url" name="meetLink" [(ngModel)]="teacher.meetLink" placeholder="https://meet.google.com/abc-defg-hij"
+    <input type="url" name="meetLink" [(ngModel)]="teacher.googlemeetLink" placeholder="https://meet.google.com/abc-defg-hij"
       class="field-input" />
     <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
   </div>
 
-<!-- ===== ADD SLOTS ===== -->
-<label class="field-label">Add Slots</label>
-<div class="book-slots-row">
+  <!-- ===== ADD SLOTS ===== -->
+  <label class="field-label">Add Slots</label>
+  <div class="book-slots-row">
 
-  <div class="time-chip-wrapper">
-    <div class="time-chip" [class.active]="activeField === 'start'" (click)="toggleTimeDropdown('start', $event)">
-      {{ teacher.startTime }}
-    </div>
-    <div class="time-dropdown" *ngIf="activeField === 'start'" (click)="$event.stopPropagation()">
-      <div class="time-slot" *ngFor="let slot of timeSlots" [class.selected]="slot === teacher.startTime"
-        (click)="selectTime('start', slot)">
-        {{ slot }}
+    <div class="time-chip-wrapper">
+      <div class="time-chip" [class.active]="activeField === 'start'" (click)="toggleTimeDropdown('start', $event)">
+        {{ teacher.startTime }}
+      </div>
+      <div class="time-dropdown" *ngIf="activeField === 'start'" (click)="$event.stopPropagation()">
+        <div class="time-slot" *ngFor="let slot of timeSlots" [class.selected]="slot === teacher.startTime"
+          (click)="selectTime('start', slot)">
+          {{ slot }}
+        </div>
       </div>
     </div>
+
+    <button type="button" class="add-slot-btn" (click)="addSlot()" [disabled]="!canAddSlot()">
+      <mat-icon>add</mat-icon>Add
+    </button>
   </div>
 
-  <button type="button" class="add-slot-btn" (click)="addSlot()" [disabled]="!canAddSlot()">
-    <mat-icon>add</mat-icon>Add
-  </button>
-</div>
+  <div class="slot-error" *ngIf="slotError">{{ slotError }}</div>
 
-<div class="slot-error" *ngIf="slotError">{{ slotError }}</div>
-
-<!-- ===== ADDED SLOTS LIST ===== -->
-<div class="added-slots-list" *ngIf="teacher.slots.length > 0">
-  <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
-    <mat-icon class="slot-icon">event</mat-icon>
-    <span class="slot-text">{{ slot.date }} · {{ slot.startTime }}</span>
-    <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
+  <!-- ===== ADDED SLOTS LIST ===== -->
+  <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
+    <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
+      <mat-icon class="slot-icon">schedule</mat-icon>
+      <span class="slot-text">{{ slot.startTime }}</span>
+      <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
+    </div>
   </div>
-</div> 
 <!-- ===== END BOOK SLOTS ===== -->
     <button type="submit" class="submit-btn">
       <mat-icon class="btn-icon">add</mat-icon> Add Teacher

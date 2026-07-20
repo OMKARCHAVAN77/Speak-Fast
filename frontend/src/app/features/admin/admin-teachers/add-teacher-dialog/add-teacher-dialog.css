@@ -31,7 +31,7 @@
   top: 0;
   right: 0;
   height: 100%;
-  width: 45%;
+  width: 40%;
   max-width: 92vw;
   background: #fff;
   box-shadow: -6px 0 24px rgba(0, 0, 0, 0.18);
@@ -367,37 +367,6 @@
   align-items: flex-start;
   gap: 10px;
   margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-/* ============ DATE CHIP (static, no dropdown) ============ */
-.date-chip-wrapper {
-  position: relative;
-}
-
-.date-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: #eef1f5;
-  color: var(--text-dark);
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.date-chip.static {
-  cursor: default; /* no longer clickable */
-}
-
-.date-icon {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
-  color: var(--text-muted);
-  flex-shrink: 0;
 }
 
 /* ============ TIME CHIP ============ */
@@ -513,23 +482,22 @@
   margin: -2px 0 14px;
 }
 
-/* ============ ADDED SLOTS LIST ============ */
+/* ============ ADDED SLOTS LIST — compact chips, since only time now ============ */
 .added-slots-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-bottom: 22px;
 }
 
 .added-slot-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: #f5f7fa;
   border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 10px 12px;
-  min-width: 0;
+  border-radius: 20px;
+  padding: 6px 10px 6px 12px;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
@@ -540,27 +508,24 @@
 
 .slot-icon {
   color: var(--primary-blue);
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
+  font-size: 15px;
+  height: 15px;
+  width: 15px;
   flex-shrink: 0;
 }
 
 .slot-text {
-  flex: 1;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--text-dark);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .remove-slot-icon {
   color: var(--text-muted);
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
+  font-size: 15px;
+  height: 15px;
+  width: 15px;
   cursor: pointer;
   flex-shrink: 0;
   border-radius: 50%;
@@ -570,12 +535,6 @@
 .remove-slot-icon:hover {
   color: #dc2626;
   background: #fee2e2;
-}
-
-@media (max-width: 340px) {
-  .added-slots-list {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ============ SUBMIT ============ */
