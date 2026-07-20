@@ -3,7 +3,7 @@
   <!-- Header -->
   <header class="page-header">
     <div class="title-block">
-      <h1>Recent Enrollments</h1>
+      <h1>All Students</h1>
       <p class="subtitle">Total: {{ totalEnrollments }} New Enrollments</p>
     </div>
 
@@ -19,10 +19,10 @@
         <mat-icon matSuffix class="filter-icon">tune</mat-icon>
       </mat-form-field>
 
-      <button mat-stroked-button class="date-btn" (click)="onSelectDate()">
+      <!-- <button mat-stroked-button class="date-btn" (click)="onSelectDate()">
         <span>Select Date</span>
         <mat-icon>calendar_today</mat-icon>
-      </button>
+      </button> -->
     </div>
   </header>
 
@@ -40,7 +40,7 @@
       <div class="card-body">
         <div class="name-row">
           <span class="student-name">{{ enrollment.name }}</span>
-          <span class="status-badge">{{ enrollment.status }}</span>
+          <!-- <span class="status-badge">{{ enrollment.status }}</span> -->
         </div>
 
         <div class="details-grid">
@@ -53,11 +53,11 @@
           <span class="detail-item">
             <mat-icon>outlined_flag</mat-icon>Teacher: {{ enrollment.teacher }}
           </span>
-          <span class="detail-item">
+          <!-- <span class="detail-item">
             <mat-icon>menu_book</mat-icon>Course: {{ enrollment.course }}
-          </span>
+          </span> -->
 
-          <span class="detail-item">
+          <!-- <span class="detail-item">
             <mat-icon>event</mat-icon>Enrolled: {{ enrollment.enrolledDate }}
           </span>
           <span class="detail-item">
@@ -73,14 +73,14 @@
           </ng-template>
           <span class="detail-item fee">
             <mat-icon>currency_rupee</mat-icon>Fee: {{ enrollment.fee }}
-          </span>
+          </span> -->
         </div>
       </div>
 
-      <button mat-stroked-button class="details-btn" (click)="viewDetails(enrollment)">
+      <!-- <button mat-stroked-button class="details-btn" (click)="viewDetails(enrollment)">
         <mat-icon>info_outline</mat-icon>
         <span>Details</span>
-      </button>
+      </button> -->
 
     </article>
   </div>

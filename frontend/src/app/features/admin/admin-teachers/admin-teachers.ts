@@ -22,7 +22,7 @@ interface Teacher {
   id: number;
   name: string;
   subjects: string;
-  leave: LeaveInfo;
+  // leave: LeaveInfo;
 }
 
 @Component({
@@ -50,37 +50,37 @@ export class AdminTeachers {
       id: 1,
       name: 'Suroj Kumbar',
       subjects: 'Grammar, Business English, IELTS Preparation',
-      leave: { status: 'requested' }
+      // leave: { status: 'requested' }
     },
     {
       id: 2,
       name: 'Kamlesh Patil',
       subjects: 'Grammar, Business English, IELTS Preparation',
-      leave: { status: 'onLeave', range: '30 Sep - 1 Aug' }
+      // leave: { status: 'onLeave', range: '30 Sep - 1 Aug' }
     },
     {
       id: 3,
       name: 'Anita Rathod',
       subjects: 'Business English, Interview Preparation, Presentation Skills',
-      leave: { status: 'requested' }
+      // leave: { status: 'requested' }
     },
     {
       id: 4,
       name: 'Sunil Devkate',
       subjects: 'TOEFL, Academic English, Writing Skills',
-      leave: { status: 'onLeave', range: '1 Aug - 3 Aug' }
+      // leave: { status: 'onLeave', range: '1 Aug - 3 Aug' }
     },
     {
       id: 5,
       name: 'Nihal Thakur',
       subjects: 'Grammar, Beginner English, Conversation',
-      leave: { status: 'none' }
+      // leave: { status: 'none' }
     },
     {
       id: 6,
       name: 'Suraj Shetty',
       subjects: 'Business English, Interview Preparation, Presentation Skills',
-      leave: { status: 'none' }
+      // leave: { status: 'none' }
     }
   ];
  
@@ -100,17 +100,17 @@ export class AdminTeachers {
     return this.teachers.length;
   }
  
-  onAcceptLeave(teacher: Teacher): void {
-    teacher.leave = { status: 'onLeave', range: 'Leave approved' };
-  }
+  // onAcceptLeave(teacher: Teacher): void {
+  //   teacher.leave = { status: 'onLeave', range: 'Leave approved' };
+  // }
  
-  onCancelLeave(teacher: Teacher): void {
-    teacher.leave = { status: 'none' };
-  }
+  // onCancelLeave(teacher: Teacher): void {
+  //   teacher.leave = { status: 'none' };
+  // }
  
-  onViewDetails(teacher: Teacher): void {
-    console.log('View details for', teacher.name);
-  }
+  // onViewDetails(teacher: Teacher): void {
+  //   console.log('View details for', teacher.name);
+  // }
  
   onDeleteTeacher(teacher: Teacher): void {
     this.teachers = this.teachers.filter(t => t.id !== teacher.id);
