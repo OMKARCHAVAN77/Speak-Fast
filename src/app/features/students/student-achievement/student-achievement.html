@@ -1,5 +1,4 @@
 <div class="dashboard">
-
   <!-- ===== Header banner ===== -->
   <header class="hero">
     <div class="hero-text">
@@ -13,15 +12,12 @@
         mat-stroked-button
         class="icon-btn"
         aria-label="Notifications"
-        (click)="onNotifications()">
+        (click)="onNotifications()"
+      >
         <mat-icon>notifications</mat-icon>
       </button>
 
-      <button
-        type="button"
-        mat-stroked-button
-        class="leave-btn"
-        (click)="onRequestLeave()">
+      <button type="button" mat-stroked-button class="leave-btn" (click)="onRequestLeave()">
         <mat-icon>person_outline</mat-icon>
         Request Leave
       </button>
@@ -43,7 +39,6 @@
 
   <!-- ===== Tabs + content ===== -->
   <div class="page-body">
-
     <!-- Pure CSS pill nav — clicking a tab only swaps the content pane
          below, nothing here re-renders and there is no navigation/reload -->
     <div class="tab-bar" role="tablist" aria-label="Section">
@@ -54,41 +49,36 @@
         *ngFor="let tab of tabs"
         [class.active]="activeTab === tab.key"
         [attr.aria-selected]="activeTab === tab.key"
-        (click)="selectTab(tab.key)">
+        (click)="selectTab(tab.key)"
+      >
         {{ tab.label }}
       </button>
     </div>
 
     <div class="content-card">
-
       <ng-container [ngSwitch]="activeTab">
-
         <!-- MY CLASSES -->
         <section *ngSwitchCase="'classes'" class="panel">
-          <h2 class="panel-title">My Classes</h2> 
+          <h2 class="panel-title">My Classes</h2>
 
           <!-- paste the selector of given tap -->
-           <app-student-process></app-student-process>
+          <app-student-process></app-student-process>
         </section>
 
         <!-- PROGRESS -->
         <section *ngSwitchCase="'progress'" class="panel">
           <app-student-my-clasess></app-student-my-clasess>
-           <!-- paste the selector of given tap -->
-        
+          <!-- paste the selector of given tap -->
         </section>
-        
+
         <!-- ASSIGNMENTS -->
         <section *ngSwitchCase="'assignments'" class="panel">
           <!-- <h2 class="panel-title">Assignments</h2>
           <p class="empty-state">Your assignments will show up here.</p> -->
           <app-student-assignment></app-student-assignment>
-           <!-- paste the selector of given tap -->
-            
+          <!-- paste the selector of given tap -->
         </section>
-
       </ng-container>
-
     </div>
   </div>
 </div>

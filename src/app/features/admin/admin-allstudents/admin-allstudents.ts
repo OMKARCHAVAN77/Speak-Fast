@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatFormField } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -39,8 +39,11 @@ interface Student {
     MatProgressBarModule,
     MatTooltipModule,
     MatChipsModule,
-  MatFormFieldModule,
-MatInputModule],
+    MatFormField,
+    MatFormFieldModule,
+  MatInputModule
+],
+  
   templateUrl: './admin-allstudents.html',
   styleUrl: './admin-allstudents.css',
 })
