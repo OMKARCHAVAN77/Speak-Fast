@@ -197,7 +197,7 @@
   color: var(--ink);
 }
 
-.status-badge {
+/* .status-badge {
   background: var(--paid-red);
   color: #ffffff;
   font-size: 11px;
@@ -205,7 +205,7 @@
   padding: 2px 10px;
   border-radius: 10px;
   line-height: 18px;
-}
+} */
 
 .details-grid {
   display: flex;
@@ -237,7 +237,7 @@
 
 /* Details button */
 
-.details-btn {
+/* .details-btn {
   flex: 0 0 auto;
   height: 36px;
   border-radius: 8px !important;
@@ -254,7 +254,7 @@
   height: 16px;
   width: 16px;
   color: var(--muted);
-}
+} */
 
 /* ---------- Tablet ---------- */
 
@@ -325,9 +325,9 @@
     white-space: normal;
   }
 
-  .details-btn {
+  /* .details-btn {
     margin-left: 0;
     width: 100%;
     justify-content: center;
-  }
+  } */
 }
