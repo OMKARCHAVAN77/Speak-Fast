@@ -9,6 +9,7 @@ import { StudentAchievement } from './features/students/student-achievement/stud
 import { CourseRecommendation } from './features/courses/course-recommendation/course-recommendation';
 import { Payment } from './features/payment/payment';
 import { adminRoutes } from './features/admin/admin-route.routes';
+import { SetPassword } from './features/teachers/set-password/set-password';
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,5 +21,6 @@ export const routes: Routes = [
     { path: 'student-achievement', component: StudentAchievement },
     { path: 'login', component: Login},
     { path : 'courses', component : CourseRecommendation},
-    { path : 'payment', component : Payment}
+    { path : 'payment', component : Payment},
+    {path : 'setpassword', component : SetPassword}
 ];
