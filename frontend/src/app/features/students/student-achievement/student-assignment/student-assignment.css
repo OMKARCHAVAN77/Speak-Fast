@@ -1,0 +1,498 @@
+:host {
+  display: block;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.page {
+  min-height: 100vh;
+  background: #ffffff;
+  /* padding: 32px 24px; */
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+.panel {
+  width: 100%;
+  /* max-width: 1180px; */
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px 15px;
+  box-sizing: border-box;
+}
+
+.page-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #101828;
+  margin: 0 0 22px 0;
+}
+
+/* ===========================
+   Filters Row
+=========================== */
+
+.filters-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 26px;
+  align-items: center;
+}
+
+.search-field {
+  flex: 1;
+}
+
+.filter-field {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+/* Hide hint/error space */
+::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* Rounded wrapper */
+::ng-deep .mat-mdc-text-field-wrapper {
+  border-radius: 28px !important;
+}
+
+::ng-deep .search-field .mat-mdc-input-element {
+  padding-left: 12px !important;
+}
+
+/* Move filter selected value / placeholder to the right */
+::ng-deep .filter-field .mat-mdc-select-value {
+  padding-left: 16px !important;
+}
+
+/* Angular Material 20 */
+::ng-deep .filter-field .mat-mdc-select-trigger {
+  padding-left: 16px !important;
+}
+
+/* Input height */
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 56px !important;
+  display: flex;
+  align-items: center;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Rounded outline */
+::ng-deep .mdc-notched-outline__leading {
+  border-radius: 28px 0 0 28px !important;
+  width: 28px !important;
+  border-color: #d0d5dd !important;
+}
+
+::ng-deep .mdc-notched-outline__notch {
+  border-color: #d0d5dd !important;
+}
+
+::ng-deep .mdc-notched-outline__trailing {
+  border-radius: 0 28px 28px 0 !important;
+  border-color: #d0d5dd !important;
+}
+
+/* Hover */
+::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__leading,
+::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__notch,
+::ng-deep .mat-mdc-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #1554b3 !important;
+}
+
+/* Focus */
+::ng-deep .mat-focused .mdc-notched-outline__leading,
+::ng-deep .mat-focused .mdc-notched-outline__notch,
+::ng-deep .mat-focused .mdc-notched-outline__trailing {
+  border-color: #1554b3 !important;
+  border-width: 2px !important;
+}
+.filters-row ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* Assignments list */
+.assignments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.assignment-card {
+  border: 1px solid #e6e8eb !important;
+  border-radius: 16px !important;
+  box-shadow: none !important;
+  padding: 28px 32px !important;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.assignment-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #101828;
+}
+
+.status-chip {
+  display: inline-block;
+  padding: 5px 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
+.status-reviewed {
+  background: #1a9850;
+}
+
+.status-pending {
+  background: #123e7c;
+}
+
+.status-overdue {
+  background: #dc2b2b;
+}
+
+.submit-btn {
+  border-radius: 10px !important;
+  border-color: #1554b3 !important;
+  color: #1554b3 !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  padding: 4px 20px !important;
+  white-space: nowrap;
+}
+
+.submit-btn mat-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  margin-right: 4px;
+  vertical-align: text-bottom;
+}
+
+/* Meta row */
+.meta-row {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  color: #667085;
+  font-size: 18px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  color: #667085;
+}
+
+/* Feedback box */
+.feedback-box {
+  background: #e3eefd;
+  border-left: 4px solid #1554b3;
+  border-radius: 4px;
+  padding: 18px 22px;
+  margin-top: 20px;
+}
+
+.feedback-title {
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  color: #101828;
+  font-size: 17px;
+}
+
+.feedback-content {
+  display: flex;
+  gap: 10px;
+}
+
+.feedback-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  color: #667085;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.feedback-comment {
+  margin: 0;
+  color: #475467;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.feedback-grade {
+  margin: 4px 0 0 0;
+  color: #475467;
+  font-size: 17px;
+}
+
+/* Deadline row */
+.deadline-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  font-size: 17px;
+  color: #101828;
+}
+
+.deadline-label {
+  font-weight: 400;
+}
+
+.deadline-days {
+  color: #475467;
+}
+
+/* Progress row */
+.progress-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-top:16px;
+}
+
+.progress-container{
+    flex:1;
+    height:14px;
+    background:#e7f6ec;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    border-radius:999px;
+    transition:width .3s ease;
+}
+
+/* Colors */
+
+.status-reviewed{
+    background:#1ba34a;
+}
+
+.status-pending{
+    background:#1565c0;
+}
+
+.status-overdue{
+    background:#d32f2f;
+}
+
+
+
+
+/* Progress row */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.progress-row mat-progress-bar {
+  flex: 1;
+}
+
+/* Increase progress bar height */
+::ng-deep .progress-row .mat-mdc-progress-bar {
+  height: 16px !important;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Track (background) */
+::ng-deep .progress-row .mdc-linear-progress__buffer-bar {
+  height: 16px !important;
+  border-radius: 10px;
+}
+
+/* Filled progress */
+::ng-deep .progress-row .mdc-linear-progress__bar-inner {
+  border-top-width: 16px !important;
+}
+
+/* Percentage text */
+.progress-percent {
+  font-weight: 700;
+  font-size: 22px;
+  color: #101828;
+  min-width: 60px;
+  text-align: right;
+}
+.progress-row mat-progress-bar {
+  flex: 1;
+  height: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress-percent {
+  font-weight: 700;
+  font-size: 20px;
+  color: #101828;
+  min-width: 54px;
+  text-align: right;
+}
+
+::ng-deep .filter-field .mat-mdc-select-arrow-wrapper {
+  transform: translateX(-16px) !important;
+}
+
+::ng-deep .progress-reviewed .mdc-linear-progress__bar-inner {
+  border-color: #1a9850 !important;
+}
+::ng-deep .progress-reviewed .mdc-linear-progress__buffer-bar {
+  background-color: #d4efdd !important;
+}
+
+::ng-deep .progress-pending .mdc-linear-progress__bar-inner {
+  border-color: #123e7c !important;
+}
+::ng-deep .progress-pending .mdc-linear-progress__buffer-bar {
+  background-color: #d7e6fa !important;
+}
+
+::ng-deep .progress-overdue .mdc-linear-progress__bar-inner {
+  border-color: #dc2b2b !important;
+}
+::ng-deep .progress-overdue .mdc-linear-progress__buffer-bar {
+  background-color: #fad8d8 !important;
+}
+
+
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 48px 0;
+  color: #98a2b3;
+}
+
+/* ===================== */
+/* Tablet (<= 900px)     */
+/* ===================== */
+@media (max-width: 900px) {
+  .panel {
+    padding: 24px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .filters-row {
+    flex-wrap: wrap;
+  }
+
+  .filter-field {
+    width: 200px;
+  }
+
+  .assignment-card {
+    padding: 22px 24px !important;
+  }
+
+  .assignment-title {
+    font-size: 20px;
+  }
+}
+
+/* ===================== */
+/* Mobile (<= 600px)     */
+/* ===================== */
+@media (max-width: 600px) {
+  .page {
+    padding: 16px 8px;
+  }
+
+  .panel {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .page-title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+
+  .filters-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .filter-field {
+    width: 100%;
+  }
+
+  .assignment-card {
+    padding: 16px !important;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .assignment-title {
+    font-size: 17px;
+  }
+
+  .meta-row {
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .deadline-row {
+    flex-direction: row;
+    font-size: 14px;
+  }
+
+  .progress-percent {
+    font-size: 14px;
+    min-width: 38px;
+  }
+}
+
+
+

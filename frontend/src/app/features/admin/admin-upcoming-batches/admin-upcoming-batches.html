@@ -1,0 +1,72 @@
+<div class="teacher-schedules">
+  <!-- Header -->
+  <div class="header">
+    <div class="header__title">
+      <h1>Teacher Schedules</h1>
+      <span class="header__subtitle">Total: {{ totalTeachers }} teachers</span>
+    </div>
+
+    <div class="header__actions">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-icon matPrefix class="search-icon">search</mat-icon>
+        <input
+          matInput
+          type="text"
+          placeholder="Search Teachers..."
+          [(ngModel)]="searchTerm"
+        />
+        <mat-icon matSuffix class="filter-icon">tune</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Teacher List -->
+  <div class="teacher-list">
+    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
+      <div class="teacher-card__row">
+        <div class="teacher-card__main">
+          <div class="avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+
+          <div class="teacher-info">
+            <div class="teacher-info__name-row">
+              <span class="teacher-name">{{ teacher.name }}</span>
+              <span class="available-badge" *ngIf="teacher.available">Available</span>
+            </div>
+            <span class="teacher-subjects">{{ teacher.subjects }}</span>
+            <span class="teacher-upcoming">
+              <mat-icon>event</mat-icon>
+              upcoming {{ teacher.upcomingCount }} Classes
+            </span>
+          </div>
+        </div>
+
+        <div class="teacher-card__actions">
+          <button
+            type="button"
+            class="upcoming-btn"
+            [class.upcoming-btn--open]="teacher.expanded"
+            (click)="toggleUpcoming(teacher)"
+          >
+            Upcoming Classes
+            <mat-icon>expand_more</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="upcoming-panel" *ngIf="teacher.expanded">
+        <div class="upcoming-panel__item" *ngFor="let cls of teacher.upcomingClasses">
+          <mat-icon>schedule</mat-icon>
+          <span class="upcoming-panel__subject">{{ cls.subject }}</span>
+          <span class="upcoming-panel__time">{{ cls.time }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredTeachers.length === 0">
+      <mat-icon>search_off</mat-icon>
+      <p>No teachers match your search.</p>
+    </div>
+  </div>
+</div>

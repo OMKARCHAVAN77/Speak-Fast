@@ -1,0 +1,93 @@
+<!-- Hero Section -->
+<section class="hero">
+
+  <button class="tag">Find Your Perfect Teacher</button>
+
+  <h1>Our Expert Teachers</h1>
+
+  <p>
+    Browse 6 certified teachers ready to help you achieve your goals
+  </p>
+
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section">
+
+  <h2>Filter & Search</h2>
+
+  <div class="filter-box">
+    <input
+      type="date"
+      #dateInput
+      (change)="onDateChange(dateInput.value)">
+  </div>
+
+  <div class="time-slots">
+    <button
+      *ngFor="let slot of timeSlots"
+      type="button"
+      [class.selected]="isSlotSelected(slot)"
+      (click)="toggleSlot(slot)">
+      {{ slot }}
+    </button>
+  </div>
+
+</section>
+
+<!-- Teachers -->
+<section class="teacher-section">
+
+  <h3>All Teacher's</h3>
+
+  <!-- shown until both date + at least one slot are selected -->
+  <p *ngIf="!showResults" class="hint-text">
+    Please select a date and at least one time slot to view available teachers.
+  </p>
+
+  <!-- shown when both are selected but nobody matches -->
+  <p *ngIf="showResults && filteredTeachers.length === 0" class="hint-text">
+    No teachers available on this date for the selected time slots.
+  </p>
+
+  <div class="teacher-grid" *ngIf="showResults">
+
+    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
+
+      <div class="card-header">
+
+        <img
+          [src]="teacher.image"
+          [alt]="teacher.name">
+
+        <h2>{{ teacher.name }}</h2>
+
+      </div>
+
+      <div class="card-body">
+
+
+
+        <span class="label">
+          Available Time Slots ({{ selectedDate }})
+        </span>
+
+        <div class="slots">
+          <button
+            *ngFor="let slot of slotsForSelectedDate(teacher)"
+            [class.highlight]="isSlotSelected(slot)">
+            {{ slot }}
+          </button>
+        </div>
+
+        <button class="book-btn" routerLink="/courses">
+          + Book Seat
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

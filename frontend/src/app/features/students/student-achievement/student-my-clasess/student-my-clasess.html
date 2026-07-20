@@ -1,0 +1,33 @@
+<mat-card class="progress-card">
+  <div class="card-header">
+    <div class="header-icon">
+      <mat-icon>trending_up</mat-icon>
+    </div>
+
+    <div class="header-text">
+      <h3 class="card-title">Learning Progress</h3>
+      <p class="card-subtitle">Your improvement over time</p>
+    </div>
+  </div>
+
+  <div class="progress-list">
+    <div class="progress-row" *ngFor="let item of progressItems">
+
+      <span class="progress-label">
+        {{ item.label }}
+      </span>
+
+      <div class="custom-progress">
+        <div
+          class="custom-progress-fill"
+          [style.width.%]="item.value">
+        </div>
+      </div>
+
+      <span class="progress-value">
+        {{ item.value }}%
+      </span>
+
+    </div>
+  </div>
+</mat-card>

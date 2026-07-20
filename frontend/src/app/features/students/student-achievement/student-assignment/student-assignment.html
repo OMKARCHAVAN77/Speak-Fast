@@ -1,0 +1,119 @@
+<div class="page">
+  <div class="panel">
+    <h1 class="page-title">My Assignments</h1>
+
+    <div class="filters-row">
+      <mat-form-field appearance="outline" class="search-field">
+        <input
+          matInput
+          placeholder="Search by students name..."
+          [ngModel]="searchTerm()"
+          (ngModelChange)="searchTerm.set($event)" />
+        <mat-icon matSuffix>filter_list</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-select
+          [ngModel]="filterValue()"
+          (ngModelChange)="filterValue.set($event)">
+          @for (option of filterOptions; track option.value) {
+            <mat-option [value]="option.value">
+              {{ option.label }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="assignments-list">
+      @for (assignment of filteredAssignments(); track assignment.id) {
+
+        <mat-card class="assignment-card">
+
+          <div class="card-header">
+            <div class="title-block">
+              <span class="assignment-title">
+                {{ assignment.title }}
+              </span>
+
+              <span
+                class="status-chip"
+                [ngClass]="statusClass(assignment.status)">
+                {{ assignment.status }}
+              </span>
+            </div>
+
+            <button
+              mat-stroked-button
+              color="primary"
+              class="submit-btn"
+              (click)="onSubmit(assignment)">
+              <mat-icon>add</mat-icon>
+              Submit
+            </button>
+          </div>
+
+          <div class="meta-row">
+            <span class="meta-item">
+              <mat-icon class="meta-icon">assignment_ind</mat-icon>
+              {{ assignment.studentName }}
+            </span>
+
+            <span class="meta-item">
+              <mat-icon class="meta-icon">event</mat-icon>
+              Due: {{ assignment.dueDate }}
+            </span>
+          </div>
+
+          @if (assignment.feedback) {
+            <div class="feedback-box">
+              <p class="feedback-title">Teacher Feedback:</p>
+
+              <div class="feedback-content">
+                <mat-icon class="feedback-icon">schedule</mat-icon>
+
+                <div>
+                  <p class="feedback-comment">
+                    {{ assignment.feedback.comment }}
+                  </p>
+
+                  <p class="feedback-grade">
+                    Grade: {{ assignment.feedback.grade }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="deadline-row">
+            <span class="deadline-label">
+              Time until deadline
+            </span>
+
+            <span class="deadline-days">
+              {{ assignment.daysLeft }} days left
+            </span>
+          </div>
+
+          <div class="progress-row">
+
+            <div class="progress-container">
+              <div
+                class="progress-fill"
+                [style.width.%]="assignment.progress"
+                [ngClass]="statusClass(assignment.status)">
+              </div>
+            </div>
+           </div>
+        <span class="progress-percent">{{ assignment.progress }}%</span>
+ 
+    </mat-card>
+    } @empty {
+    <div class="empty-state">
+      <mat-icon>search_off</mat-icon>
+      <p>No assignments match your search.</p>
+    </div>
+    }
+  </div>
+</div>
+</div>

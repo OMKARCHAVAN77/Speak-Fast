@@ -1,0 +1,59 @@
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Brand column -->
+    <div class="footer-col brand-col">
+      <div class="brand-logo">
+        <img 
+    src="assets/speakfast.png" 
+    alt="Speak Fast Logo" 
+    class="brand-logo"
+  />
+      </div>
+      <h3 class="brand-title">Speak Fast Academy</h3>
+      <p class="brand-desc">
+        Your trusted platform for online English speaking courses with expert teachers.
+      </p>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-col">
+      <h4 class="col-heading">Quick Links</h4>
+      <ul class="link-list">
+        <li *ngFor="let link of quickLinks">
+          <a [routerLink]="link.route" class="footer-link">{{ link.label }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Courses Offered -->
+    <div class="footer-col">
+      <h4 class="col-heading">Courses Offered</h4>
+      <ul class="link-list">
+        <li *ngFor="let course of coursesOffered">
+          <span class="footer-text">{{ course }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Contact Us -->
+    <div class="footer-col">
+      <h4 class="col-heading">Contact Us</h4>
+      <ul class="contact-list">
+        <li>
+          <mat-icon class="contact-icon">mail_outline</mat-icon>
+          <a href="mailto:{{ contactEmail }}" class="footer-link">{{ contactEmail }}</a>
+        </li>
+        <li>
+          <mat-icon class="contact-icon">call</mat-icon>
+          <a href="tel:{{ contactPhone }}" class="footer-link">{{ contactPhone }}</a>
+        </li>
+        <li>
+          <mat-icon class="contact-icon">location_on</mat-icon>
+          <span class="footer-text">{{ contactAddress }}</span>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</footer>

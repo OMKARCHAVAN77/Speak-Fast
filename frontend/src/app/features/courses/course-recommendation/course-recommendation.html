@@ -1,0 +1,194 @@
+<div class="course-recommendation-page">
+
+  <!-- Course-Header Section -->
+  <section class="course-header">
+    <h1 class="course-header__title">
+      Your Course Recommendation
+    </h1>
+
+    <p class="course-header__description">
+      Based on your test performance, we recommend the perfect course for you
+    </p>
+  </section>
+
+  <!-- Test Score -->
+  <section class="score-section">
+    <mat-card class="score-card">
+      <div class="score-card-content">
+
+        <!-- Left Side -->
+        <div class="score-left">
+
+          <div class="score-icon-container">
+            <!-- <mat-icon class="score-icon">workspace_premium</mat-icon> -->
+            <img
+              src="assets/test-score.png"
+              alt="Test Score"
+              class="score-icon" 
+            />
+          </div>
+
+          <div class="score-text-container">
+            <h2 class="score-title">Your Test Score</h2>
+            <p class="score-description">
+              Great effort! Here's your result.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Right Side -->
+        <div class="score-right">
+          <span class="score-value">22</span>
+          <span class="score-total">/25</span>
+        </div>
+
+      </div>
+    </mat-card>
+  </section>
+
+  <!-- Recommendation -->
+  <section class="recommendation-section">
+    <mat-card class="recommendation-card">
+      <mat-card-content class="recommendation-card-content">
+        <h3 class="recommendation-title">Strong Foundation Recommended</h3>
+        <p class="recommendation-description">
+          Based on your test results, we recommend focusing on building a strong foundation in this area.
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+
+  <!-- Recommended Courses -->
+  <section class="recommended-courses">
+    <h2 class="section-title">Recommended Courses</h2>
+    <div class="course-grid">
+
+      @for(course of recommendedCourses; track course.title){
+
+      <mat-card class="course-card">
+
+        <!-- Card Header -->
+        <div class="card-header">
+
+          <div class="card-icon">
+            <!-- <mat-icon>school</mat-icon>  -->
+            <img
+              src= {{course.img}}
+              alt="Test Score"
+              class="score-icon" 
+            />
+          </div>
+
+          <div class="recommended-chip">
+            {{course.badge}}
+          </div>
+
+        </div>
+
+        <!-- Title -->
+        <h3 class="course-title">
+          {{course.title}}
+        </h3>
+
+        <!-- Description -->
+        <p class="course-description">
+          {{course.description}}
+        </p>
+
+        <!-- Duration & Sessions -->
+        <div class="course-info">
+
+          <div class="info-item">
+            <span class="info-label">Duration</span>
+            <div class="info-content">
+              <mat-icon>schedule</mat-icon>
+              <span class="info-value">{{course.duration}}</span>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <span class="info-label">Live Sessions</span>
+            <div class="info-content">
+              <mat-icon>schedule</mat-icon>
+              <span class="info-value">{{course.sessions}}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Learn Section -->
+        <div class="learn-section">
+
+          <h4>What You'll Learn</h4>
+
+          <ul>
+
+            @for(topic of course.topics; track topic){
+
+            <li>
+
+              <mat-icon>check_circle</mat-icon>
+
+              <span>{{topic}}</span>
+
+            </li>
+
+            }
+
+          </ul>
+
+        </div>
+
+        <mat-divider></mat-divider>
+        <!-- Price -->
+        <div class="course-price">
+
+          <span>Course Price</span>
+
+          <h2>{{course.price}}</h2>
+
+        </div>
+
+        <!-- Button -->
+        <button
+          routerLink="/payment"
+          mat-flat-button
+          color="primary"
+          class="enroll-button">
+          <mat-icon>add</mat-icon>
+          Enroll Now
+
+        </button>
+      </mat-card>
+      }
+    </div>
+  </section>
+
+  <!-- Other Courses -->
+  <section class="other-courses">
+
+  </section>
+
+  <!-- Bottom Buttons -->
+  <section class="action-buttons">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="action-button-back">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+
+    <button
+      routerLink="/payment"
+      mat-flat-button
+      color="primary"
+      class="action-button-forward">
+      Enroll Now
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </section>
+</div>
