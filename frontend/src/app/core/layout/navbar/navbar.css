@@ -27,60 +27,33 @@
   box-sizing: border-box;
   flex-wrap: wrap;
   row-gap: 10px;
-   overflow-x: auto;
 }
 
-/* Logo */
 .logo-section {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
   width: 113px;
-  min-width: 113px;
+  min-width: 90px;
   height: auto;
   flex-shrink: 0;
+  text-decoration: none;
 }
 
-.logo-text {
-  font-size: clamp(16px, 2.2vw, 22px);
-  font-weight: 800;
-  font-style: italic;
-  letter-spacing: 0.3px;
-  white-space: nowrap;
+.logo-image {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.logo-speak {
-  color: #1a3a6b;
-}
-
-.logo-fast {
-  color: #e13b3b;
-}
-
-.logo-reg {
-  font-size: 10px;
-  color: #1a3a6b;
-  margin-left: 1px;
-}
-
-.logo-tagline {
-  font-size: 10px;
-  color: #e13b3b;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  margin-top: 1px;
-  white-space: nowrap;
-}
-
-/* Nav links */
 .nav-links {
   display: flex;
   align-items: center;
- flex-wrap: nowrap;  
- gap: clamp(24px, 4.0vw, 60px);
+  flex-wrap: nowrap;
+  gap: clamp(24px, 4.0vw, 60px);
   flex: 1 1 auto;
   justify-content: center;
-  margin-left: clamp(0px, 30vw, 450px);   /* scales down as screen shrinks */
+  margin-left: clamp(0px, 30vw, 450px);
   margin-right: auto;
 }
 
@@ -89,12 +62,12 @@
   color: #333333;
   text-decoration: none;
   cursor: pointer;
-  font-weight: 400;
+  font-weight: 700;
+  font-family: "Quicksand", sans-serif;
   transition: color 0.2s ease;
   white-space: nowrap;
 }
 
-.nav-link a:hover,
 .nav-link:hover {
   color: #3F78F5;
 }
@@ -102,56 +75,73 @@
 .nav-link.active {
   color: #3F78F5;
   text-decoration: underline;
-  font-weight: 500;
+  font-weight: 700;
 }
 
-/* Actions */
 .actions-section {
   display: flex;
   align-items: center;
   gap: 14px;
   flex-shrink: 0;
+  margin-left: auto;
+  margin-right: -60px;
+}
+.call-btn {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  border-radius: 8px !important;
+  border: 1.8px solid transparent !important;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(90deg, #4687FB 0%, #9050E0 100%) border-box !important;
+  color: #000 !important;
+  font-size: 18px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  text-transform: none;
+  padding: 0 20px !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+  box-shadow: none !important;
 }
 
-.call-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 22px !important;
-  border: 1px solid #1a4fa0 !important;
-  color: #1a4fa0 !important;
-  font-size: 14px;
-  text-transform: none;
-  padding: 0 18px !important;
-  line-height: 36px !important;
-  white-space: nowrap;
+.call-btn .mat-mdc-button-touch-target {
+  height: 40px !important;
 }
 
 .call-icon {
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
-  color: #1a4fa0;
+  font-size: 24px !important;
+  height: 22px !important;
+  width: 24px !important;
+  color: #031a37 !important;
+  transform: rotate(-10deg);
 }
 
 .login-btn {
-  background: linear-gradient(90deg, #6b4fd6 0%, #1a4fa0 100%) !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  background: linear-gradient(90deg, #4687FB 0%, #9050E0 100%) !important;
   color: #ffffff !important;
-  border-radius: 22px !important;
+  border-radius: 8px !important;
   font-size: 14px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
   text-transform: none;
-  padding: 0 24px !important;
-  line-height: 36px !important;
-  font-weight: 500;
+  padding: 0 28px !important;
+  line-height: 1 !important;
   white-space: nowrap;
+  box-shadow: none !important;
 }
 
-/* Hamburger toggle - not used, kept hidden */
-.menu-toggle {
-  display: none !important;
+.login-btn .mat-mdc-button-touch-target {
+  height: 40px !important;
 }
 
-/* New hamburger button - hidden on desktop, shown on mobile */
 .menu-toggle-btn {
   display: none;
   background: none;
@@ -159,18 +149,21 @@
   cursor: pointer;
   padding: 8px;
   color: #333333;
+  flex-shrink: 0;
 }
 
-/* Bottom accent bar */
+.menu-toggle-btn mat-icon {
+  font-size: 26px !important;
+  height: 26px !important;
+  width: 26px !important;
+}
+
 .bottom-bar {
   height: 1px;
   width: 100%;
   background-color: #dddddd;
 }
 
-/* ===== Responsive breakpoints ===== */
-
-/* Tablet / laptop */
 @media (max-width: 1024px) {
   .navbar-container {
     padding: 10px 24px;
@@ -181,11 +174,22 @@
   }
 }
 
-/* Small tablet */
 @media (max-width: 900px) {
   .navbar-container {
     flex-wrap: wrap;
     row-gap: 10px;
+    overflow-x: visible;
+  }
+
+  .call-btn,
+  .login-btn {
+    display: none !important;
+  }
+
+  .actions-section {
+    margin-left: auto;
+    margin-right: 0;
+    gap: 0;
   }
 
   .nav-links {
@@ -200,16 +204,21 @@
     margin-right: 0;
     background: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
   }
 
   .nav-links.open {
     display: flex;
+    max-height: 500px;
   }
 
   .nav-link {
     width: 100%;
     padding: 12px 4px;
     border-bottom: 1px solid #eeeeee;
+    font-size: 15px;
   }
 
   .menu-toggle-btn {
@@ -219,49 +228,49 @@
   }
 }
 
-/* Mobile */
 @media (max-width: 600px) {
   .navbar-container {
     padding: 10px 16px;
   }
 
+  .logo-section {
+    width: 95px;
+    min-width: 80px;
+  }
+
   .nav-link {
     font-size: 14px;
   }
-
-  .actions-section {
-    gap: 8px;
-  }
-
-  .call-btn span {
-    display: none;
-  }
-
-  .call-btn {
-    padding: 0 12px !important;
-  }
-
-  .login-btn {
-    padding: 0 16px !important;
-    font-size: 13px;
-  }
-
-  .logo-tagline {
-    display: none;
-  }
 }
 
-/* Small mobile */
-@media (max-width: 380px) {
+@media (max-width: 400px) {
+  .logo-section {
+    width: 80px;
+    min-width: 70px;
+  }
+
   .nav-link {
     font-size: 13px;
   }
 
-  .call-btn {
-    display: none;
+  .menu-toggle-btn {
+    padding: 6px;
   }
 
-  .logo-text {
-    font-size: 16px;
+  .menu-toggle-btn mat-icon {
+    font-size: 22px !important;
+    height: 22px !important;
+    width: 22px !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .navbar-container {
+    padding: 8px 12px;
+  }
+
+  .logo-section {
+    width: 70px;
+    min-width: 65px;
   }
 }
