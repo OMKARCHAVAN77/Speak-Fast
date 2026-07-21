@@ -19,7 +19,7 @@ interface NavLink {
     CommonModule,
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
