@@ -1,92 +1,96 @@
-<!-- Hero Section -->
-<section class="hero">
+<section class="teachers-page">
 
-  <button class="tag">Find Your Perfect Teacher</button>
-
-  <h1>Our Expert Teachers</h1>
-
-  <p>
-    Browse 6 certified teachers ready to help you achieve your goals
-  </p>
-
-</section>
-
-<!-- Filter Section -->
-<section class="filter-section">
-
-  <h2>Filter & Search</h2>
-
-  <div class="filter-box">
-    <input
-      type="date"
-      #dateInput
-      (change)="onDateChange(dateInput.value)">
+  <!-- ============ Header ============ -->
+  <div class="page-header">
+    <span class="eyebrow-badge">
+      <mat-icon class="eyebrow-icon">search</mat-icon>
+      Find Your Perfect Teacher
+    </span>
+    <h1 class="headline">
+      <span class="headline-accent">One-on-One</span> Training
+    </h1>
+    <p class="subtitle">Pick a date and time — we'll show you every teacher free to meet then.</p>
   </div>
 
-  <div class="time-slots">
-    <button
-      *ngFor="let slot of timeSlots"
-      type="button"
-      [class.selected]="isSlotSelected(slot)"
-      (click)="toggleSlot(slot)">
-      {{ slot }}
-    </button>
-  </div>
+  <!-- ============ Booking / filter card ============ -->
+  <div class="card">
+    <p class="card-title">When do you want to start</p>
 
-</section>
-
-<!-- Teachers -->
-<section class="teacher-section">
-
-  <h3>All Teacher's</h3>
-
-  <!-- shown until both date + at least one slot are selected -->
-  <p *ngIf="!showResults" class="hint-text">
-    Please select a date and at least one time slot to view available teachers.
-  </p>
-
-  <!-- shown when both are selected but nobody matches -->
-  <p *ngIf="showResults && filteredTeachers.length === 0" class="hint-text">
-    No teachers available on this date for the selected time slots.
-  </p>
-
-  <div class="teacher-grid" *ngIf="showResults">
-
-    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
-
-      <div class="card-header">
-
-        <img
-          [src]="teacher.image"
-          [alt]="teacher.name">
-
-        <h2>{{ teacher.name }}</h2>
-
-      </div>
-
-      <div class="card-body">
-
-
-
-        <span class="label">
-          Available Time Slots ({{ selectedDate }})
-        </span>
-
-        <div class="slots">
-          <button
-            *ngFor="let slot of slotsForSelectedDate(teacher)"
-            [class.highlight]="isSlotSelected(slot)">
-            {{ slot }}
-          </button>
-        </div>
-
-        <button class="book-btn" routerLink="/courses">
-          + Book Seat
-        </button>
-
-      </div>
-
+    <div class="filter-box">
+      <!-- Date field -->
+      <mat-form-field
+        class="field"
+        [class.has-value]="selectedDateObj"
+        appearance="outline"
+        subscriptSizing="dynamic">
+        <mat-icon matPrefix class="field-icon">calendar_today</mat-icon>
+        <mat-label>Date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [(ngModel)]="selectedDateObj"
+          (dateChange)="onDatePicked($event.value)"
+          (click)="picker.open()"
+          placeholder="Select Date"
+          readonly>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
     </div>
+
+    <!-- Time slots -->
+    <p class="section-label">Select time slot(s)</p>
+    <div class="time-slots">
+      <button
+        *ngFor="let slot of timeSlots"
+        type="button"
+        class="slot-chip"
+        [class.selected]="isSlotSelected(slot)"
+        (click)="toggleSlot(slot)">
+        {{ slot }}
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ Results ============ -->
+  <div class="results">
+
+    <ng-container *ngIf="showResults; else emptyState">
+      <p class="results-count" *ngIf="filteredTeachers.length as count">
+        {{ count }} teacher{{ count === 1 ? '' : 's' }} available on {{ selectedDate }}
+      </p>
+
+      <div class="teacher-grid" *ngIf="filteredTeachers.length > 0; else noMatches">
+        <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
+          <img [src]="teacher.image" [alt]="teacher.name" class="teacher-photo">
+          <div class="teacher-info">
+            <p class="teacher-name">{{ teacher.name }}</p>
+            <div class="teacher-slots">
+              <span
+                class="mini-slot"
+                *ngFor="let slot of slotsForSelectedDate(teacher)"
+                [class.mini-slot--selected]="isSlotSelected(slot)">
+                {{ slot }}
+              </span>
+            </div>
+          </div>
+          <button mat-flat-button color="primary" class="book-btn">Book</button>
+        </div>
+      </div>
+
+      <ng-template #noMatches>
+        <div class="empty-panel">
+          <mat-icon class="empty-icon">event_busy</mat-icon>
+          <p>No teachers are free for that exact combination. Try a different date or fewer time slots.</p>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <ng-template #emptyState>
+      <div class="empty-panel">
+        <mat-icon class="empty-icon">schedule</mat-icon>
+        <p>Pick a date and at least one time slot to see available teachers.</p>
+      </div>
+    </ng-template>
 
   </div>
 
