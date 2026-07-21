@@ -158,6 +158,8 @@ const filterTeacherService = async (date, time) => {
     };
   }
 
+
+
   const teachers = await Teacher.find(query).select(
     "-password -resetToken -resetTokenExpiry"
   );
