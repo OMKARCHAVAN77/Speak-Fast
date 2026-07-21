@@ -1,86 +1,83 @@
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatDividerModule } from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from "@angular/router";
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+
+interface Plan {
+  name: string;
+  badge?: string;
+  description: string;
+  price: number;
+  originalPrice: number;
+  discount: string;
+  duration: string;
+  liveSessions: number;
+  learnItems: string[];
+  featured?: boolean;
+}
 
 @Component({
   selector: 'app-course-recommendation',
-  imports: [
-    RouterLink,
-    MatIconModule,
-    MatDividerModule,
-    MatCardModule
-  ],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule],
   templateUrl: './course-recommendation.html',
   styleUrl: './course-recommendation.css',
 })
 export class CourseRecommendation {
-  recommendedCourses = [
+  plans: Plan[] = [
     {
-      title: 'VIP Plan',
-      badge: 'Recommended',
-      img : "assets/basic-score-icon.png",
-      description: 'Intermediate level course for improving fluency and advanced grammar concepts.',
-      duration: '1 Month',
-      sessions: '30',
-      price: '₹5,000',
-      topics: [
-        'Advanced grammar structures',
-        'Complex sentence formation',
-        'Professional conversations',
-        'Accent improvement'
+      name: 'BASIC PLAN',
+      description: 'Intermediate level course for improving fluency and advanced grammar concepts',
+      price: 8000,
+      originalPrice: 10000,
+      discount: '20% OFF',
+      duration: '2 Month',
+      liveSessions: 50,
+      learnItems: [
+        '1 Month Grammar + 1 Month Speaking',
+        '50 Live 1 on 1 sessions (40 mins each)',
+        'Basic grammar for communication',
+        '20 Grammar test'
       ]
     },
-
     {
-      title: 'All in One Class',
-      badge: 'Limited Time Offer',
-      img: "assets/all-inone-icon.png",
-      description: 'Complete package with all three courses - Foundation, Knowledge & Practice combined at special discounted price!',
-      duration: '3 Months',
-      sessions: '90',
-      price: '₹12,000',
-      originalPrice: '₹15,000',
-      offerExpiry: '13 March 2026',
-      topics: [
-        'All Foundation + Knowledge + Practice',
-        '3 months comprehensive training',
-        'Personal mentor support',
-        'Certificate of completion'
+      name: 'PREMIUM PLAN',
+      badge: 'Best Seller',
+      description: 'Intermediate level course for improving fluency and advanced grammar concepts',
+      price: 12000,
+      originalPrice: 15000,
+      discount: '20% OFF',
+      duration: '3 Month',
+      liveSessions: 75,
+      featured: true,
+      learnItems: [
+        '2 Months Grammar + 1 Month Speaking',
+        '75 Live 1 on 1 sessions (40 mins each)',
+        '35 Grammar tests',
+        'Free Interview training worth ₹ 3000',
+        'Free Vocabulary E-book'
       ]
     },
-
     {
-      title: 'Basic Plan',
-      badge: 'Beginner',
-      img : "assets/basic-score-icon.png",
-      description: 'Foundation level English speaking course covering basic conversation and grammar.',
-      duration: '1 Month',
-      sessions: '30',
-      price: '₹5,000',
-      topics: [
-        'Basic grammar fundamentals',
-        'Essential vocabulary building',
-        'Simple conversation practice',
-        'Pronunciation basics'
-      ]
-    },
-
-    {
-      title: 'Premium Plan',
-      badge: 'Advanced',
-      img : "assets/basic-score-icon.png",
-      description: 'Complete mastery course with intensive practice and real-world application.',
-      duration: '1 Month',
-      sessions: '30',
-      price: '₹5,000',
-      topics: [
-        'Complete grammar mastery',
-        'Fluent conversation skills',
-        'Interview preparation',
-        'Public speaking practice'
+      name: 'VIP PLAN',
+      description: 'Intermediate level course for improving fluency and advanced grammar concepts',
+      price: 20000,
+      originalPrice: 25000,
+      discount: '20% OFF',
+      duration: '6 Month',
+      liveSessions: 150,
+      learnItems: [
+        '2 Months Grammar + 4 Months',
+        '150 Live 1 on 1 sessions (40 mins each)',
+        '4 mock interview by expert',
+        'Resume Making Guidance',
+        'Free Interview training worth ₹ 3000',
+        'Free Vocabulary E-book'
       ]
     }
   ];
+
+  enroll(plan: Plan): void {
+    console.log('Enrolling in', plan.name);
+  }
 }
