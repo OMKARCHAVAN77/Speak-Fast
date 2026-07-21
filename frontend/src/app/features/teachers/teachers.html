@@ -1,93 +1,247 @@
-<!-- Hero Section -->
-<section class="hero">
+<div class="landing-page">
 
-  <button class="tag">Find Your Perfect Teacher</button>
+  <!-- ================= HERO ================= -->
 
-  <h1>Our Expert Teachers</h1>
+  <section class="hero-section">
 
-  <p>
-    Browse 6 certified teachers ready to help you achieve your goals
-  </p>
+    <div class="hero-container">
 
-</section>
+      <!-- LEFT CONTENT -->
 
-<!-- Filter Section -->
-<section class="filter-section">
+      <div class="hero-left">
 
-  <h2>Filter & Search</h2>
+        <div class="hero-tag">
+          Find Your Perfect Teacher
+        </div>
 
-  <div class="filter-box">
-    <input
-      type="date"
-      #dateInput
-      (change)="onDateChange(dateInput.value)">
-  </div>
+        <h1>
+          One-on-One Training with
+          <span>Top Experts</span>
+        </h1>
 
-  <div class="time-slots">
-    <button
-      *ngFor="let slot of timeSlots"
-      type="button"
-      [class.selected]="isSlotSelected(slot)"
-      (click)="toggleSlot(slot)">
-      {{ slot }}
-    </button>
-  </div>
+        <p>
+          Browse our certified teachers ready to help you achieve your English speaking goals.
+        </p>
 
-</section>
+        <div class="feature-list">
 
-<!-- Teachers -->
-<section class="teacher-section">
+          <div class="feature-card">
 
-  <h3>All Teacher's</h3>
+            <div class="feature-icon">
+              <mat-icon>school</mat-icon>
+            </div>
 
-  <!-- shown until both date + at least one slot are selected -->
-  <p *ngIf="!showResults" class="hint-text">
-    Please select a date and at least one time slot to view available teachers.
-  </p>
+            <div>
 
-  <!-- shown when both are selected but nobody matches -->
-  <p *ngIf="showResults && filteredTeachers.length === 0" class="hint-text">
-    No teachers available on this date for the selected time slots.
-  </p>
+              <strong>Certified</strong>
 
-  <div class="teacher-grid" *ngIf="showResults">
+              <span>Teacher</span>
 
-    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
+            </div>
 
-      <div class="card-header">
+          </div>
 
-        <img
-          [src]="teacher.image"
-          [alt]="teacher.name">
+          <div class="feature-card">
 
-        <h2>{{ teacher.name }}</h2>
+            <div class="feature-icon">
+
+              <mat-icon>calendar_month</mat-icon>
+
+            </div>
+
+            <div>
+
+              <strong>Flexible</strong>
+
+              <span>Schedules</span>
+
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 
-      <div class="card-body">
+      <!-- RIGHT SIDE -->
 
+      <div class="hero-right">
 
+        <!-- Background -->
 
-        <span class="label">
-          Available Time Slots ({{ selectedDate }})
-        </span>
+        <div class="hero-bg"></div>
 
-        <div class="slots">
-          <button
-            *ngFor="let slot of slotsForSelectedDate(teacher)"
-            [class.highlight]="isSlotSelected(slot)">
-            {{ slot }}
-          </button>
+        <!-- Award -->
+
+        <div class="award-card">
+
+          <div class="award-icon">
+
+            🏆
+
+          </div>
+
+          <div>
+
+            <strong>We have 50+</strong>
+
+            <small>Winning Awards</small>
+
+          </div>
+
         </div>
 
-        <button class="book-btn" routerLink="/courses">
-          + Book Seat
-        </button>
+        <!-- Male Teacher -->
+
+        <div class="teacher-card male">
+
+          <img src="assets/images/teacher-male.jpg">
+
+          <div class="video-controls">
+
+            <button class="green"></button>
+
+            <button class="red"></button>
+
+            <button class="green"></button>
+
+          </div>
+
+        </div>
+
+        <!-- Female Teacher -->
+
+        <div class="teacher-card female">
+
+          <img src="assets/images/teacher-female.jpg">
+
+          <div class="video-controls">
+
+            <button class="green"></button>
+
+            <button class="red"></button>
+
+            <button class="green"></button>
+
+          </div>
+
+        </div>
+
+        <!-- Live Classes -->
+
+        <div class="live-card">
+
+          <span class="title">
+
+            Live Classes
+
+          </span>
+
+          <div class="avatar-group">
+
+            <img src="assets/images/avatar1.jpg">
+
+            <img src="assets/images/avatar2.jpg">
+
+            <img src="assets/images/avatar3.jpg">
+
+            <span>+43</span>
+
+          </div>
+
+        </div>
+
+        <!-- Rating -->
+
+        <div class="rating-card">
+
+          <mat-icon>
+
+            star
+
+          </mat-icon>
+
+          <div>
+
+            <strong>4.8/5</strong>
+
+            <small>From 200+ students</small>
+
+          </div>
+
+        </div>
 
       </div>
 
     </div>
 
-  </div>
+  </section>
 
-</section>
+  <!-- ================= FILTER ================= -->
+
+  <section class="filter-section">
+
+    <mat-card class="filter-card">
+
+      <h2>
+
+        When do you want to start
+
+      </h2>
+
+      <div class="filter-row">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+
+            Date
+
+          </mat-label>
+
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="selectedDate">
+
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker">
+          </mat-datepicker-toggle>
+
+          <mat-datepicker
+            #picker>
+          </mat-datepicker>
+
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+
+            Select Time
+
+          </mat-label>
+
+          <mat-select
+            [(ngModel)]="selectedTime">
+
+            <mat-option
+              *ngFor="let item of timeSlots"
+              [value]="item">
+
+              {{item}}
+
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+    </mat-card>
+
+  </section>
+
+</div>
