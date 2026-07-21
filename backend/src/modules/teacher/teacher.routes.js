@@ -5,8 +5,8 @@ import isAdmin from "../../middlewares/auth.middleware.js";
 import {
   registerTeacher,
   getAllTeachers,
-  setPassword,
-   loginTeacher,
+  filterTeachers,
+  
 } from "./teacher.controller.js";
 
 const router = express.Router();
@@ -21,5 +21,7 @@ router.get("/all", isAdmin, getAllTeachers);
 // router.get("/all", getAllTeachers);
 router.post('/reset-password', setPassword);
 router.post('/login', loginTeacher);
+
+router.get("/filter",filterTeachers)
 
 export default router;
