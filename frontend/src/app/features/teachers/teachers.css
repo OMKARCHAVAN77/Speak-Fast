@@ -1,303 +1,323 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-:host {
-  --primary-blue: #0c4a9e;
-  --primary-blue-dark: #0a3d84;
-}
-body{
-    background:#f5f7fb;
+/* ============================================================
+   Page layout
+============================================================ */
+.teachers-page {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 48px;
+  background: linear-gradient(135deg, #f7f8fc 0%, #eef1fa 100%);
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-/* ================= Hero ================= */
-
-.hero{
-    background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-    color:#fff;
-    text-align:center;
-    padding:60px 20px 90px;
+.page-header {
+  max-width: 640px;
+  margin: 0 auto 32px auto;
+  text-align: center;
 }
 
-.hero .tag{
-    padding:10px 22px;
-    border:1px solid #fff;
-    border-radius:30px;
-    background:transparent;
-    color:#fff;
-    margin-bottom:20px;
-    cursor:pointer;
-    font-size:15px;
+/* ============================================================
+   Eyebrow + headline
+============================================================ */
+.eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eaf0ff;
+  color: #4361ee;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 16px;
 }
 
-.hero h1{
-    font-size:42px;
-    margin:20px 0 10px;
+.eyebrow-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
 }
 
-.hero p{
-    font-size:18px;
+.headline {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #111417;
+  margin: 0 0 10px 0;
 }
 
-/* ================= Filter ================= */
-
-.filter-section{
-    width:90%;
-    max-width:1300px;
-    margin:-45px auto 40px;
-    background:#fff;
-    border-radius:12px;
-    padding:25px;
-    box-shadow:0 5px 15px rgba(0,0,0,.1);
+.headline-accent {
+  color: #4361ee;
 }
 
-.filter-section h2{
-    margin-bottom:20px;
-    font-size:24px;
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
 }
 
-.filter-box input{
-    width:250px;
-    max-width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    margin-bottom:20px;
+/* ============================================================
+   Booking / filter card
+============================================================ */
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  max-width: 640px;
+  margin: 0 auto 32px auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
 }
 
-.time-slots{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  margin: 0 0 16px 0;
 }
 
-.time-slots button{
-    padding:9px 14px;
-    border:1px solid #cfd8dc;
-    background:#fff;
-    border-radius:6px;
-    cursor:pointer;
-    transition:.3s;
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 20px 0 10px 0;
 }
 
-.time-slots button:hover{
-    background:#0f57a5;
-    color:#fff;
+.filter-box {
+  display: flex;
+  gap: 12px;
 }
 
-/* ================= Teacher Section ================= */
-
-.teacher-section{
-    width:90%;
-    max-width:1300px;
-    margin:40px auto;
+.field {
+  flex: 1;
+  font-size: 13px;
 }
 
-.teacher-section h3{
-    margin-bottom:25px;
-    font-size:26px;
+.field ::ng-deep .mat-mdc-text-field-wrapper {
+  background: #fff;
+  border-radius: 12px;
+  padding: 6px 14px;
 }
 
-/* ================= Grid ================= */
-
-.teacher-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:25px;
+.field ::ng-deep .mdc-notched-outline__leading,
+.field ::ng-deep .mdc-notched-outline__notch,
+.field ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #e4e6ec !important;
+  border-width: 1.5px !important;
 }
 
-/* ================= Card ================= */
-
-.teacher-card{
-    background:#fff;
-    border-radius:12px;
-    overflow:hidden;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
-    transition:.3s;
+.field ::ng-deep .mdc-notched-outline__notch {
+  border-left: none !important;
 }
 
-.teacher-card:hover{
-    transform:translateY(-5px);
+.field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
 
-.card-header{
-    background:#0f57a5;
-    color:#fff;
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:18px;
+.field ::ng-deep .mat-mdc-form-field-icon-prefix {
+  padding-right: 10px;
 }
 
-.card-header img{
-    width:65px;
-    height:65px;
-    border-radius:50%;
-    object-fit:cover;
-    border:3px solid #fff;
+.field .field-icon {
+  color: #6b7280;
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
 }
 
-.card-header h2{
-    font-size:22px;
-    word-break:break-word;
+.field ::ng-deep mat-label {
+  position: static !important;
+  display: block;
+  transform: none !important;
+  font-size: 11px;
+  color: #9296a3;
+  margin-bottom: 2px;
 }
 
-.card-body{
-    padding:20px;
+.field ::ng-deep .mdc-floating-label {
+  position: static !important;
+  transform: none !important;
 }
 
-.card-body p{
-    color:#555;
-    line-height:1.6;
-    margin-bottom:18px;
+.field ::ng-deep input.mat-mdc-input-element {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  caret-color: transparent;
 }
 
-.label{
-    display:inline-block;
-    background:#fff3cd;
-    color:#8a6d3b;
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:13px;
-    margin-bottom:15px;
+.field ::ng-deep input.mat-mdc-input-element::placeholder {
+  font-weight: 500;
+  color: #9296a3;
 }
 
-.slots{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin:15px 0 25px;
+.field:hover ::ng-deep .mdc-notched-outline__leading,
+.field:hover ::ng-deep .mdc-notched-outline__notch,
+.field:hover ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #c9ccd6 !important;
 }
 
-.slots button{
-    padding:8px 12px;
-    border:1px solid #d5dbe0;
-    background:#fff;
-    border-radius:6px;
-    cursor:pointer;
-    transition:.3s;
+.field.has-value ::ng-deep .mdc-notched-outline__leading,
+.field.has-value ::ng-deep .mdc-notched-outline__notch,
+.field.has-value ::ng-deep .mdc-notched-outline__trailing,
+.field.mat-focused ::ng-deep .mdc-notched-outline__leading,
+.field.mat-focused ::ng-deep .mdc-notched-outline__notch,
+.field.mat-focused ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #7c3aed !important;
 }
 
-.slots button:hover{
-    background:#0f57a5;
-    color:#fff;
+.field.has-value ::ng-deep .mat-mdc-text-field-wrapper,
+.field.mat-focused ::ng-deep .mat-mdc-text-field-wrapper {
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
 }
 
-.book-btn{
-    width:100%;
-    border:none;
-    background:#ef3a2f;
-    color:#fff;
-    padding:14px;
-    border-radius:8px;
-    font-size:17px;
-    cursor:pointer;
-    transition:.3s;
+.field.has-value .field-icon,
+.field.mat-focused .field-icon {
+  color: #7c3aed;
 }
 
-.book-btn:hover{
-    background:#d72c22;
+/* ============================================================
+   Time slot chips
+============================================================ */
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
-/* ================= Tablet ================= */
-
-@media (max-width:992px){
-
-.teacher-grid{
-    grid-template-columns:repeat(2,1fr);
+.slot-chip {
+  border: 1.5px solid #e4e6ec;
+  background: #fff;
+  color: #374151;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.hero h1{
-    font-size:36px;
+.slot-chip:hover {
+  border-color: #c9ccd6;
 }
 
-.hero p{
-    font-size:16px;
+.slot-chip.selected {
+  background: #7c3aed;
+  border-color: #7c3aed;
+  color: #fff;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
 }
 
+/* ============================================================
+   Results
+============================================================ */
+.results {
+  max-width: 960px;
+  margin: 0 auto;
 }
 
-/* ================= Mobile ================= */
-
-@media (max-width:768px){
-
-.hero{
-    padding:50px 15px 80px;
+.results-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0 0 16px 0;
 }
 
-.hero h1{
-    font-size:30px;
+.teacher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
-.hero p{
-    font-size:15px;
+.teacher-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-.filter-section{
-    width:95%;
-    padding:18px;
+.teacher-photo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 3px solid #eef1fa;
 }
 
-.filter-box input{
-    width:100%;
+.teacher-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111417;
+  margin: 0 0 10px 0;
 }
 
-.time-slots{
-    justify-content:center;
+.teacher-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: 14px;
 }
 
-.time-slots button{
-    flex:1 1 80px;
+.mini-slot {
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  background: #f4f5f8;
+  padding: 4px 8px;
+  border-radius: 999px;
 }
 
-.teacher-section{
-    width:95%;
+.mini-slot--selected {
+  background: #eee5fd;
+  color: #7c3aed;
+  font-weight: 700;
 }
 
-.teacher-grid{
-    grid-template-columns:1fr;
+.book-btn {
+  width: 100%;
 }
 
-.card-header{
-    flex-direction:column;
-    text-align:center;
+/* ============================================================
+   Empty / no-match state
+============================================================ */
+.empty-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 48px 24px;
+  color: #9296a3;
 }
 
-.card-header h2{
-    font-size:20px;
+.empty-icon {
+  font-size: 32px;
+  height: 32px;
+  width: 32px;
+  color: #c9ccd6;
 }
 
-.slots{
-    justify-content:center;
+.empty-panel p {
+  font-size: 13px;
+  margin: 0;
+  max-width: 320px;
 }
 
-.slots button{
-    flex:1 1 90px;
-}
-
-}
-
-/* ================= Small Mobile ================= */
-
-@media (max-width:480px){
-
-.hero h1{
-    font-size:26px;
-}
-
-.hero .tag{
-    width:100%;
-}
-
-.filter-section h2,
-.teacher-section h3{
-    font-size:22px;
-}
-
-.book-btn{
-    font-size:16px;
-}
-
+/* ============================================================
+   Responsive
+============================================================ */
+@media (max-width: 600px) {
+  .teachers-page {
+    padding: 24px 16px;
+  }
+  .headline {
+    font-size: 26px;
+  }
+  .filter-box {
+    flex-direction: column;
+  }
 }
