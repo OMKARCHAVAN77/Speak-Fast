@@ -1,6 +1,7 @@
 import {
   registerTeacherService,
   getAllTeachersService,
+  filterTeacherService
 } from "./teacher.service.js";
 
 const registerTeacher = async (req, res) => {
@@ -34,6 +35,7 @@ const getAllTeachers = async (req, res) => {
     const result = await getAllTeachersService();
 
     res.status(200).json({
+      count:result.length,
       teachers: result.teachers,
     });
   } catch (err) {
@@ -46,7 +48,20 @@ const getAllTeachers = async (req, res) => {
   }
 };
 
+
+// according to time slot and time show teachers
+ const filterTeachers = async (req, res) => {
+
+    const { date, time } = req.query;
+
+    const teachers = await filterTeacherService(date, time);
+
+    res.status(200).json({count:teachers.length,teachers});
+
+};
+
 export {
   registerTeacher,
   getAllTeachers,
+  filterTeachers
 };

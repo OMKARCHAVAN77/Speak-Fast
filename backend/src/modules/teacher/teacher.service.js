@@ -2,6 +2,7 @@ import crypto from "crypto";
 import Teacher from "./teacher.model.js";
 import sendMail from "../../utils/sendMail.js";
 
+
 const registerTeacherService = async (data, photoFile) => {
   const {
     firstName,
@@ -85,7 +86,25 @@ const getAllTeachersService = async () => {
   };
 };
 
+
+const filterTeacherService = async (date, time) => {
+
+    const teachers = await Teacher.find({
+        slots: {
+            $elemMatch: {
+                date: date,
+                time: time
+            }
+        }
+    });
+
+    return teachers;
+
+};
+
+
 export {
   registerTeacherService,
   getAllTeachersService,
+  filterTeacherService
 };
