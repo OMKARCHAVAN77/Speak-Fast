@@ -66,6 +66,7 @@ export class Login {
 
         // teacher ki info localStorage me save kar sakte hain (optional, baad me use hogi)
         localStorage.setItem('teacher', JSON.stringify(res.teacher));
+        localStorage.setItem('teacher role', res.teacher.role);
 
         // teacher dashboard/home pe redirect
         this.router.navigate(['/home']);
