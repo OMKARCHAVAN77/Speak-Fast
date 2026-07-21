@@ -19,6 +19,8 @@ router.get("/all", isAdmin, getAllTeachers);
 
 // Get All Teachers (Public)
 // router.get("/all", getAllTeachers);
+router.post('/reset-password', setPassword);
+router.post('/login', loginTeacher);
 
 router.get("/filter",filterTeachers)
 

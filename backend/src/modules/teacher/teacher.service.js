@@ -58,7 +58,7 @@ const registerTeacherService = async (data, photoFile) => {
 
   await teacher.save();
 
-  const link = `http://localhost:4200/set-password?token=${token}&email=${email}`;
+  const link = `http://localhost:4200/setpassword?token=${token}&email=${email}`;
 
   const html = `
     <h3>Welcome ${firstName} ${lastName}</h3>

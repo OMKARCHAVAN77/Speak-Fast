@@ -1,0 +1,107 @@
+<div class="landing-wrapper">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <span class="hero-chip">Trusted by 1200+ students worldwide</span>
+      <h1 class="hero-title">Master English With Expert Teacher's</h1>
+      <p class="hero-subtitle">
+        Join expert-led, live English classes designed to build your fluency and confidence
+      </p>
+      <div class="hero-buttons">
+        <button mat-flat-button class="btn-primary">Get Started</button>
+        <button mat-stroked-button class="btn-outline-white">Browse Courses</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat" *ngFor="let s of stats">
+          <div class="stat-value">{{ s.value }}</div>
+          <div class="stat-label">{{ s.label }}</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARANTEE STRIP -->
+  <div class="guarantee-strip">
+    <span class="guarantee-item" *ngFor="let g of guarantees">
+      <mat-icon class="guarantee-icon">verified</mat-icon>{{ g }}
+    </span>
+  </div>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="section-header">
+      <div class="eyebrow">Why Choose Us</div>
+      <h2 class="section-title">Everything You Need to Succeed</h2>
+      <p class="section-subtitle">We provide comprehensive support to help you achieve your fluency goals</p>
+    </div>
+    <div class="feature-grid">
+      <mat-card class="feature-card" *ngFor="let f of features">
+        <div class="feature-icon"><mat-icon>{{ f.icon }}</mat-icon></div>
+        <div class="feature-title">{{ f.title }}</div>
+        <p class="feature-desc">{{ f.desc }}</p>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section section-alt">
+    <div class="section-header">
+      <div class="eyebrow">Simple Process</div>
+      <h2 class="section-title">How It Works</h2>
+      <p class="section-subtitle">Get started in three easy steps and begin your fluency journey today</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-item" *ngFor="let s of steps">
+        <div class="step-num">{{ s.num }}</div>
+        <div class="step-title">{{ s.title }}</div>
+        <p class="step-desc">{{ s.desc }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPECIALIZATIONS -->
+  <section class="section section-blue">
+    <div class="section-header">
+      <div class="eyebrow">Our Programs</div>
+      <h2 class="section-title">Our Specializations</h2>
+      <p class="section-subtitle">Choose from a wide range of specialized English learning tracks</p>
+    </div>
+    <div class="spec-grid">
+      <mat-card class="spec-card" *ngFor="let sp of specializations">
+        <mat-icon class="spec-icon">{{ sp.icon }}</mat-icon>
+        <div class="spec-title">{{ sp.title }}</div>
+        <p class="spec-desc">{{ sp.desc }}</p>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="section-header">
+      <div class="eyebrow">Student Stories</div>
+      <h2 class="section-title">What Our Students Say</h2>
+      <p class="section-subtitle">Hear from students who transformed their fluency with expert guidance</p>
+    </div>
+    <div class="testimonial-grid">
+      <mat-card class="testimonial-card" *ngFor="let t of testimonials">
+        <div class="testimonial-stars">
+          <mat-icon *ngFor="let star of starsArray(t.rating)">star</mat-icon>
+        </div>
+        <p class="testimonial-text">{{ t.text }}</p>
+        <div class="testimonial-name">{{ t.name }}</div>
+      </mat-card>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-banner">
+    <h2 class="cta-title">Ready to Start Your English Journey?</h2>
+    <p class="cta-subtitle">Join thousands of students who transformed their fluency with expert guidance</p>
+    <div class="cta-buttons">
+      <button mat-flat-button class="cta-btn-white">Get Started Today</button>
+      <button mat-stroked-button class="cta-btn-outline">Take Free Test</button>
+    </div>
+  </div>
+
+</div>

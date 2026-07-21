@@ -2,25 +2,23 @@
   <div class="navbar-container">
 
     <!-- Logo -->
-<div class="logo-section">
-  <a routerLink="/home" class="logo-section">
+    <a routerLink="/home" class="logo-section">
       <img src="assets/speakfast.png" alt="Speak Fast Logo" class="logo-image">
-  </a>
-</div>
+    </a>
 
     <!-- Nav Links -->
     <nav class="nav-links" [class.open]="isMenuOpen">
-  <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Home</a>
-  <a routerLink="/teachers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Teachers</a>
-  <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Courses</a>
-  <a routerLink="/grammer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Grammar Test</a>
-</nav>
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Home</a>
+      <a routerLink="/teachers" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Teachers</a>
+      <a routerLink="/courses" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Courses</a>
+      <a routerLink="/grammer" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link" (click)="closeMenu()">Grammar Test</a>
+    </nav>
 
     <!-- Actions -->
     <div class="actions-section">
       <button mat-stroked-button class="call-btn" (click)="onCallNow()">
-        <mat-icon class="call-icon">call</mat-icon>
-        Call Now
+        <mat-icon class="call-icon material-icons-outlined">call</mat-icon>
+        <span>Call Now</span>
       </button>
 
       <button mat-flat-button class="login-btn" (click)="onLogIn()">
