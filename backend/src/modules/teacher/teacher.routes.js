@@ -19,7 +19,7 @@ router.get("/all", isAdmin, getAllTeachers);
 
 // Get All Teachers (Public)
 // router.get("/all", getAllTeachers);
-router.post('/set-password', setPassword);
+router.post('/reset-password', setPassword);
 router.post('/login', loginTeacher);
 
 export default router;

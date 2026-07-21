@@ -104,11 +104,12 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    padding: 32px 28px;
+    padding: 64px 28px 32px;
     border-radius: 20px;
     border: 1px solid #ececf4;
     box-shadow: 0 10px 30px rgba(20, 19, 43, 0.06);
     background: #ffffff;
+    height: 725px;
 }
 
 .plan-card:hover {
