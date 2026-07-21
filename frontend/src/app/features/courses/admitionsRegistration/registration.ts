@@ -8,6 +8,7 @@ import {
   ValidationErrors,
   Validators
 } from '@angular/forms';
+import { StudentService } from '../../../core/services/student.service';
 
 
 function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
@@ -56,6 +57,8 @@ function optionInListValidator(options: string[]) {
 })
 export class RegistrationComponent {
 
+
+
   registrationForm: FormGroup;
 
   districts = [
@@ -97,11 +100,11 @@ export class RegistrationComponent {
   filteredDistricts: string[] = this.districts;
   filteredQualifications: string[] = this.qualifications;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private studentServ:StudentService) {
 
     this.registrationForm = this.fb.group({
 
-      firstname: [
+      firstName: [
         '',
         [
           Validators.required,
@@ -109,7 +112,7 @@ export class RegistrationComponent {
         ]
       ],
 
-      lastname: [
+      lastName: [
         '',
         [
           Validators.required,
@@ -117,7 +120,7 @@ export class RegistrationComponent {
         ]
       ],
 
-      mobile: [
+      contactNumber: [
         '',
         [
           Validators.required,
@@ -237,6 +240,13 @@ export class RegistrationComponent {
 
     if (this.registrationForm.valid) {
 
+      this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
+        next:(data:any)=>{
+          console.log(data)
+        },error:(err:any)=>{
+          console.log(err)
+        }
+      })
       
       // alert('Registration Successful');
       console.log(this.registrationForm.value);
