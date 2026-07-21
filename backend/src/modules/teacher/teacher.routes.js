@@ -5,8 +5,9 @@ import isAdmin from "../../middlewares/auth.middleware.js";
 import {
   registerTeacher,
   getAllTeachers,
+  setPassword,
+  loginTeacher,
   filterTeachers,
-  
 } from "./teacher.controller.js";
 
 const router = express.Router();
@@ -17,11 +18,13 @@ router.post("/register", upload.any(), registerTeacher);
 // Get All Teachers (Protected)
 router.get("/all", isAdmin, getAllTeachers);
 
-// Get All Teachers (Public)
-// router.get("/all", getAllTeachers);
-router.post('/reset-password', setPassword);
-router.post('/login', loginTeacher);
+// Set Password (after registration, via emailed link)
+router.post("/reset-password", setPassword);
 
-router.get("/filter",filterTeachers)
+// Teacher Login
+router.post("/login", loginTeacher);
+
+// Filter Teachers by date/time
+router.get("/filter", filterTeachers);
 
 export default router;
