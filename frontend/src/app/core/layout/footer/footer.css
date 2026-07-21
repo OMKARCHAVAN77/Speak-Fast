@@ -1,15 +1,21 @@
 :host {
   display: block;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  font-family: 'Quicksand', sans-serif;
 }
 
 .footer {
-  background: linear-gradient(135deg, #dbe7fb 0%, #f3e9f5 50%, #fbe3e3 100%);
+  background-color: #ffffff;
+  background-image: 
+   url('../../../../assets/footer_red.png'),
+   url('../../../../assets/footer_blue.png');
+  background-repeat: no-repeat, no-repeat;
+  background-position: top  right -567px, bottom -150px left -140px;
+  background-size: 65% 100%, 65% 100%;
   color: #333c4d;
-  padding: 40px 32px;
-  border-top: 0.5px solid #2c3550;
+  padding: 40px 32px 24px 32px;
+  position: relative;
 }
-
 
 .footer-container {
   max-width: 1200px;
@@ -85,7 +91,7 @@
 .footer-link {
   color: #5a6274;
   text-decoration: none;
-  font-size: 13.5px;
+  font-size: 12px;
   transition: color 0.2s ease;
 }
 
@@ -118,9 +124,9 @@
   max-width: 1200px;
   margin: 24px auto 0;
   padding-top: 16px;
-  border-top: 1px solid rgba(26, 35, 56, 0.1);
   font-size: 12px;
   color: #7c88a8;
+  border-top: 1px dashed rgba(200, 120, 150, 0.35);
 }
 
 /* Responsive */
