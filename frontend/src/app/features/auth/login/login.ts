@@ -7,6 +7,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
 type UserType = 'student' | 'teacher' | 'admin';
@@ -28,13 +29,15 @@ export class Login {
   rememberMe: boolean = true;
   hidePassword: boolean = true;
   showPassword = false;
-
-  errorMessage: string = '';
   isLoading: boolean = false;
 
   private teacherLoginUrl = 'http://localhost:5000/api/teacher/login';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -45,10 +48,8 @@ export class Login {
   }
 
   onLogin(): void {
-    this.errorMessage = '';
-
     if (!this.email || !this.password) {
-      this.errorMessage = 'Please enter both email and password.';
+      this.showToast('Please enter both email and password.', 'error');
       return;
     }
 
@@ -62,24 +63,32 @@ export class Login {
     this.http.post<any>(this.teacherLoginUrl, payload, { withCredentials: true }).subscribe({
       next: (res) => {
         this.isLoading = false;
-        console.log('Login successful:', res);
 
-        // teacher ki info localStorage me save kar sakte hain (optional, baad me use hogi)
         localStorage.setItem('teacher', JSON.stringify(res.teacher));
+        localStorage.setItem('teacherRole', res.teacher.role);
 
-        // teacher dashboard/home pe redirect
+        this.showToast('Login successful!', 'success');
         this.router.navigate(['/home']);
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Login failed. Please try again.';
-        console.error('LOGIN ERROR:', err);
+        const message = err?.error?.message || 'Login failed. Please try again.';
+        this.showToast(message, 'error');
+        console.error('LOGIN ERROR:', err.status, err.error);
       }
+    });
+  }
+
+  private showToast(message: string, type: 'success' | 'error'): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: type === 'error' ? ['toast-error'] : ['toast-success'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
     });
   }
 
   onForgotPassword(): void {
     console.log('Forgot password clicked');
-    // TODO: Navigate to forgot password page/flow
   }
 }

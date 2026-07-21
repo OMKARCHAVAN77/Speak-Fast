@@ -16,18 +16,18 @@
       <!-- Email -->
 
       <div class="email-wrapper" >
-        <Label style="font-size: 18px;">Email Address</Label>
+        <Label >Email Address</Label>
         <input type="text" [(ngModel)]="email" name="email" placeholder="Enter your email here">
       </div>
 
       <!-- Password -->
       <div class="password-wrapper">
-        <label style="font-size:18px;">Password</label>
+        <label >Password</label>
 
         <div class="position-relative mt-2">
           <input [type]="showPassword ? 'text' : 'password'" class="form-control pe-5"
             [(ngModel)]="password" name="password"
-            placeholder="Enter your password here" >
+            placeholder="Enter your password" >
 
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()" >
           </i>
@@ -35,15 +35,15 @@
       </div>
 
       <!-- Error Message -->
-      <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px; font-size: 14px;">
+      <!-- <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px; font-size: 14px;">
         {{ errorMessage }}
-      </div>
+      </div> -->
 
       <!-- Remember me / Forgot password -->
       <div class="check-out-wrapper top-row" >
         <div class="mb-3 form-check" >
           <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="rememberMe" name="rememberMe">
-          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+          <label class="form-check-label" for="exampleCheck1">Remember me</label>
         </div>
 
         <a routerLink="/forgotPassword" class="forgot-link"

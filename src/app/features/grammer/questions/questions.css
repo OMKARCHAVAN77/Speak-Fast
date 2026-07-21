@@ -1,0 +1,238 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  background-color: #eef1f6;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 560px;
+}
+
+/* Progress card */
+.progress-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 18px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 16px;
+}
+
+.progress-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.progress-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.progress-count {
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+.progress-track {
+  width: 100%;
+  height: 6px;
+  background-color: #eef1f6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #16a34a;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Question card */
+.question-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  margin-bottom: 20px;
+}
+
+.category {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0 0 10px;
+}
+
+.question-text {
+  font-size: 17px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.option {
+  width: 100%;
+  text-align: left;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #111827;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.option:hover {
+  border-color: #cbd5e1;
+  background-color: #f9fafb;
+}
+
+.option.selected {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+  box-shadow: 0 0 0 1px #dc2626;
+  font-weight: 600;
+}
+
+.option:focus-visible {
+  outline: 2px solid #1e4ed8;
+  outline-offset: 2px;
+}
+
+/* Footer nav */
+.footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-previous {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #dc2626;
+  border: 1px solid #f3b4b4;
+  border-radius: 10px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.btn-previous:hover:not(:disabled) {
+  background-color: #fef2f2;
+}
+
+.btn-previous:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #dc2626;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 26px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.btn-next:hover {
+  background-color: #c81e1e;
+}
+
+.btn-next:active {
+  transform: scale(0.99);
+}
+
+.arrow-left,
+.arrow-right {
+  font-size: 15px;
+  line-height: 1;
+}
+
+/* ----------- Mobile responsiveness ----------- */
+@media (max-width: 480px) {
+  .page {
+    padding: 24px 12px;
+  }
+
+  .progress-card {
+    padding: 14px 18px;
+  }
+
+  .question-card {
+    padding: 22px 18px 20px;
+  }
+
+  .question-text {
+    font-size: 15.5px;
+  }
+
+  .option {
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+
+  .footer-nav {
+    gap: 10px;
+  }
+
+  .btn-previous,
+  .btn-next {
+    flex: 1;
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .question-text {
+    font-size: 14.5px;
+  }
+
+  .progress-label {
+    font-size: 13px;
+  }
+
+  .progress-count {
+    font-size: 12px;
+  }
+}
