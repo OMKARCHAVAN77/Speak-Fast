@@ -1,6 +1,8 @@
 import {
   registerTeacherService,
   getAllTeachersService,
+  setPasswordService,
+  loginTeacherService
 } from "./teacher.service.js";
 
 const registerTeacher = async (req, res) => {
@@ -46,7 +48,48 @@ const getAllTeachers = async (req, res) => {
   }
 };
 
+const setPassword = async (req, res) => {
+  try {
+    const { email, token, newPassword, confirmPassword } = req.body;
+
+    const result = await setPasswordService(email, token, newPassword, confirmPassword);
+
+    if (result.error) {
+      return res.status(result.status).json({ message: result.message });
+    }
+
+    res.status(200).json({ message: result.message });
+  } catch (err) {
+    console.log('SET PASSWORD ERROR:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
+const loginTeacher = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const result = await loginTeacherService(email, password);
+
+    if (result.error) {
+      return res.status(result.status).json({ message: result.message });
+    }
+
+    req.session.teacher = result.teacher;
+
+    res.status(200).json({
+      message: 'Login successful',
+      teacher: result.teacher
+    });
+  } catch (err) {
+    console.error('LOGIN TEACHER ERROR:', err);
+    res.status(500).json({ message: 'Server error', error: err.message });
+  }
+};
+
 export {
   registerTeacher,
   getAllTeachers,
+  setPassword,
+  loginTeacher
 };

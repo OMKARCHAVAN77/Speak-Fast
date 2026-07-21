@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 interface BookedSlot {
-  date: string;
   startTime: string;
 }
 
@@ -19,7 +18,7 @@ export class AddTeacherDialog implements OnInit {
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<any>();
 
-  experienceOptions = ['0-1 years', '1-3 years', '3-5 years', '5+ years'];
+  // experienceOptions = ['0-1 years', '1-3 years', '3-5 years', '5+ years'];
   aadharOptions = ['Verified', 'Not Verified', 'Pending'];
 
   photoFile: File | null = null;
@@ -31,25 +30,14 @@ export class AddTeacherDialog implements OnInit {
 
   slotError = '';
 
-  // ============ CALENDAR STATE ============
-  isCalendarOpen = false;
-  selectedDate: Date = new Date();
-  viewYear = this.selectedDate.getFullYear();
-  viewMonth = this.selectedDate.getMonth();
-  calendarDays: (Date | null)[] = [];
-  monthLabel = '';
-  weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-  // ==========================================
-
   teacher = {
     firstName: '',
     lastName: '',
-    experience: '',
     contactNumber: '',
     aadharNumber: '',
     email: '',
+    googlemeetLink: '',
     photo: null as File | null,
-    bookingDate: '',
     startTime: '',
     slots: [] as BookedSlot[]
   };
@@ -57,29 +45,14 @@ export class AddTeacherDialog implements OnInit {
   constructor(private elRef: ElementRef) {}
 
   ngOnInit(): void {
-    this.setDefaultDateAndTime();
-    this.buildCalendar();
+    this.setDefaultTime();
   }
 
-  // ============ AUTO DATE & TIME ============
-  private setDefaultDateAndTime(): void {
+  // ============ AUTO TIME ============
+  private setDefaultTime(): void {
     const now = new Date();
-    this.selectedDate = now;
-    this.viewYear = now.getFullYear();
-    this.viewMonth = now.getMonth();
-
-    this.teacher.bookingDate = this.formatDisplayDate(now);
-
     const roundedStart = this.roundToNext15Min(now);
     this.teacher.startTime = this.formatTime12h(roundedStart);
-  }
-
-  private formatDisplayDate(date: Date): string {
-    return date.toLocaleDateString('en-US', {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric'
-    });
   }
 
   private roundToNext15Min(date: Date): Date {
@@ -96,76 +69,7 @@ export class AddTeacherDialog implements OnInit {
     const mm = String(minutes).padStart(2, '0');
     return `${hours}:${mm}${period}`;
   }
-  // ============ END AUTO DATE & TIME ============
-
-  // ============ CALENDAR LOGIC ============
-  toggleCalendar(event: Event): void {
-    event.stopPropagation();
-    this.isCalendarOpen = !this.isCalendarOpen;
-    this.activeField = null;
-    if (this.isCalendarOpen) {
-      this.viewYear = this.selectedDate.getFullYear();
-      this.viewMonth = this.selectedDate.getMonth();
-      this.buildCalendar();
-    }
-  }
-
-  private buildCalendar(): void {
-    const firstDay = new Date(this.viewYear, this.viewMonth, 1);
-    const lastDay = new Date(this.viewYear, this.viewMonth + 1, 0);
-    const startOffset = firstDay.getDay(); // 0 = Sunday
-
-    const days: (Date | null)[] = [];
-    for (let i = 0; i < startOffset; i++) {
-      days.push(null);
-    }
-    for (let d = 1; d <= lastDay.getDate(); d++) {
-      days.push(new Date(this.viewYear, this.viewMonth, d));
-    }
-
-    this.calendarDays = days;
-    this.monthLabel = firstDay.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-  }
-
-  prevMonth(): void {
-    this.viewMonth--;
-    if (this.viewMonth < 0) {
-      this.viewMonth = 11;
-      this.viewYear--;
-    }
-    this.buildCalendar();
-  }
-
-  nextMonth(): void {
-    this.viewMonth++;
-    if (this.viewMonth > 11) {
-      this.viewMonth = 0;
-      this.viewYear++;
-    }
-    this.buildCalendar();
-  }
-
-  selectDate(day: Date): void {
-    this.selectedDate = day;
-    this.teacher.bookingDate = this.formatDisplayDate(day);
-    this.isCalendarOpen = false;
-  }
-
-  isToday(day: Date): boolean {
-    const today = new Date();
-    return day.toDateString() === today.toDateString();
-  }
-
-  isSelected(day: Date): boolean {
-    return day.toDateString() === this.selectedDate.toDateString();
-  }
-
-  isPast(day: Date): boolean {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    return day < today;
-  }
-  // ============ END CALENDAR LOGIC ============
+  // ============ END AUTO TIME ============
 
   private generateTimeSlots(): string[] {
     const slots: string[] = [];
@@ -183,7 +87,6 @@ export class AddTeacherDialog implements OnInit {
 
   toggleTimeDropdown(field: 'start', event: Event): void {
     event.stopPropagation();
-    this.isCalendarOpen = false;
     this.activeField = this.activeField === field ? null : field;
   }
 
@@ -196,33 +99,31 @@ export class AddTeacherDialog implements OnInit {
   onDocumentClick(event: Event): void {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.activeField = null;
-      this.isCalendarOpen = false;
     }
   }
 
   // ============ BOOK SLOTS LIST ============
   canAddSlot(): boolean {
-    return !!(this.teacher.bookingDate && this.teacher.startTime);
+    return !!this.teacher.startTime;
   }
 
   addSlot(): void {
     this.slotError = '';
 
     if (!this.canAddSlot()) {
-      this.slotError = 'Select a date and start time first.';
+      this.slotError = 'Select a start time first.';
       return;
     }
 
     const isDuplicate = this.teacher.slots.some(
-      s => s.date === this.teacher.bookingDate && s.startTime === this.teacher.startTime
+      s => s.startTime === this.teacher.startTime
     );
     if (isDuplicate) {
-      this.slotError = 'This slot has already been added.';
+      this.slotError = 'This time slot has already been added.';
       return;
     }
 
     this.teacher.slots.push({
-      date: this.teacher.bookingDate,
       startTime: this.teacher.startTime
     });
   }
@@ -262,17 +163,15 @@ export class AddTeacherDialog implements OnInit {
     this.teacher = {
       firstName: '',
       lastName: '',
-      experience: '',
       contactNumber: '',
       aadharNumber: '',
       email: '',
+      googlemeetLink: '',
       photo: null as File | null,
-      bookingDate: '',
       startTime: '',
       slots: []
     };
-    this.setDefaultDateAndTime();
-    this.buildCalendar();
+    this.setDefaultTime();
   }
 
   onSubmit(): void {
