@@ -39,10 +39,10 @@ const studentSchema = new mongoose.Schema(
     },
 
     password: {
-        type: String,
-        required: [true, "Password is required"],
-        minlength: [8, "Password must be at least 8 characters"],
-        select: false
+      type: String,
+      required: [true, "Password is required"],
+      minlength: [8, "Password must be at least 8 characters"],
+      select: false
     },
 
     district: {
@@ -69,14 +69,18 @@ const studentSchema = new mongoose.Schema(
     },
     // forgot password
     passwordResetToken: {
-        type: String,
-        default: null
+      type: String,
+      default: null
     },
 
     passwordResetTokenExpiry: {
-        type: Date,
-        default: null
+      type: Date,
+      default: null
     },
+    teacherId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Teacher"
+    }
   },
   {
     timestamps: true,

@@ -2,6 +2,7 @@ import crypto from "crypto";
 import Teacher from "./teacher.model.js";
 import sendMail from "../../utils/sendMail.js";
 
+
 const registerTeacherService = async (data, photoFile) => {
   const {
     firstName,
@@ -86,64 +87,24 @@ const getAllTeachersService = async () => {
 };
 
 
-const setPasswordService = async (email, token, newPassword, confirmPassword) => {
-  if (newPassword !== confirmPassword) {
-    return { error: true, status: 400, message: 'Passwords do not match' };
-  }
+const filterTeacherService = async (date, time) => {
 
-  const teacher = await Teacher.findOne({ email: email });
+    const teachers = await Teacher.find({
+        slots: {
+            $elemMatch: {
+                date: date,
+                time: time
+            }
+        }
+    });
 
-  if (!teacher) {
-    return { error: true, status: 404, message: 'Teacher not found' };
-  }
+    return teachers;
 
-  if (teacher.resetToken !== token) {
-    return { error: true, status: 400, message: 'Invalid or expired link' };
-  }
-
-  if (teacher.resetTokenExpiry < Date.now()) {
-    return { error: true, status: 400, message: 'Link has expired' };
-  }
-
-  teacher.password = newPassword;
-  teacher.isPasswordSet = true;
-  teacher.resetToken = undefined;
-  teacher.resetTokenExpiry = undefined;
-  await teacher.save();
-
-  return { error: false, message: 'Password set successfully. You can now login.' };
 };
 
-const loginTeacherService = async (email, password) => {
-  const teacher = await Teacher.findOne({ email: email });
-
-  if (!teacher) {
-    return { error: true, status: 401, message: 'Invalid email or password' };
-  }
-
-  if (!teacher.isPasswordSet) {
-    return { error: true, status: 400, message: 'Please set your password first using the link sent to your email' };
-  }
-
-  if (teacher.password !== password) {
-    return { error: true, status: 401, message: 'Invalid email or password' };
-  }
-
-  return {
-    error: false,
-    teacher: {
-      id: teacher._id,
-      firstName: teacher.firstName,
-      lastName: teacher.lastName,
-      email: teacher.email,
-      role: teacher.role
-    }
-  };
-};
 
 export {
   registerTeacherService,
   getAllTeachersService,
-  setPasswordService,
-  loginTeacherService
+  filterTeacherService
 };
