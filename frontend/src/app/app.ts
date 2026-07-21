@@ -22,14 +22,15 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit {
   protected readonly title = signal('frontend');
   isNavbarOn: boolean= true;
-  hiddenRoutes = ['/', '/login'];
+
+
   constructor(private actRout: ActivatedRoute, private route: Router){}
 
   ngOnInit(): void {
       console.log("router url is ",this.actRout.snapshot.url)
       this.route.events.pipe(filter(x=>x instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
         //  this.isNavbarOn = !this.hiddenRoutes.includes(event.urlAfterRedirects);
-             if(event.url == "/" || event.url == "/login"){
+             if(event.url == "/" || event.url == "/login"  ){
               this.isNavbarOn= false;
               console.log(this.isNavbarOn);
              }else{
