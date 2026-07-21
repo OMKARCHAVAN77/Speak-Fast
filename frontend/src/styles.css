@@ -25,3 +25,19 @@ app-root {
 mat-toolbar, .mat-toolbar {
   width: 100%;
 }
+
+
+.toast-error {
+  background-color: #dc2626 !important;
+  color: white !important;
+}
+
+.toast-success {
+  background-color: #16a34a !important;
+  color: white !important;
+}
+
+.toast-error .mdc-snackbar__label,
+.toast-success .mdc-snackbar__label {
+  color: white !important;
+}
