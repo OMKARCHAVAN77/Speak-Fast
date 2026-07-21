@@ -17,7 +17,7 @@
 
       <div class="email-wrapper" >
         <Label style="font-size: 18px;">Email Address</Label>
-        <input type="text"  placeholder="Enter your email here">
+        <input type="text" [(ngModel)]="email" name="email" placeholder="Enter your email here">
       </div>
 
       <!-- Password -->
@@ -26,6 +26,7 @@
 
         <div class="position-relative mt-2">
           <input [type]="showPassword ? 'text' : 'password'" class="form-control pe-5"
+            [(ngModel)]="password" name="password"
             placeholder="Enter your password here" >
 
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()" >
@@ -33,25 +34,29 @@
         </div>
       </div>
 
+      <!-- Error Message -->
+      <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px; font-size: 14px;">
+        {{ errorMessage }}
+      </div>
+
       <!-- Remember me / Forgot password -->
       <div class="check-out-wrapper top-row" >
         <div class="mb-3 form-check" >
-          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="rememberMe" name="rememberMe">
           <label class="form-check-label" for="exampleCheck1">Check me out</label>
         </div>
 
-        <a href="javascript:void(0)" class="forgot-link"
+        <a routerLink="/forgotPassword" class="forgot-link"
           (click)="onForgotPassword()">
           Forgot password?
         </a>
       </div>
 
       <!-- Login Button -->
-      <button mat-raised-button type="submit" class="btn-login w-100 " >
-        <div class="text-white" > Login&nbsp;<mat-icon
-            class="text-white">arrow_forward</mat-icon>
+      <button mat-raised-button type="submit" class="btn-login w-100" [disabled]="isLoading">
+        <div class="text-white">
+          {{ isLoading ? 'Logging in...' : 'Login' }}&nbsp;<mat-icon class="text-white">arrow_forward</mat-icon>
         </div>
-
       </button>
 
     </form>

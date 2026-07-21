@@ -36,3 +36,10 @@ button{
 button div{
   display: flex; align-items: center; justify-content: center;
 }
+
+a{
+
+  text-decoration: underline;
+  text-decoration-color: black;
+  margin-right: 10px;
+}
