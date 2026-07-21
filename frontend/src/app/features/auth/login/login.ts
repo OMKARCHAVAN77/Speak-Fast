@@ -7,18 +7,18 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule,     FormsModule,
+  imports: [CommonModule, FormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatIconModule,],
+    MatIconModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
