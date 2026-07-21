@@ -66,7 +66,7 @@ export class SetPassword {
 
         // 2 second baad login page pe redirect
         setTimeout(() => {
-          this.router.navigate(['/teacher-login']);
+          this.router.navigate(['/login']);
         }, 2000);
       },
       error: (err) => {
