@@ -60,6 +60,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-console.log("hello");
+console.log("hello world");
 
 export default app;
