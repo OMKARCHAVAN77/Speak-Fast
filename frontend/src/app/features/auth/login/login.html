@@ -16,17 +16,17 @@
       <!-- Email -->
 
       <div class="email-wrapper" >
-        <Label >Email Address</Label>
-        <input type="text" [(ngModel)]="email" name="email" placeholder="Enter your email here">
+        <Label id="email-" >Email Address</Label>
+        <input for="email-" type="text"  name="email" placeholder="Enter your email here">
       </div>
 
       <!-- Password -->
       <div class="password-wrapper">
         <label >Password</label>
 
-        <div class="position-relative mt-2">
-          <input [type]="showPassword ? 'text' : 'password'" class="form-control pe-5"
-            [(ngModel)]="password" name="password"
+        <div class="position-relative ">
+          <input [type]="showPassword ? 'text' : 'password'" 
+             name="password"
             placeholder="Enter your password" >
 
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()" >
@@ -35,7 +35,7 @@
       </div>
 
       <!-- Error Message -->
-      <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px; font-size: 14px;">
+      <div class="error-message" *ngIf="'errorMessage'" style="color: red; margin-top: 10px; font-size: 14px;">
         {{ errorMessage }}
       </div>
 
