@@ -18,6 +18,9 @@ const adminSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  lastActive: {
+  type: Date,
+},
   resetToken: {
     type: String,
   },
