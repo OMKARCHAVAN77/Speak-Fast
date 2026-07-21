@@ -65,7 +65,7 @@
 
 .logo-tagline {
   font-size: 10px;
-  color: #1a3a6b;
+  color: #e13b3b;
   font-weight: 500;
   letter-spacing: 0.5px;
   margin-top: 1px;
@@ -96,11 +96,11 @@
 
 .nav-link a:hover,
 .nav-link:hover {
-  color: #e13b3b;
+  color: #3F78F5;
 }
 
 .nav-link.active {
-  color: #e13b3b;
+  color: #3F78F5;
   text-decoration: underline;
   font-weight: 500;
 }
@@ -113,27 +113,13 @@
   flex-shrink: 0;
 }
 
-/* .call-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  border-radius: 22px !important;
-  border: 1px solid #cccccc !important;
-  color: #333333 !important;
-  font-size: 14px;
-  text-transform: none;
-  padding: 0 18px !important;
-  line-height: 36px !important;
-  white-space: nowrap;
-} */
-
 .call-btn {
   display: flex;
   align-items: center;
   gap: 6px;
-  border-radius: 8px !important;   /* soft round */
-  border: 1px solid #cccccc !important;
-  color: #333333 !important;
+  border-radius: 22px !important;
+  border: 1px solid #1a4fa0 !important;
+  color: #1a4fa0 !important;
   font-size: 14px;
   text-transform: none;
   padding: 0 18px !important;
@@ -145,25 +131,13 @@
   font-size: 18px;
   height: 18px;
   width: 18px;
-  color: #333333;
+  color: #1a4fa0;
 }
 
-/* .login-btn {
-  background-color: #1a4fa0 !important;
+.login-btn {
+  background: linear-gradient(90deg, #6b4fd6 0%, #1a4fa0 100%) !important;
   color: #ffffff !important;
   border-radius: 22px !important;
-  font-size: 14px;
-  text-transform: none;
-  padding: 0 24px !important;
-  line-height: 36px !important;
-  font-weight: 500;
-  white-space: nowrap;
-} */
-
-.login-btn {
-  background-color: #1a4fa0 !important;
-  color: #ffffff !important;
-  border-radius: 8px !important;   /* was: 22px */
   font-size: 14px;
   text-transform: none;
   padding: 0 24px !important;
@@ -189,9 +163,9 @@
 
 /* Bottom accent bar */
 .bottom-bar {
-  height: 4px;
+  height: 1px;
   width: 100%;
-  background-color: #1a4fa0;
+  background-color: #dddddd;
 }
 
 /* ===== Responsive breakpoints ===== */
