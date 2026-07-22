@@ -26,15 +26,18 @@
 
       <div class="line-row">
         <span class="line-label">Course Fee</span>
-        <span class="line-value">{{ courseFee | currency:'INR':'symbol':'1.0-0' }}</span>
+        <!-- <span class="line-value">{{ courseFee | currency:'INR':'symbol':'1.0-0' }}</span> -->
+          <span class="line-value">₹{{ courseFee }}</span>
       </div>
       <div class="line-row">
         <span class="line-label">Discount</span>
-        <span class="line-value">{{ discount | currency:'INR':'symbol':'1.0-0' }}</span>
+        <!-- <span class="line-value">{{ discount | currency:'INR':'symbol':'1.0-0' }}</span> -->
+         <span class="line-value">₹{{ discountAmount }}</span>
       </div>
       <div class="line-row total-row">
         <span class="line-label total-label">Total Amount</span>
-        <span class="line-value total-value">{{ totalAmount | currency:'INR':'symbol':'1.0-0' }}</span>
+        <!-- <span class="line-value total-value">{{ totalAmount | currency:'INR':'symbol':'1.0-0' }}</span> -->
+         <span class="line-value"><strong>₹{{ totalAmount }}</strong></span>
       </div>
 
       <button type="button" class="pay-btn" (click)="onPaymentDone()">

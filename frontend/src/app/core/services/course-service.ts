@@ -1,17 +1,17 @@
 import { Injectable, signal } from '@angular/core';
-import { Course } from '../../features/courses/course-recommendation/course-recommendation';
+import { Plan } from '../../features/courses/course-recommendation/course-recommendation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CourseService {
-      selectedCourse = signal<Course | null>(null);
+    selectedPlan = signal<Plan | null>(null);
 
-  setCourse(course: Course) {
-    this.selectedCourse.set(course);
+  setPlan(plan: Plan) {
+    this.selectedPlan.set(plan);
   }
 
-  getCourse() {
-    return this.selectedCourse();
+  getPlan() {
+    return this.selectedPlan();
   }
 }
