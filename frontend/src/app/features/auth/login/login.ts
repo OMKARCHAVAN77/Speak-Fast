@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
+import { environment } from '../../../../environments/environments';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
@@ -34,8 +35,8 @@ export class Login {
   // selectedRole: UserType = 'teacher';
 
 
-  // private teacherLoginUrl = 'http://${environment.apiUrl}/teacher/login';
-  // private adminLoginUrl = 'http://${environment.apiUrl}/auth/login';;
+  // private teacherLoginUrl = `http://${environment.apiUrl}/teacher/login`;
+  // private adminLoginUrl = `http://${environment.apiUrl}/auth/login`;;
 
   // constructor(
   //   private http: HttpClient,
@@ -137,9 +138,9 @@ export class Login {
 
   // Donhi endpoints ithe declare kele — adhi phakt teacherLoginUrl hota
   // student login add kela
-  private teacherLoginUrl = 'http://${environment.apiUrl}/teacher/login';
-  private adminLoginUrl = 'http://${environment.apiUrl}/auth/login';
-  private studentLoginUrl = 'http://${environment.apiUrl}/students/login';
+  private teacherLoginUrl = `http://${environment.apiUrl}/teacher/login`;
+  private adminLoginUrl = `http://${environment.apiUrl}/auth/login`;
+  private studentLoginUrl = `http://${environment.apiUrl}/students/login`;
 
   constructor(
     private http: HttpClient,
@@ -156,6 +157,12 @@ export class Login {
   }
 
   onLogin(): void {
+
+
+    console.log("EMAIL:", this.email);
+  console.log("PASSWORD:", this.password);
+  console.log("ROLE:", this.selectedRole);
+
     if (!this.email || !this.password) {
       this.showToast('Please enter both email and password.', 'error');
       return;
