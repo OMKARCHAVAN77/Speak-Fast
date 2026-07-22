@@ -36,8 +36,8 @@ export class Login {
   // selectedRole: UserType = 'teacher';
 
 
-  // private teacherLoginUrl = 'http://localhost:5000/api/teacher/login';
-  // private adminLoginUrl = 'http://localhost:5000/api/auth/login';;
+  // private teacherLoginUrl = 'http://${environment.apiUrl}/api/teacher/login';
+  // private adminLoginUrl = 'http://${environment.apiUrl}/api/auth/login';;
 
   // constructor(
   //   private http: HttpClient,
@@ -139,9 +139,9 @@ export class Login {
 
   // Donhi endpoints ithe declare kele — adhi phakt teacherLoginUrl hota
   // student login add kela
-  private teacherLoginUrl = 'http://localhost:5000/api/teacher/login';
-  private adminLoginUrl = 'http://localhost:5000/api/auth/login';
-  private studentLoginUrl = 'http://localhost:5000/api/students/login';
+  private teacherLoginUrl = 'http://${environment.apiUrl}/api/teacher/login';
+  private adminLoginUrl = 'http://${environment.apiUrl}/api/auth/login';
+  private studentLoginUrl = 'http://${environment.apiUrl}/api/students/login';
 
   constructor(
     private http: HttpClient,
