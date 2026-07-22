@@ -19,7 +19,18 @@ router.post("/forgot-password", forgotPassword );
 // get all student API
 router.get("/getallstudent", getAllStudents );
 
+
+// book slot
+
+
+
+import { bookSlot } from "../student/student.controller.js";
+
+
+router.post("/book-slot", bookSlot);
+
 // reset student password
 router.patch("/reset-password/:token", resetPassword);
 
 export default router;
+
