@@ -274,62 +274,81 @@ export { getAllStudentsService };
 
 
 
- // Student Reset Password Service
-const resetPasswordStudentService = async (token, body) => {
+ // Student Reset Password student Service
+const resetPasswordStudentService = async (
+    token,
+    body
+) => {
 
-  const { password, confirmPassword } = body;
+    const { password, confirmPassword } = body;
 
-  if (!password || !confirmPassword) {
-    throw new Error("All fields are required");
-  }
+    // Required Fields
+    if (!password || !confirmPassword) {
+        throw new ApiError(
+            400,
+            "All fields are required."
+        );
+    }
 
-  if (password !== confirmPassword) {
-    throw new Error("Passwords do not match");
-  }
+    // Password Match
+    if (password !== confirmPassword) {
+        throw new ApiError(
+            400,
+            "Passwords do not match."
+        );
+    }
 
-  // Hash URL Token
+    // Hash URL Token
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
 
-  const hashedToken = crypto
-    .createHash("sha256")
-    .update(token)
-    .digest("hex");
+    // Find Student
+    const student = await Student.findOne({
 
-  // Find Student
+        passwordResetToken: hashedToken,
 
-  const student = await Student.findOne({
-    passwordResetToken: hashedToken,
-    passwordResetTokenExpiry: {
-      $gt: Date.now(),
-    },
-  }).select("+password");
+        passwordResetTokenExpiry: {
+            $gt: Date.now()
+        }
 
-  if (!student) {
-    throw new Error("Reset password link is invalid or expired.");
-  }
+    }).select("+password");
 
-  // Hash New Password
+    if (!student) {
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+        throw new ApiError(
+            400,
+            "Reset password link is invalid or expired."
+        );
 
-  // Update Password
+    }
 
-  student.password = hashedPassword;
+    // Hash Password
+    const hashedPassword =
+        await bcrypt.hash(password, 10);
 
-  // Clear Reset Token
+    // Update Password
+    student.password = hashedPassword;
 
-  student.passwordResetToken = null;
-  student.passwordResetTokenExpiry = null;
+    // Remove Token
+    student.passwordResetToken = null;
+    student.passwordResetTokenExpiry = null;
 
-  await student.save();
+    await student.save();
 
-  return {
-    success: true,
-    message: "Password changed successfully.",
-  };
+    return {
+
+        success: true,
+
+        message:
+            "Password changed successfully."
+
+    };
+
 };
 
 export { resetPasswordStudentService };
-
 
 
 /// book slot service code
