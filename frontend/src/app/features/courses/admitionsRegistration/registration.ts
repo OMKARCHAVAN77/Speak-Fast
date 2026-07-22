@@ -143,7 +143,7 @@ constructor(private fb: FormBuilder, private studentServ:StudentService, private
     if (this.registrationForm.valid) {
 
 
-      this.http.post ('http://localhost:5000/api/students/register',this.registrationForm.value).subscribe({
+      this.http.post ('http://${environment.apiUrl}/api/students/register',this.registrationForm.value).subscribe({
         next:(data:any)=>{
           console.log(data.massage)
           alert('sucessfully registered');
@@ -192,7 +192,7 @@ constructor(private fb: FormBuilder, private studentServ:StudentService, private
 
 //   onSubmit():void{
 //         console.log("value is ",this.registrationForm.value);
-//         this.http.post('http://localhost:5000/api/students/register',this.registrationForm.value)
+//         this.http.post('http://${environment.apiUrl}/api/students/register',this.registrationForm.value)
 //          .subscribe({
 //             next: (response) => {
 //               console.log(response);

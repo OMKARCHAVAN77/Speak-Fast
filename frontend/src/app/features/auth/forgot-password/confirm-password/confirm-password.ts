@@ -53,7 +53,7 @@ export class ConfirmPassword {
       return;
     }
 
-    this.http.post('http://localhost:5000/api/students/reset-password', {
+    this.http.post('http://${environment.apiUrl}/api/students/reset-password', {
   token: this.token,
   email: this.email,
   newPassword: password,

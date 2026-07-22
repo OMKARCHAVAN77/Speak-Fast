@@ -10,10 +10,10 @@ export class StudentService{
 
 
     addStudentApi(data:any){
-      return  this.http.post('http://localhost:5000/api/students/register',data)
+      return  this.http.post('http://${environment.apiUrl}/api/students/register',data)
     }
 
     forgotStudentPassword(mail : any){
-        return this.http.post('http://localhost:5000/api/students/forgot-password', mail)
+        return this.http.post('http://${environment.apiUrl}/api/students/forgot-password', mail)
     }
 }

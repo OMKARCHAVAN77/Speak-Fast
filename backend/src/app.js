@@ -18,10 +18,13 @@ app.use(express.json());
 app.use(helmet());
 
 // Enable CORS
-app.use( cors({
-    origin: "http://localhost:4200",
-    credentials: true,
-  }));
+app.use(cors({
+  origin: [
+    "http://localhost:4200",
+    process.env.CLIENT_URL
+  ],
+  credentials: true,
+}));
 
 // Logger
 app.use(morgan("dev"));
@@ -38,7 +41,7 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: "mySecretKey123",
+    secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: false,
   })

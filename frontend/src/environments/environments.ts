@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'http://localhost:5000/api'  // match your backend port
+  production: true,
+  apiUrl: 'https://speak-fast.onrender.com/api'
 };
