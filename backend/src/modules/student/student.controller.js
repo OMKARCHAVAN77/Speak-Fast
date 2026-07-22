@@ -1,6 +1,6 @@
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import ApiResponse from "../../utils/ApiResponse.js";
-import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordStudentService,bookSlotService   } from "../student/student.service.js";
+import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordStudentService,bookSlotService ,getStudentProfileService  } from "../student/student.service.js";
 
 
 
@@ -128,4 +128,34 @@ const bookSlot = async (req, res) => {
     }
 };
 
+
 export { bookSlot };
+
+
+
+
+ const getStudentProfile = async (req, res) => {
+
+    try {
+
+        const { studentId } = req.params;
+
+        const student = await getStudentProfileService(studentId);
+
+        res.status(200).json({
+            success: true,
+            data: student
+        });
+
+    } catch (err) {
+
+        res.status(500).json({
+            success: false,
+            message: err.message
+        });
+
+    }
+
+};
+
+export {getStudentProfile}

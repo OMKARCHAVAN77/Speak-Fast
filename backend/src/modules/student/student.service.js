@@ -377,6 +377,36 @@ export { resetPasswordStudentService };
 
     await teacher.save();
 
+    await Student.findByIdAndUpdate(
+    studentId,
+    {
+        assignedTeacher: teacherId
+    },
+    {
+        new: true
+    }
+);
+
     return teacher;
 };
 export {bookSlotService };
+
+
+const getStudentProfileService = async (studentId) => {
+
+    const student = await Student.findById(studentId)
+        .populate({
+            path: "assignedTeacher",
+            select: "-password -resetToken -resetTokenExpiry"
+        });
+
+    if (!student) {
+        throw new Error("Student not found");
+    }
+
+    return student;
+};
+
+export  {getStudentProfileService}
+
+
