@@ -77,24 +77,39 @@ export { getAllStudents };
 
 
 // Reset Student Password Controller
-const resetPassword = async (req, res) => {
+// const resetPassword = async (req, res) => {
 
-  console.log("Token :", req.params.token);
-  console.log("Body :", req.body);
-  try {
+//   console.log("Token :", req.params.token);
+//   console.log("Body :", req.body);
+//   try {
+//     const result = await resetPasswordStudentService(
+//       req.params.token,
+//       req.body
+//     );
+
+//     return res.status(200).json(result);
+//   } catch (error) {
+//     return res.status(400).json({
+//       success: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
+// export { resetPassword };
+
+const resetPassword = asyncHandler(async (req, res) => {
+
+    const { token } = req.params;
+
     const result = await resetPasswordStudentService(
-      req.params.token,
-      req.body
+        token,
+        req.body
     );
 
     return res.status(200).json(result);
-  } catch (error) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+
+});
 
 export { resetPassword };
 

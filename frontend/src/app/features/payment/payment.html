@@ -1,75 +1,64 @@
 <div class="page">
-  <div class="page__grid">
+  <div class="card header-card">
+    <h1 class="header-title">Scan QR Code to Pay</h1>
+    <p class="header-subtitle">Pay using any UPI app</p>
+  </div>
 
-    <!-- Header card -->
-    <mat-card class="card card--header">
-      <h1 class="header__title">Scan QR Code to Pay</h1>
-      <p class="header__subtitle">Pay using any UPI app</p>
-    </mat-card>
+  <div class="qr-wrapper">
+    <img class="qr-icon" src="../../../../assets/qr-scanner.png" alt="QR code scan icon" />
+  </div>
 
-    <!-- QR Code card -->
-    <mat-card class="card card--qr">
-      <div class="qr-wrapper">
-        <img
-          class="qr-code"
-          src="../../../../assets/qr-scanner.png"
-          alt="Scan this QR code with any UPI app to pay"
-        />
-      </div>
-    </mat-card>
+  <div class="card content-card">
+    <div class="summary-col">
+      <h2 class="summary-title">Order Summary</h2>
 
-    <!-- Order Summary card -->
-    <mat-card class="card card--summary">
-      <h2 class="summary__title">Order Summary</h2>
-
-      <div class="summary__field">
-        <span class="summary__label">Teacher</span>
-        <span class="summary__value">{{ order.teacherName }}</span>
+      <div class="field">
+        <span class="field-label">Teacher</span>
+        <span class="field-value">{{ teacherName }}</span>
       </div>
 
-      <div class="summary__field">
-        <span class="summary__label">Course</span>
-        <span class="summary__value">{{ order.courseName }}</span>
+      <div class="field">
+        <span class="field-label">Course</span>
+        <span class="field-value">{{ courseName }}</span>
       </div>
 
-      <div class="summary__divider"></div>
+      <div class="divider"></div>
 
-      <div class="summary__row">
-        <span class="summary__row-label">Course Fee</span>
-        <span class="summary__row-value">{{ formatCurrency(order.courseFee) }}</span>
+      <div class="line-row">
+        <span class="line-label">Course Fee</span>
+        <span class="line-value">{{ courseFee | currency:'INR':'symbol':'1.0-0' }}</span>
       </div>
-      <div class="summary__row">
-        <span class="summary__row-label">Discount</span>
-        <span class="summary__row-value">{{ formatCurrency(order.discount) }}</span>
+      <div class="line-row">
+        <span class="line-label">Discount</span>
+        <span class="line-value">{{ discount | currency:'INR':'symbol':'1.0-0' }}</span>
       </div>
-      <div class="summary__row summary__row--total">
-        <span class="summary__row-label">Total Amount</span>
-        <span class="summary__row-value">{{ formatCurrency(order.totalAmount) }}</span>
+      <div class="line-row total-row">
+        <span class="line-label total-label">Total Amount</span>
+        <span class="line-value total-value">{{ totalAmount | currency:'INR':'symbol':'1.0-0' }}</span>
       </div>
 
-      <button mat-flat-button class="pay-btn" (click)="onPaymentDone()">
+      <button type="button" class="pay-btn" (click)="onPaymentDone()">
         Payment Done
-        <mat-icon class="pay-btn__icon">arrow_forward</mat-icon>
+        <span class="arrow">&rarr;</span>
       </button>
-    </mat-card>
+    </div>
 
-    <!-- Amount / scan-to-pay banner -->
-    <mat-card class="card card--banner">
-      <div class="banner__amount">{{ formatCurrency(order.totalAmount) }}</div>
-      <div class="banner__text">Scan to pay with any UPI app</div>
-    </mat-card>
+    <div class="pay-col">
+      <div class="amount-box">
+        <div class="amount">{{ totalAmount | currency:'INR':'symbol':'1.0-0' }}</div>
+        <div class="amount-caption">Scan to pay with any UPI app</div>
+      </div>
 
-    <!-- How to Pay card -->
-    <mat-card class="card card--howto">
-      <h2 class="howto__title">How to Pay:</h2>
-      <ol class="howto__list">
-        <li>Open any UPI app on your phone (Google Pay, PhonePe, etc.)</li>
-        <li>Tap on "Scan QR Code" option</li>
-        <li>Scan the QR code displayed above</li>
-        <li>Verify the amount ({{ formatCurrency(order.totalAmount) }}) and complete payment</li>
-        <li>Click "Payment Done" button below after successful payment</li>
-      </ol>
-    </mat-card>
-
+      <div class="steps-box">
+        <h3 class="steps-title">How to Pay:</h3>
+        <ol class="steps-list">
+          <li>Open any UPI app on your phone (Google Pay, PhonePe, etc.)</li>
+          <li>Tap on "Scan QR Code" option</li>
+          <li>Scan the QR code displayed above</li>
+          <li>Verify the amount ({{ totalAmount | currency:'INR':'symbol':'1.0-0' }}) and complete payment</li>
+          <li>Click "Payment Done" button below after successful payment</li>
+        </ol>
+      </div>
+    </div>
   </div>
 </div>

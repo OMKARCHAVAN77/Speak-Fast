@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { RouterLink, RouterModule } from '@angular/router';
 
 interface Plan {
   name: string;
@@ -17,9 +18,17 @@ interface Plan {
   featured?: boolean;
 }
 
+export interface Course {
+  id: number;
+  name: string;
+  originalPrice: number;
+  discount: number;
+  finalPrice: number;
+}
+
 @Component({
   selector: 'app-course-recommendation',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule,RouterModule,RouterLink],
   templateUrl: './course-recommendation.html',
   styleUrl: './course-recommendation.css',
 })
