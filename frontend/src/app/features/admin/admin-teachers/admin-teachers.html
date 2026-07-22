@@ -37,7 +37,13 @@
     <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
       <div class="teacher-card__main">
         <div class="avatar">
-          <mat-icon>person</mat-icon>
+          <img
+            *ngIf="teacher.photo"
+            [src]="'http://localhost:5000/uploads/' + teacher.photo"
+            [alt]="teacher.firstName + ' ' + teacher.lastName"
+            class="avatar-img"
+          />
+          <mat-icon *ngIf="!teacher.photo">person</mat-icon>
         </div>
 
         <div class="teacher-info">
@@ -46,6 +52,18 @@
           </div>
           <span class="teacher-subjects">{{ teacher.email }}</span>
         </div>
+      </div>
+
+      <div class="teacher-card__actions" *ngIf="teacher.googleMeetLink">
+        <a
+          [href]="teacher.googleMeetLink"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="meet-link-btn"
+        >
+          <mat-icon>videocam</mat-icon>
+          Join Meet
+        </a>
       </div>
     </div>
 
