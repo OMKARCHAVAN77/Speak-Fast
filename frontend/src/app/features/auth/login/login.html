@@ -24,9 +24,9 @@
       <div class="password-wrapper">
         <label >Password</label>
 
-        <div class="position-relative mt-2">
-          <input [type]="showPassword ? 'text' : 'password'" class="form-control pe-5"
-            [(ngModel)]="password" name="password"
+        <div class="position-relative ">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control"
+
             placeholder="Enter your password" >
 
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()" >
