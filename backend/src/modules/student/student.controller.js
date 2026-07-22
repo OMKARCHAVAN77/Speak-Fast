@@ -1,10 +1,7 @@
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import ApiResponse from "../../utils/ApiResponse.js";
-<<<<<<< HEAD
 import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordStudentService   } from "../student/student.service.js";
-=======
 import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService,bookSlotService } from "../student/student.service.js";
->>>>>>> 637a9965a9b0942ec11d97dab263f74b38993b51
 
 
 
@@ -79,7 +76,6 @@ const getAllStudents = asyncHandler(async (req, res) => {
 export { getAllStudents };
 
 
-<<<<<<< HEAD
 // Reset Student Password Controller
 const resetPassword = async (req, res) => {
 
@@ -101,7 +97,6 @@ const resetPassword = async (req, res) => {
 };
 
 export { resetPassword };
-=======
 
 
 // book slot teacher
@@ -134,4 +129,3 @@ const bookSlot = async (req, res) => {
 };
 
 export { bookSlot };
->>>>>>> 637a9965a9b0942ec11d97dab263f74b38993b51

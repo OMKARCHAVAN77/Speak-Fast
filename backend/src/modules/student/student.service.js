@@ -270,7 +270,6 @@ const getAllStudentsService = async () => {
     }
     return students;
 };
-<<<<<<< HEAD
 export { getAllStudentsService };
 
 
@@ -330,7 +329,6 @@ const resetPasswordStudentService = async (token, body) => {
 };
 
 export { resetPasswordStudentService };
-=======
 
 
 
@@ -382,4 +380,3 @@ export { resetPasswordStudentService };
     return teacher;
 };
 export { getAllStudentsService ,bookSlotService };
->>>>>>> 637a9965a9b0942ec11d97dab263f74b38993b51
