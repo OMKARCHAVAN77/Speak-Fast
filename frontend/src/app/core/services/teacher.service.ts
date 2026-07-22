@@ -1,19 +1,23 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 @Injectable({
-    providedIn:'root'
+  providedIn: 'root'
 })
-export class TeacherService{
+export class TeacherService {
 
-    constructor(private http:HttpClient){}
+  constructor(private http: HttpClient) {}
 
+  filterTeacherApi(date: string, time: string) {
 
-    filterTeacherApi(data:any){
-      return  this.http.get(`http://localhost:5000/api/teacher/filter?date=${data.date}&time=${data.time}`);
-    }
+    const params = new HttpParams()
+      .set('date', date)
+      .set('time', time);
 
-    getAllTeachersApi(){
-      return  this.http.get('http://localhost:5000/api/teacher/all');
-    }
+    return this.http.get(
+      'http://localhost:5000/api/teacher/filter',
+      { params }
+    );
+  }
+
 }

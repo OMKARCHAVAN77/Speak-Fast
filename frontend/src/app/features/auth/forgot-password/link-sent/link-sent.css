@@ -10,6 +10,26 @@
   margin-bottom: 40px;
 }
 
+.welcome-heading {
+  font-family: Quicksand;
+font-weight: 700;
+font-style: Bold;
+font-size: 28px;
+line-height: 100%;
+letter-spacing: -2%;
+
+}
+
+.welcome-subtext {
+margin-top: 24px;
+font-weight: 500;
+font-style: Medium;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: -1%;
+color:#0F172A
+}
+
 .email-wrapper {
   margin-bottom: 24px;
 }
@@ -37,9 +57,27 @@ button div{
   display: flex; align-items: center; justify-content: center;
 }
 
-a{
+div a{
+
+  font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: -1%;
+text-decoration: underline ;
 
   text-decoration: underline;
   text-decoration-color: black;
   margin-right: 10px;
+}
+span{
+  font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: -1%;
+color: #4376F6;
+
 }

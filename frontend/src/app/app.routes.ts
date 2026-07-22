@@ -1,7 +1,6 @@
 import { PasswordChanged } from './features/auth/forgot-password/password-changed/password-changed';
 import { ConfirmPassword } from './features/auth/forgot-password/confirm-password/confirm-password';
 import { ResetPassword } from './features/auth/forgot-password/reset-password/reset-password';
-import { Path } from './../../../backend/node_modules/path-to-regexp/dist/index.d';
 import { ForgotPassword } from './features/auth/forgot-password/forgot-password';
 import { Admin } from './features/admin/admin';
 import { Routes } from '@angular/router';

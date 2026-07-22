@@ -7,6 +7,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 
 type UserType = 'student' | 'teacher' | 'admin';
@@ -18,6 +20,8 @@ type UserType = 'student' | 'teacher' | 'admin';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatRadioButton,
+     MatRadioGroup, 
     MatIconModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -28,13 +32,18 @@ export class Login {
   rememberMe: boolean = true;
   hidePassword: boolean = true;
   showPassword = false;
-
-  errorMessage: string = '';
   isLoading: boolean = false;
+  selectedRole: UserType = 'teacher';
 
+  // Donhi endpoints ithe declare kele — adhi phakt teacherLoginUrl hota
   private teacherLoginUrl = 'http://localhost:5000/api/teacher/login';
+  private adminLoginUrl = 'http://localhost:5000/api/auth/login';;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -45,10 +54,8 @@ export class Login {
   }
 
   onLogin(): void {
-    this.errorMessage = '';
-
     if (!this.email || !this.password) {
-      this.errorMessage = 'Please enter both email and password.';
+      this.showToast('Please enter both email and password.', 'error');
       return;
     }
 
@@ -59,27 +66,66 @@ export class Login {
       password: this.password
     };
 
-    this.http.post<any>(this.teacherLoginUrl, payload, { withCredentials: true }).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        console.log('Login successful:', res);
+    // selectedRole var based ekach API call hoil
+    const loginUrl = this.selectedRole === 'admin' ? this.adminLoginUrl : this.teacherLoginUrl;
 
-        // teacher ki info localStorage me save kar sakte hain (optional, baad me use hogi)
-        localStorage.setItem('teacher', JSON.stringify(res.teacher));
+    this.http.post<any>(loginUrl, payload, { withCredentials: true }).subscribe({
+      next: (res) => this.handleLoginSuccess(res),
+      error: (err) => this.handleLoginError(err)
+    });
+  }
 
-        // teacher dashboard/home pe redirect
+  private handleLoginSuccess(res: any): void {
+    this.isLoading = false;
+
+    // selectedRole based var response cha key nivadaycha (res.admin ki res.teacher)
+    const user = this.selectedRole === 'admin' ? res.admin : res.teacher;
+    const role: UserType = user?.role || this.selectedRole;
+
+    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem('userRole', role);
+
+    // setTimeout ne NG0100 (ExpressionChangedAfterItHasBeenCheckedError) taalla
+    setTimeout(() => this.showToast('Login successful!', 'success'));
+
+    this.navigateByRole(role);
+  }
+
+  private handleLoginError(err: any): void {
+    this.isLoading = false;
+    const message = err?.error?.message || 'Login failed. Please try again.';
+
+    setTimeout(() => this.showToast(message, 'error'));
+
+    console.error('LOGIN ERROR:', err.status, err.error);
+  }
+
+  private navigateByRole(role: UserType): void {
+    switch (role) {
+      case 'admin':
+        this.router.navigate(['/admin']);
+        break;
+      case 'teacher':
+        this.router.navigate(['/teachers']);
+        break;
+      case 'student':
+        this.router.navigate(['/student/dashboard']);
+        break;
+      default:
         this.router.navigate(['/home']);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Login failed. Please try again.';
-        console.error('LOGIN ERROR:', err);
-      }
+    }
+  }
+
+  private showToast(message: string, type: 'success' | 'error'): void {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
+      panelClass: type === 'error' ? ['toast-error'] : ['toast-success'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
     });
   }
 
   onForgotPassword(): void {
     console.log('Forgot password clicked');
-    // TODO: Navigate to forgot password page/flow
   }
 }

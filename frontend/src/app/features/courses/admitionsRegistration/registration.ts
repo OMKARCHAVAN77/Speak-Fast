@@ -243,6 +243,7 @@ export class RegistrationComponent {
       this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
         next:(data:any)=>{
           console.log(data)
+          this.registrationForm.reset();
         },error:(err:any)=>{
           console.log(err)
         }

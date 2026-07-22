@@ -1,194 +1,75 @@
-<div class="course-recommendation-page">
+<section class="recommendation-page">
+  <!-- Decorative background blob -->
+  <div class="bg-blob"></div>
 
-  <!-- Course-Header Section -->
-  <section class="course-header">
-    <h1 class="course-header__title">
-      Your Course Recommendation
+  <!-- Decorative books image -->
+  <img
+    class="bg-books"
+    src="../../../../assets/stack-of-books.png"
+    alt="this is a book image"
+    aria-hidden="true"
+  />
+
+  <div class="page-header">
+    <span class="pill-badge">Find a perfect course</span>
+    <h1 class="page-title">
+      Your <span class="highlight">Course Recommendation</span>
     </h1>
+    <p class="page-subtitle">Advance Course to build a strong foundation</p>
+  </div>
 
-    <p class="course-header__description">
-      Based on your test performance, we recommend the perfect course for you
-    </p>
-  </section>
+  <div class="plans-grid">
+    <mat-card
+      *ngFor="let plan of plans"
+      class="plan-card"
+      [class.featured]="plan.featured"
+    >
+      <span class="badge" *ngIf="plan.badge">{{ plan.badge }}</span>
 
-  <!-- Test Score -->
-  <section class="score-section">
-    <mat-card class="score-card">
-      <div class="score-card-content">
+      <h2 class="plan-name">{{ plan.name }}</h2>
+      <p class="plan-description">{{ plan.description }}</p>
 
-        <!-- Left Side -->
-        <div class="score-left">
-
-          <div class="score-icon-container">
-            <!-- <mat-icon class="score-icon">workspace_premium</mat-icon> -->
-            <img
-              src="assets/test-score.png"
-              alt="Test Score"
-              class="score-icon" 
-            />
-          </div>
-
-          <div class="score-text-container">
-            <h2 class="score-title">Your Test Score</h2>
-            <p class="score-description">
-              Great effort! Here's your result.
-            </p>
-          </div>
-
+      <div class="price-block">
+        <span class="price-label">Course Price</span>
+        <div class="price-row">
+          <span class="price-current">₹{{ plan.price | number }}<span class="price-unit">/mo</span></span>
+          <span class="price-original">₹{{ plan.originalPrice | number }}<span class="price-unit">/mo</span></span>
+          <span class="discount-chip">{{ plan.discount }}</span>
         </div>
-
-        <!-- Right Side -->
-        <div class="score-right">
-          <span class="score-value">22</span>
-          <span class="score-total">/25</span>
-        </div>
-
       </div>
+
+      <div class="info-boxes">
+        <div class="info-box">
+          <span class="info-label">Duration</span>
+          <span class="info-value">
+            <mat-icon>schedule</mat-icon>
+            {{ plan.duration }}
+          </span>
+        </div>
+        <div class="info-box">
+          <span class="info-label">Live Sessions</span>
+          <span class="info-value no-icon">{{ plan.liveSessions }}</span>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="learn-section">
+        <span class="learn-title">What you'll learn:</span>
+        <ul class="learn-list">
+          <li *ngFor="let item of plan.learnItems">
+            <mat-icon class="check-icon">check_circle</mat-icon>
+            <span>{{ item }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <hr class="divider" />
+
+      <button mat-flat-button class="enroll-btn" (click)="enroll(plan)">
+        Enroll Now
+        <mat-icon>add</mat-icon>
+      </button>
     </mat-card>
-  </section>
-
-  <!-- Recommendation -->
-  <section class="recommendation-section">
-    <mat-card class="recommendation-card">
-      <mat-card-content class="recommendation-card-content">
-        <h3 class="recommendation-title">Strong Foundation Recommended</h3>
-        <p class="recommendation-description">
-          Based on your test results, we recommend focusing on building a strong foundation in this area.
-        </p>
-      </mat-card-content>
-    </mat-card>
-  </section>
-
-  <!-- Recommended Courses -->
-  <section class="recommended-courses">
-    <h2 class="section-title">Recommended Courses</h2>
-    <div class="course-grid">
-
-      @for(course of recommendedCourses; track course.title){
-
-      <mat-card class="course-card">
-
-        <!-- Card Header -->
-        <div class="card-header">
-
-          <div class="card-icon">
-            <!-- <mat-icon>school</mat-icon>  -->
-            <img
-              src= {{course.img}}
-              alt="Test Score"
-              class="score-icon" 
-            />
-          </div>
-
-          <div class="recommended-chip">
-            {{course.badge}}
-          </div>
-
-        </div>
-
-        <!-- Title -->
-        <h3 class="course-title">
-          {{course.title}}
-        </h3>
-
-        <!-- Description -->
-        <p class="course-description">
-          {{course.description}}
-        </p>
-
-        <!-- Duration & Sessions -->
-        <div class="course-info">
-
-          <div class="info-item">
-            <span class="info-label">Duration</span>
-            <div class="info-content">
-              <mat-icon>schedule</mat-icon>
-              <span class="info-value">{{course.duration}}</span>
-            </div>
-          </div>
-
-          <div class="info-item">
-            <span class="info-label">Live Sessions</span>
-            <div class="info-content">
-              <mat-icon>schedule</mat-icon>
-              <span class="info-value">{{course.sessions}}</span>
-            </div>
-          </div>
-
-        </div>
-
-        <mat-divider></mat-divider>
-
-        <!-- Learn Section -->
-        <div class="learn-section">
-
-          <h4>What You'll Learn</h4>
-
-          <ul>
-
-            @for(topic of course.topics; track topic){
-
-            <li>
-
-              <mat-icon>check_circle</mat-icon>
-
-              <span>{{topic}}</span>
-
-            </li>
-
-            }
-
-          </ul>
-
-        </div>
-
-        <mat-divider></mat-divider>
-        <!-- Price -->
-        <div class="course-price">
-
-          <span>Course Price</span>
-
-          <h2>{{course.price}}</h2>
-
-        </div>
-
-        <!-- Button -->
-        <button
-          routerLink="/payment"
-          mat-flat-button
-          color="primary"
-          class="enroll-button">
-          <mat-icon>add</mat-icon>
-          Enroll Now
-
-        </button>
-      </mat-card>
-      }
-    </div>
-  </section>
-
-  <!-- Other Courses -->
-  <section class="other-courses">
-
-  </section>
-
-  <!-- Bottom Buttons -->
-  <section class="action-buttons">
-    <button
-      mat-stroked-button
-      color="primary"
-      class="action-button-back">
-      <mat-icon>arrow_back</mat-icon>
-      Back
-    </button>
-
-    <button
-      routerLink="/payment"
-      mat-flat-button
-      color="primary"
-      class="action-button-forward">
-      Enroll Now
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
-  </section>
-</div>
+  </div>
+</section>

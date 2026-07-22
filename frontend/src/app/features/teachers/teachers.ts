@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,43 +28,84 @@ interface Teacher {
   templateUrl: './teachers.html',
   styleUrls: ['./teachers.css']
 })
-export class Teachers {
+export class Teachers implements OnInit {
   // Matches the design: 05 January 2026
   selectedDate: Date = new Date(2026, 0, 5);
   selectedTime: string | null = null;
   isDatePickerOpen = false;
   isTimeMenuOpen = false;
+  formattedDate:any;
+ ngOnInit(): void {
+
+  this.formattedDate = this.formatDate(this.selectedDate);
+  this.loadTeachers();
+
+}
+formatDate(date: Date): string {
+
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+}
 
 constructor(private teacherService: TeacherService) {}  
+loadTeachers(): void {
+
+  if (!this.formattedDate || !this.selectedTime) {
+    return;
+  }
+
+  console.log('Calling API...');
+  console.log(this.formattedDate);
+  console.log(this.selectedTime);
+
+  this.teacherService
+  .filterTeacherApi(this.formattedDate, this.selectedTime)
+  .subscribe({
+    next: (res: any) => {
+      console.log("API Response:", res);
+    },
+    error: (err) => {
+      console.error(err);
+    }
+  });
+
+}
+
 
   timeSlots: string[] = [
-    '09:00 AM', '10:00 AM', '11:00 AM',
-    '01:00 PM', '02:00 PM', '03:00 PM',
-    '04:00 PM', '05:00 PM'
+    '09:00AM', '10:00AM', '11:00AM',
+    '01:00PM', '02:00PM', '3:00pm','4:15am',
+    '04:00PM', '05:00PM','12:45pm', '06:00PM', '07:00PM', '08:00PM'
   ];
 
-  onDateChange(event: any): void {
-    if (event?.value) {
+ onDateChange(event: any): void {
 
-      this.selectedDate = event.value;
-        const formattedDate = `${this.selectedDate.getFullYear()}-${String(this.selectedDate.getMonth() + 1).padStart(2, '0')}-${String(this.selectedDate.getDate()).padStart(2, '0')}`;
-      console.log('Selected date:', formattedDate);
-    }
-  }
+  if (!event.value) return;
+
+  this.selectedDate = event.value;
+
+  this.formattedDate = this.formatDate(this.selectedDate);
+
+  console.log(this.formattedDate);
+
+  this.loadTeachers();
+
+}
 
   selectTime(slot: string): void {
-    this.selectedTime = slot;
-    console.log('Selected time:', this.selectedTime);
-  }
+
+  this.selectedTime = slot;
+
+  console.log(this.selectedTime);
+
+  this.loadTeachers();
+
+}
 
   // ---------- ALL TEACHERS ----------
   selectedTeacherId: string | null = 'sakshi-pable';
 
-  ngOnInit() {
-    this.teacherService.getAllTeachersApi().subscribe((teachers: any) => {
-      this.teachers = teachers;
-    });
-  }
+
 
   teachers: Teacher[] = [
     {

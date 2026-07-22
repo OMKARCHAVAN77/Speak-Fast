@@ -5,6 +5,8 @@ import Student from "../student/student.model.js";
 import ApiError from "../../utils/ApiError.js";
 import sendEmail from "../../utils/studentSendMail.js";
 import { validateStudentRegistration,validateStudentLogin } from "../student/student.validation.js";
+import Teacher from "../teacher/teacher.model.js";
+
 
 // student registration service
 const registerStudent = async (studentData) => {
@@ -122,41 +124,38 @@ export { loginStudentService };
 
 
 
+// const resetURL =`${process.env.CLIENT_URL}/forgotPassword/confirmPassword/${resetToken}`;
+
 // student forgot password service
+// Student Forgot Password Service
 const forgotPasswordService = async (email) => {
+  const student = await Student.findOne({
+    email: email.toLowerCase(),
+  });
 
-    const student = await Student.findOne({
-        email: email.toLowerCase()
-    });
+  if (!student) {
+    throw new ApiError(404, "Student not found.");
+  }
 
-    if (!student) {
-        throw new ApiError(
-            404,
-            "Student not found."
-        );
-    }
+  // Generate Random Token
+  const resetToken = crypto.randomBytes(32).toString("hex");
 
-    // Generate Random Token
-    const resetToken = crypto.randomBytes(32).toString("hex");
-    // Hash Token
-    const hashedToken = crypto
+  // Hash Token
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
 
-        .createHash("sha256")
+  // Save Token in Database
+  student.passwordResetToken = hashedToken;
 
-        .update(resetToken)
+  // Expiry Time - 15 Minutes
+  student.passwordResetTokenExpiry = Date.now() + 15 * 60 * 1000;
 
-        .digest("hex");
+  await student.save();
 
-    // Save in Database
-    student.passwordResetToken = hashedToken;
-
-    student.passwordResetTokenExpiry =
-        Date.now() + 15 * 60 * 1000;
-
-    await student.save();
-
-    // Reset URL
-    const resetURL =`${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+  // Reset URL
+  const resetURL = `${process.env.CLIENT_URL}/forgotPassword/confirmPassword?token=${resetToken}&email=${student.email}`;
 
     // Email HTML
         const html = `
@@ -244,6 +243,11 @@ const forgotPasswordService = async (email) => {
         "Reset Password",
         html
     );
+
+    return {
+    success: true,
+    message: "Password reset link sent successfully.",
+  };
 };
 
 export { forgotPasswordService };
@@ -267,3 +271,131 @@ const getAllStudentsService = async () => {
     return students;
 };
 export { getAllStudentsService };
+
+
+
+ // Student Reset Password student Service
+const resetPasswordStudentService = async (
+    token,
+    body
+) => {
+
+    const { password, confirmPassword } = body;
+
+    // Required Fields
+    if (!password || !confirmPassword) {
+        throw new ApiError(
+            400,
+            "All fields are required."
+        );
+    }
+
+    // Password Match
+    if (password !== confirmPassword) {
+        throw new ApiError(
+            400,
+            "Passwords do not match."
+        );
+    }
+
+    // Hash URL Token
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+
+    // Find Student
+    const student = await Student.findOne({
+
+        passwordResetToken: hashedToken,
+
+        passwordResetTokenExpiry: {
+            $gt: Date.now()
+        }
+
+    }).select("+password");
+
+    if (!student) {
+
+        throw new ApiError(
+            400,
+            "Reset password link is invalid or expired."
+        );
+
+    }
+
+    // Hash Password
+    const hashedPassword =
+        await bcrypt.hash(password, 10);
+
+    // Update Password
+    student.password = hashedPassword;
+
+    // Remove Token
+    student.passwordResetToken = null;
+    student.passwordResetTokenExpiry = null;
+
+    await student.save();
+
+    return {
+
+        success: true,
+
+        message:
+            "Password changed successfully."
+
+    };
+
+};
+
+export { resetPasswordStudentService };
+
+
+/// book slot service code
+
+
+ const bookSlotService = async (
+    teacherId,
+    slotId,
+    studentId
+) => {
+
+    // Find teacher
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+        throw new Error("Teacher not found");
+    }
+
+    // Find slot
+    const slot = teacher.slots.id(slotId);
+
+    if (!slot) {
+        throw new Error("Slot not found");
+    }
+
+    // Check if already booked
+    if (slot.isBooked) {
+        throw new Error("Slot already booked");
+    }
+
+    // Example:
+    // Save teacherId & slotId in student record
+    // (Modify according to your Student schema)
+
+    await Student.findByIdAndUpdate(
+        studentId,
+        {
+            teacherId,
+            slotId
+        }
+    );
+
+    // Update slot
+    slot.isBooked = true;
+
+    await teacher.save();
+
+    return teacher;
+};
+export {bookSlotService };
