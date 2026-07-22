@@ -1,6 +1,7 @@
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import ApiResponse from "../../utils/ApiResponse.js";
-import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService,bookSlotService } from "../student/student.service.js";
+import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordStudentService,bookSlotService   } from "../student/student.service.js";
+
 
 
 
@@ -75,6 +76,27 @@ const getAllStudents = asyncHandler(async (req, res) => {
 export { getAllStudents };
 
 
+// Reset Student Password Controller
+const resetPassword = async (req, res) => {
+
+  console.log("Token :", req.params.token);
+  console.log("Body :", req.body);
+  try {
+    const result = await resetPasswordStudentService(
+      req.params.token,
+      req.body
+    );
+
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { resetPassword };
 
 
 // book slot teacher
