@@ -4,69 +4,66 @@ import jwt from "jsonwebtoken";
 import Student from "../student/student.model.js";
 import ApiError from "../../utils/ApiError.js";
 import sendEmail from "../../utils/studentSendMail.js";
-import { validateStudentRegistration,validateStudentLogin } from "../student/student.validation.js";
+import { validateStudentRegistration, validateStudentLogin } from "../student/student.validation.js";
 import Teacher from "../teacher/teacher.model.js";
 
 
 // student registration service
 const registerStudent = async (studentData) => {
 
-  const validation = validateStudentRegistration(studentData);
+    const validation = validateStudentRegistration(studentData);
 
-  if (!validation.isValid) {
-    throw new ApiError(400, validation.message);
-  }
+    if (!validation.isValid) {
+        throw new ApiError(400, validation.message);
+    }
 
-  const {
-    firstName,
-    lastName,
-    contactNumber,
-    email,
-    password,
-    district,
-    qualification,
-    occupation,
-  } = studentData;
+    const {
+        firstName,
+        lastName,
+        contactNumber,
+        email,
+        password,
+        district,
+        qualification,
+        occupation,
+    } = studentData;
 
-  // Check Email Exists
-  const existingEmail = await Student.findOne({ email });
+    // Check Email Exists
+    const existingEmail = await Student.findOne({ email });
 
-  if (existingEmail) {
-    throw new ApiError(409, "Email already registered.");
-  }
+    if (existingEmail) {
+        throw new ApiError(409, "Email already registered.");
+    }
 
-  // Check Contact Number Exists
-  const existingContact = await Student.findOne({ contactNumber });
+    // Check Contact Number Exists
+    const existingContact = await Student.findOne({ contactNumber });
 
-  if (existingContact) {
-    throw new ApiError(409, "Contact Number already registered.");
-  }
+    if (existingContact) {
+        throw new ApiError(409, "Contact Number already registered.");
+    }
 
-  // Hash Password
-  const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash Password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Create Student
-  const student = await Student.create({
-    firstName: firstName.trim(),
-    lastName: lastName.trim(),
-    contactNumber: contactNumber.trim(),
-    email: email.trim().toLowerCase(),
-    password: hashedPassword,
-    district: district.trim(),
-    qualification: qualification.trim(),
-    occupation: occupation.trim(),
-  });
+    // Create Student
+    const student = await Student.create({
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
+        contactNumber: contactNumber.trim(),
+        email: email.trim().toLowerCase(),
+        password: hashedPassword,
+        district: district.trim(),
+        qualification: qualification.trim(),
+        occupation: occupation.trim(),
+    });
 
-  // Remove Password from Response
-  const studentResponse = student.toObject();
-  delete studentResponse.password;
+    // Remove Password from Response
+    const studentResponse = student.toObject();
+    delete studentResponse.password;
 
-  return studentResponse;
+    return studentResponse;
 };
-
 export { registerStudent };
-
-
 
 
 
@@ -119,46 +116,41 @@ const loginStudentService = async (loginData) => {
     };
 
 };
-
 export { loginStudentService };
 
 
-
-// const resetURL =`${process.env.CLIENT_URL}/forgotPassword/confirmPassword/${resetToken}`;
-
-// student forgot password service
 // Student Forgot Password Service
 const forgotPasswordService = async (email) => {
-  const student = await Student.findOne({
-    email: email.toLowerCase(),
-  });
+    const student = await Student.findOne({
+        email: email.toLowerCase(),
+    });
 
-  if (!student) {
-    throw new ApiError(404, "Student not found.");
-  }
+    if (!student) {
+        throw new ApiError(404, "Student not found.");
+    }
 
-  // Generate Random Token
-  const resetToken = crypto.randomBytes(32).toString("hex");
+    // Generate Random Token
+    const resetToken = crypto.randomBytes(32).toString("hex");
 
-  // Hash Token
-  const hashedToken = crypto
-    .createHash("sha256")
-    .update(resetToken)
-    .digest("hex");
+    // Hash Token
+    const hashedToken = crypto
+        .createHash("sha256")
+        .update(resetToken)
+        .digest("hex");
 
-  // Save Token in Database
-  student.passwordResetToken = hashedToken;
+    // Save Token in Database
+    student.passwordResetToken = hashedToken;
 
-  // Expiry Time - 15 Minutes
-  student.passwordResetTokenExpiry = Date.now() + 15 * 60 * 1000;
+    // Expiry Time - 15 Minutes
+    student.passwordResetTokenExpiry = Date.now() + 15 * 60 * 1000;
 
-  await student.save();
+    await student.save();
 
-  // Reset URL
-  const resetURL = `${process.env.CLIENT_URL}/forgotPassword/confirmPassword?token=${resetToken}&email=${student.email}`;
+    // Reset URL
+    const resetURL = `${process.env.CLIENT_URL}/forgotPassword/confirmPassword?token=${resetToken}&email=${student.email}`;
 
     // Email HTML
-        const html = `
+    const html = `
         <!DOCTYPE html>
         <html lang="en">
         <head>
@@ -245,11 +237,10 @@ const forgotPasswordService = async (email) => {
     );
 
     return {
-    success: true,
-    message: "Password reset link sent successfully.",
-  };
+        success: true,
+        message: "Password reset link sent successfully.",
+    };
 };
-
 export { forgotPasswordService };
 
 
@@ -274,68 +265,34 @@ export { getAllStudentsService };
 
 
 
- // Student Reset Password Service
-const resetPasswordStudentService = async (token, body) => {
-
-  const { password, confirmPassword } = body;
-
-  if (!password || !confirmPassword) {
-    throw new Error("All fields are required");
-  }
-
-  if (password !== confirmPassword) {
-    throw new Error("Passwords do not match");
-  }
-
-  // Hash URL Token
-
-  const hashedToken = crypto
-    .createHash("sha256")
-    .update(token)
-    .digest("hex");
-
-  // Find Student
+// Student Reset Password student Service
+const resetPasswordService = async (email, token, newPassword) => {
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
   const student = await Student.findOne({
+    email: email.toLowerCase(),
     passwordResetToken: hashedToken,
-    passwordResetTokenExpiry: {
-      $gt: Date.now(),
-    },
-  }).select("+password");
+    passwordResetTokenExpiry: { $gt: Date.now() },
+  });
 
   if (!student) {
-    throw new Error("Reset password link is invalid or expired.");
+    throw new ApiError(400, "Invalid or expired token.");
   }
 
-  // Hash New Password
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  // Update Password
-
-  student.password = hashedPassword;
-
-  // Clear Reset Token
-
-  student.passwordResetToken = null;
-  student.passwordResetTokenExpiry = null;
+  student.password = await bcrypt.hash(newPassword, 10); // ya jo bhi hashing tum use karte ho
+  student.passwordResetToken = undefined;
+  student.passwordResetTokenExpiry = undefined;
 
   await student.save();
 
-  return {
-    success: true,
-    message: "Password changed successfully.",
-  };
+  return { success: true, message: "Password reset successful." };
 };
-
-export { resetPasswordStudentService };
-
+export { resetPasswordService };
 
 
-/// book slot service code
 
-
- const bookSlotService = async (
+// book slot service code
+const bookSlotService = async (
     teacherId,
     slotId,
     studentId
@@ -377,6 +334,36 @@ export { resetPasswordStudentService };
 
     await teacher.save();
 
+    await Student.findByIdAndUpdate(
+    studentId,
+    {
+        assignedTeacher: teacherId
+    },
+    {
+        new: true
+    }
+);
+
     return teacher;
 };
-export {bookSlotService };
+export { bookSlotService };
+
+
+// student profile service
+const getStudentProfileService = async (studentId) => {
+
+    const student = await Student.findById(studentId)
+        .populate({
+            path: "assignedTeacher",
+            select: "-password -resetToken -resetTokenExpiry"
+        });
+
+    if (!student) {
+        throw new Error("Student not found");
+    }
+
+    return student;
+};
+export  {getStudentProfileService}
+
+
