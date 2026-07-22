@@ -39,7 +39,7 @@
         <div class="avatar">
           <img
             *ngIf="teacher.photo"
-            [src]="'http://${environment.apiUrl}/uploads/' + teacher.photo"
+            [src]="'${environment.apiUrl}/uploads/' + teacher.photo"
             [alt]="teacher.firstName + ' ' + teacher.lastName"
             class="avatar-img"
           />

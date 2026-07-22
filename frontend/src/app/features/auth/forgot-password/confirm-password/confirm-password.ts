@@ -54,7 +54,7 @@ export class ConfirmPassword {
       return;
     }
 
-    this.http.post(`http://${environment.apiUrl}/students/reset-password`, {
+    this.http.post(`${environment.apiUrl}/students/reset-password`, {
   token: this.token,
   email: this.email,
   newPassword: password,

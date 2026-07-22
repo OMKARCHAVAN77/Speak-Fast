@@ -91,7 +91,7 @@ togglePassword() {
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  private apiUrl = `http://${environment.apiUrl}/teacher/reset-password`;
+  private apiUrl = `${environment.apiUrl}/teacher/reset-password`;
 
   constructor(
     private route: ActivatedRoute,
