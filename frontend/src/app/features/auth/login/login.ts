@@ -138,9 +138,9 @@ export class Login {
 
   // Donhi endpoints ithe declare kele — adhi phakt teacherLoginUrl hota
   // student login add kela
-  private teacherLoginUrl = `http://${environment.apiUrl}/teacher/login`;
-  private adminLoginUrl = `http://${environment.apiUrl}/auth/login`;
-  private studentLoginUrl = `http://${environment.apiUrl}/students/login`;
+  private teacherLoginUrl = `${environment.apiUrl}/teacher/login`;
+private adminLoginUrl = `${environment.apiUrl}/auth/login`;
+private studentLoginUrl = `${environment.apiUrl}/students/login`;
 
   constructor(
     private http: HttpClient,
