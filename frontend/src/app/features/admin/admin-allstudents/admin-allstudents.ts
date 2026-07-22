@@ -58,7 +58,7 @@ ngOnInit(): void {
 }
 
 loadStudents() {
-  this.http.get<any>(`http://${environment.apiUrl}/students/getallstudent`)
+  this.http.get<any>(`${environment.apiUrl}/students/getallstudent`)
     .subscribe({
       next: (res) => {
         this.allStudentList.set(res.data);

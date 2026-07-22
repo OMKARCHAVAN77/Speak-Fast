@@ -144,7 +144,7 @@ constructor(private fb: FormBuilder, private studentServ:StudentService, private
     if (this.registrationForm.valid) {
 
 
-      this.http.post (`http://${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
+      this.http.post (`${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
         next:(data:any)=>{
           console.log(data.massage)
           alert('sucessfully registered');
