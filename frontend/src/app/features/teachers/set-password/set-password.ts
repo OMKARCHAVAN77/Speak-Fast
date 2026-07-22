@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { environment } from '../../../../environments/environments';
 
 @Component({
   selector: 'app-set-password',
@@ -25,7 +25,7 @@ togglePassword() {
   //  errorMessage: string = '';
 //   isLoading: boolean = false;
 
-//   private apiUrl = 'http://${environment.apiUrl}/teacher/set-password';
+//   private apiUrl = `http://${environment.apiUrl}/teacher/set-password`;
 
 //   constructor(
 //     private route: ActivatedRoute,
@@ -91,7 +91,7 @@ togglePassword() {
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  private apiUrl = 'http://${environment.apiUrl}/teacher/reset-password';
+  private apiUrl = `http://${environment.apiUrl}/teacher/reset-password`;
 
   constructor(
     private route: ActivatedRoute,

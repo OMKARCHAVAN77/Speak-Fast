@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { environment } from '../../../../environments/environments';
 
 
 function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
@@ -143,7 +144,7 @@ constructor(private fb: FormBuilder, private studentServ:StudentService, private
     if (this.registrationForm.valid) {
 
 
-      this.http.post ('http://${environment.apiUrl}/students/register',this.registrationForm.value).subscribe({
+      this.http.post (`http://${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
         next:(data:any)=>{
           console.log(data.massage)
           alert('sucessfully registered');
@@ -192,7 +193,7 @@ constructor(private fb: FormBuilder, private studentServ:StudentService, private
 
 //   onSubmit():void{
 //         console.log("value is ",this.registrationForm.value);
-//         this.http.post('http://${environment.apiUrl}/students/register',this.registrationForm.value)
+//         this.http.post(`http://${environment.apiUrl}/students/register`,this.registrationForm.value)
 //          .subscribe({
 //             next: (response) => {
 //               console.log(response);
