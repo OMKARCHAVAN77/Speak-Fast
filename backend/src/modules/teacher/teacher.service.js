@@ -85,24 +85,23 @@ const getAllTeachersService = async () => {
   };
 };
 
-
 const setPasswordService = async (email, token, newPassword, confirmPassword) => {
   if (newPassword !== confirmPassword) {
-    return { error: true, status: 400, message: 'Passwords do not match' };
+    return { error: true, status: 400, message: "Passwords do not match" };
   }
 
-  const teacher = await Teacher.findOne({ email: email });
+  const teacher = await Teacher.findOne({ email });
 
   if (!teacher) {
-    return { error: true, status: 404, message: 'Teacher not found' };
+    return { error: true, status: 404, message: "Teacher not found" };
   }
 
   if (teacher.resetToken !== token) {
-    return { error: true, status: 400, message: 'Invalid or expired link' };
+    return { error: true, status: 400, message: "Invalid or expired link" };
   }
 
   if (teacher.resetTokenExpiry < Date.now()) {
-    return { error: true, status: 400, message: 'Link has expired' };
+    return { error: true, status: 400, message: "Link has expired" };
   }
 
   teacher.password = newPassword;
@@ -111,22 +110,26 @@ const setPasswordService = async (email, token, newPassword, confirmPassword) =>
   teacher.resetTokenExpiry = undefined;
   await teacher.save();
 
-  return { error: false, message: 'Password set successfully. You can now login.' };
+  return { error: false, message: "Password set successfully. You can now login." };
 };
 
 const loginTeacherService = async (email, password) => {
-  const teacher = await Teacher.findOne({ email: email });
+  const teacher = await Teacher.findOne({ email });
 
   if (!teacher) {
-    return { error: true, status: 401, message: 'Invalid email or password' };
+    return { error: true, status: 401, message: "Invalid email or password" };
   }
 
   if (!teacher.isPasswordSet) {
-    return { error: true, status: 400, message: 'Please set your password first using the link sent to your email' };
+    return {
+      error: true,
+      status: 400,
+      message: "Please set your password first using the link sent to your email",
+    };
   }
 
   if (teacher.password !== password) {
-    return { error: true, status: 401, message: 'Invalid email or password' };
+    return { error: true, status: 401, message: "Invalid email or password" };
   }
 
   return {
@@ -136,14 +139,38 @@ const loginTeacherService = async (email, password) => {
       firstName: teacher.firstName,
       lastName: teacher.lastName,
       email: teacher.email,
-      role: teacher.role
-    }
+      role: teacher.role,
+    },
   };
+};
+
+// date/time नुसार available teachers शोधण्यासाठी
+const filterTeacherService = async (date, time) => {
+  const query = {};
+
+  // slots array मध्ये आत date/time साठी match शोधतोय
+  if (date || time) {
+    query.slots = {
+      $elemMatch: {
+        ...(date && { date }),
+        ...(time && { time }),
+      },
+    };
+  }
+
+
+
+  const teachers = await Teacher.find(query).select(
+    "-password -resetToken -resetTokenExpiry"
+  );
+
+  return teachers;
 };
 
 export {
   registerTeacherService,
   getAllTeachersService,
   setPasswordService,
-  loginTeacherService
+  loginTeacherService,
+  filterTeacherService,
 };

@@ -2,6 +2,8 @@ import crypto from "crypto";
 import Admin from "../admin/admin.model.js";
 import sendMail from "../../utils/sendMail.js";
 
+const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 मिनिटं — गरजेनुसार बदला
+
 const loginAdmin = async (email, password) => {
   const admin = await Admin.findOne({ email });
 
@@ -21,7 +23,12 @@ const loginAdmin = async (email, password) => {
     };
   }
 
-  if (admin.isLoggedIn) {
+  // जुनी session खूप वेळ (30 मिनिटांपेक्षा जास्त) active असेल तर ती stale मानून पुढे जाऊ द्या
+  const isStale =
+    admin.lastActive &&
+    Date.now() - new Date(admin.lastActive).getTime() > SESSION_TIMEOUT;
+
+  if (admin.isLoggedIn && !isStale) {
     return {
       error: true,
       status: 403,
@@ -30,6 +37,7 @@ const loginAdmin = async (email, password) => {
   }
 
   admin.isLoggedIn = true;
+  admin.lastActive = Date.now();
   await admin.save();
 
   return {
@@ -42,14 +50,12 @@ const loginAdmin = async (email, password) => {
 };
 
 const logoutAdmin = async (email) => {
-  if (email) {
-    const admin = await Admin.findOne({ email });
+  if (!email) return;
 
-    if (admin) {
-      admin.isLoggedIn = false;
-      await admin.save();
-    }
-  }
+  await Admin.updateOne(
+    { email },
+    { $set: { isLoggedIn: false } }
+  );
 };
 
 const forgotPasswordService = async (email) => {

@@ -28,11 +28,21 @@ const teacherSchema = new mongoose.Schema({
   googleMeetLink: {
     type: String,
   },
-  slots: [
+   slots: [
     {
-      date: String,
-      time: String,
-    },
+      date: {
+        type: String,
+        default:() => new Date().toISOString().split("T")[0]
+      },
+      time: {
+        type: String,
+        required: true
+      },
+      isBooked: {
+        type: Boolean,
+        default: false
+      }
+    }
   ],
   password: {
     type: String,
