@@ -6,124 +6,156 @@
       <mat-icon class="close-icon" (click)="onClose()">close</mat-icon>
       <span class="drawer-title">Add New Teacher</span>
     </div>
-    <!-- <mat-icon class="delete-icon" (click)="onDelete()">delete_outline</mat-icon> -->
   </div>
 
   <form class="drawer-form" (ngSubmit)="onSubmit()" #teacherForm="ngForm">
+    <div class="name-row">
+      <div class="name-field">
+        <label class="field-label">First Name</label>
+        <div class="field-box">
+          <input
+            type="text"
+            name="firstName"
+            [(ngModel)]="teacher.firstName"
+            placeholder="Tom"
+            class="field-input"
+            required
+          />
+        </div>
+      </div>
 
-  <div class="name-row">
-    <div class="name-field">
-      <label class="field-label">First Name</label>
-      <div class="field-box">
-        <input type="text" name="firstName" [(ngModel)]="teacher.firstName" placeholder="Tom" class="field-input"
-          required />
-        <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
+      <div class="name-field">
+        <label class="field-label">Last Name</label>
+        <div class="field-box">
+          <input
+            type="text"
+            name="lastName"
+            [(ngModel)]="teacher.lastName"
+            placeholder="Wilson"
+            class="field-input"
+            required
+          />
+        </div>
       </div>
     </div>
-  
-    <div class="name-field">
-      <label class="field-label">Last Name</label>
-      <div class="field-box">
-        <input type="text" name="lastName" [(ngModel)]="teacher.lastName" placeholder="Wilson" class="field-input"
-          required />
-        <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
-      </div>
-    </div>
-  </div>
 
-  <label class="field-label">Email</label>
+    <label class="field-label">Email</label>
     <div class="field-box">
-      <input type="email" name="email" [(ngModel)]="teacher.email" placeholder="tom.wilson@gmail.com" class="field-input" required email />
-      <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="teacher.email"
+        placeholder="tom.wilson@gmail.com"
+        class="field-input"
+        required
+        email
+      />
     </div>
-
-    <!-- <label class="field-label">Experience</label>
-    <div class="field-box select-box">
-      <select name="experience" [(ngModel)]="teacher.experience" class="field-select" required>
-        <option value="" disabled selected>Select...</option>
-        <option *ngFor="let opt of experienceOptions" [value]="opt">{{ opt }}</option>
-      </select>
-      <mat-icon class="field-icon">expand_more</mat-icon>
-    </div> -->
 
     <div class="name-row">
       <div class="name-field">
         <label class="field-label">Contact Number</label>
         <div class="field-box">
-          <input type="tel" name="contactNumber" [(ngModel)]="teacher.contactNumber" placeholder="+91 98765 43210"
-            class="field-input" />
-          <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
+          <input
+            type="tel"
+            name="contactNumber"
+            [(ngModel)]="teacher.contactNumber"
+            placeholder="+91 98765 43210"
+            class="field-input"
+          />
         </div>
       </div>
 
       <div class="name-field">
         <label class="field-label">Aadhar No.</label>
         <div class="field-box">
-          <input type="text" name="aadharNumber" [(ngModel)]="teacher.aadharNumber" placeholder="1234 5678 9012"
-            class="field-input" />
-          <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
+          <input
+            type="text"
+            name="aadharNumber"
+            [(ngModel)]="teacher.aadharNumber"
+            placeholder="1234 5678 9012"
+            class="field-input"
+          />
         </div>
       </div>
     </div>
 
-  <label class="field-label">Photo</label>
-  <div class="upload-box" (click)="fileInput.click()" [class.has-file]="photoFileName">
-    <input #fileInput type="file" accept="image/*" (change)="onPhotoSelected($event)" class="upload-input-hidden" />
+    <label class="field-label">Photo</label>
+    <div class="upload-box" (click)="fileInput.click()" [class.has-file]="photoFileName">
+      <input
+        #fileInput
+        type="file"
+        accept="image/*"
+        (change)="onPhotoSelected($event)"
+        class="upload-input-hidden"
+      />
 
-    <mat-icon class="upload-icon">cloud_upload</mat-icon>
+      <mat-icon class="upload-icon">cloud_upload</mat-icon>
 
-    <span class="upload-status" *ngIf="photoFileName">
-      <mat-icon class="check-icon">check_circle</mat-icon>
-      {{ photoFileName }}
-    </span>
+      <span class="upload-status" *ngIf="photoFileName">
+        <mat-icon class="check-icon">check_circle</mat-icon>
+        {{ photoFileName }}
+      </span>
 
-    <span class="upload-text" *ngIf="!photoFileName">
-      Click to upload photo
-    </span>
-  </div>
+      <span class="upload-text" *ngIf="!photoFileName"> Click to upload photo </span>
+    </div>
 
-  <label class="field-label">Google Meet Link</label>
-  <div class="field-box">
-    <input type="url" name="meetLink" [(ngModel)]="teacher.googlemeetLink" placeholder="https://meet.google.com/abc-defg-hij"
-      class="field-input" />
-    <!-- <mat-icon class="field-icon">reorder</mat-icon> -->
-  </div>
+    <label class="field-label">Google Meet Link</label>
+    <div class="field-box">
+      <input
+        type="url"
+        name="meetLink"
+        [(ngModel)]="teacher.googlemeetLink"
+        placeholder="https://meet.google.com/abc-defg-hij"
+        class="field-input"
+      />
+    </div>
 
-  <!-- ===== ADD SLOTS ===== -->
-  <label class="field-label">Add Slots</label>
-  <div class="book-slots-row">
-
-    <div class="time-chip-wrapper">
-      <div class="time-chip" [class.active]="activeField === 'start'" (click)="toggleTimeDropdown('start', $event)">
-        {{ teacher.startTime }}
-      </div>
-      <div class="time-dropdown" *ngIf="activeField === 'start'" (click)="$event.stopPropagation()">
-        <div class="time-slot" *ngFor="let slot of timeSlots" [class.selected]="slot === teacher.startTime"
-          (click)="selectTime('start', slot)">
-          {{ slot }}
+    <!-- ===== ADD SLOTS ===== -->
+    <label class="field-label">Add Slots</label>
+    <div class="book-slots-row">
+      <div class="time-chip-wrapper">
+        <div
+          class="time-chip"
+          [class.active]="activeField === 'start'"
+          (click)="toggleTimeDropdown('start', $event)"
+        >
+          {{ teacher.startTime }}
+        </div>
+        <div
+          class="time-dropdown"
+          *ngIf="activeField === 'start'"
+          (click)="$event.stopPropagation()"
+        >
+          <div
+            class="time-slot"
+            *ngFor="let slot of timeSlots"
+            [class.selected]="slot === teacher.startTime"
+            (click)="selectTime('start', slot)"
+          >
+            {{ slot }}
+          </div>
         </div>
       </div>
+
+      <button type="button" class="add-slot-btn" (click)="addSlot()" [disabled]="!canAddSlot()">
+        <mat-icon>add</mat-icon>Add
+      </button>
     </div>
 
-    <button type="button" class="add-slot-btn" (click)="addSlot()" [disabled]="!canAddSlot()">
-      <mat-icon>add</mat-icon>Add
-    </button>
-  </div>
+    <div class="slot-error" *ngIf="slotError">{{ slotError }}</div>
 
-  <div class="slot-error" *ngIf="slotError">{{ slotError }}</div>
-
-  <!-- ===== ADDED SLOTS LIST ===== -->
-  <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
-    <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
-      <mat-icon class="slot-icon">schedule</mat-icon>
-      <span class="slot-text">{{ slot.startTime }}</span>
-      <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
+    <!-- ===== ADDED SLOTS LIST ===== -->
+    <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
+      <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
+        <mat-icon class="slot-icon">schedule</mat-icon>
+        <span class="slot-text">{{ slot.startTime }}</span>
+        <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
+      </div>
     </div>
-  </div>
-<!-- ===== END BOOK SLOTS ===== -->
+    <!-- ===== END BOOK SLOTS ===== -->
     <button type="submit" class="submit-btn">
       <mat-icon class="btn-icon">add</mat-icon> Add Teacher
     </button>
-
   </form>
 </div>
