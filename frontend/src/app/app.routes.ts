@@ -15,13 +15,15 @@ import { Payment } from './features/payment/payment';
 import { adminRoutes } from './features/admin/admin-route.routes';
 import { SetPassword } from './features/teachers/set-password/set-password';
 import { LinkSent } from './features/auth/forgot-password/link-sent/link-sent';
+import { Teachers } from './features/teachers/teachers';
+
 
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'home', component: Home },
     { path: 'admin', component: Admin, children: adminRoutes },
-    // { path: 'teachers', component: TeacherHeroComponent },
+    { path: 'teachers', component: Teachers },
     { path: 'registration', component: RegistrationComponent},
     { path: 'forgotPassword', component: ForgotPassword,
       children:[

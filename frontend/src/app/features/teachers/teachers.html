@@ -1,247 +1,148 @@
-<div class="landing-page">
+<section class="hero">
+  <!-- LEFT COLUMN -->
+  <div class="hero-left">
+    <button class="pill-badge" type="button">Find Your Perfect Teacher</button>
 
-  <!-- ================= HERO ================= -->
+    <h1 class="hero-title">
+      <span class="highlight">One-on-One</span> Training
+    </h1>
 
-  <section class="hero-section">
-
-    <div class="hero-container">
-
-      <!-- LEFT CONTENT -->
-
-      <div class="hero-left">
-
-        <div class="hero-tag">
-          Find Your Perfect Teacher
-        </div>
-
-        <h1>
-          One-on-One Training with
-          <span>Top Experts</span>
-        </h1>
-
-        <p>
-          Browse our certified teachers ready to help you achieve your English speaking goals.
-        </p>
-
-        <div class="feature-list">
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-              <mat-icon>school</mat-icon>
-            </div>
-
-            <div>
-
-              <strong>Certified</strong>
-
-              <span>Teacher</span>
-
-            </div>
-
-          </div>
-
-          <div class="feature-card">
-
-            <div class="feature-icon">
-
-              <mat-icon>calendar_month</mat-icon>
-
-            </div>
-
-            <div>
-
-              <strong>Flexible</strong>
-
-              <span>Schedules</span>
-
-            </div>
-
-          </div>
-
-        </div>
-
+    <div class="feature-row">
+      <div class="feature-chip">
+        <img src="assets/avatar1.jpg" alt="" class="chip-avatar" />
+        <span>Certified<br />Teacher</span>
       </div>
-
-      <!-- RIGHT SIDE -->
-
-      <div class="hero-right">
-
-        <!-- Background -->
-
-        <div class="hero-bg"></div>
-
-        <!-- Award -->
-
-        <div class="award-card">
-
-          <div class="award-icon">
-
-            🏆
-
-          </div>
-
-          <div>
-
-            <strong>We have 50+</strong>
-
-            <small>Winning Awards</small>
-
-          </div>
-
-        </div>
-
-        <!-- Male Teacher -->
-
-        <div class="teacher-card male">
-
-          <img src="assets/images/teacher-male.jpg">
-
-          <div class="video-controls">
-
-            <button class="green"></button>
-
-            <button class="red"></button>
-
-            <button class="green"></button>
-
-          </div>
-
-        </div>
-
-        <!-- Female Teacher -->
-
-        <div class="teacher-card female">
-
-          <img src="assets/images/teacher-female.jpg">
-
-          <div class="video-controls">
-
-            <button class="green"></button>
-
-            <button class="red"></button>
-
-            <button class="green"></button>
-
-          </div>
-
-        </div>
-
-        <!-- Live Classes -->
-
-        <div class="live-card">
-
-          <span class="title">
-
-            Live Classes
-
-          </span>
-
-          <div class="avatar-group">
-
-            <img src="assets/images/avatar1.jpg">
-
-            <img src="assets/images/avatar2.jpg">
-
-            <img src="assets/images/avatar3.jpg">
-
-            <span>+43</span>
-
-          </div>
-
-        </div>
-
-        <!-- Rating -->
-
-        <div class="rating-card">
-
-          <mat-icon>
-
-            star
-
-          </mat-icon>
-
-          <div>
-
-            <strong>4.8/5</strong>
-
-            <small>From 200+ students</small>
-
-          </div>
-
-        </div>
-
+      <div class="feature-chip">
+        <span class="chip-icon-wrap">
+          <mat-icon class="chip-icon">event_available</mat-icon>
+        </span>
+        <span>Flexible<br />Schedules</span>
       </div>
+    </div>
+  </div>
 
+  <!-- RIGHT COLUMN -->
+  <div class="hero-right">
+    <div class="award-card">
+      <div class="award-badge">
+        <mat-icon>military_tech</mat-icon>
+      </div>
+      <p class="award-text">
+        We have <span class="highlight-inline">50+</span><br />Winning Awards
+      </p>
     </div>
 
-  </section>
-
-  <!-- ================= FILTER ================= -->
-
-  <section class="filter-section">
-
-    <mat-card class="filter-card">
-
-      <h2>
-
-        When do you want to start
-
-      </h2>
-
-      <div class="filter-row">
-
-        <mat-form-field appearance="outline">
-
-          <mat-label>
-
-            Date
-
-          </mat-label>
-
-          <input
-            matInput
-            [matDatepicker]="picker"
-            [(ngModel)]="selectedDate">
-
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker">
-          </mat-datepicker-toggle>
-
-          <mat-datepicker
-            #picker>
-          </mat-datepicker>
-
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-
-          <mat-label>
-
-            Select Time
-
-          </mat-label>
-
-          <mat-select
-            [(ngModel)]="selectedTime">
-
-            <mat-option
-              *ngFor="let item of timeSlots"
-              [value]="item">
-
-              {{item}}
-
-            </mat-option>
-
-          </mat-select>
-
-        </mat-form-field>
-
+    <div class="photo-stack">
+      <div class="photo-card photo-back">
+        <img src="../../../assets/teachersss.png" alt="Teacher on a video call" />
       </div>
 
-    </mat-card>
+      <div class="live-classes-card">
+        <span class="live-label">Live Classes</span>
+        <div class="avatar-stack">
+          <img src="assets/avatar1.jpg" alt="" />
+          <img src="assets/avatar2.jpg" alt="" />
+          <img src="assets/avatar3.jpg" alt="" />
+          <span class="more-count">+3</span>
+        </div>
+      </div>
 
-  </section>
+      <div class="rating-card">
+        <mat-icon class="star-icon">star</mat-icon>
+        <div>
+          <div class="rating-value">4.8/5</div>
+          <div class="rating-subtext">From 200+ students</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- BOOKING CARD -->
+<div class="booking-card">
+  <h3 class="booking-title">When do you want to start</h3>
+
+  <div class="booking-fields">
+
+    <!-- DATE FIELD -->
+    <div class="field-box date-box" [class.picker-open]="isDatePickerOpen" (click)="picker.open()">
+      <mat-icon class="field-icon">calendar_today</mat-icon>
+      <div class="field-text">
+        <span class="field-label">Date</span>
+        <span class="field-value">{{ selectedDate | date: 'dd MMMM yyyy' }}</span>
+      </div>
+
+      <input
+        class="hidden-date-input"
+        [matDatepicker]="picker"
+        [value]="selectedDate"
+        (dateChange)="onDateChange($event)"
+        readonly
+      />
+      <mat-datepicker
+        #picker
+        panelClass="booking-datepicker-panel"
+        (opened)="isDatePickerOpen = true"
+        (closed)="isDatePickerOpen = false"
+      ></mat-datepicker>
+    </div>
+
+    <!-- TIME FIELD -->
+    <div
+      class="field-box time-box"
+      [class.menu-open]="isTimeMenuOpen"
+      [matMenuTriggerFor]="timeMenu"
+      (menuOpened)="isTimeMenuOpen = true"
+      (menuClosed)="isTimeMenuOpen = false"
+    >
+      <mat-icon class="field-icon time-icon">schedule</mat-icon>
+      <div class="field-text">
+        <span class="field-value" [class.placeholder]="!selectedTime">
+          {{ selectedTime || 'Select Time' }}
+        </span>
+      </div>
+    </div>
+
+    <mat-menu #timeMenu="matMenu" class="booking-time-menu">
+      <button
+        mat-menu-item
+        *ngFor="let slot of timeSlots"
+        (click)="selectTime(slot)"
+      >
+        {{ slot }}
+      </button>
+    </mat-menu>
+
+  </div>
 </div>
+
+<!-- ALL TEACHERS -->
+<section class="all-teachers">
+  <h2 class="section-title">All Teachers</h2>
+
+  <div class="teacher-grid">
+    <div
+      class="teacher-card"
+      *ngFor="let teacher of teachers"
+      [class.selected]="selectedTeacherId === teacher.id"
+      (click)="selectTeacher(teacher.id)"
+    >
+      <div class="teacher-photo">
+        <img [src]="teacher.photo" [alt]="teacher.name" />
+      </div>
+
+      <div class="teacher-body">
+        <p class="teacher-name">{{ teacher.name }}</p>
+
+        <div class="slot-grid">
+          <span class="slot-chip" *ngFor="let slot of teacher.slots">{{ slot }}</span>
+        </div>
+
+        <button class="book-btn" type="button" (click)="bookSeat(teacher.id); $event.stopPropagation()">
+          <mat-icon class="book-icon">add</mat-icon>
+          Book Seat
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
