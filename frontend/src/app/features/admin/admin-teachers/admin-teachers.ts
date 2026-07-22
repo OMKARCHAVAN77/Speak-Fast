@@ -32,6 +32,7 @@ export class AdminTeachers implements OnInit {
   searchTerm = '';
   teachers: Teacher[] = [];
   loading = false;
+environment: any;
 
   constructor(private teacherService: TeacherService) {}
 
@@ -43,6 +44,8 @@ loadTeachers(): void {
   this.loading = true;
   this.teacherService.getTeachers().subscribe({
     next: (res) => {
+
+      console.log("TEACHER API RESPONSE:", res);
       this.teachers = res.teachers;   // unwrap { count, teachers }
       this.loading = false;
     },

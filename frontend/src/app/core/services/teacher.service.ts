@@ -41,8 +41,8 @@ export class TeacherService {
     formData.append('lastName', teacher.lastName);
     formData.append('email', teacher.email);
     formData.append('contactNumber', teacher.contactNumber || '');
-    formData.append('aadharNo', teacher.aadharNumber || '');
-    formData.append('googleMeetLink', teacher.googlemeetLink || '');
+    formData.append('aadharNo', teacher.aadharNo || '');
+    formData.append('googleMeetLink', teacher.googleMeetLink || '');
 
     const transformedSlots = teacher.slots.map((s: any) => ({
       time: s.startTime
