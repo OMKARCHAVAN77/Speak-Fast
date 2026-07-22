@@ -379,4 +379,4 @@ export { resetPasswordStudentService };
 
     return teacher;
 };
-export { getAllStudentsService ,bookSlotService };
+export {bookSlotService };
