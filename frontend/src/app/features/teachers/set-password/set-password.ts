@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-set-password',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './set-password.html',
   styleUrls: ['./set-password.css'],
 })
