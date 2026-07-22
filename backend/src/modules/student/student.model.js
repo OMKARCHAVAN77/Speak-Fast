@@ -83,7 +83,7 @@ const studentSchema = new mongoose.Schema(
       default: null,
     },
 
-    teacherId: {
+    assignedTeacher: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Teacher",
       default: null,

@@ -63,10 +63,7 @@ const registerStudent = async (studentData) => {
 
     return studentResponse;
 };
-
 export { registerStudent };
-
-
 
 
 
@@ -119,14 +116,9 @@ const loginStudentService = async (loginData) => {
     };
 
 };
-
 export { loginStudentService };
 
 
-
-// const resetURL =`${process.env.CLIENT_URL}/forgotPassword/confirmPassword/${resetToken}`;
-
-// student forgot password service
 // Student Forgot Password Service
 const forgotPasswordService = async (email) => {
     const student = await Student.findOne({
@@ -249,7 +241,6 @@ const forgotPasswordService = async (email) => {
         message: "Password reset link sent successfully.",
     };
 };
-
 export { forgotPasswordService };
 
 
@@ -275,81 +266,6 @@ export { getAllStudentsService };
 
 
 // Student Reset Password student Service
-// const resetPasswordStudentService = async (
-//     token,
-//     body
-// ) => {
-
-//     const { password, confirmPassword } = body;
-
-//     // Required Fields
-//     if (!password || !confirmPassword) {
-//         throw new ApiError(
-//             400,
-//             "All fields are required."
-//         );
-//     }
-
-//     // Password Match
-//     if (password !== confirmPassword) {
-//         throw new ApiError(
-//             400,
-//             "Passwords do not match."
-//         );
-//     }
-
-//     // Hash URL Token
-//     const hashedToken = crypto
-//         .createHash("sha256")
-//         .update(token)
-//         .digest("hex");
-
-//     // Find Student
-//     const student = await Student.findOne({
-
-//         passwordResetToken: hashedToken,
-
-//         passwordResetTokenExpiry: {
-//             $gt: Date.now()
-//         }
-
-//     }).select("+password");
-
-//     if (!student) {
-
-//         throw new ApiError(
-//             400,
-//             "Reset password link is invalid or expired."
-//         );
-
-//     }
-
-//     // Hash Password
-//     const hashedPassword =
-//         await bcrypt.hash(password, 10);
-
-//     // Update Password
-//     student.password = hashedPassword;
-
-//     // Remove Token
-//     student.passwordResetToken = null;
-//     student.passwordResetTokenExpiry = null;
-
-//     await student.save();
-
-//     return {
-
-//         success: true,
-
-//         message:
-//             "Password changed successfully."
-
-//     };
-
-// };
-
-// export { resetPasswordStudentService };
-
 const resetPasswordService = async (email, token, newPassword) => {
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
@@ -371,13 +287,11 @@ const resetPasswordService = async (email, token, newPassword) => {
 
   return { success: true, message: "Password reset successful." };
 };
-
 export { resetPasswordService };
 
 
-/// book slot service code
 
-
+// book slot service code
 const bookSlotService = async (
     teacherId,
     slotId,
@@ -420,6 +334,36 @@ const bookSlotService = async (
 
     await teacher.save();
 
+    await Student.findByIdAndUpdate(
+    studentId,
+    {
+        assignedTeacher: teacherId
+    },
+    {
+        new: true
+    }
+);
+
     return teacher;
 };
 export { bookSlotService };
+
+
+// student profile service
+const getStudentProfileService = async (studentId) => {
+
+    const student = await Student.findById(studentId)
+        .populate({
+            path: "assignedTeacher",
+            select: "-password -resetToken -resetTokenExpiry"
+        });
+
+    if (!student) {
+        throw new Error("Student not found");
+    }
+
+    return student;
+};
+export  {getStudentProfileService}
+
+

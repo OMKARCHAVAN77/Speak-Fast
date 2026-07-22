@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register,loginStudent,forgotPassword,getAllStudents, resetPassword } from "../student/student.controller.js";
+import { register,loginStudent,forgotPassword,getAllStudents, resetPassword ,getStudentProfile } from "../student/student.controller.js";
 
 const router = Router();
 
@@ -26,8 +26,13 @@ router.get("/getallstudent", getAllStudents );
 
 import { bookSlot } from "../student/student.controller.js";
 
-
+//  book slot
 router.post("/book-slot", bookSlot);
+
+// get student profile
+router.get("/profile/:studentId", getStudentProfile);
+
+
 
 // reset student password
 // router.patch("/reset-password/:token", resetPassword);
