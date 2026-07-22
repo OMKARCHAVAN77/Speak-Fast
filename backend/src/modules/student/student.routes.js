@@ -30,7 +30,8 @@ import { bookSlot } from "../student/student.controller.js";
 router.post("/book-slot", bookSlot);
 
 // reset student password
-router.patch("/reset-password/:token", resetPassword);
+// router.patch("/reset-password/:token", resetPassword);
+router.post("/reset-password", resetPassword);
 
 export default router;
 

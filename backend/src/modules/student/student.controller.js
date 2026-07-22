@@ -1,6 +1,6 @@
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import ApiResponse from "../../utils/ApiResponse.js";
-import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordStudentService,bookSlotService   } from "../student/student.service.js";
+import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService,bookSlotService ,resetPasswordService } from "../student/student.service.js";
 
 
 
@@ -98,20 +98,28 @@ export { getAllStudents };
 
 // export { resetPassword };
 
+// const resetPassword = asyncHandler(async (req, res) => {
+
+//     const { token } = req.params;
+
+//     const result = await resetPasswordStudentService(
+//         token,
+//         req.body
+//     );
+
+//     return res.status(200).json(result);
+
+// });
+
+// export { resetPassword };
+
 const resetPassword = asyncHandler(async (req, res) => {
-
-    const { token } = req.params;
-
-    const result = await resetPasswordStudentService(
-        token,
-        req.body
-    );
-
-    return res.status(200).json(result);
-
+  const { email, token, newPassword } = req.body;
+  await resetPasswordService(email, token, newPassword);
+  return res.status(200).json(new ApiResponse(200, "Password reset successful."));
 });
 
-export { resetPassword };
+export {resetPassword}
 
 
 // book slot teacher
