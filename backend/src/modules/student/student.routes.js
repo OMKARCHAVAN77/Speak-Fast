@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { register,loginStudent,forgotPassword,getAllStudents } from "../student/student.controller.js";
-
+import { register,loginStudent,forgotPassword,getAllStudents, resetPassword } from "../student/student.controller.js";
 
 const router = Router();
 
@@ -29,6 +28,9 @@ import { bookSlot } from "../student/student.controller.js";
 
 
 router.post("/book-slot", bookSlot);
+
+// reset student password
+router.patch("/reset-password/:token", resetPassword);
 
 export default router;
 
