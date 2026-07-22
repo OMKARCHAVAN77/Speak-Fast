@@ -13,10 +13,44 @@
 
     <form (ngSubmit)="onLogin()" #loginForm="ngForm">
 
-      <mat-radio-group name="role">
+      <!-- <mat-radio-group [(ngModel)]="selectedRole" name="role">
   <mat-radio-button value="teacher">Teacher</mat-radio-button>
   <mat-radio-button value="admin">Admin</mat-radio-button>
-</mat-radio-group>
+  <mat-radio-button value="student">Student</mat-radio-button>
+</mat-radio-group> -->
+
+<div class="role-tabs" role="tablist">
+
+  <button
+    type="button"
+    class="role-tab"
+    [class.active]="selectedRole === 'admin'"
+    (click)="selectedRole = 'admin'">
+    <mat-icon>person</mat-icon>
+    <span>Admin</span>
+  </button>
+
+  
+
+  <button
+    type="button"
+    class="role-tab"
+    [class.active]="selectedRole === 'teacher'"
+    (click)="selectedRole = 'teacher'">
+    <mat-icon>auto_stories</mat-icon>
+    <span>Teacher</span>
+  </button>
+
+  <button
+    type="button"
+    class="role-tab"
+    [class.active]="selectedRole === 'student'"
+    (click)="selectedRole = 'student'">
+    <mat-icon>school</mat-icon>
+    <span>Student</span>
+  </button>
+  
+</div>
 
       <!-- Email -->
 
