@@ -67,6 +67,10 @@ const studentSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+      role: {
+      type: String,
+      default: "student",
+    },
 
     // Forgot Password Fields
     passwordResetToken: {
