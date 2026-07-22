@@ -11,58 +11,118 @@ import studentRoutes from "./modules/student/student.routes.js";
 
 const app = express();
 
-// Middleware
+
+// ================= Middleware =================
+
 app.use(express.json());
-
-// Security Middleware
-app.use(helmet());
-
-// Enable CORS
-app.use(cors({
-  origin: [
-    "http://localhost:4200",
-    process.env.CLIENT_URL
-  ],
-  credentials: true,
-}));
-
-// Logger
-app.use(morgan("dev"));
-
-// Parse JSON
-app.use(express.json());
-
-// Parse Form Data
 app.use(express.urlencoded({ extended: true }));
 
-// Middleware
+
+// ================= Security =================
+
+// Helmet
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
+
+
+// ================= CORS =================
+
+const allowedOrigins = [
+  "http://localhost:4200",
+  "https://speak-fast.vercel.app"
+];
+
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+
+      // allow Postman / server requests
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+
+    credentials: true,
+
+    methods: [
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "DELETE",
+      "OPTIONS"
+    ],
+
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization"
+    ]
+  })
+);
+
+
+// ================= Logger =================
+
+app.use(morgan("dev"));
+
+
+// ================= Cookie =================
+
 app.use(cookieParser());
 
+
+// ================= Session =================
 
 app.use(
   session({
     secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none"
+    }
   })
 );
 
-// Routes
+
+// ================= Routes =================
+
 app.use("/api/auth", authRoutes);
-app.use("/uploads", express.static("uploads"));
+
 app.use("/api/teacher", teacherRoutes);
 
-// student
 app.use("/api/students", studentRoutes);
 
-// Global Error Handler
+app.use("/uploads", express.static("uploads"));
+
+
+// ================= Error Handler =================
+
 app.use((err, req, res, next) => {
+
+  console.error(err);
+
   res.status(err.statusCode || 500).json({
     success: false,
-    message: err.message || "Internal Server Error",
+    message: err.message || "Internal Server Error"
   });
+
 });
 
-console.log("hello emmet");
+
+console.log("Server middleware loaded");
+
 
 export default app;
