@@ -25,6 +25,10 @@
         Log In
       </button>
 
+      <button mat-flat-button class="login-btn" (click)="onLogout()">
+        Log-Out
+      </button>
+
       <button class="menu-toggle-btn" (click)="toggleMenu()" aria-label="Toggle menu">
         <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
       </button>

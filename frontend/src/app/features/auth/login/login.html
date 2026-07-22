@@ -13,6 +13,11 @@
 
     <form (ngSubmit)="onLogin()" #loginForm="ngForm">
 
+      <mat-radio-group [(ngModel)]="selectedRole" name="role">
+  <mat-radio-button value="teacher">Teacher</mat-radio-button>
+  <mat-radio-button value="admin">Admin</mat-radio-button>
+</mat-radio-group>
+
       <!-- Email -->
 
       <div class="email-wrapper" >

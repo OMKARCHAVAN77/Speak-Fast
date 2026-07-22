@@ -11,7 +11,7 @@ export const validateStudentRegistration = (studentData) => {
     confirmPassword,
     district,
     qualification,
-    occupation,
+    occupation, 
   } = studentData;
 
   // Required Fields
