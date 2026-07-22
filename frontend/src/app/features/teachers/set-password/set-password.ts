@@ -25,7 +25,7 @@ togglePassword() {
   //  errorMessage: string = '';
 //   isLoading: boolean = false;
 
-//   private apiUrl = 'http://${environment.apiUrl}/api/teacher/set-password';
+//   private apiUrl = 'http://${environment.apiUrl}/teacher/set-password';
 
 //   constructor(
 //     private route: ActivatedRoute,
@@ -91,7 +91,7 @@ togglePassword() {
   errorMessage: string = '';
   isLoading: boolean = false;
 
-  private apiUrl = 'http://${environment.apiUrl}/api/teacher/reset-password';
+  private apiUrl = 'http://${environment.apiUrl}/teacher/reset-password';
 
   constructor(
     private route: ActivatedRoute,

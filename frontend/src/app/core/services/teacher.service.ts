@@ -19,7 +19,7 @@ export interface Teacher {
 })
 export class TeacherService {
 
-  private baseUrl = 'http://${environment.apiUrl}/api/teacher';
+  private baseUrl = 'http://${environment.apiUrl}/teacher';
 
   constructor(private http: HttpClient) {}
 

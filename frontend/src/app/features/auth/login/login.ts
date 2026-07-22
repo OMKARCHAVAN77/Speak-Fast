@@ -20,8 +20,6 @@ type UserType = 'student' | 'teacher' | 'admin';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatRadioButton,
-     MatRadioGroup, 
     MatIconModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
@@ -36,8 +34,8 @@ export class Login {
   // selectedRole: UserType = 'teacher';
 
 
-  // private teacherLoginUrl = 'http://${environment.apiUrl}/api/teacher/login';
-  // private adminLoginUrl = 'http://${environment.apiUrl}/api/auth/login';;
+  // private teacherLoginUrl = 'http://${environment.apiUrl}/teacher/login';
+  // private adminLoginUrl = 'http://${environment.apiUrl}/auth/login';;
 
   // constructor(
   //   private http: HttpClient,
@@ -139,9 +137,9 @@ export class Login {
 
   // Donhi endpoints ithe declare kele — adhi phakt teacherLoginUrl hota
   // student login add kela
-  private teacherLoginUrl = 'http://${environment.apiUrl}/api/teacher/login';
-  private adminLoginUrl = 'http://${environment.apiUrl}/api/auth/login';
-  private studentLoginUrl = 'http://${environment.apiUrl}/api/students/login';
+  private teacherLoginUrl = 'http://${environment.apiUrl}/teacher/login';
+  private adminLoginUrl = 'http://${environment.apiUrl}/auth/login';
+  private studentLoginUrl = 'http://${environment.apiUrl}/students/login';
 
   constructor(
     private http: HttpClient,
