@@ -3,27 +3,53 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { Router, RouterLink, RouterModule } from '@angular/router';
+import { CourseService } from '../../../core/services/course-service';
 
-interface Plan {
+// interface Plan {
+//   name: string;
+//   badge?: string;
+//   description: string;
+//   price: number;
+//   originalPrice: number;
+//   discount: string;
+//   duration: string;
+//   liveSessions: number;
+//   learnItems: string[];
+//   featured?: boolean;
+// }
+
+export interface Plan {
   name: string;
-  badge?: string;
   description: string;
   price: number;
   originalPrice: number;
   discount: string;
   duration: string;
   liveSessions: number;
-  learnItems: string[];
+  badge?: string;
   featured?: boolean;
+  learnItems: string[];
 }
+
+// export interface Course {
+//   id: number;
+//   name: string;
+//   originalPrice: number;
+//   discount: number;
+//   finalPrice: number;
+// }
 
 @Component({
   selector: 'app-course-recommendation',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule,RouterModule,RouterLink],
   templateUrl: './course-recommendation.html',
   styleUrl: './course-recommendation.css',
 })
 export class CourseRecommendation {
+
+constructor(private router: Router, private courseserve : CourseService){}
+
   plans: Plan[] = [
     {
       name: 'BASIC PLAN',
@@ -79,5 +105,13 @@ export class CourseRecommendation {
 
   enroll(plan: Plan): void {
     console.log('Enrolling in', plan.name);
+    this.courseserve.setPlan(plan);
+
+  this.router.navigate(['/payment']);
   }
+
+
+
+
+  
 }

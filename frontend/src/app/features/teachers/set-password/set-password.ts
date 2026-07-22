@@ -7,7 +7,7 @@ import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-set-password',
-  imports: [CommonModule, FormsModule, MatIcon],
+  imports: [CommonModule, FormsModule,],
   templateUrl: './set-password.html',
   styleUrls: ['./set-password.css'],
 })

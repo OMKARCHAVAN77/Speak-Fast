@@ -23,22 +23,23 @@ export const routes: Routes = [
     { path: 'home', component: Home },
     { path: 'admin', component: Admin, children: adminRoutes },
     { path: 'teachers', component: Teachers },
-    { path: 'registration', component: RegistrationComponent},
-    { path: 'forgotPassword', component: ForgotPassword,
-      children:[
-          {path:'',redirectTo:'resetpassword',pathMatch:'full'},
-          {path: 'resetpassword', component:ResetPassword},
-          {path: 'sentLink', component: LinkSent},
-          {path: 'confirmPassword', component: ConfirmPassword},
-          {path: 'passwordChanged', component: PasswordChanged}
+    { path: 'registration', component: RegistrationComponent },
+    {
+        path: 'forgotPassword', component: ForgotPassword,
+        children: [
+            { path: '', redirectTo: 'resetpassword', pathMatch: 'full' },
+            { path: 'resetpassword', component: ResetPassword },
+            { path: 'sentLink', component: LinkSent },
+            { path: 'confirmPassword', component: ConfirmPassword },
+            { path: 'passwordChanged', component: PasswordChanged }
 
-      ]
+        ]
 
-  },
-    { path: 'landing-page', component: LandingPage},
+    },
+    { path: 'landing-page', component: LandingPage },
     { path: 'student-achievement', component: StudentAchievement },
-    { path: 'login', component: Login},
-    { path : 'courses', component : CourseRecommendation},
-    { path : 'payment', component : Payment},
-    {path : 'setpassword', component : SetPassword}
+    { path: 'login', component: Login },
+    { path: 'courses', component: CourseRecommendation },
+    { path: 'payment', component: Payment },
+    { path: 'setpassword', component: SetPassword }
 ];
