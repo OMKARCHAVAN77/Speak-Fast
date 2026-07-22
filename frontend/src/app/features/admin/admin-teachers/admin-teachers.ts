@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef,Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -34,9 +34,10 @@ export class AdminTeachers implements OnInit {
   loading = false;
 environment: any;
 
-  constructor(private teacherService: TeacherService) {}
+  constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+     console.log("Admin Teachers Component Loaded");
     this.loadTeachers();
   }
 
@@ -48,6 +49,8 @@ loadTeachers(): void {
       console.log("TEACHER API RESPONSE:", res);
       this.teachers = res.teachers;   // unwrap { count, teachers }
       this.loading = false;
+
+      this.cdr.detectChanges();
     },
     error: (err) => {
       console.error('Failed to load teachers:', err);
