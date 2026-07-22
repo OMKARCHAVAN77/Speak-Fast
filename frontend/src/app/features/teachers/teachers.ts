@@ -1,162 +1,144 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterModule } from '@angular/router';
-
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
+import { TeacherService } from '../../core/services/teacher.service';
 
-interface Availability {
-  date: string;      // 'yyyy-MM-dd'
+interface Teacher {
+  id: string;
+  name: string;
+  photo: string;
   slots: string[];
 }
 
-interface Teacher {
-  name: string;
-  image: string;
-  // description: string;
-  availability: Availability[];
-}
-
 @Component({
-  selector: 'app-teachers',
+  selector: 'app-teacher-hero',
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
-    FormsModule,
-    MatButtonModule,
     MatIconModule,
-    MatChipsModule,
-    MatFormFieldModule,
-    MatInputModule,
+    MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatMenuModule
   ],
   templateUrl: './teachers.html',
-  styleUrl: './teachers.css'
+  styleUrls: ['./teachers.css']
 })
-export class Teachers {
+export class Teachers implements OnInit {
+  // Matches the design: 05 January 2026
+  selectedDate: Date = new Date(2026, 0, 5);
+  selectedTime: string | null = null;
+  isDatePickerOpen = false;
+  isTimeMenuOpen = false;
+  formattedDate:any;
+ ngOnInit(): void {
 
-  timeSlots = [
-    '07:00am','08:00am','09:00am','10:00am','11:00am','12:00pm',
-    '01:00pm','02:00pm','03:00pm','04:00pm','05:00pm','06:00pm',
-    '07:00pm','08:00pm','09:00pm'
+  this.formattedDate = this.formatDate(this.selectedDate);
+  this.loadTeachers();
+
+}
+formatDate(date: Date): string {
+
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+}
+
+constructor(private teacherService: TeacherService) {}  
+loadTeachers(): void {
+
+  if (!this.formattedDate || !this.selectedTime) {
+    return;
+  }
+
+  console.log('Calling API...');
+  console.log(this.formattedDate);
+  console.log(this.selectedTime);
+
+  this.teacherService
+  .filterTeacherApi(this.formattedDate, this.selectedTime)
+  .subscribe({
+    next: (res: any) => {
+      console.log("API Response:", res);
+    },
+    error: (err) => {
+      console.error(err);
+    }
+  });
+
+}
+
+
+  timeSlots: string[] = [
+    '09:00AM', '10:00AM', '11:00AM',
+    '01:00PM', '02:00PM', '3:00pm','4:15am',
+    '04:00PM', '05:00PM','12:45pm', '06:00PM', '07:00PM', '08:00PM'
   ];
 
-  /** Plain 'yyyy-MM-dd' string used everywhere in the existing filter logic */
-  selectedDate: string = '';
+ onDateChange(event: any): void {
 
-  /** Bound to the Material datepicker input (mat-datepicker works with Date objects) */
-  selectedDateObj: Date | null = null;
+  if (!event.value) return;
 
-  selectedSlots: string[] = [];
+  this.selectedDate = event.value;
+
+  this.formattedDate = this.formatDate(this.selectedDate);
+
+  console.log(this.formattedDate);
+
+  this.loadTeachers();
+
+}
+
+  selectTime(slot: string): void {
+
+  this.selectedTime = slot;
+
+  console.log(this.selectedTime);
+
+  this.loadTeachers();
+
+}
+
+  // ---------- ALL TEACHERS ----------
+  selectedTeacherId: string | null = 'sakshi-pable';
+
+
 
   teachers: Teacher[] = [
     {
+      id: 'anita-rathod',
       name: 'Anita Rathod',
-      image: 'https://i.pravatar.cc/100?img=1',
-
-      availability: [
-        { date: '2026-07-20', slots: ['07:00am','08:00am','10:00am','11:00am'] },
-        { date: '2026-07-21', slots: ['12:00pm','02:00pm'] }
-      ]
+      photo: 'assets/teachers/anita-rathod.jpg',
+      slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
     },
     {
-      name: 'Chandani Kulkarni',
-      image: 'https://i.pravatar.cc/100?img=5',
-
-      availability: [
-        { date: '2026-07-20', slots: ['07:00am','08:00am','04:00pm'] },
-        { date: '2026-07-21', slots: ['10:00am','11:00am','12:00pm','02:00pm'] }
-      ]
+      id: 'sakshi-pable',
+      name: 'Sakshi Pable',
+      photo: 'assets/teachers/sakshi-pable.jpg',
+      slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
     },
     {
-      name: 'Dinesh Deshmukh',
-      image: 'https://i.pravatar.cc/100?img=12',
-
-      availability: [
-        { date: '2026-07-20', slots: ['07:00am','08:00am','10:00am'] }
-      ]
-    },
-    {
-      name: 'Ganesh Chouhan',
-      image: 'https://i.pravatar.cc/100?img=13',
-
-      availability: [
-        { date: '2026-07-21', slots: ['07:00am','11:00am','12:00pm','02:00pm'] }
-      ]
-    },
-    {
-      name: 'Kamlesh Patil',
-      image: 'https://i.pravatar.cc/100?img=15',
-
-      availability: [
-        { date: '2026-07-20', slots: ['11:00am','12:00pm'] }
-      ]
-    },
-    {
-      name: 'Mohini Shetty',
-      image: 'https://i.pravatar.cc/100?img=9',
-      availability: [
-        { date: '2026-07-21', slots: ['08:00am','12:00pm','04:00pm','05:00pm'] }
-      ]
+      id: 'ansh-agarwal',
+      name: 'Ansh Agarwal',
+      photo: 'assets/teachers/ansh-agarwal.jpg',
+      slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
     }
   ];
 
-  // toggle a slot in/out of the selectedSlots array
-  toggleSlot(slot: string) {
-    if (this.selectedSlots.includes(slot)) {
-      this.selectedSlots = this.selectedSlots.filter(s => s !== slot);
-    } else {
-      this.selectedSlots = [...this.selectedSlots, slot];
-    }
+  selectTeacher(id: string): void {
+    this.selectedTeacherId = id;
   }
 
-  isSlotSelected(slot: string): boolean {
-    return this.selectedSlots.includes(slot);
-  }
-
-  onDateChange(value: string) {
-    this.selectedDate = value;
-  }
-
-  /** Called by mat-datepicker (dateChange) which emits a Date, not a string */
-  onDatePicked(value: Date | null) {
-    if (!value) {
-      this.selectedDate = '';
+  bookSeat(id: string): void {
+    const teacher = this.teachers.find(t => t.id === id);
+    if (!teacher) {
       return;
     }
-    const year = value.getFullYear();
-    const month = String(value.getMonth() + 1).padStart(2, '0');
-    const day = String(value.getDate()).padStart(2, '0');
-    this.selectedDate = `${year}-${month}-${day}`;
-  }
-
-  // true only when BOTH a date AND at least one slot are selected
-  get showResults(): boolean {
-    return !!this.selectedDate && this.selectedSlots.length > 0;
-  }
-
-  // slots a teacher has free ON the selected date
-  slotsForSelectedDate(teacher: Teacher): string[] {
-    const match = teacher.availability.find(a => a.date === this.selectedDate);
-    return match ? match.slots : [];
-  }
-
-  // teachers who are free on that date for ALL selected slots
-  get filteredTeachers(): Teacher[] {
-    if (!this.showResults) {
-      return [];
-    }
-    return this.teachers.filter(t => {
-      const daySlots = this.slotsForSelectedDate(t);
-      return this.selectedSlots.every(slot => daySlots.includes(slot));
-    });
+    // Hook this up to your booking flow/service.
+    // e.g. this.bookingService.book(teacher.id, this.selectedDate, this.selectedTime)
+    console.log('Booking seat with', teacher.name, this.selectedDate, this.selectedTime);
   }
 }

@@ -1,97 +1,148 @@
-<section class="teachers-page">
+<section class="hero">
+  <!-- LEFT COLUMN -->
+  <div class="hero-left">
+    <button class="pill-badge" type="button">Find Your Perfect Teacher</button>
 
-  <!-- ============ Header ============ -->
-  <div class="page-header">
-    <span class="eyebrow-badge">
-      <mat-icon class="eyebrow-icon">search</mat-icon>
-      Find Your Perfect Teacher
-    </span>
-    <h1 class="headline">
-      <span class="headline-accent">One-on-One</span> Training
+    <h1 class="hero-title">
+      <span class="highlight">One-on-One</span> Training
     </h1>
-    <p class="subtitle">Pick a date and time — we'll show you every teacher free to meet then.</p>
+
+    <div class="feature-row">
+      <div class="feature-chip">
+        <img src="assets/avatar1.jpg" alt="" class="chip-avatar" />
+        <span>Certified<br />Teacher</span>
+      </div>
+      <div class="feature-chip">
+        <span class="chip-icon-wrap">
+          <mat-icon class="chip-icon">event_available</mat-icon>
+        </span>
+        <span>Flexible<br />Schedules</span>
+      </div>
+    </div>
   </div>
 
-  <!-- ============ Booking / filter card ============ -->
-  <div class="card">
-    <p class="card-title">When do you want to start</p>
-
-    <div class="filter-box">
-      <!-- Date field -->
-      <mat-form-field
-        class="field"
-        [class.has-value]="selectedDateObj"
-        appearance="outline"
-        subscriptSizing="dynamic">
-        <mat-icon matPrefix class="field-icon">calendar_today</mat-icon>
-        <mat-label>Date</mat-label>
-        <input
-          matInput
-          [matDatepicker]="picker"
-          [(ngModel)]="selectedDateObj"
-          (dateChange)="onDatePicked($event.value)"
-          (click)="picker.open()"
-          placeholder="Select Date"
-          readonly>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+  <!-- RIGHT COLUMN -->
+  <div class="hero-right">
+    <div class="award-card">
+      <div class="award-badge">
+        <mat-icon>military_tech</mat-icon>
+      </div>
+      <p class="award-text">
+        We have <span class="highlight-inline">50+</span><br />Winning Awards
+      </p>
     </div>
 
-    <!-- Time slots -->
-    <p class="section-label">Select time slot(s)</p>
-    <div class="time-slots">
+    <div class="photo-stack">
+      <div class="photo-card photo-back">
+        <img src="../../../assets/teachersss.png" alt="Teacher on a video call" />
+      </div>
+
+      <div class="live-classes-card">
+        <span class="live-label">Live Classes</span>
+        <div class="avatar-stack">
+          <img src="assets/avatar1.jpg" alt="" />
+          <img src="assets/avatar2.jpg" alt="" />
+          <img src="assets/avatar3.jpg" alt="" />
+          <span class="more-count">+3</span>
+        </div>
+      </div>
+
+      <div class="rating-card">
+        <mat-icon class="star-icon">star</mat-icon>
+        <div>
+          <div class="rating-value">4.8/5</div>
+          <div class="rating-subtext">From 200+ students</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING CARD -->
+<div class="booking-card">
+  <h3 class="booking-title">When do you want to start</h3>
+
+  <div class="booking-fields">
+
+    <!-- DATE FIELD -->
+    <div class="field-box date-box" [class.picker-open]="isDatePickerOpen" (click)="picker.open()">
+      <mat-icon class="field-icon">calendar_today</mat-icon>
+      <div class="field-text">
+        <span class="field-label">Date</span>
+        <span class="field-value">{{ selectedDate | date: 'dd MMMM yyyy' }}</span>
+      </div>
+
+      <input
+        class="hidden-date-input"
+        [matDatepicker]="picker"
+        [value]="selectedDate"
+        (dateChange)="onDateChange($event)"
+        readonly
+      />
+      <mat-datepicker
+        #picker
+        panelClass="booking-datepicker-panel"
+        (opened)="isDatePickerOpen = true"
+        (closed)="isDatePickerOpen = false"
+      ></mat-datepicker>
+    </div>
+
+    <!-- TIME FIELD -->
+    <div
+      class="field-box time-box"
+      [class.menu-open]="isTimeMenuOpen"
+      [matMenuTriggerFor]="timeMenu"
+      (menuOpened)="isTimeMenuOpen = true"
+      (menuClosed)="isTimeMenuOpen = false"
+    >
+      <mat-icon class="field-icon time-icon">schedule</mat-icon>
+      <div class="field-text">
+        <span class="field-value" [class.placeholder]="!selectedTime">
+          {{ selectedTime || 'Select Time' }}
+        </span>
+      </div>
+    </div>
+
+    <mat-menu #timeMenu="matMenu" class="booking-time-menu">
       <button
+        mat-menu-item
         *ngFor="let slot of timeSlots"
-        type="button"
-        class="slot-chip"
-        [class.selected]="isSlotSelected(slot)"
-        (click)="toggleSlot(slot)">
+        (click)="selectTime(slot)"
+      >
         {{ slot }}
       </button>
+    </mat-menu>
+
+  </div>
+</div>
+
+<!-- ALL TEACHERS -->
+<section class="all-teachers">
+  <h2 class="section-title">All Teachers</h2>
+
+  <div class="teacher-grid">
+    <div
+      class="teacher-card"
+      *ngFor="let teacher of teachers"
+      [class.selected]="selectedTeacherId === teacher.id"
+      (click)="selectTeacher(teacher.id)"
+    >
+      <div class="teacher-photo">
+        <img [src]="teacher.photo" [alt]="teacher.name" />
+      </div>
+
+      <div class="teacher-body">
+        <p class="teacher-name">{{ teacher.name }}</p>
+
+        <div class="slot-grid">
+          <span class="slot-chip" *ngFor="let slot of teacher.slots">{{ slot }}</span>
+        </div>
+
+        <button class="book-btn" type="button" (click)="bookSeat(teacher.id); $event.stopPropagation()">
+          <mat-icon class="book-icon">add</mat-icon>
+          Book Seat
+        </button>
+      </div>
     </div>
   </div>
-
-  <!-- ============ Results ============ -->
-  <div class="results">
-
-    <ng-container *ngIf="showResults; else emptyState">
-      <p class="results-count" *ngIf="filteredTeachers.length as count">
-        {{ count }} teacher{{ count === 1 ? '' : 's' }} available on {{ selectedDate }}
-      </p>
-
-      <div class="teacher-grid" *ngIf="filteredTeachers.length > 0; else noMatches">
-        <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
-          <img [src]="teacher.image" [alt]="teacher.name" class="teacher-photo">
-          <div class="teacher-info">
-            <p class="teacher-name">{{ teacher.name }}</p>
-            <div class="teacher-slots">
-              <span
-                class="mini-slot"
-                *ngFor="let slot of slotsForSelectedDate(teacher)"
-                [class.mini-slot--selected]="isSlotSelected(slot)">
-                {{ slot }}
-              </span>
-            </div>
-          </div>
-          <button mat-flat-button color="primary" class="book-btn">Book</button>
-        </div>
-      </div>
-
-      <ng-template #noMatches>
-        <div class="empty-panel">
-          <mat-icon class="empty-icon">event_busy</mat-icon>
-          <p>No teachers are free for that exact combination. Try a different date or fewer time slots.</p>
-        </div>
-      </ng-template>
-    </ng-container>
-
-    <ng-template #emptyState>
-      <div class="empty-panel">
-        <mat-icon class="empty-icon">schedule</mat-icon>
-        <p>Pick a date and at least one time slot to see available teachers.</p>
-      </div>
-    </ng-template>
-
-  </div>
-
 </section>

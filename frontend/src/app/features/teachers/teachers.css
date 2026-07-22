@@ -1,323 +1,701 @@
-/* ============================================================
-   Page layout
-============================================================ */
-.teachers-page {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  padding: 48px;
-  background: linear-gradient(135deg, #f7f8fc 0%, #eef1fa 100%);
-  min-height: 100vh;
-  box-sizing: border-box;
+:host {
+  --brand-purple: #6c4ce0;
+  --brand-blue-text: #4c5fe0;
+  --pink-border: #ff9c93;
+  --blue-border: #7fc6e8;
+  --call-pink: #f2536b;
+  --call-teal: #26c9a8;
+  --ink: #1b1b2a;
+  --muted: #6b7280;
+  --border-gray: #e7e7ef;
+  display: block;
+  font-family: 'Quicksand', sans-serif;
+  color: var(--ink);
 }
 
-.page-header {
-  max-width: 640px;
-  margin: 0 auto 32px auto;
-  text-align: center;
+/* keep Material icon ligatures working — don't let Quicksand override the icon font */
+:host mat-icon,
+::ng-deep .mat-mdc-menu-panel mat-icon,
+::ng-deep .booking-datepicker-panel mat-icon {
+  font-family: 'Material Icons' !important;
+  /* background: white; */
 }
 
-/* ============================================================
-   Eyebrow + headline
-============================================================ */
-.eyebrow-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: #eaf0ff;
-  color: #4361ee;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 6px 14px;
+::ng-deep .booking-datepicker-panel,
+::ng-deep .booking-datepicker-panel * {
+  font-family: 'Quicksand', sans-serif;
+}
+
+::ng-deep .booking-time-menu,
+::ng-deep .booking-time-menu * {
+  font-family: 'Quicksand', sans-serif;
+}
+
+/* ---------- HERO LAYOUT ---------- */
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 48px 32px 80px;
+  background: url('../../../assets/Group1.png') no-repeat right bottom;
+  background-size: 300px auto;
+  max-width: 1440px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.hero-left {
+  flex: 1 1 360px;
+  min-width: 300px;
+  padding-top: 24px;
+}
+.hero-right {
+  flex: 1 1 480px;
+  min-width: 320px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-height: 340px;
+  margin-top: -65px;
+}
+
+.pill-badge {
+  border: 1.5px solid var(--brand-purple);
+  color: var(--brand-purple);
+  background: #fff;
   border-radius: 999px;
-  margin-bottom: 16px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: default;
 }
-
-.eyebrow-icon {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
-}
-
-.headline {
-  font-size: 32px;
-  font-weight: 800;
+.hero-title {
+  font-size: 42px;
   line-height: 1.15;
-  color: #111417;
-  margin: 0 0 10px 0;
+  font-weight: 800;
+  margin: 24px 0 40px;
+}
+.hero-title .highlight {
+  color: var(--brand-blue-text);
 }
 
-.headline-accent {
-  color: #4361ee;
+.feature-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.feature-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #ececf3;
+  border-radius: 16px;
+  padding: 10px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  box-shadow: 0 6px 16px rgba(20, 20, 43, 0.05);
+}
+.chip-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.chip-icon-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #eaf6e9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chip-icon {
+  color: #3fae5a;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
 }
 
-.subtitle {
-  font-size: 14px;
-  color: #6b7280;
+.award-card {
+  position: absolute;
+  top: 85px;
+  left: -58px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 12px 30px rgba(20, 20, 43, 0.09);
+  z-index: 3;
+}
+.award-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #fff3d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.award-badge mat-icon {
+  color: #f0a93a;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+.award-text {
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
   margin: 0;
 }
+.highlight-inline {
+  color: var(--brand-blue-text);
+}
 
-/* ============================================================
-   Booking / filter card
-============================================================ */
-.card {
-  background: #fff;
+.photo-stack {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  height: 320px;
+  margin-top: 70px;
+}
+.photo-card {
+  position: absolute;
+  width: 656px;
+  height: 240px;
   border-radius: 20px;
-  padding: 24px;
-  max-width: 640px;
-  margin: 0 auto 32px auto;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  padding: 6px;
+  box-sizing: border-box;
 }
-
-.card-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #111;
-  margin: 0 0 16px 0;
-}
-
-.section-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: #6b7280;
-  margin: 20px 0 10px 0;
-}
-
-.filter-box {
-  display: flex;
-  gap: 12px;
-}
-
-.field {
-  flex: 1;
-  font-size: 13px;
-}
-
-.field ::ng-deep .mat-mdc-text-field-wrapper {
-  background: #fff;
-  border-radius: 12px;
-  padding: 6px 14px;
-}
-
-.field ::ng-deep .mdc-notched-outline__leading,
-.field ::ng-deep .mdc-notched-outline__notch,
-.field ::ng-deep .mdc-notched-outline__trailing {
-  border-color: #e4e6ec !important;
-  border-width: 1.5px !important;
-}
-
-.field ::ng-deep .mdc-notched-outline__notch {
-  border-left: none !important;
-}
-
-.field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  display: none;
-}
-
-.field ::ng-deep .mat-mdc-form-field-icon-prefix {
-  padding-right: 10px;
-}
-
-.field .field-icon {
-  color: #6b7280;
-  font-size: 20px;
-  height: 20px;
-  width: 20px;
-}
-
-.field ::ng-deep mat-label {
-  position: static !important;
+.photo-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
   display: block;
-  transform: none !important;
-  font-size: 11px;
-  color: #9296a3;
-  margin-bottom: 2px;
+}
+.photo-back {
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.photo-front {
+  right: 0;
+  top: 60px;
+  background: var(--blue-border);
+  z-index: 2;
 }
 
-.field ::ng-deep .mdc-floating-label {
-  position: static !important;
-  transform: none !important;
-}
-
-.field ::ng-deep input.mat-mdc-input-element {
-  font-size: 13px;
-  font-weight: 600;
-  color: #1a1a1a;
-  caret-color: transparent;
-}
-
-.field ::ng-deep input.mat-mdc-input-element::placeholder {
-  font-weight: 500;
-  color: #9296a3;
-}
-
-.field:hover ::ng-deep .mdc-notched-outline__leading,
-.field:hover ::ng-deep .mdc-notched-outline__notch,
-.field:hover ::ng-deep .mdc-notched-outline__trailing {
-  border-color: #c9ccd6 !important;
-}
-
-.field.has-value ::ng-deep .mdc-notched-outline__leading,
-.field.has-value ::ng-deep .mdc-notched-outline__notch,
-.field.has-value ::ng-deep .mdc-notched-outline__trailing,
-.field.mat-focused ::ng-deep .mdc-notched-outline__leading,
-.field.mat-focused ::ng-deep .mdc-notched-outline__notch,
-.field.mat-focused ::ng-deep .mdc-notched-outline__trailing {
-  border-color: #7c3aed !important;
-}
-
-.field.has-value ::ng-deep .mat-mdc-text-field-wrapper,
-.field.mat-focused ::ng-deep .mat-mdc-text-field-wrapper {
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
-}
-
-.field.has-value .field-icon,
-.field.mat-focused .field-icon {
-  color: #7c3aed;
-}
-
-/* ============================================================
-   Time slot chips
-============================================================ */
-.time-slots {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.slot-chip {
-  border: 1.5px solid #e4e6ec;
+.call-pill {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   background: #fff;
-  color: #374151;
-  font-size: 13px;
-  font-weight: 500;
-  padding: 9px 16px;
   border-radius: 999px;
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+}
+.round-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
-
-.slot-chip:hover {
-  border-color: #c9ccd6;
-}
-
-.slot-chip.selected {
-  background: #7c3aed;
-  border-color: #7c3aed;
+.round-btn mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
   color: #fff;
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+.round-btn.call {
+  background: var(--call-pink);
+}
+.round-btn.video {
+  background: var(--call-teal);
+}
+
+.live-classes-card {
+  position: absolute;
+  left: -61px;
+  top: 167px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 12px 30px rgba(20, 20, 43, 0.1);
+  z-index: 3;
+}
+.live-label {
+  color: var(--brand-purple);
+  font-weight: 700;
+  font-size: 13px;
+}
+.avatar-stack {
+  display: flex;
+  align-items: center;
+}
+.avatar-stack img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  margin-left: -8px;
+}
+.avatar-stack img:first-child {
+  margin-left: 0;
+}
+.more-count {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #efe8ff;
+  color: var(--brand-purple);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -8px;
+  border: 2px solid #fff;
+}
+
+.rating-card {
+  position: absolute;
+  right: -97px;
+  top: -40px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 12px 30px rgba(20, 20, 43, 0.1);
+  z-index: 3;
+}
+
+.star-icon {
+  color: #f5b301;
+}
+.rating-value {
+  font-weight: 700;
+  font-size: 14px;
+}
+.rating-subtext {
+  font-size: 11px;
+  color: var(--muted);
 }
 
 /* ============================================================
-   Results
-============================================================ */
-.results {
-  max-width: 960px;
-  margin: 0 auto;
+   BOOKING CARD
+   ============================================================ */
+.booking-card {
+  max-width: 1136px;
+  margin: -100px auto 48px;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 10px 50px rgba(20, 26, 43, 0.3);
+  padding: 32px;
+  position: relative;
+  z-index: 4;
 }
 
-.results-count {
+.booking-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+
+.booking-fields {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.field-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 230px;
+  padding: 12px 20px;
+  border-radius: 14px;
+  border: 1.5px solid var(--border-gray);
+  background: #fff;
+  cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.field-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--ink);
+}
+
+.time-icon {
+  color: var(--muted);
+}
+
+.field-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.field-label {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.field-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  background: none;
+}
+
+.field-value.placeholder {
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+}
+
+.date-box:hover,
+.date-box.picker-open {
+  border-color: var(--brand-purple);
+  box-shadow: 0 0 0 4px rgba(108, 76, 224, 0.1);
+}
+
+.time-box:hover,
+.time-box.menu-open {
+  border-color: var(--brand-purple);
+  box-shadow: 0 0 0 4px rgba(108, 76, 224, 0.1);
+}
+
+.hidden-date-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+::ng-deep .booking-datepicker-panel {
+  border-radius: 20px !important;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(20, 20, 43, 0.18) !important;
+  background: white;
+}
+::ng-deep .booking-datepicker-panel .mat-datepicker-content {
+  border-radius: 20px;
+}
+::ng-deep .booking-datepicker-panel .mat-calendar {
+  width: 300px;
+}
+::ng-deep .booking-datepicker-panel .mat-calendar-body-selected {
+  background-color: #6c4ce0 !important;
+  color: #fff !important;
+}
+::ng-deep .booking-datepicker-panel .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #6c4ce0 !important;
+  /* background-color: white; */
+}
+::ng-deep .booking-datepicker-panel .mat-calendar-header {
+  padding: 12px 12px 0;
+}
+
+/* ---------- CALENDAR DAY HOVER ----------
+   Plain purple-tint hover on unselected days only, so the hover
+   state never appears/lingers on the already-selected (solid purple) day. */
+::ng-deep .booking-datepicker-panel .mat-calendar-body-cell-content {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+::ng-deep .booking-datepicker-panel .mat-calendar-body-cell:hover .mat-calendar-body-cell-content:not(.mat-calendar-body-selected) {
+  background-color: #f1ecfe !important;
+  color: #6c4ce0 !important;
+}
+
+/* Selected day stays solid purple even on hover — no gray/tint overlay */
+::ng-deep .booking-datepicker-panel .mat-calendar-body-cell:hover .mat-calendar-body-selected,
+::ng-deep .booking-datepicker-panel .mat-calendar-body-selected:hover {
+  background-color: #6c4ce0 !important;
+  color: #fff !important;
+}
+
+::ng-deep .booking-time-menu {
+  border-radius: 16px !important;
+  box-shadow: 0 20px 45px rgba(20, 20, 43, 0.15) !important;
+  padding: 6px !important;
+  max-height: 280px;
+  background-color: #fff !important;
+  opacity: 1 !important;
+}
+::ng-deep .booking-time-menu.mat-mdc-menu-panel {
+  background-color: #fff !important;
+}
+::ng-deep .booking-time-menu .mat-mdc-menu-content {
+  background-color: #fff !important;
+}
+::ng-deep .booking-time-menu .mat-mdc-menu-item {
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #6b7280;
-  margin: 0 0 16px 0;
+  min-height: 40px;
+  background: #fff;
+}
+::ng-deep .booking-time-menu .mat-mdc-menu-item:hover {
+  background: #f1ecfe;
+  color: #6c4ce0;
+}
+
+/* ============================================================
+   ALL TEACHERS — grid of teacher cards below the booking card
+   ============================================================ */
+.all-teachers {
+  max-width: 1136px;
+  margin: 0 auto 64px;
+  padding: 0 32px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 800;
+  margin: 0 0 20px;
+  color: var(--ink);
+}
+
+.teachers-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 20px;
+  border: 1.5px dashed var(--border-gray);
+  border-radius: 16px;
+  text-align: center;
+}
+.teachers-state.error {
+  border-color: rgba(242, 83, 107, 0.35);
+}
+
+.state-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  margin: 0;
+}
+.teachers-state.error .state-text {
+  color: var(--call-pink);
+}
+
+.retry-btn {
+  border: 1.5px solid var(--brand-purple);
+  color: var(--brand-purple);
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 20px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.retry-btn:hover {
+  background: #f1ecfe;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid var(--border-gray);
+  border-top-color: var(--brand-purple);
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .teacher-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
 }
 
 .teacher-card {
   background: #fff;
-  border-radius: 16px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  border: 1.5px solid var(--border-gray);
+  padding: 12px;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.teacher-card:hover {
+  transform: translateY(-2px);
+}
+
+.teacher-card.selected {
+  border-color: var(--brand-purple);
+  box-shadow: 0 0 0 4px rgba(108, 76, 224, 0.12);
 }
 
 .teacher-photo {
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 0.85;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.teacher-photo img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  margin-bottom: 12px;
-  border: 3px solid #eef1fa;
+  display: block;
+}
+
+.teacher-body {
+  padding: 0 4px 4px;
 }
 
 .teacher-name {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
-  color: #111417;
-  margin: 0 0 10px 0;
+  color: var(--ink);
+  margin: 0 0 10px;
 }
 
-.teacher-slots {
-  display: flex;
-  flex-wrap: wrap;
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 6px;
-  justify-content: center;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
-.mini-slot {
+.slot-chip {
   font-size: 11px;
-  font-weight: 500;
-  color: #6b7280;
-  background: #f4f5f8;
-  padding: 4px 8px;
-  border-radius: 999px;
-}
-
-.mini-slot--selected {
-  background: #eee5fd;
-  color: #7c3aed;
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--muted);
+  border: 1.5px solid var(--border-gray);
+  border-radius: 8px;
+  padding: 6px 4px;
+  text-align: center;
 }
 
 .book-btn {
   width: 100%;
-}
-
-/* ============================================================
-   Empty / no-match state
-============================================================ */
-.empty-panel {
+  height: 44px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-blue-text), var(--brand-purple));
+  color: #fff;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 10px;
-  padding: 48px 24px;
-  color: #9296a3;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.book-btn:hover {
+  filter: brightness(1.05);
+}
+.book-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #fff;
 }
 
-.empty-icon {
-  font-size: 32px;
-  height: 32px;
-  width: 32px;
-  color: #c9ccd6;
-}
-
-.empty-panel p {
-  font-size: 13px;
-  margin: 0;
-  max-width: 320px;
-}
-
-/* ============================================================
-   Responsive
-============================================================ */
-@media (max-width: 600px) {
-  .teachers-page {
-    padding: 24px 16px;
-  }
-  .headline {
-    font-size: 26px;
-  }
-  .filter-box {
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .hero {
     flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 20px 60px;
+  }
+  .hero-left {
+    padding-top: 0;
+  }
+  .feature-row {
+    justify-content: center;
+  }
+  .hero-right {
+    min-height: 380px;
+  }
+  .teacher-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero-title {
+    font-size: 30px;
+  }
+  .photo-stack {
+    height: 300px;
+  }
+  .photo-card {
+    width: 160px;
+    height: 190px;
+  }
+  .photo-front {
+    top: 90px;
+  }
+  .award-card {
+    position: static;
+    margin-bottom: 16px;
+  }
+  .live-classes-card {
+    left: 8px;
+    top: 130px;
+  }
+  .rating-card {
+    top: -4px;
+  }
+
+  .booking-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+  .booking-fields {
+    flex-direction: column;
+  }
+  .field-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .all-teachers {
+    padding: 0 20px;
+  }
+  .teacher-grid {
+    grid-template-columns: 1fr;
   }
 }
