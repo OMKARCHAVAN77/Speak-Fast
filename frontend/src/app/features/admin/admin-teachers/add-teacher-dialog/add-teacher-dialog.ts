@@ -18,7 +18,6 @@ export class AddTeacherDialog implements OnInit {
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<any>();
 
-  // experienceOptions = ['0-1 years', '1-3 years', '3-5 years', '5+ years'];
   aadharOptions = ['Verified', 'Not Verified', 'Pending'];
 
   photoFile: File | null = null;
