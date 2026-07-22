@@ -1,6 +1,6 @@
 import asyncHandler from "../../middlewares/asyncHandler.js";
 import ApiResponse from "../../utils/ApiResponse.js";
-import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordStudentService,bookSlotService ,getStudentProfileService  } from "../student/student.service.js";
+import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordService,bookSlotService ,getStudentProfileService  } from "../student/student.service.js";
 
 
 //student registration controller 
