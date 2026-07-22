@@ -15,10 +15,11 @@
   color: #333c4d;
   padding: 40px 32px 24px 32px;
   position: relative;
+  max-width: 1440px;
 }
 
 .footer-container {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1.4fr 1fr 1fr 1.2fr;

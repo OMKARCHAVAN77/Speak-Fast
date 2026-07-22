@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { MatIcon } from "@angular/material/icon";
+
 
 @Component({
   selector: 'app-set-password',
-  imports: [CommonModule, FormsModule, MatIcon],
+  imports: [CommonModule, FormsModule],
   templateUrl: './set-password.html',
   styleUrls: ['./set-password.css'],
 })
