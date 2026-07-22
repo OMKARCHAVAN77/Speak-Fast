@@ -15,7 +15,7 @@ interface OrderSummary {
 @Component({
   selector: 'app-payment',
   imports: [MatCardModule,
-    MatIconModule, MatCardContent, MatCardHeader, MatCardTitle, MatCardSubtitle, MatCard, MatIcon, MatButtonModule, RouterModule],
+    MatIconModule,  MatCard, MatIcon, MatButtonModule, RouterModule],
   templateUrl: './payment.html',
   styleUrl: './payment.css',
 })
