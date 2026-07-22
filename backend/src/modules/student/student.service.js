@@ -5,6 +5,8 @@ import Student from "../student/student.model.js";
 import ApiError from "../../utils/ApiError.js";
 import sendEmail from "../../utils/studentSendMail.js";
 import { validateStudentRegistration,validateStudentLogin } from "../student/student.validation.js";
+import Teacher from "../teacher/teacher.model.js";
+
 
 // student registration service
 const registerStudent = async (studentData) => {
@@ -266,4 +268,54 @@ const getAllStudentsService = async () => {
     }
     return students;
 };
-export { getAllStudentsService };
+
+
+
+/// book slot service code
+
+
+ const bookSlotService = async (
+    teacherId,
+    slotId,
+    studentId
+) => {
+
+    // Find teacher
+    const teacher = await Teacher.findById(teacherId);
+
+    if (!teacher) {
+        throw new Error("Teacher not found");
+    }
+
+    // Find slot
+    const slot = teacher.slots.id(slotId);
+
+    if (!slot) {
+        throw new Error("Slot not found");
+    }
+
+    // Check if already booked
+    if (slot.isBooked) {
+        throw new Error("Slot already booked");
+    }
+
+    // Example:
+    // Save teacherId & slotId in student record
+    // (Modify according to your Student schema)
+
+    await Student.findByIdAndUpdate(
+        studentId,
+        {
+            teacherId,
+            slotId
+        }
+    );
+
+    // Update slot
+    slot.isBooked = true;
+
+    await teacher.save();
+
+    return teacher;
+};
+export { getAllStudentsService ,bookSlotService };
