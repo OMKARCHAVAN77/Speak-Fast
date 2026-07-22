@@ -33,9 +33,9 @@ export class AddTeacherDialog implements OnInit {
     firstName: '',
     lastName: '',
     contactNumber: '',
-    aadharNumber: '',
+    aadharN0: '',
     email: '',
-    googlemeetLink: '',
+    googleMeetLink: '',
     photo: null as File | null,
     startTime: '',
     slots: [] as BookedSlot[]
@@ -177,9 +177,9 @@ private generateTimeSlots(): string[] {
       firstName: '',
       lastName: '',
       contactNumber: '',
-      aadharNumber: '',
+      aadharN0: '',
       email: '',
-      googlemeetLink: '',
+      googleMeetLink: '',
       photo: null as File | null,
       startTime: '',
       slots: []
@@ -188,9 +188,10 @@ private generateTimeSlots(): string[] {
   }
 
   onSubmit(): void {
+      console.log("teacher registration value:", this.teacher);
     this.addTeacher.emit(this.teacher);
     this.onClose();
-    console.log("teacher registration value",this.addTeacher.emit(this.teacher));
+    // console.log("teacher registration value",this.addTeacher.emit(this.teacher));
     
   }
 }
