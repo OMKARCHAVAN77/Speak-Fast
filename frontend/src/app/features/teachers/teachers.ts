@@ -48,6 +48,7 @@ export class Teachers implements OnInit {
   isTimeMenuOpen = false;
   formattedDate:any;
    teachers: Teacher[] =[];
+   showTeachers = false;
  ngOnInit(): void {
 
   this.formattedDate = this.formatDate(this.selectedDate);
@@ -78,12 +79,13 @@ loadTeachers(): void {
   console.log("API Response:", res);
 
   this.teachers = [...res.teachers];
-
+       this.showTeachers = this.teachers.length > 0;
   this.cdr.detectChanges();
 
   console.log(this.teachers);
 },
-    error: (err) => {
+    error: (err) => { 
+       this.showTeachers = false;
       console.error(err);
     }
   });
