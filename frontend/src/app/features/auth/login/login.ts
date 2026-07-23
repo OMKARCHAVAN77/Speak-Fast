@@ -21,6 +21,7 @@ type UserType = 'student' | 'teacher' | 'admin';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+
     MatIconModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',

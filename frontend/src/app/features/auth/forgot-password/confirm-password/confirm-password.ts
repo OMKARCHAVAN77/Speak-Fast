@@ -8,7 +8,7 @@ import { environment } from '../../../../../environments/environments';
 
 @Component({
   selector: 'app-confirm-password',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule,  FormsModule, ReactiveFormsModule],
   templateUrl: './confirm-password.html',
   styleUrl: './confirm-password.css',
 })
