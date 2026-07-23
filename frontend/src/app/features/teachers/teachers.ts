@@ -6,16 +6,28 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { TeacherService } from '../../core/services/teacher.service';
+import { ChangeDetectorRef } from '@angular/core';
+
+interface Slot {
+  _id: string;
+  date: string;
+  time: string;
+  isBooked: boolean;
+}
 
 interface Teacher {
-  id: string;
-  name: string;
-  photo: string;
-  slots: string[];
+  _id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  contactNumber: string;
+  photo:null;
+  role: string;
+  slots: Slot[];
 }
 
 @Component({
-  selector: 'app-teacher-hero',
+  selector: 'app-teacher',
   standalone: true,
   imports: [
     CommonModule,
@@ -35,6 +47,7 @@ export class Teachers implements OnInit {
   isDatePickerOpen = false;
   isTimeMenuOpen = false;
   formattedDate:any;
+   teachers: Teacher[] =[];
  ngOnInit(): void {
 
   this.formattedDate = this.formatDate(this.selectedDate);
@@ -47,7 +60,7 @@ formatDate(date: Date): string {
 
 }
 
-constructor(private teacherService: TeacherService) {}  
+constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef) {}  
 loadTeachers(): void {
 
   if (!this.formattedDate || !this.selectedTime) {
@@ -62,8 +75,14 @@ loadTeachers(): void {
   .filterTeacherApi(this.formattedDate, this.selectedTime)
   .subscribe({
     next: (res: any) => {
-      console.log("API Response:", res);
-    },
+  console.log("API Response:", res);
+
+  this.teachers = [...res.teachers];
+
+  this.cdr.detectChanges();
+
+  console.log(this.teachers);
+},
     error: (err) => {
       console.error(err);
     }
@@ -73,8 +92,8 @@ loadTeachers(): void {
 
 
   timeSlots: string[] = [
-    '09:00AM', '10:00AM', '11:00AM',
-    '01:00PM', '02:00PM', '3:00pm','4:15am',
+    '09:00AM', '10:00AM', '11:00AM','02:45am',
+    '01:00PM', '02:00PM', '3:00pm','4:15am','03:30am','01:30am',
     '04:00PM', '05:00PM','12:45pm', '06:00PM', '07:00PM', '08:00PM'
   ];
 
@@ -88,7 +107,7 @@ loadTeachers(): void {
 
   console.log(this.formattedDate);
 
-  this.loadTeachers();
+  // this.loadTeachers();
 
 }
 
@@ -107,38 +126,26 @@ loadTeachers(): void {
 
 
 
-  teachers: Teacher[] = [
-    {
-      id: 'anita-rathod',
-      name: 'Anita Rathod',
-      photo: "../../../assets/circle1.jpg",
-      slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
-    },
-    {
-      id: 'sakshi-pable',
-      name: 'Sakshi Pable',
-      photo: "../../../assets/circle2.jpg",
-      slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
-    },
-    {
-      id: 'ansh-agarwal',
-      name: 'Ansh Agarwal',
-      photo: "../../../assets/circle3.jpg",
-      slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
-    }
-  ];
+ 
 
   selectTeacher(id: string): void {
     this.selectedTeacherId = id;
+    
   }
 
-  bookSeat(id: string): void {
-    const teacher = this.teachers.find(t => t.id === id);
-    if (!teacher) {
-      return;
-    }
-    // Hook this up to your booking flow/service.
-    // e.g. this.bookingService.book(teacher.id, this.selectedDate, this.selectedTime)
-    console.log('Booking seat with', teacher.name, this.selectedDate, this.selectedTime);
+bookSeat(id: string): void {
+
+  const teacher = this.teachers.find(t => t._id === id);
+
+  if (!teacher) {
+    return;
   }
+
+  console.log(
+    teacher.firstName,
+    teacher.lastName,
+    this.selectedDate,
+    this.selectedTime
+  );
+}
 }

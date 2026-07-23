@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environments';
 
 interface NavLink {
   label: string;
@@ -31,7 +32,7 @@ interface NavLink {
 export class Navbar {
 
   constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar) {}
-  private logoutUrl = 'http://localhost:5000/api/auth/logout';
+  private logoutUrl = `${environment.apiUrl}/auth/logout`;
 
   isMenuOpen = false;
 

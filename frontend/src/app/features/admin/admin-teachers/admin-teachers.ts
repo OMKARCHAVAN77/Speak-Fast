@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef,Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -9,21 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
-
-
-
-
-interface LeaveInfo {
-  status: 'none' | 'requested' | 'onLeave';
-  range?: string; // e.g. "30 Sep - 1 Aug"
-}
- 
-interface Teacher {
-  id: number;
-  name: string;
-  subjects: string;
-  // leave: LeaveInfo;
-}
+import { TeacherService, Teacher } from '../../../core/services/teacher.service';
 
 @Component({
   selector: 'app-admin-teachers',
@@ -41,81 +27,73 @@ interface Teacher {
   templateUrl: './admin-teachers.html',
   styleUrl: './admin-teachers.css',
 })
-export class AdminTeachers {
-  
+export class AdminTeachers implements OnInit {
+
   searchTerm = '';
- 
-  teachers: Teacher[] = [
-    {
-      id: 1,
-      name: 'Suroj Kumbar',
-      subjects: 'Grammar, Business English, IELTS Preparation',
-      // leave: { status: 'requested' }
-    },
-    {
-      id: 2,
-      name: 'Kamlesh Patil',
-      subjects: 'Grammar, Business English, IELTS Preparation',
-      // leave: { status: 'onLeave', range: '30 Sep - 1 Aug' }
-    },
-    {
-      id: 3,
-      name: 'Anita Rathod',
-      subjects: 'Business English, Interview Preparation, Presentation Skills',
-      // leave: { status: 'requested' }
-    },
-    {
-      id: 4,
-      name: 'Sunil Devkate',
-      subjects: 'TOEFL, Academic English, Writing Skills',
-      // leave: { status: 'onLeave', range: '1 Aug - 3 Aug' }
-    },
-    {
-      id: 5,
-      name: 'Nihal Thakur',
-      subjects: 'Grammar, Beginner English, Conversation',
-      // leave: { status: 'none' }
-    },
-    {
-      id: 6,
-      name: 'Suraj Shetty',
-      subjects: 'Business English, Interview Preparation, Presentation Skills',
-      // leave: { status: 'none' }
-    }
-  ];
- 
-  get filteredTeachers(): Teacher[] {
-    const term = this.searchTerm.trim().toLowerCase();
-    if (!term) {
-      return this.teachers;
-    }
-    return this.teachers.filter(
-      t =>
-        t.name.toLowerCase().includes(term) ||
-        t.subjects.toLowerCase().includes(term)
-    );
+  teachers: Teacher[] = [];
+  loading = false;
+environment: any;
+
+  constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+     console.log("Admin Teachers Component Loaded");
+    this.loadTeachers();
   }
- 
+
+loadTeachers(): void {
+  this.loading = true;
+  this.teacherService.getTeachers().subscribe({
+    next: (res) => {
+
+      console.log("TEACHER API RESPONSE:", res);
+      this.teachers = res.teachers;   // unwrap { count, teachers }
+      this.loading = false;
+
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Failed to load teachers:', err);
+      this.loading = false;
+    }
+  });
+}
+
+onTeacherAdded(teacher: any): void {
+  this.teacherService.addTeacher(teacher).subscribe({
+    next: (res) => {
+      console.log(res.message); // "Teacher registered successfully. Email sent."
+      this.loadTeachers();       // refresh the list instead of pushing a fake object
+    },
+    error: (err) => {
+      console.error('Failed to add teacher:', err);
+    }
+  });
+}
+
+ get filteredTeachers(): Teacher[] {
+  const term = this.searchTerm.trim().toLowerCase();
+  if (!term) return this.teachers;
+  return this.teachers.filter(
+    t =>
+      `${t.firstName} ${t.lastName}`.toLowerCase().includes(term) ||
+      t.email.toLowerCase().includes(term)
+  );
+}
+
   get totalTeachers(): number {
     return this.teachers.length;
   }
- 
-  // onAcceptLeave(teacher: Teacher): void {
-  //   teacher.leave = { status: 'onLeave', range: 'Leave approved' };
+
+  // onDeleteTeacher(teacher: Teacher): void {
+  //   this.teacherService.deleteTeacher(teacher.id).subscribe({
+  //     next: () => {
+  //       this.teachers = this.teachers.filter(t => t.id !== teacher.id);
+  //     },
+  //     error: (err) => console.error('Failed to delete teacher:', err)
+  //   });
   // }
- 
-  // onCancelLeave(teacher: Teacher): void {
-  //   teacher.leave = { status: 'none' };
-  // }
- 
-  // onViewDetails(teacher: Teacher): void {
-  //   console.log('View details for', teacher.name);
-  // }
- 
-  onDeleteTeacher(teacher: Teacher): void {
-    this.teachers = this.teachers.filter(t => t.id !== teacher.id);
-  }
- 
+
   drawerOpen = false;
 
   openDrawer(): void {
@@ -126,8 +104,4 @@ export class AdminTeachers {
     this.drawerOpen = false;
   }
 
-  onTeacherAdded(teacher: any): void {
-    console.log('New teacher:', teacher);
-    // call your API service here
-  }
 }
