@@ -81,6 +81,32 @@ export {resetPassword}
 
 
 // book slot teacher
+// const bookSlot = async (req, res) => {
+//     try {
+
+//         const { teacherId, slotId, studentId } = req.body;
+
+//         const booking = await bookSlotService(
+//             teacherId,
+//             slotId,
+//             studentId
+//         );
+
+//         res.status(200).json({
+//             success: true,
+//             message: "Slot booked successfully",
+//             data: booking
+//         });
+
+//     } catch (error) {
+
+//         res.status(400).json({
+//             success: false,
+//             message: error.message
+//         });
+
+//     }
+// };
 const bookSlot = async (req, res) => {
     try {
 
@@ -104,7 +130,6 @@ const bookSlot = async (req, res) => {
             success: false,
             message: error.message
         });
-
     }
 };
 export { bookSlot };
