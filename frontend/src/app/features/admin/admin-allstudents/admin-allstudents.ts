@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { environment } from '../../../../environments/environments';
 
 
 
@@ -57,7 +58,7 @@ ngOnInit(): void {
 }
 
 loadStudents() {
-  this.http.get<any>('http://localhost:5000/api/students/getallstudent')
+  this.http.get<any>(`${environment.apiUrl}/students/getallstudent`)
     .subscribe({
       next: (res) => {
         this.allStudentList.set(res.data);

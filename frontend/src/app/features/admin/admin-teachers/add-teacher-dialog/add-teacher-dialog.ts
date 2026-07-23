@@ -18,7 +18,6 @@ export class AddTeacherDialog implements OnInit {
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<any>();
 
-  // experienceOptions = ['0-1 years', '1-3 years', '3-5 years', '5+ years'];
   aadharOptions = ['Verified', 'Not Verified', 'Pending'];
 
   photoFile: File | null = null;
@@ -34,9 +33,9 @@ export class AddTeacherDialog implements OnInit {
     firstName: '',
     lastName: '',
     contactNumber: '',
-    aadharNumber: '',
+    aadharNo: '',
     email: '',
-    googlemeetLink: '',
+    googleMeetLink: '',
     photo: null as File | null,
     startTime: '',
     slots: [] as BookedSlot[]
@@ -60,30 +59,44 @@ export class AddTeacherDialog implements OnInit {
     return new Date(Math.ceil(date.getTime() / ms) * ms);
   }
 
-  private formatTime12h(date: Date): string {
-    let hours = date.getHours();
-    const minutes = date.getMinutes();
-    const period = hours < 12 ? 'am' : 'pm';
-    hours = hours % 12;
-    if (hours === 0) hours = 12;
-    const mm = String(minutes).padStart(2, '0');
-    return `${hours}:${mm}${period}`;
-  }
-  // ============ END AUTO TIME ============
+  // ============ AUTO TIME FORMAT ============
+private formatTime12h(date: Date): string {
+  let hours = date.getHours();
+  const minutes = date.getMinutes();
 
-  private generateTimeSlots(): string[] {
-    const slots: string[] = [];
-    for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += 15) {
-        const period = h < 12 ? 'am' : 'pm';
-        let hour12 = h % 12;
-        if (hour12 === 0) hour12 = 12;
-        const mm = String(m).padStart(2, '0');
-        slots.push(`${hour12}:${mm}${period}`);
-      }
+  const period = hours < 12 ? 'am' : 'pm';
+
+  hours = hours % 12;
+  if (hours === 0) hours = 12;
+
+  const hh = String(hours).padStart(2, '0');
+  const mm = String(minutes).padStart(2, '0');
+
+  return `${hh}:${mm}${period}`;
+}
+// ============ END AUTO TIME ============
+
+
+private generateTimeSlots(): string[] {
+  const slots: string[] = [];
+
+  for (let h = 0; h < 24; h++) {
+    for (let m = 0; m < 60; m += 15) {
+
+      const period = h < 12 ? 'am' : 'pm';
+
+      let hour12 = h % 12;
+      if (hour12 === 0) hour12 = 12;
+
+      const hh = String(hour12).padStart(2, '0');
+      const mm = String(m).padStart(2, '0');
+
+      slots.push(`${hh}:${mm}${period}`);
     }
-    return slots;
   }
+
+  return slots;
+}
 
   toggleTimeDropdown(field: 'start', event: Event): void {
     event.stopPropagation();
@@ -164,9 +177,9 @@ export class AddTeacherDialog implements OnInit {
       firstName: '',
       lastName: '',
       contactNumber: '',
-      aadharNumber: '',
+      aadharNo: '',
       email: '',
-      googlemeetLink: '',
+      googleMeetLink: '',
       photo: null as File | null,
       startTime: '',
       slots: []
@@ -175,7 +188,10 @@ export class AddTeacherDialog implements OnInit {
   }
 
   onSubmit(): void {
+      console.log("teacher registration value:", this.teacher);
     this.addTeacher.emit(this.teacher);
     this.onClose();
+    // console.log("teacher registration value",this.addTeacher.emit(this.teacher));
+    
   }
 }

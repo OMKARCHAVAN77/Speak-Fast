@@ -21,6 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs/internal/Observable';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/district-list';
 import { OCCUPATIONS } from '../../../core/Shared-common-list/occupations-list';
+import { environment } from '../../../../environments/environments';
 
 
 function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
@@ -293,7 +294,7 @@ selectOccupation(occupation: string) {
     if (this.registrationForm.valid) {
 
 
-      this.http.post ('http://localhost:5000/api/students/register',this.registrationForm.value).subscribe({
+      this.http.post (`${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
         next:(data:any)=>{
           console.log(data.massage)
           alert('sucessfully registered');
@@ -320,3 +321,39 @@ selectOccupation(occupation: string) {
 
 }
 
+//     this.initializeForm();
+
+
+//   }
+
+//   initializeForm():void{
+//       this.registrationForm = this.fb.group({
+//         firstName: ['sai'],
+//         lastName: ['shetty'],
+//         contactNumber: ['9423165720'],
+//         email: ['saishetty.ux@gmail.com'],
+//         password: ['Saishetty@123'],
+//         confirmPassword: ['Saishetty@123'],
+//         district: ['kolhapur'],
+//         qualification: ['Btech'],
+//         occupation: ['Student']
+
+//       });
+//   }
+
+//   onSubmit():void{
+//         console.log("value is ",this.registrationForm.value);
+//         this.http.post(`http://${environment.apiUrl}/students/register`,this.registrationForm.value)
+//          .subscribe({
+//             next: (response) => {
+//               console.log(response);
+//               alert('Student registered successfully!');
+//             },
+//             error: (err) => {
+//               console.error(err);
+//               alert('Registration failed!');
+//             }
+//           });
+
+//   }
+// }

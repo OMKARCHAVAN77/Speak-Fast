@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { environment } from '../../../../../environments/environments';
 
 @Component({
   selector: 'app-confirm-password',
@@ -53,7 +54,7 @@ export class ConfirmPassword {
       return;
     }
 
-    this.http.post('http://localhost:5000/api/students/reset-password', {
+    this.http.post(`${environment.apiUrl}/students/reset-password`, {
   token: this.token,
   email: this.email,
   newPassword: password,
