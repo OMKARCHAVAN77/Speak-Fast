@@ -101,9 +101,15 @@
 
 <!-- ALL TEACHERS -->
 <section class="all-teachers">
-  <h2 class="section-title">All Teachers</h2>
+  
+  <!-- Empty State -->
+  <div class="teacher-empty-state" *ngIf="!showTeachers">
+    <img src="assets/emptytrainer.png" alt="No Teachers">
+  </div>
 
-  <div class="teacher-grid">
+  <h2 class="section-title">All Teachers</h2>
+  <div class="teacher-grid" *ngIf="showTeachers">
+  
     <div class="teacher-card" *ngFor="let teacher of teachers" [class.selected]="selectedTeacherId === teacher._id"
       (click)="selectTeacher(teacher._id)">
       <div class="teacher-photo">
@@ -130,5 +136,26 @@
         </button>
       </div>
     </div>
+  </div>
+</section>
+<!-- REQUEST SLOT CARD -->
+<section class="request-slot-section">
+  <div class="request-slot-card" >
+
+    <div class="request-left">
+      <div class="request-icon">
+        <mat-icon>school</mat-icon>
+      </div>
+
+      <div class="request-content">
+        <h4>Please contact us if you cannot find an available training time slot.</h4>
+        <p>We are here to help find a time that works for you.</p>
+      </div>
+    </div>
+
+    <button mat-flat-button class="request-btn">
+      Request a Slot
+    </button>
+
   </div>
 </section>
