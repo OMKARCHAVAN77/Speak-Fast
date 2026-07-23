@@ -150,6 +150,7 @@ constructor(private fb: FormBuilder, private studentServ:StudentService, private
           alert('sucessfully registered');
           this.registrationForm.reset();
         },error:(err:any)=>{
+            alert("Success Messeage")
           console.log(err)
                     alert('fail registertion');
         }

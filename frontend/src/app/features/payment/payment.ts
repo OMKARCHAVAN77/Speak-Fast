@@ -11,22 +11,6 @@ import { CourseService } from '../../core/services/course-service';
 })
 export class Payment {
 
-  // constructor(private courseserve : CourseService){}
-
-  // teacherName = 'Priya Sharma';
-  // courseName = 'PREMIUM PLAN';
-
-  // courseFee = 15000;
-  // discount = 3000;
-
-  // get totalAmount(): number {
-  //   return this.courseFee - this.discount;
-  // }
-
-  // onPaymentDone(): void {
-  //   console.log('Payment marked as done');
-  // }
-
   teacherName = 'Priya Sharma';
 
   constructor(private courseService: CourseService) {}
