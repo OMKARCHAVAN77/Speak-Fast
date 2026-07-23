@@ -144,7 +144,7 @@ export { bookSlot };
 
         const student = await getStudentProfileService(studentId);
 
-        res.status(200).json({
+        res.status(200).json({  
             success: true,
             data: student
         });

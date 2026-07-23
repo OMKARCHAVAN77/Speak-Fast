@@ -569,3 +569,231 @@
   height: 18px;
   width: 18px;
 }
+
+
+/* ============ TABLET VIEW (≤1024px) ============ */
+@media (max-width: 1024px) {
+  .drawer {
+    width: 60%;
+  }
+}
+
+/* ============ TABLET / SMALL LAPTOP (≤768px) ============ */
+@media (max-width: 768px) {
+  .drawer {
+    width: 75%;
+    padding: 20px 18px;
+  }
+
+  .name-row {
+    gap: 16px;
+  }
+
+  .name-field {
+    flex: 0 0 calc(50% - 8px);
+    max-width: calc(50% - 8px);
+  }
+
+  .drawer-title {
+    font-size: 18px;
+  }
+
+  .field-label {
+    font-size: 13px;
+    margin: 14px 0 6px;
+  }
+
+  .field-box {
+    height: 42px;
+  }
+
+  .upload-box {
+    min-height: 90px;
+    padding: 16px;
+  }
+
+  /* ---- Time dropdown as bottom-sheet ---- */
+  .time-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 45vh;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 28px rgba(15, 23, 42, 0.22);
+    z-index: 2000;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .time-slot {
+    padding: 13px 18px;
+    font-size: 13.5px;
+  }
+}
+
+/* ============ MOBILE VIEW (≤576px) ============ */
+@media (max-width: 576px) {
+  .drawer {
+    width: 100%;
+    max-width: 100vw;
+    padding: 18px 16px;
+    border-radius: 0;
+  }
+
+  .drawer-header {
+    margin-bottom: 18px;
+  }
+
+  .header-left {
+    gap: 8px;
+  }
+
+  .drawer-title {
+    font-size: 16.5px;
+  }
+
+  .close-icon,
+  .delete-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+
+  /* Stack name fields vertically on small screens */
+  .name-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .name-field {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .field-label {
+    font-size: 12.5px;
+    margin: 12px 0 6px;
+  }
+
+  .field-box {
+    height: 42px;
+    padding: 0 10px;
+  }
+
+  .field-input,
+  .field-select,
+  .field-textarea {
+    font-size: 13px;
+  }
+
+  .upload-box {
+    min-height: 80px;
+    padding: 14px;
+    gap: 8px;
+  }
+
+  .upload-icon {
+    font-size: 18px;
+    height: 18px;
+    width: 18px;
+    padding: 7px;
+  }
+
+  .upload-text {
+    font-size: 12px;
+  }
+
+  .upload-status {
+    font-size: 12px;
+  }
+
+  /* Book slots row wraps on small screens */
+  .book-slots-row {
+    flex-wrap: wrap;
+  }
+
+  .time-chip {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  /* ---- Time dropdown bottom-sheet (mobile) ---- */
+  .time-dropdown {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 50vh;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 28px rgba(15, 23, 42, 0.22);
+    z-index: 2000;
+    padding-top: 6px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .time-slot {
+    padding: 14px 18px;
+    font-size: 14px;
+  }
+
+  .add-slot-btn {
+    height: 38px;
+    padding: 0 12px;
+    font-size: 12px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .added-slot-item {
+    padding: 5px 8px 5px 10px;
+  }
+
+  .slot-text {
+    font-size: 11.5px;
+  }
+
+  .submit-btn {
+    height: 46px;
+    font-size: 15.5px;
+    margin-top: 22px;
+  }
+}
+
+/* ============ VERY SMALL MOBILE (≤360px) ============ */
+@media (max-width: 360px) {
+  .drawer {
+    padding: 14px 12px;
+  }
+
+  .drawer-title {
+    font-size: 15.5px;
+  }
+
+  .time-dropdown {
+    max-height: 55vh;
+  }
+
+  .add-slot-btn span {
+    display: none;
+  }
+}
+
+/* ============ OPTIONAL: dropdown backdrop (mobile/tablet only) ============ */
+.time-dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1999;
+}
+
+@media (min-width: 769px) {
+  .time-dropdown-backdrop {
+    display: none;
+  }
+}
