@@ -292,57 +292,100 @@ export { resetPasswordService };
 
 
 // book slot service code
-const bookSlotService = async (
-    teacherId,
-    slotId,
-    studentId
-) => {
+// const bookSlotService = async (
+//     teacherId,
+//     slotId,
+//     studentId
+// ) => {
 
-    // Find teacher
+//     // Find teacher
+//     const teacher = await Teacher.findById(teacherId);
+
+//     if (!teacher) {
+//         throw new Error("Teacher not found");
+//     }
+
+//     // Find slot
+//     const slot = teacher.slots.id(slotId);
+
+//     if (!slot) {
+//         throw new Error("Slot not found");
+//     }
+
+//     // Check if already booked
+//     if (slot.isBooked) {
+//         throw new Error("Slot already booked");
+//     }
+
+//     // Example:
+//     // Save teacherId & slotId in student record
+//     // (Modify according to your Student schema)
+
+//     await Student.findByIdAndUpdate(
+//         studentId,
+//         {
+//             teacherId,
+//             slotId
+//         }
+//     );
+
+//     // Update slot
+//     slot.isBooked = true;
+
+//     await teacher.save();
+
+//     await Student.findByIdAndUpdate(
+//     studentId,
+//     {
+//         assignedTeacher: teacherId
+//     },
+//     {
+//         new: true
+//     }
+// );
+
+//     return teacher;
+// };
+const bookSlotService = async (teacherId, slotId, studentId) => {
+
+    // Find Teacher
     const teacher = await Teacher.findById(teacherId);
 
     if (!teacher) {
         throw new Error("Teacher not found");
     }
 
-    // Find slot
+    // Find Slot
     const slot = teacher.slots.id(slotId);
 
     if (!slot) {
         throw new Error("Slot not found");
     }
 
-    // Check if already booked
+    // Check if Slot Already Booked
     if (slot.isBooked) {
         throw new Error("Slot already booked");
     }
 
-    // Example:
-    // Save teacherId & slotId in student record
-    // (Modify according to your Student schema)
+    // Update Slot
+    slot.isBooked = true;
 
+    // Save Student Id in Slot
+    slot.studentId = studentId;
+
+    // Save Teacher
+    await teacher.save();
+
+    // Update Student
     await Student.findByIdAndUpdate(
         studentId,
         {
-            teacherId,
-            slotId
+            assignedTeacher: teacherId
+        },
+        {
+            new: true
         }
     );
-
-    // Update slot
-    slot.isBooked = true;
-
-    await teacher.save();
-
-    await Student.findByIdAndUpdate(
-    studentId,
-    {
-        assignedTeacher: teacherId
-    },
-    {
-        new: true
-    }
-);
 
     return teacher;
 };
