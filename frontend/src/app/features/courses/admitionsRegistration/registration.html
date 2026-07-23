@@ -1,13 +1,13 @@
 <div class="registration-page">
 
   <div class="top-banner  d-flex flex-column justify-content-center align-items-center">
-    <h1>Complete your registration</h1>
+    <h1 > Complete<span> your registration </span> </h1>
     <p>Just one more step to start your English learning journey!</p>
   </div>
 
-  <div class="container form-section">
+  <div class="container form-section" >
     <!-- Your cards and registration form -->
-    <div class="row cards-section">
+    <div class="row cards-section" >
       <div class="col-lg-6 mb-4">
         <div class="left-card">
           <!-- Left Content -->
@@ -73,7 +73,7 @@
               <!-- First Name -->
               <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">
-                  First Name <span class="text-danger">*</span>
+                  First Name <span >*</span>
                 </label>
                 <input type="text" class="form-control custom-input" placeholder="Type your first name"
                   formControlName="firstName">
@@ -89,7 +89,7 @@
               <!-- Contact Number -->
               <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">
-                  Contact Number <span class="text-danger">*</span>
+                  Contact Number <span >*</span>
                 </label>
                 <input type="tel" class="form-control custom-input" placeholder="e.g. 9423165720"
                   formControlName="contactNumber">
@@ -125,7 +125,7 @@
               </div> -->
 
               <!-- District -->
-              <div class="col-md-6 mb-4">
+              <!-- <div class="col-12 mb-4">
                 <label class="form-label fw-semibold">
                   District <span class="text-danger">*</span>
                 </label>
@@ -136,10 +136,54 @@
                   <option value="mumbai">Mumbai</option>
                   <option value="kolhapur">Kolhapur</option>
                 </select>
+              </div> -->
+
+              <!-- <div class="col-12 mb-4 position-relative">
+                <label class="form-label fw-semibold">
+                  District <span class="text-danger">*</span>
+                </label>
+
+                <input type="text" class="form-control custom-input" formControlName="district"
+                  (input)="filterDistricts()" autocomplete="off">
+
+                <ul class="list-group position-absolute w-100 shadow" *ngIf="filteredDistricts.length > 0">
+
+                  <li *ngFor="let district of filteredDistricts" class="list-group-item list-group-item-action"
+                    (click)="selectDistrict(district)">
+                    {{ district }}
+                  </li>
+
+                </ul>
+              </div> -->
+
+
+              <div class="col-12 mb-4 position-relative">
+                <label class="form-label fw-semibold">
+                  District <span >*</span>
+                </label>
+
+                <div class="input-group">
+                  <input type="text" class="form-control custom-input" placeholder="Search District..."
+                    formControlName="district" (input)="filterDistricts()" (focus)="showAllDistricts()"
+                    autocomplete="off">
+
+                  <button class="btn btn-outline-secondary" type="button" (click)="toggleDistrictDropdown()">
+                    <i class="bi bi-chevron-down"></i>
+                  </button>
+                </div>
+
+                <ul class="list-group position-absolute w-100 shadow" *ngIf="showDistrictDropdown">
+
+                  <li class="list-group-item list-group-item-action" *ngFor="let district of filteredDistricts"
+                    (click)="selectDistrict(district)">
+                    {{ district }}
+                  </li>
+
+                </ul>
               </div>
 
               <!-- Qualification -->
-              <div class="col-12 mb-4">
+              <!-- <div class="col-12 mb-4">
                 <label class="form-label fw-semibold">Qualification</label>
 
                 <select class="form-select custom-input" formControlName="qualification">
@@ -149,10 +193,56 @@
                   <option value="Btech">B.Tech</option>
                   <option value="Graduate">Graduate</option>
                 </select>
+              </div> -->
+
+              <!-- <div class="col-12 mb-4 position-relative">
+                <label class="form-label fw-semibold">
+                  Qualification
+                </label>
+
+                <input type="text" class="form-control custom-input" placeholder="Search Qualification..."
+                  formControlName="qualification" (input)="filterQualifications()" autocomplete="off">
+
+                <ul class="list-group position-absolute w-100 shadow" *ngIf="filteredQualifications.length > 0">
+
+                  <li class="list-group-item list-group-item-action"
+                    *ngFor="let qualification of filteredQualifications" (click)="selectQualification(qualification)">
+
+                    {{ qualification }}
+
+                  </li>
+
+                </ul>
+              </div> -->
+
+
+              <div class="col-12 mb-4 position-relative">
+                <label class="form-label fw-semibold">
+                  Qualification
+                </label>
+
+                <div class="input-group">
+                  <input type="text" class="form-control custom-input" placeholder="Search Qualification..."
+                    formControlName="qualification" (input)="filterQualifications()" (focus)="showAllQualifications()"
+                    autocomplete="off">
+
+                  <button class="btn btn-outline-secondary" type="button" (click)="toggleQualificationDropdown()">
+                    <i class="bi bi-chevron-down"></i>
+                  </button>
+                </div>
+
+                <ul class="list-group position-absolute w-100 shadow" *ngIf="showQualificationDropdown">
+
+                  <li class="list-group-item list-group-item-action"
+                    *ngFor="let qualification of filteredQualifications" (click)="selectQualification(qualification)">
+                    {{ qualification }}
+                  </li>
+
+                </ul>
               </div>
 
               <!-- Occupation -->
-              <div class="col-12 mb-4">
+              <!-- <div class="col-12 mb-4">
                 <label class="form-label fw-semibold">Occupation</label>
 
                 <select class="form-select custom-input" formControlName="occupation">
@@ -161,8 +251,58 @@
                   <option value="Business">Business</option>
                   <option value="Employee">Employee</option>
                 </select>
-              </div>
+              </div> -->
 
+              <!-- <div class="col-12 mb-4 position-relative">
+                <label class="form-label fw-semibold">
+                  Occupation
+                </label>
+
+                <input type="text" class="form-control custom-input" placeholder="Search Occupation..."
+                  formControlName="occupation" (input)="filterOccupations()" autocomplete="off">
+
+                <ul class="list-group position-absolute w-100 shadow" *ngIf="filteredOccupations.length > 0">
+
+                  <li class="list-group-item list-group-item-action" *ngFor="let occupation of filteredOccupations"
+                    (click)="selectOccupation(occupation)">
+
+                    {{ occupation }}
+
+                  </li>
+
+                </ul>
+              </div> -->
+
+              <div class="col-12 mb-4 position-relative">
+                <label class="form-label fw-semibold">
+                  Occupation
+                </label>
+
+                <div class="input-group">
+
+                  <input type="text" class="form-control custom-input" placeholder="Search Occupation..."
+                    formControlName="occupation" (input)="filterOccupations()" (focus)="showAllOccupations()"
+                    autocomplete="off">
+
+                  <button class="btn btn-outline-secondary" type="button" (click)="toggleOccupationDropdown()">
+
+                    <i class="bi bi-chevron-down"></i>
+
+                  </button>
+
+                </div>
+
+                <ul class="list-group position-absolute w-100 shadow" *ngIf="showOccupationDropdown">
+
+                  <li class="list-group-item list-group-item-action" *ngFor="let occupation of filteredOccupations"
+                    (click)="selectOccupation(occupation)">
+
+                    {{ occupation }}
+
+                  </li>
+
+                </ul>
+              </div>
             </div>
 
           </form>
@@ -172,7 +312,18 @@
         </div>
 
         <div class="buttons d-flex justify-content-between pt-4 w-100">
-          <button>back</button>
+          <button style="width: 109;
+height: 38;
+gap: 4px;
+opacity: 1;
+border-radius: 50px;
+border-width: 1px;
+padding-top: 8px;
+padding-right: 16px;
+padding-bottom: 8px;
+padding-left: 16px;
+"><i class="bi bi-arrow-left"></i>
+            back</button>
           <button type="button" (click)="onSubmit()" style="width: 140;
 height: 38;
 gap: 4px;

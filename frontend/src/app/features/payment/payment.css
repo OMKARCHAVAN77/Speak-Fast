@@ -37,12 +37,14 @@
   margin: 0 0 6px;
   font-size: 1.5rem;
   font-weight: 700;
+  color: #0F172A;
 }
 
 .header-subtitle {
   margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
+  color: #475569;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 /* QR icon */
@@ -92,8 +94,9 @@
 
 .summary-title {
   margin: 0 0 20px;
-  font-size: 1.3rem;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0F172A;
 }
 
 .field {
@@ -103,9 +106,10 @@
 }
 
 .field-label {
-  color: var(--muted);
-  font-size: 0.85rem;
+  color: #475569;
+  font-size: 16px;
   margin-bottom: 4px;
+  font-weight: 500;
 }
 
 .field-value {
@@ -198,20 +202,22 @@
 }
 
 .amount-caption {
-  color: var(--ink);
-  font-size: 0.98rem;
+  color: #0F172A;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .steps-title {
   margin: 0 0 12px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0F172A;
 }
 
 .steps-list {
   margin: 0;
   padding-left: 20px;
-  color: var(--muted);
+  color: #475569;
   font-size: 0.9rem;
   line-height: 1.7;
 }

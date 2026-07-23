@@ -171,18 +171,6 @@
 
 }
 
-.tabs-scroll {
-  display: flex;
-    justify-content: space-between;
-  gap: 4px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.tabs-scroll::-webkit-scrollbar {
-  display: none;
-}
-
 a{
   text-decoration: none;
 }
@@ -229,62 +217,368 @@ a{
   padding: 28px;
 }
 
-/* ===== Tablet (<=1024px) ===== */
-@media (max-width: 1024px) {
+/* ============ GLOBAL FIX: remove legacy fixed-width .active rule ============ */
+/* This overrides the old standalone ".active { width:238px; height:38px; }"
+   rule permanently, at all screen sizes — not just mobile. */
+.active {
+  width: auto !important;
+  height: auto !important;
+}
+
+.tab-pill.active {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* ============ TABS: works in one row on every device ============ */
+.tabs-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 4px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-pill {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* ============ LARGE DESKTOP / WIDE SCREENS (≥1440px) ============ */
+@media (min-width: 1440px) {
   .dashboard-header {
-    padding: 24px 28px 48px;
+    padding: 32px 64px 60px;
   }
 
-  .stats-section,
-  .tabs-bar,
+  .stats-section {
+    padding: 56px 64px;
+  }
+
+  .tabs-bar {
+    margin: 32px 64px 0;
+  }
+
   .content-card {
-    margin-left: 28px;
-    margin-right: 28px;
+    margin: 24px 64px 48px;
+  }
+}
+
+/* ============ LAPTOP / SMALL DESKTOP (≤1024px) ============ */
+@media (max-width: 1024px) {
+  .dashboard-header {
+    padding: 24px 24px 48px;
+  }
+
+  .header-title {
+    font-size: clamp(26px, 4vw, 34px);
+  }
+
+  .stats-section {
+    padding: 36px 24px;
   }
 
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
-  .header-title {
-    font-size: 36px;
+  .tabs-bar {
+    margin: 28px 24px 0;
+  }
+
+  .content-card {
+    margin: 20px 24px 40px;
+    padding: 22px;
   }
 }
 
-/* ===== Mobile (<=640px) ===== */
-@media (max-width: 640px) {
+/* ============ TABLET (≤900px) ============ */
+@media (max-width: 900px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .stat-value {
+    font-size: 26px;
+  }
+}
+
+/* ============ TABLET / SMALL LAPTOP (≤768px) ============ */
+@media (max-width: 768px) {
   .dashboard-header {
     padding: 20px 18px 40px;
   }
 
-  .stats-section,
-  .tabs-bar,
-  .content-card {
-    margin-left: 16px;
-    margin-right: 16px;
+  .header-top {
+    margin-bottom: 20px;
+  }
+
+  .admin-panel-btn {
+    font-size: 12px;
+    padding: 0 12px !important;
+  }
+
+  .notif-btn {
+    width: 40px;
+    height: 40px;
   }
 
   .header-title {
-    font-size: 28px;
+    font-size: clamp(22px, 5vw, 26px);
   }
 
   .header-subtitle {
     font-size: 14px;
   }
 
-  .stats-grid {
-    grid-template-columns: 1fr;
+  .stats-section {
+    padding: 28px 18px;
+  }
+
+  .stat-card {
+    padding: 16px !important;
+  }
+
+  .stat-icon-wrap {
+    width: 38px;
+    height: 38px;
+  }
+
+  .stat-icon-wrap mat-icon {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+
+  .stat-value {
+    font-size: 24px;
+  }
+
+  .stat-label,
+  .stat-sublabel {
+    font-size: 12.5px;
+  }
+
+  .tabs {
+    padding: 8px;
+  }
+
+  .tabs-bar {
+    margin: 24px 18px 0;
+    border-radius: 24px;
+    padding: 5px;
+  }
+
+  .tab-pill {
+    padding: 10px 16px;
+    font-size: 13px;
   }
 
   .content-card {
+    margin: 18px 18px 36px;
     padding: 18px;
+    border-radius: 14px;
+  }
+}
+
+/* ============ LARGE MOBILE / SMALL TABLET (≤640px) ============ */
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+}
+
+/* ============ MOBILE VIEW (≤576px) ============ */
+@media (max-width: 576px) {
+  .dashboard-header {
+    padding: 18px 14px 34px;
+  }
+
+  .header-top {
+    margin-bottom: 16px;
   }
 
   .admin-panel-btn span {
     display: none;
   }
 
+  .admin-panel-btn {
+    min-width: 40px;
+    padding: 0 8px !important;
+  }
+
   .admin-panel-btn mat-icon {
     margin-right: 0;
   }
+
+  .notif-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .header-title {
+    font-size: clamp(19px, 6vw, 21px);
+    letter-spacing: -0.3px;
+  }
+
+  .header-subtitle {
+    font-size: 12.5px;
+  }
+
+  .stats-section {
+    padding: 22px 14px;
+  }
+
+  /* Stats: single column on phones */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 14px !important;
+  }
+
+  .stat-card-top {
+    margin-bottom: 12px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .tabs {
+    padding: 6px;
+  }
+
+  .tabs-bar {
+    margin: 18px 14px 0;
+    border-radius: 20px;
+    padding: 4px;
+  }
+
+  .tab-pill {
+    padding: 9px 14px;
+    font-size: 12.5px;
+    border-radius: 20px;
+  }
+
+  .content-card {
+    margin: 14px 14px 30px;
+    padding: 14px;
+    border-radius: 12px;
+  }
 }
+
+/* ============ SMALL MOBILE (≤400px) ============ */
+@media (max-width: 400px) {
+  .header-title {
+    font-size: 19px;
+  }
+
+  .header-subtitle {
+    font-size: 12px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .stat-label,
+  .stat-sublabel {
+    font-size: 11.5px;
+  }
+
+  .tab-pill {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .content-card {
+    padding: 12px;
+  }
+}
+
+/* ============ VERY SMALL MOBILE (≤360px) ============ */
+@media (max-width: 360px) {
+  .dashboard-header {
+    padding: 16px 10px 28px;
+  }
+
+  .header-title {
+    font-size: 17px;
+  }
+
+  .stat-icon-wrap {
+    width: 34px;
+    height: 34px;
+  }
+
+  .stat-value {
+    font-size: 18px;
+  }
+
+  .tab-pill {
+    padding: 7px 10px;
+    font-size: 11.5px;
+  }
+
+  .content-card {
+    padding: 10px;
+  }
+}
+
+/* ============ VERY NARROW / FOLDABLE DEVICES (≤320px) ============ */
+@media (max-width: 320px) {
+  .stats-section {
+    padding: 16px 8px;
+  }
+
+  .stats-grid {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 10px !important;
+  }
+
+  .tab-pill {
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+}
+
+/* ============ LANDSCAPE MOBILE (short height, wide width) ============ */
+@media (max-height: 480px) and (orientation: landscape) {
+  .dashboard-header {
+    padding: 14px 20px 24px;
+  }
+
+  .header-title {
+    font-size: 20px;
+  }
+
+  .stats-section {
+    padding: 16px 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+}
+
+
