@@ -111,19 +111,19 @@ loadTeachers(): void {
     {
       id: 'anita-rathod',
       name: 'Anita Rathod',
-      photo: 'assets/teachers/anita-rathod.jpg',
+      photo: "../../../assets/circle1.jpg",
       slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
     },
     {
       id: 'sakshi-pable',
       name: 'Sakshi Pable',
-      photo: 'assets/teachers/sakshi-pable.jpg',
+      photo: "../../../assets/circle2.jpg",
       slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
     },
     {
       id: 'ansh-agarwal',
       name: 'Ansh Agarwal',
-      photo: 'assets/teachers/ansh-agarwal.jpg',
+      photo: "../../../assets/circle3.jpg",
       slots: ['07:00am', '07:00am', '07:00am', '07:00am', '07:00am', '07:00am']
     }
   ];
