@@ -56,7 +56,12 @@
 
       <div class="email-wrapper" >
         <Label id="email-" >Email Address</Label>
-        <input for="email-" type="text"  name="email" placeholder="Enter your email here">
+        <input 
+  id="email"
+  type="text"
+  name="email"
+  [(ngModel)]="email"
+  placeholder="Enter your email here">
       </div>
 
       <!-- Password -->
@@ -64,9 +69,12 @@
         <label >Password</label>
 
         <div class="position-relative ">
-          <input [type]="showPassword ? 'text' : 'password'" class="form-control"
-
-            placeholder="Enter your password" >
+          <input 
+  [type]="showPassword ? 'text' : 'password'"
+  class="form-control"
+  name="password"
+  [(ngModel)]="password"
+  placeholder="Enter your password">
 
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()" >
           </i>
