@@ -2,6 +2,8 @@
     min-height: 100vh;
     background: #f8f9fa;
     position: relative;
+
+
 }
 
 .top-banner{
@@ -13,14 +15,46 @@
     background-position: center;
 }
 
+h1{
+  font-family: Quicksand;
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 40px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color:#000100
+}
+
+.top-banner h1 span{
+          background:linear-gradient(90.47deg, #4687FB 0%, #9050E0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: Quicksand;
+  font-weight: 600;
+  font-style: SemiBold;
+  font-size: 40px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.top-banner p{
+ font-family: Quicksand;
+font-weight: 400;
+font-style: Regular;
+font-size: 16px;
+line-height: 100%;
+letter-spacing: 0%;
+
+}
 .form-section{
-    margin-top: -80px;           /* Moves cards upward over the banner */
+    margin-top: -40px;           /* Moves cards upward over the banner */
     position: relative;
     z-index: 10;
 }
 
 .cards-section{
-    margin-top: -80px;   /* Overlap banner */
+    margin-top: -40px;   /* Overlap banner */
     position: relative;
     z-index: 10;
 }
@@ -48,6 +82,16 @@
     box-shadow:0 4px 12px rgba(0,0,0,.08);
 
     transition:.3s;
+}
+
+.feature-card div p{
+  font-family: Quicksand;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color:#0F172A;
 }
 
 .feature-card:hover{
@@ -79,14 +123,33 @@
 }
 
 
-.form-label{
+.form-label {
     display:block;
     margin-bottom:8px;
 
-    font-size:18px;
-    font-weight:600;
 
-    color:#30374b;
+
+    font-family: Quicksand;
+  font-weight: 500;
+  font-style: Medium;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  .form-label span{
+
+    color:#0F172A;
+  }
+}
+
+input{
+  font-family: Quicksand;
+font-weight: 500;
+font-style: Medium;
+font-size: 14px;
+line-height: 100%;
+letter-spacing: 0%;
+color: #475569;
+
 }
 
 .w-100{
@@ -141,6 +204,60 @@
     color: #9aa3b2;
 }
 
+.list-group {
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1050;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+.list-group {
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1050;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/*
+.list-group {
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.list-group {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.list-group-item {
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+} */
+
 
 /* ===============================
    Large Devices (992px - 1199px)
@@ -172,7 +289,7 @@
     }
 
     .cards-section {
-        margin-top: -50px;
+        margin-top: -40px;
     }
 
     .left-card,
@@ -221,6 +338,7 @@
 
     .top-banner h1 {
         font-size: 26px;
+
     }
 
     .top-banner p {

@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit {
   protected readonly title = signal('frontend');
   isNavbarOn: boolean= true;
-
+  hideUrls: string[]=["/","/login","/forgotPassword/resetpassword","/forgotPassword/sentLink","/forgotPassword/confirmPassword","/forgotPassword/passwordChanged"]
 
   constructor(private actRout: ActivatedRoute, private route: Router){}
 
@@ -30,13 +30,11 @@ export class App implements OnInit {
       console.log("router url is ",this.actRout.snapshot.url)
       this.route.events.pipe(filter(x=>x instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
         //  this.isNavbarOn = !this.hiddenRoutes.includes(event.urlAfterRedirects);
-             if(event.url == "/" || event.url == "/login"  ){
+             if( this.hideUrls.includes(event.url)  ){
               this.isNavbarOn= false;
               console.log(this.isNavbarOn);
              }else{
               this.isNavbarOn=true;
-              console.log(this.isNavbarOn);
-
              }
 
 
