@@ -299,45 +299,189 @@
   height: 40px;
 }
 
-/* ---------- Tablet ---------- */
+/* ============ BASE / DESKTOP: search box + add button in one row ============ */
+.header__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-field {
+  order: 1;
+}
+
+.add-btn {
+  order: 2;
+}
+
+.filter-icon {
+  order: 3;
+}
+
+/* ============ LARGE DESKTOP (≥1440px) ============ */
+@media (min-width: 1440px) {
+  .students-page {
+    padding: 24px 32px;
+  }
+}
+
+/* ============ LAPTOP / SMALL DESKTOP (≤1024px) — still one row ============ */
+@media (max-width: 1024px) {
+  .header__actions {
+    flex-direction: row;
+    width: auto;
+  }
+
+  .search-field {
+    width: 200px;
+  }
+
+  .student-info {
+    min-width: 200px;
+  }
+}
+
+/* ============ TABLET (≤900px) — still one row, slightly tighter ============ */
 @media (max-width: 900px) {
+  .students-page {
+    padding: 18px;
+  }
+
+  .student-card {
+    padding: 13px 15px;
+  }
+
+  .search-field {
+    width: 180px;
+  }
+}
+
+/* ============ TABLET / SMALL LAPTOP (≤768px) — switch to stacked ============ */
+@media (max-width: 768px) {
   .students-page {
     padding: 16px;
   }
 
-  .card-actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
-
-  .meta-row {
-    gap: 10px;
-  }
-}
-
-/* ---------- Mobile ---------- */
-@media (max-width: 600px) {
   .page-header {
     flex-direction: column;
     align-items: stretch;
+    gap: 12px;
   }
 
-  .header-actions {
+  .header-title h1 {
+    font-size: clamp(18px, 3vw, 20px);
+  }
+
+  /* Stack search + button vertically from here down */
+  .header__actions {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    gap: 10px;
   }
 
-  .search-box {
+  .search-field {
     width: 100%;
   }
 
-  .add-student-btn {
+  .add-btn {
     width: 100%;
     justify-content: center;
+    height: 42px;
+    padding: 0 14px;
+  }
+
+  .student-card {
+    padding: 12px 14px;
+  }
+
+  .card-top {
+    gap: 10px;
   }
 
   .student-info {
+    min-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .card-actions {
+    width: 100%;
+    justify-content: flex-start;
     flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .contact-row,
+  .meta-row {
+    gap: 10px;
+    font-size: 12px;
+  }
+}
+
+/* ============ LARGE MOBILE / SMALL TABLET (≤640px) ============ */
+@media (max-width: 640px) {
+  .students-page {
+    padding: 14px;
+  }
+
+  .student-card {
+    padding: 12px;
+  }
+}
+
+/* ============ MOBILE VIEW (≤576px) ============ */
+@media (max-width: 576px) {
+  .students-page {
+    padding: 12px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 16px;
+    gap: 10px;
+  }
+
+  .header-title h1 {
+    font-size: clamp(17px, 5vw, 18px);
+  }
+
+  .total-count {
+    font-size: 12px;
+  }
+
+  .header__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+  }
+
+  /* Search box on top */
+  .search-field {
+    width: 100%;
+    order: 1;
+  }
+
+  /* Add Student button below search */
+  .add-btn {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+    height: 42px;
+    font-size: 13.5px;
+  }
+
+  .filter-icon {
+    order: 3;
+    align-self: flex-end;
+  }
+
+  /* ---- Student card ---- */
+  .student-card {
+    padding: 12px;
+    border-radius: 10px;
   }
 
   .card-top {
@@ -345,8 +489,135 @@
     align-items: stretch;
   }
 
+  .student-info {
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .avatar mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .student-name {
+    font-size: 13.5px;
+  }
+
+  .leave-badge {
+    font-size: 10.5px;
+    padding: 2px 8px;
+  }
+
+  .name-row {
+    gap: 8px;
+  }
+
+  .contact-row,
+  .meta-row {
+    gap: 8px 12px;
+    font-size: 11.5px;
+  }
+
+  .mini-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+  }
+
+  /* ---- Actions row: scrollable on small screens ---- */
   .card-actions {
-    justify-content: space-between;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .card-actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .whatsapp-btn {
+    font-size: 11.5px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 10px !important;
+    flex-shrink: 0;
+  }
+
+  .card-actions button[mat-icon-button] {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    flex-shrink: 0;
+  }
+
+  /* ---- Progress ---- */
+  .progress-section {
+    margin-top: 10px;
+  }
+
+  .progress-labels {
+    font-size: 11px;
+  }
+
+  .no-results {
+    padding: 28px 16px;
+  }
+
+  .no-results mat-icon {
+    font-size: 32px;
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* ============ SMALL MOBILE (≤400px) ============ */
+@media (max-width: 400px) {
+  .students-page {
+    padding: 10px;
+  }
+
+  .header-title h1 {
+    font-size: 16.5px;
+  }
+
+  .add-btn {
+    height: 40px;
+    font-size: 13px;
+  }
+
+  .student-card {
+    padding: 10px;
+  }
+
+  .student-name {
+    font-size: 13px;
+  }
+
+  .contact-row,
+  .meta-row {
+    font-size: 11px;
+  }
+}
+
+/* ============ VERY SMALL MOBILE (≤360px) ============ */
+@media (max-width: 360px) {
+  .students-page {
+    padding: 10px;
+  }
+
+  .student-card {
+    padding: 10px;
+  }
+
+  .student-name {
+    font-size: 13px;
   }
 
   .contact-row,
@@ -356,11 +627,22 @@
   }
 
   .whatsapp-btn span {
-    display: none;
+    display: none; /* icon-only on very small screens */
+  }
+}
+
+/* ============ VERY NARROW / FOLDABLE DEVICES (≤320px) ============ */
+@media (max-width: 320px) {
+  .students-page {
+    padding: 8px;
   }
 
-  .whatsapp-btn {
-    padding: 0 8px !important;
-    width: 34px;
+  .add-btn {
+    height: 38px;
+    font-size: 12.5px;
+  }
+
+  .student-card {
+    padding: 8px;
   }
 }

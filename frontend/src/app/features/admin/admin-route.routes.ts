@@ -10,7 +10,7 @@ import { Routes } from '@angular/router';
 export const adminRoutes: Routes = [
 
   { path: '',
-    redirectTo: 'recentEnrollments',
+    redirectTo: 'AllStudents',
     pathMatch: 'full'
   },
   {

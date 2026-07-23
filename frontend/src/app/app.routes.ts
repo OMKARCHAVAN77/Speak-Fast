@@ -5,7 +5,6 @@ import { ForgotPassword } from './features/auth/forgot-password/forgot-password'
 import { Admin } from './features/admin/admin';
 import { Routes } from '@angular/router';
 import { Home } from './features/dashboard/home/home';
-import { Teachers } from './features/teachers/teachers';
 import { RegistrationComponent } from './features/courses/admitionsRegistration/registration';
 import { LandingPage } from './features/auth/landing-page/landing-page';
 import { Login } from './features/auth/login/login';
@@ -15,28 +14,32 @@ import { Payment } from './features/payment/payment';
 import { adminRoutes } from './features/admin/admin-route.routes';
 import { SetPassword } from './features/teachers/set-password/set-password';
 import { LinkSent } from './features/auth/forgot-password/link-sent/link-sent';
+import { Teachers } from './features/teachers/teachers';
+
+
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'home', component: Home },
     { path: 'admin', component: Admin, children: adminRoutes },
     { path: 'teachers', component: Teachers },
-    { path: 'registration', component: RegistrationComponent},
-    { path: 'forgotPassword', component: ForgotPassword,
-      children:[
-          {path:'',redirectTo:'resetpassword',pathMatch:'full'},
-          {path: 'resetpassword', component:ResetPassword},
-          {path: 'sentLink', component: LinkSent},
-          {path: 'confirmPassword', component: ConfirmPassword},
-          {path: 'passwordChanged', component: PasswordChanged}
+    { path: 'registration', component: RegistrationComponent },
+    {
+        path: 'forgotPassword', component: ForgotPassword,
+        children: [
+            { path: '', redirectTo: 'resetpassword', pathMatch: 'full' },
+            { path: 'resetpassword', component: ResetPassword },
+            { path: 'sentLink', component: LinkSent },
+            { path: 'confirmPassword', component: ConfirmPassword },
+            { path: 'passwordChanged', component: PasswordChanged }
 
-      ]
+        ]
 
-  },
-    { path: 'landing-page', component: LandingPage},
+    },
+    { path: 'landing-page', component: LandingPage },
     { path: 'student-achievement', component: StudentAchievement },
-    { path: 'login', component: Login},
-    { path : 'courses', component : CourseRecommendation},
-    { path : 'payment', component : Payment},
-    {path : 'setpassword', component : SetPassword}
+    { path: 'login', component: Login },
+    { path: 'courses', component: CourseRecommendation },
+    { path: 'payment', component: Payment },
+    { path: 'setpassword', component: SetPassword }
 ];

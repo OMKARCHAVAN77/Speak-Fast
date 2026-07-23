@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, computed, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -10,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { environment } from '../../../../environments/environments';
 
 
 
@@ -44,96 +46,64 @@ MatInputModule],
   templateUrl: './admin-allstudents.html',
   styleUrl: './admin-allstudents.css',
 })
-export class AdminAllStudents {
+export class AdminAllStudents implements OnInit {
   searchTerm = '';
+allStudentList = signal<any[]>([]);
+studentLength = signal<number>(0);
 
-  students: Student[] = [
-    {
-      id: 1,
-      name: 'Shubham Jadhav',
-      email: 'shubham@email.com',
-      phone: '+1 234567890',
-      course: 'Practice (3 Months)',
-      enrolled: 'Jan 15, 2026',
-      end: 'April 15, 2026',
-      progress: 65
-    },
-    {
-      id: 2,
-      name: 'Sunil Devkate',
-      email: 'sunil@email.com',
-      phone: '+1 234567890',
-      course: 'Practice (3 Months)',
-      enrolled: 'Jan 15, 2026',
-      end: 'April 15, 2026',
-      progress: 65,
-      onLeave: 'On Leave for 30 Sep - 1 Aug'
-    },
-    {
-      id: 3,
-      name: 'Kamlesh Patil',
-      email: 'kamlesh@email.com',
-      phone: '+1 234567890',
-      course: 'Practice (3 Months)',
-      enrolled: 'Jan 15, 2026',
-      end: 'April 15, 2026',
-      progress: 65
-    },
-    {
-      id: 4,
-      name: 'Suraj Kumbar',
-      email: 'suraj@email.com',
-      phone: '+1 234567890',
-      course: 'Practice (3 Months)',
-      enrolled: 'Jan 15, 2026',
-      end: 'April 15, 2026',
-      progress: 65,
-      onLeave: 'On Leave for 30 Sep - 1 Aug'
-    },
-    {
-      id: 5,
-      name: 'Dinesh Deshmukh',
-      email: 'dinesh@email.com',
-      phone: '+1 234567890',
-      course: 'Practice (3 Months)',
-      enrolled: 'Jan 15, 2026',
-      end: 'April 15, 2026',
-      progress: 65,
-      onLeave: 'On Leave for 30 Sep - 1 Aug'
-    }
-  ];
+constructor(private http: HttpClient) {}
 
-  get filteredStudents(): Student[] {
-    if (!this.searchTerm.trim()) {
-      return this.students;
-    }
-    const term = this.searchTerm.toLowerCase();
-    return this.students.filter(
-      s =>
-        s.name.toLowerCase().includes(term) ||
-        s.email.toLowerCase().includes(term)
-    );
+ngOnInit(): void {
+  this.loadStudents();
+}
+
+loadStudents() {
+  this.http.get<any>(`${environment.apiUrl}/students/getallstudent`)
+    .subscribe({
+      next: (res) => {
+        this.allStudentList.set(res.data);
+        this.studentLength.set(res.data.length);
+
+        console.log(this.allStudentList());
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 
-  onEdit(student: Student): void {
-    console.log('Edit student:', student);
+  get filteredStudents(): any[] {
+
+  if (!this.searchTerm.trim()) {
+    return this.allStudentList();
   }
 
-  onDelete(student: Student): void {
-    console.log('Delete student:', student);
-    this.students = this.students.filter(s => s.id !== student.id);
+  const term = this.searchTerm.toLowerCase();
+
+  return this.allStudentList().filter((student: any) =>
+    student.firstName.toLowerCase().includes(term) ||
+    student.lastName.toLowerCase().includes(term) ||
+    student.email.toLowerCase().includes(term)
+  );
+
   }
 
-  onWhatsApp(student: Student): void {
-    const phone = student.phone.replace(/[^0-9]/g, '');
+
+  onDelete(student: any): void {
+
+  this.allStudentList.update(list =>
+    list.filter(s => s._id !== student._id)
+  );
+
+  this.studentLength.set(this.allStudentList().length);
+  }
+
+  onEdit(student: any): void {
+    console.log(student);
+  }
+
+  onWhatsApp(student: any): void {
+    const phone = student.contactNumber.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${phone}`, '_blank');
   }
-
-  onAddStudent(): void {
-    console.log('Add student clicked');
-  }
-
-  onFilter(): void {
-    console.log('Filter clicked');
-  }
-}
+}  

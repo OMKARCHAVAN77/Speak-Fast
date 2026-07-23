@@ -4,7 +4,7 @@
   <div class="page-header">
     <div class="header-title">
       <h1>All Students</h1>
-      <span class="total-count">Total: {{ students.length }} students</span>
+      <span class="total-count">Total: {{ studentLength() }} students</span>
     </div>
 
     <div class="header__actions">
@@ -19,7 +19,7 @@
         <mat-icon matSuffix class="filter-icon">tune</mat-icon>
       </mat-form-field>
 
-      <button mat-flat-button color="primary" class="add-btn" (click)="onAddStudent()">
+      <button mat-flat-button color="primary" class="add-btn" >
         <mat-icon>add</mat-icon>
         Add student
       </button>
@@ -38,7 +38,8 @@
 
           <div class="details">
             <div class="name-row">
-              <span class="student-name">{{ student.name }}</span>
+              <span class="student-name">{{ student.firstName }}</span>
+              <span class="student-name">{{ student.lastName }}</span>
               <span class="leave-badge" *ngIf="student.onLeave">
                 {{ student.onLeave }}
               </span>
@@ -51,11 +52,11 @@
               </span>
               <span class="contact-item">
                 <mat-icon class="mini-icon">call</mat-icon>
-                {{ student.phone }}
+                {{ student.contactNumber }}
               </span>
             </div>
 
-            <div class="meta-row">
+            <!-- <div class="meta-row">
               <span class="meta-item">Course: {{ student.course }}</span>
               <span class="meta-item">
                 <mat-icon class="mini-icon">event</mat-icon>
@@ -65,12 +66,12 @@
                 <mat-icon class="mini-icon">event</mat-icon>
                 End: {{ student.end }}
               </span>
-            </div>
+            </div> -->
           </div>
         </div>
 
         <div class="card-actions">
-          <button
+          <!-- <button
             mat-stroked-button
             class="whatsapp-btn"
             (click)="onWhatsApp(student)"
@@ -91,12 +92,12 @@
             (click)="onDelete(student)"
           >
             <mat-icon>delete_outline</mat-icon>
-          </button>
+          </button> -->
         </div>
       </div>
 
       <!-- Progress bar -->
-      <div class="progress-section">
+      <!-- <div class="progress-section">
         <div class="progress-labels">
           <span>Basic</span>
           <span>Advance</span>
@@ -111,7 +112,7 @@
         ></mat-progress-bar>
 
         
-      </div>
+      </div> -->
       
     </div>
 

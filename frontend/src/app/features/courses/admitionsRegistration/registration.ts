@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   AbstractControl,
@@ -9,6 +10,13 @@ import {
   Validators
 } from '@angular/forms';
 import { StudentService } from '../../../core/services/student.service';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { environment } from '../../../../environments/environments';
 
 
 function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
@@ -25,7 +33,7 @@ function passwordMatchValidator(group: AbstractControl): ValidationErrors | null
     return { mismatch: true };
   }
 
-  
+
   if (confirmControl.hasError('mismatch')) {
     const { mismatch, ...rest } = confirmControl.errors ?? {};
     confirmControl.setErrors(Object.keys(rest).length ? rest : null);
@@ -50,16 +58,21 @@ function optionInListValidator(options: string[]) {
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,MatFormFieldModule,
+MatInputModule,
+MatIconModule,
+MatSelectModule,
+MatDatepickerModule,
+MatNativeDateModule,
 ],
   templateUrl: './registration.html',
   styleUrl: './registration.css'
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
 
 
 
-  registrationForm: FormGroup;
+  // registrationForm: FormGroup;
 
   districts = [
     'Pune',
@@ -99,158 +112,50 @@ export class RegistrationComponent {
   showQualificationDropdown = false;
   filteredDistricts: string[] = this.districts;
   filteredQualifications: string[] = this.qualifications;
+  registrationForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private studentServ:StudentService) {
+constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient) {
 
-    this.registrationForm = this.fb.group({
 
-      firstName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3)
-        ]
-      ],
-
-      lastName: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(3)
-        ]
-      ],
-
-      contactNumber: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[6-9][0-9]{9}$')
-        ]
-      ],
-
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.email
-        ]
-      ],
-
-      password:[
-        '',
-        [
-          Validators.required
-
-        ]
-      ],
-      confirmPassword:[
-        '',
-        [
-          Validators.required
-
-        ]
-      ],
-
-      // dob: [
-      //   '',
-      //   Validators.required
-      // ],
-
-      district: [
-        '',
-        [Validators.required, optionInListValidator(this.districts)]
-      ],
-
-      qualification: [
-        '',
-        [Validators.required, optionInListValidator(this.qualifications)]
-      ],
-
-      occupation: [
-        '',
-        Validators.required
-      ]
-
-    }, { validators: passwordMatchValidator });
 
   }
 
-  get f() {
-    return this.registrationForm.controls;
-  }
 
-  // NEW: toggle handlers for the eye icons
-  togglePasswordVisibility(): void {
-    this.showPassword = !this.showPassword;
+  ngOnInit(): void {
+      this.formInitialization();
   }
+  formInitialization() {
+      this.registrationForm = this.fb.group({
+        firstName: ['swai'],
+        lastName: ['shettvy'],
+        contactNumber: ['9223165720'],
+        email: ['saishetety.ux@gmail.com'],
+        password: ['Saisheqtty@123'],
+        confirmPassword: ['Saiswhetty@123'],
+        district: ['kolhapeur'],
+        qualification: ['wwBtech'],
+        occupation: ['Studeent']
 
-  toggleConfirmPasswordVisibility(): void {
-    this.showConfirmPassword = !this.showConfirmPassword;
-  }
-
-  // NEW: District searchable dropdown handlers
-  onDistrictFocus(): void {
-    this.filteredDistricts = this.districts;
-    this.showDistrictDropdown = true;
-  }
-
-  onDistrictInput(): void {
-    const value = (this.f['district'].value || '').toLowerCase();
-    this.filteredDistricts = this.districts.filter((d) =>
-      d.toLowerCase().includes(value)
-    );
-    this.showDistrictDropdown = true;
-  }
-
-  selectDistrict(district: string): void {
-    this.registrationForm.get('district')?.setValue(district);
-    this.showDistrictDropdown = false;
-  }
-
-  onDistrictBlur(): void {
-    // small delay so a click on a list item (mousedown) registers
-    // before the list closes
-    setTimeout(() => (this.showDistrictDropdown = false), 150);
-  }
-
-  // NEW: Qualification searchable dropdown handlers
-  onQualificationFocus(): void {
-    this.filteredQualifications = this.qualifications;
-    this.showQualificationDropdown = true;
-  }
-
-  onQualificationInput(): void {
-    const value = (this.f['qualification'].value || '').toLowerCase();
-    this.filteredQualifications = this.qualifications.filter((q) =>
-      q.toLowerCase().includes(value)
-    );
-    this.showQualificationDropdown = true;
-  }
-
-  selectQualification(qualification: string): void {
-    this.registrationForm.get('qualification')?.setValue(qualification);
-    this.showQualificationDropdown = false;
-  }
-
-  onQualificationBlur(): void {
-    setTimeout(() => (this.showQualificationDropdown = false), 150);
+      });
   }
 
   onSubmit() {
-
+    console.log("form value is ",this.registrationForm.valid);
     if (this.registrationForm.valid) {
 
-      this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
+
+      this.http.post (`${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
         next:(data:any)=>{
-          console.log(data)
-          alert("Success Messeage")
+          console.log(data.massage)
+          alert('sucessfully registered');
           this.registrationForm.reset();
         },error:(err:any)=>{
             alert("Success Messeage")
           console.log(err)
+                    alert('fail registertion');
         }
       })
-      
+
       // alert('Registration Successful');
       console.log(this.registrationForm.value);
 
@@ -262,8 +167,44 @@ export class RegistrationComponent {
 
   }
 
-  back() {
-    history.back();
-  }
+  
 
 }
+//   ngOnInit(): void {
+
+//     this.initializeForm();
+
+
+//   }
+
+//   initializeForm():void{
+//       this.registrationForm = this.fb.group({
+//         firstName: ['sai'],
+//         lastName: ['shetty'],
+//         contactNumber: ['9423165720'],
+//         email: ['saishetty.ux@gmail.com'],
+//         password: ['Saishetty@123'],
+//         confirmPassword: ['Saishetty@123'],
+//         district: ['kolhapur'],
+//         qualification: ['Btech'],
+//         occupation: ['Student']
+
+//       });
+//   }
+
+//   onSubmit():void{
+//         console.log("value is ",this.registrationForm.value);
+//         this.http.post(`http://${environment.apiUrl}/students/register`,this.registrationForm.value)
+//          .subscribe({
+//             next: (response) => {
+//               console.log(response);
+//               alert('Student registered successfully!');
+//             },
+//             error: (err) => {
+//               console.error(err);
+//               alert('Registration failed!');
+//             }
+//           });
+
+//   }
+// }

@@ -1,267 +1,321 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+.registration-page{
+    min-height: 100vh;
+    background: #f8f9fa;
+    position: relative;
 }
 
-body {
-  background: #f5f7fb;
+.top-banner{
+    width: 100%;
+    height: 220px;               /* Adjust as needed */
+    background-image: url('../../../../assets/student-registration-banner.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
-:host {
-  --primary-blue: #0c4a9e;
-  --primary-blue-dark: #0a3d84;
+.form-section{
+    margin-top: -80px;           /* Moves cards upward over the banner */
+    position: relative;
+    z-index: 10;
 }
 
-/* ================= HERO ================= */
-
-.hero {
-  background: linear-gradient(180deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
-  color: white;
-  text-align: center;
-  padding: 70px 20px 120px;
+.cards-section{
+    margin-top: -80px;   /* Overlap banner */
+    position: relative;
+    z-index: 10;
 }
 
-.hero h1 {
-  font-size: 42px;
-  margin-bottom: 15px;
+/* Card Design */
+.left-card,
+.right-card{
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.12);
+    padding: 30px;
+    min-height: 500px;
 }
 
-.hero p {
-  font-size: 18px;
-  opacity: .9;
+.feature-card{
+    background:#fff;
+    border-radius:18px;
+    padding:22px 28px;
+    min-height:110px;
+
+    display:flex;
+    align-items:center;
+
+    border:1px solid #ececec;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+    transition:.3s;
 }
 
-/* ================= FORM ================= */
-
-.form-group select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23555'><path d='M7 10l5 5 5-5z'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 14px;
-
-  padding-right: 32px;
+.feature-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
 }
 
-.registration-section {
-  display: flex;
-  justify-content: center;
-  margin-top: -70px;
-  padding: 20px;
+.icon-box{
+    width:48px;
+    height:48px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    flex-shrink:0;
 }
 
-.registration-card {
-  width: 100%;
-  max-width: 800px;
-  background: white;
-  padding: 35px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+.icon-box img{
+    width:48px;
+    height:48px;
+    object-fit:contain;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.form-group {
-  margin-bottom: 22px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #1f2937;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 14px 15px;
-  border: 1px solid #d8d8d8;
-  border-radius: 8px;
-  font-size: 15px;
-  transition: .3s;
-  outline: none;
-  background: white;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: #0d5cab;
-  box-shadow: 0 0 5px rgba(13, 92, 171, .25);
-}
-
-.error {
-  display: block;
-  margin-top: 5px;
-  color: #e53935;
-  font-size: 13px;
-}
-
-/* ================= PASSWORD TOGGLE ================= */
-
-.password-field {
-  position: relative;
-}
-
-.password-field input {
-  padding-right: 44px;
-  /* leave room so text doesn't sit under the icon */
-}
-
-.toggle-password-btn {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  background: none;
-  border: none;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.toggle-password-btn:hover {
-  background: #f2f4f7;
-}
-
-.toggle-password-btn:focus-visible {
-  outline: 2px solid #0d5cab;
-  outline-offset: 2px;
-}
-
-/* ================= SEARCHABLE DROPDOWN ================= */
-
-.searchable-dropdown {
-  position: relative;
-}
-
-.dropdown-list {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  margin-top: 6px;
-  background: white;
-  border: 1px solid #d8d8d8;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  max-height: 220px;
-  overflow-y: auto;
-  list-style: none;
-  padding: 6px 0;
-  z-index: 20;
-}
-
-.dropdown-list li {
-  padding: 10px 15px;
-  font-size: 14px;
-  color: #1f2937;
-  cursor: pointer;
-}
-
-.dropdown-list li:hover {
-  background: #f2f6fc;
-}
-
-.dropdown-list li.no-results {
-  color: #98a2b3;
-  cursor: default;
-}
-
-.dropdown-list li.no-results:hover {
-  background: none;
-}
-
-/* ================= BUTTONS ================= */
-
-.button-group {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 30px;
-}
-
-.back-btn {
-  flex: 1;
-  padding: 14px;
-  border: 2px solid #0d5cab;
-  background: white;
-  color: #0d5cab;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: .3s;
-}
-
-.back-btn:hover {
-  background: #0d5cab;
-  color: white;
+.feature-card p{
+    font-size:17px;
+    font-weight:500;
+    color:#444;
 }
 
 
-.submit-btn {
-  flex: 1;
-  padding: 14px;
-  background: #0d5cab;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: .3s;
+.form-label{
+    display:block;
+    margin-bottom:8px;
+
+    font-size:18px;
+    font-weight:600;
+
+    color:#30374b;
 }
 
-.submit-btn:hover {
-  .submit-btn:hover {
-    background: #084c8d;
-  }
+.w-100{
+    width:100%;
+}
 
-  /* ================= RESPONSIVE ================= */
+::ng-deep .mat-mdc-form-field{
+    width:100%;
+}
 
-  @media(max-width:768px) {
+::ng-deep .mat-mdc-text-field-wrapper{
+    border-radius:12px !important;
+}
 
-    .hero {
-      padding: 60px 20px 100px;
+::ng-deep .mat-mdc-form-field-infix{
+    min-height:56px;
+}
+
+::ng-deep input.mat-mdc-input-element{
+    font-size:16px;
+}
+
+::ng-deep .mat-mdc-select-value{
+    font-size:16px;
+}
+
+.form-label {
+    font-size: 15px;
+    color: #2f3a56;
+    margin-bottom: 8px;
+}
+
+.custom-input {
+    height: 52px;
+    border-radius: 12px;
+    border: 1px solid #d8dce8;
+    font-size: 15px;
+    padding: 12px 16px;
+    box-shadow: none;
+}
+
+.custom-input:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 0.15rem rgba(108, 99, 255, 0.15);
+}
+
+.form-select.custom-input {
+    padding-right: 2.5rem;
+}
+
+::placeholder {
+    color: #9aa3b2;
+}
+
+
+/* ===============================
+   Large Devices (992px - 1199px)
+================================== */
+@media (max-width: 1199px) {
+
+    .left-card,
+    .right-card {
+        padding: 25px;
     }
 
-    .hero h1 {
-      font-size: 30px;
+    .feature-card {
+        padding: 18px 20px;
     }
 
-    .hero p {
-      font-size: 15px;
+    .feature-card p {
+        font-size: 16px;
     }
 
-    .registration-card {
-      padding: 25px;
+}
+
+/* ===============================
+   Tablets (768px - 991px)
+================================== */
+@media (max-width: 991px) {
+
+    .top-banner {
+        height: 180px;
     }
 
-    .row {
-      grid-template-columns: 1fr;
+    .cards-section {
+        margin-top: -50px;
     }
 
-    .button-group {
-      flex-direction: column;
+    .left-card,
+    .right-card {
+        min-height: auto;
+        padding: 25px;
+        margin-bottom: 25px;
     }
 
-    .back-btn,
-    .submit-btn {
-      width: 100%;
+    .feature-card {
+        min-height: 90px;
+        padding: 18px;
     }
 
-  }
+    .feature-card p {
+        font-size: 15px;
+    }
+
+    .icon-box,
+    .icon-box img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .form-label {
+        font-size: 14px;
+    }
+
+    .custom-input {
+        height: 48px;
+        font-size: 14px;
+    }
+
+}
+
+/* ===============================
+   Mobile Devices (<768px)
+================================== */
+@media (max-width: 767px) {
+
+    .top-banner {
+        height: 150px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .top-banner h1 {
+        font-size: 26px;
+    }
+
+    .top-banner p {
+        font-size: 14px;
+    }
+
+    .cards-section {
+        margin-top: -35px;
+    }
+
+    .left-card,
+    .right-card {
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
+    .feature-card {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .feature-card p {
+        font-size: 14px;
+    }
+
+    .icon-box,
+    .icon-box img {
+        width: 35px;
+        height: 35px;
+    }
+
+    .form-label {
+        font-size: 14px;
+    }
+
+    .custom-input {
+        height: 46px;
+        font-size: 14px;
+    }
+
+}
+
+/* ===============================
+   Small Mobile (<576px)
+================================== */
+@media (max-width: 575px) {
+
+    .registration-page {
+        padding: 0 10px;
+    }
+
+    .top-banner {
+        height: 130px;
+    }
+
+    .top-banner h1 {
+        font-size: 22px;
+    }
+
+    .top-banner p {
+        font-size: 13px;
+    }
+
+    .cards-section {
+        margin-top: -25px;
+    }
+
+    .left-card,
+    .right-card {
+        padding: 16px;
+    }
+
+    .feature-card {
+        padding: 12px;
+    }
+
+    .feature-card p {
+        font-size: 13px;
+    }
+
+    .icon-box,
+    .icon-box img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .form-label {
+        font-size: 13px;
+    }
+
+    .custom-input {
+        height: 44px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
 }

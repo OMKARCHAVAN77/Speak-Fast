@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { environment } from "../../../environments/environments";
 
 @Injectable({
     providedIn:'root'
@@ -10,10 +11,10 @@ export class StudentService{
 
 
     addStudentApi(data:any){
-      return  this.http.post('http://localhost:5000/api/students/register',data)
+      return  this.http.post(`http${environment.apiUrl}/students/register`,data)
     }
 
     forgotStudentPassword(mail : any){
-        return this.http.post('http://localhost:5000/api/students/forgot-password', mail)
+        return this.http.post(`${environment.apiUrl}/students/forgot-password`, mail)
     }
 }
