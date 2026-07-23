@@ -28,11 +28,11 @@ const teacherSchema = new mongoose.Schema({
   googleMeetLink: {
     type: String,
   },
-   slots: [
+  slots: [
     {
       date: {
         type: String,
-        default:() => new Date().toISOString().split("T")[0]
+        default: () => new Date().toISOString().split("T")[0]
       },
       time: {
         type: String,
@@ -41,6 +41,11 @@ const teacherSchema = new mongoose.Schema({
       isBooked: {
         type: Boolean,
         default: false
+      },
+      studentId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+        default: null
       }
     }
   ],
