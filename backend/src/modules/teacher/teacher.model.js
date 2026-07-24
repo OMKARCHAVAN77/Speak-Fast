@@ -16,7 +16,7 @@ const teacherSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: String,
-    required: true,
+    // required: true,
   },
   aadharNo: {
     type: String,
