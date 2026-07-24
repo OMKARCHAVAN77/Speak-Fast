@@ -1,5 +1,5 @@
+import { OCCUPATIONS, QUALIFICATIONS,  } from '../../../core/Shared-common-list/registration-dummy-data';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
-import { QUALIFICATIONS } from './../../../core/Shared-common-list/qualification-list';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -17,9 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/district-list';
-import { OCCUPATIONS } from '../../../core/Shared-common-list/occupations-list';
-import { environment } from '../../../../environments/environment';
+import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/registration-dummy-data';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -50,7 +48,7 @@ searchDistrict = '';
 filteredDistricts: string[] = [];
 showDistrictDropdown = false;
 
-  qualifications = QUALIFICATIONS;
+  qualifications = QUALIFICATIONS
   filteredQualifications: string[] = [];
   showQualificationDropdown = false;
   // searchQualification='';
@@ -78,15 +76,15 @@ showDistrictDropdown = false;
 
   formInitialization() {
       this.registrationForm = this.fb.group({
-        firstName: ['elon',[Validators.required,RegistrationValidator.noSpaceValidator]],
-        lastName: ['musk',[Validators.required,RegistrationValidator.noSpaceValidator]],
-        contactNumber: ['8796054576',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
-        email: ['elon@gmail.com',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
-        password: ['Asdf@1234',[Validators.required,RegistrationValidator.password]],
-        confirmPassword: ['Asdf@1234',Validators.required],
-        district: ['kolhapur',Validators.required],
-        qualification: ['iti',Validators.required],
-        occupation: ['others',Validators.required]
+        firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+        lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+        contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
+        email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
+        password: ['',[Validators.required,RegistrationValidator.password]],
+        confirmPassword: ['',Validators.required],
+        district: ['',Validators.required],
+        qualification: ['',Validators.required],
+        occupation: ['',Validators.required]
 
       },
   {
