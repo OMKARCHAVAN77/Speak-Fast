@@ -31,7 +31,7 @@ static password(control: AbstractControl): ValidationErrors | null {
     // - At least one number
     // - At least one special character
     const passwordRegex =
-      /^[A-Z](?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^()_\-+=]).{8,}$/;
+      /^(?=.{8,}$)[A-Z](?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#^()_\-+=]).*$/;
 
     return passwordRegex.test(value)
       ? null

@@ -39,3 +39,25 @@ export const MAHARASHTRA_DISTRICTS = [
   'Washim',
   'Yavatmal'
 ];
+
+
+
+
+export const OCCUPATIONS = [
+  'Student',
+  'Employed',
+  'Business Owner',
+  'Other'
+];
+
+export const QUALIFICATIONS = [
+  'Below 10th',
+  '10th',
+  '12th',
+  'ITI',
+  'Diploma',
+  'Graduate',
+  'Post Graduate',
+  'Doctorate (Ph.D.)',
+  'Other'
+];
