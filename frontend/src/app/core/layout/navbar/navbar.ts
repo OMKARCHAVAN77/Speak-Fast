@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment';
 
 interface NavLink {
   label: string;

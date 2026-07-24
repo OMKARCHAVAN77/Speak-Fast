@@ -16,7 +16,7 @@ const teacherSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: String,
-    required: true,
+    // required: true,
   },
   aadharNo: {
     type: String,
@@ -28,11 +28,11 @@ const teacherSchema = new mongoose.Schema({
   googleMeetLink: {
     type: String,
   },
-  slots: [
+   slots: [
     {
       date: {
         type: String,
-        default: () => new Date().toISOString().split("T")[0]
+        default:() => new Date().toISOString().split("T")[0]
       },
       time: {
         type: String,
@@ -42,11 +42,11 @@ const teacherSchema = new mongoose.Schema({
         type: Boolean,
         default: false
       },
-      studentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Student",
-        default: null
-      }
+       studentId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Student",
+                default: null
+            }
     }
   ],
   password: {

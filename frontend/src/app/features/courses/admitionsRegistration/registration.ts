@@ -19,7 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/district-list';
 import { OCCUPATIONS } from '../../../core/Shared-common-list/occupations-list';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
 
 
@@ -213,6 +213,7 @@ selectOccupation(occupation: string) {
           );
           this.registrationForm.reset();
         },error:(err:any)=>{
+            alert("Success Messeage")
           console.log(err)
 
             this.toastr.error(

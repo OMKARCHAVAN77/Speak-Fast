@@ -1,21 +1,35 @@
-import nodemailer from "nodemailer";
+import transporter from "../config/mail.config.js";
+
 
 const sendMail = async (to, subject, html) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to,
-    subject,
-    html,
-  });
+  try {
+
+    await transporter.sendMail({
+
+      from: `"Speak Fast" <${process.env.EMAIL_USER}>`,
+
+      to,
+
+      subject,
+
+      html,
+
+    });
+
+
+    console.log("✅ Email sent:", to);
+
+
+  } catch (error) {
+
+    console.error("❌ Email sending failed:", error.message);
+
+    throw error;
+
+  }
+
 };
 
-export default sendMail;
 
+export default sendMail;
