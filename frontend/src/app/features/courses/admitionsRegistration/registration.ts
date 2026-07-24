@@ -1,14 +1,13 @@
+import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { QUALIFICATIONS } from './../../../core/Shared-common-list/qualification-list';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { StudentService } from '../../../core/services/student.service';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -18,45 +17,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable } from 'rxjs/internal/Observable';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/district-list';
 import { OCCUPATIONS } from '../../../core/Shared-common-list/occupations-list';
 import { environment } from '../../../../environments/environments';
+import { ToastrService } from 'ngx-toastr';
 
 
-function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-  const password = group.get('password')?.value;
-  const confirmPassword = group.get('confirmPassword')?.value;
-  const confirmControl = group.get('confirmPassword');
 
-  if (!confirmControl) {
-    return null;
-  }
-
-  if (password && confirmPassword && password !== confirmPassword) {
-    confirmControl.setErrors({ ...confirmControl.errors, mismatch: true });
-    return { mismatch: true };
-  }
-
-
-  if (confirmControl.hasError('mismatch')) {
-    const { mismatch, ...rest } = confirmControl.errors ?? {};
-    confirmControl.setErrors(Object.keys(rest).length ? rest : null);
-  }
-
-  return null;
-}
-
-
-// function optionInListValidator(options: string[]) {
-//   return (control: AbstractControl): ValidationErrors | null => {
-//     const value = control.value;
-//     if (!value) {
-//       return null; // let Validators.required handle the empty case
-//     }
-//     return options.includes(value) ? null : { notInList: true };
-//   };
-// }
 
 @Component({
   selector: 'app-registration',
@@ -78,12 +45,7 @@ MatNativeDateModule,
 export class RegistrationComponent implements OnInit {
 
 
-
-  // registrationForm: FormGroup;
-
  districts = MAHARASHTRA_DISTRICTS;
-
-
 searchDistrict = '';
 filteredDistricts: string[] = [];
 showDistrictDropdown = false;
@@ -96,66 +58,47 @@ showDistrictDropdown = false;
   occupations = OCCUPATIONS;
   filteredOccupations: string[] = [];
   showOccupationDropdown = false;
+  isPasswordHide: boolean = false;
 
 
-  // NEW: controls whether password fields render as plain text or masked
   showPassword = false;
   showConfirmPassword = false;
-
-  // NEW: searchable dropdown state for District and Qualification
-  // showDistrictDropdown = false;
-
-  // filteredDistricts: string[] = this.districts;
 
   registrationForm!: FormGroup;
 
 
-  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient) {
-
-
+  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService) {
 
   }
 
 
   ngOnInit(): void {
       this.formInitialization();
-
-
-
   }
 
   formInitialization() {
       this.registrationForm = this.fb.group({
-        firstName: [''],
-        lastName: [''],
-        contactNumber: [''],
-        email: [''],
-        password: ['Abc@1234'],
-        confirmPassword: ['Abc@1234'],
-        district: [null],
-        qualification: [null],
-        occupation: ['']
+        firstName: ['elon',[Validators.required,RegistrationValidator.noSpaceValidator]],
+        lastName: ['musk',[Validators.required,RegistrationValidator.noSpaceValidator]],
+        contactNumber: ['8796054576',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
+        email: ['elon@gmail.com',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
+        password: ['Asdf@1234',[Validators.required,RegistrationValidator.password]],
+        confirmPassword: ['Asdf@1234',Validators.required],
+        district: ['kolhapur',Validators.required],
+        qualification: ['iti',Validators.required],
+        occupation: ['others',Validators.required]
 
-      });
+      },
+  {
+    validators: RegistrationValidator.passwordChecking
+  });
   }
 
 
-    // filterDistricts() {
-    //   const search =
-    //     this.registrationForm.get('district')?.value?.toLowerCase() || '';
 
-    //   this.filteredDistricts = this.districts.filter(district =>
-    //     district.toLowerCase().includes(search)
-    //   );
-    // }
-
-    // selectDistrict(district: string) {
-    //   this.registrationForm.patchValue({
-    //     district: district
-    //   });
-
-    //   this.filteredDistricts = [];
-    // }
+    togglePassword(){
+      this.isPasswordHide=!this.isPasswordHide;
+    }
 
     filterDistricts() {
     const search =
@@ -189,23 +132,6 @@ showDistrictDropdown = false;
     this.showDistrictDropdown = false;
   }
 
-
-  //   filterQualifications() {
-  // const search =
-  //   this.registrationForm.get('qualification')?.value?.toLowerCase() || '';
-
-  //   this.filteredQualifications = this.qualifications.filter(qualification =>
-  //     qualification.toLowerCase().includes(search)
-  //   );
-  // }
-
-  // selectQualification(qualification: string) {
-  //   this.registrationForm.patchValue({
-  //     qualification: qualification
-  //   });
-
-  //   this.filteredQualifications = [];
-  // }
 
 
 
@@ -241,22 +167,7 @@ filterQualifications() {
     this.showQualificationDropdown = false;
   }
 
-  // filterOccupations() {
-  // const search =
-  //   this.registrationForm.get('occupation')?.value?.toLowerCase() || '';
 
-  //   this.filteredOccupations = this.occupations.filter(occupation =>
-  //     occupation.toLowerCase().includes(search)
-  //   );
-  // }
-
-  // selectOccupation(occupation: string) {
-  //   this.registrationForm.patchValue({
-  //     occupation: occupation
-  //   });
-
-  //   this.filteredOccupations = [];
-  // }
 
   filterOccupations() {
   const search =
@@ -293,16 +204,21 @@ selectOccupation(occupation: string) {
     console.log("form value is ",this.registrationForm.valid);
     if (this.registrationForm.valid) {
 
-
-      this.http.post (`${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
+      this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
         next:(data:any)=>{
           console.log(data.massage)
-          alert('sucessfully registered');
+          this.toastr.success(
+            'User registered successfully!',
+            'Success'
+          );
           this.registrationForm.reset();
         },error:(err:any)=>{
           console.log(err)
 
-                    alert('fail registertion');
+            this.toastr.error(
+              'Registration failed!',
+              'Error'
+            );
         }
       })
 
@@ -318,42 +234,43 @@ selectOccupation(occupation: string) {
   }
 
 
-
+  get password() {
+  return this.registrationForm.get('password');
 }
 
-//     this.initializeForm();
+get passwordValue(): string {
+  return this.password?.value || '';
+}
+
+hasMinLength(): boolean {
+  return this.passwordValue.length >= 8;
+}
+
+hasUppercase(): boolean {
+  return /^[A-Z]/.test(this.passwordValue); // First letter uppercase
+}
+
+hasLowercase(): boolean {
+  return /[a-z]/.test(this.passwordValue);
+}
+
+hasNumber(): boolean {
+  return /\d/.test(this.passwordValue);
+}
+
+hasSpecialChar(): boolean {
+  return /[@$!%*?&#^()_\-+=]/.test(this.passwordValue);
+}
 
 
-//   }
+isPasswordValid(): boolean {
+  return (
+    this.hasMinLength() &&
+    this.hasUppercase() &&
+    this.hasLowercase() &&
+    this.hasNumber() &&
+    this.hasSpecialChar()
+  );
+}
+}
 
-//   initializeForm():void{
-//       this.registrationForm = this.fb.group({
-//         firstName: ['sai'],
-//         lastName: ['shetty'],
-//         contactNumber: ['9423165720'],
-//         email: ['saishetty.ux@gmail.com'],
-//         password: ['Saishetty@123'],
-//         confirmPassword: ['Saishetty@123'],
-//         district: ['kolhapur'],
-//         qualification: ['Btech'],
-//         occupation: ['Student']
-
-//       });
-//   }
-
-//   onSubmit():void{
-//         console.log("value is ",this.registrationForm.value);
-//         this.http.post(`http://${environment.apiUrl}/students/register`,this.registrationForm.value)
-//          .subscribe({
-//             next: (response) => {
-//               console.log(response);
-//               alert('Student registered successfully!');
-//             },
-//             error: (err) => {
-//               console.error(err);
-//               alert('Registration failed!');
-//             }
-//           });
-
-//   }
-// }

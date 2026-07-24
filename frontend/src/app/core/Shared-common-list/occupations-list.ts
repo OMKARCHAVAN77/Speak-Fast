@@ -2,10 +2,7 @@
 
 export const OCCUPATIONS = [
   'Student',
-  'Private Employee',
-  'Government Employee',
+  'Employed',
   'Business Owner',
-  'Self-Employed',
-  'Farmer',
   'Other'
 ];

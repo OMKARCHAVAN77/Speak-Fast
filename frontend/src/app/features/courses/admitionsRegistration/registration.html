@@ -1,13 +1,13 @@
 <div class="registration-page">
 
   <div class="top-banner  d-flex flex-column justify-content-center align-items-center">
-    <h1 > Complete<span> your registration </span> </h1>
+    <h1> Complete<span> your registration </span> </h1>
     <p>Just one more step to start your English learning journey!</p>
   </div>
 
-  <div class="container form-section" >
+  <div class="container form-section">
     <!-- Your cards and registration form -->
-    <div class="row cards-section" >
+    <div class="row cards-section">
       <div class="col-lg-6 mb-4">
         <div class="left-card">
           <!-- Left Content -->
@@ -73,10 +73,17 @@
               <!-- First Name -->
               <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">
-                  First Name <span >*</span>
+                  First Name <span>*</span>
                 </label>
                 <input type="text" class="form-control custom-input" placeholder="Type your first name"
                   formControlName="firstName">
+                @if(registrationForm.get('firstName')?.hasError('required') &&
+                registrationForm.get('firstName')?.touched){
+                <small class="text-danger">field is required.</small>
+                }
+                @if(registrationForm.get('firstName')?.hasError('noSpace') && registrationForm.get('firstName')?.dirty){
+                <small class="text-danger">Spaces are not allowed.</small>
+                }
               </div>
 
               <!-- Last Name -->
@@ -84,15 +91,48 @@
                 <label class="form-label fw-semibold">Last Name</label>
                 <input type="text" class="form-control custom-input" placeholder="Type your last name"
                   formControlName="lastName">
+                @if(registrationForm.get('lastName')?.hasError('required') &&
+                registrationForm.get('lastName')?.touched){
+                <small class="text-danger">field is required.</small>
+                }
+                @if(registrationForm.get('lastName')?.hasError('noSpace') && registrationForm.get('lastName')?.dirty){
+                <small class="text-danger">Spaces are not allowed.</small>
+                }
               </div>
 
               <!-- Contact Number -->
               <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">
-                  Contact Number <span >*</span>
+                  Contact Number <span>*</span>
                 </label>
                 <input type="tel" class="form-control custom-input" placeholder="e.g. 9423165720"
                   formControlName="contactNumber">
+                @if(registrationForm.get('contactNumber')?.hasError('required') &&
+                registrationForm.get('contactNumber')?.touched){
+                <small class="text-danger">field is required.</small>
+                }
+                @if(registrationForm.get('contactNumber')?.hasError('noSpace') &&
+                registrationForm.get('contactNumber')?.dirty){
+                <small class="text-danger">Spaces are not allowed.</small>
+                }
+                @if (
+                registrationForm.get('contactNumber')?.hasError('mobileNumber') &&
+                registrationForm.get('contactNumber')?.touched
+                ) {
+                <small class="text-danger">
+                  enter 10 digit your mobile number
+                </small>
+                }
+
+                @if (
+                registrationForm.get('contactNumber')?.hasError('numberOnly') &&
+                registrationForm.get('contactNumber')?.dirty
+                ) {
+                <small class="text-danger">
+                  enter number only
+                </small>
+                }
+
               </div>
 
               <!-- Email -->
@@ -100,13 +140,62 @@
                 <label class="form-label fw-semibold">Email</label>
                 <input type="email" class="form-control custom-input" placeholder="example@gmail.com"
                   formControlName="email">
+                @if(registrationForm.get('email')?.hasError('required') && registrationForm.get('email')?.touched){
+                <small class="text-danger">field is required.</small>
+                }
+                @if(registrationForm.get('email')?.hasError('noSpace') && registrationForm.get('email')?.dirty){
+                <small class="text-danger">Spaces are not allowed.</small>
+                }
+                @if(registrationForm.get('email')?.hasError('isEmailCorrect') && registrationForm.get('email')?.touched){
+                <small class="text-danger">Enter your full email id</small>
+                }
               </div>
 
               <!-- Password -->
               <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">Password</label>
-                <input type="password" class="form-control custom-input" placeholder="Enter password"
-                  formControlName="password">
+
+                <div class="position-relative">
+                  <input [type]="isPasswordHide ? 'text' : 'password'" class="form-control custom-input"
+                    placeholder="Enter your password" formControlName="password">
+
+                  <i class="bi position-absolute top-50 end-0 translate-middle-y me-3"
+                    [ngClass]="isPasswordHide ? 'bi-eye-slash' : 'bi-eye'" (click)="isPasswordHide = !isPasswordHide"
+                    style="cursor: pointer;">
+                  </i>
+                </div>
+                @if (
+                registrationForm.get('password')?.hasError('required') &&
+                registrationForm.get('password')?.touched
+                ) {
+                <small class="text-danger">
+                  field is required
+                </small>
+                }
+
+                <div *ngIf="password?.dirty && !isPasswordValid()" class="mt-2">
+
+                  <small [class.text-success]="hasMinLength()" [class.text-danger]="!hasMinLength()" >
+                   ✔ At least 8 characters
+                  </small><br>
+
+                  <small [class.text-success]="hasUppercase()" [class.text-danger]="!hasUppercase()">
+                    ✔ Starts with an uppercase letter
+                  </small><br>
+
+                  <small [class.text-success]="hasLowercase()" [class.text-danger]="!hasLowercase()">
+                    ✔ Contains at least one lowercase letter
+                  </small><br>
+
+                  <small [class.text-success]="hasNumber()" [class.text-danger]="!hasNumber()">
+                    ✔ Contains at least one number
+                  </small><br>
+
+                  <small [class.text-success]="hasSpecialChar()" [class.text-danger]="!hasSpecialChar()">
+                    ✔ Contains at least one special character
+                  </small>
+
+                </div>
               </div>
 
               <!-- Confirm Password -->
@@ -114,6 +203,18 @@
                 <label class="form-label fw-semibold">Confirm Password</label>
                 <input type="password" class="form-control custom-input" placeholder="Confirm password"
                   formControlName="confirmPassword">
+                @if(registrationForm.get('confirmPassword')?.hasError('required') &&
+                registrationForm.get('confirmPassword')?.touched){
+                <small class="text-danger">field is required.</small>
+                }
+                @if (
+                registrationForm.get('confirmPassword')?.hasError('passwordChecking') &&
+                registrationForm.get('confirmPassword')?.dirty
+                ) {
+                <small class="text-danger">
+                  Passwords do not match.
+                </small>
+                }
               </div>
 
               <!-- Date of Birth -->
@@ -125,41 +226,10 @@
               </div> -->
 
               <!-- District -->
-              <!-- <div class="col-12 mb-4">
-                <label class="form-label fw-semibold">
-                  District <span class="text-danger">*</span>
-                </label>
-
-                <select class="form-select custom-input" formControlName="district">
-                  <option value="">Select District</option>
-                  <option value="pune">Pune</option>
-                  <option value="mumbai">Mumbai</option>
-                  <option value="kolhapur">Kolhapur</option>
-                </select>
-              </div> -->
-
-              <!-- <div class="col-12 mb-4 position-relative">
-                <label class="form-label fw-semibold">
-                  District <span class="text-danger">*</span>
-                </label>
-
-                <input type="text" class="form-control custom-input" formControlName="district"
-                  (input)="filterDistricts()" autocomplete="off">
-
-                <ul class="list-group position-absolute w-100 shadow" *ngIf="filteredDistricts.length > 0">
-
-                  <li *ngFor="let district of filteredDistricts" class="list-group-item list-group-item-action"
-                    (click)="selectDistrict(district)">
-                    {{ district }}
-                  </li>
-
-                </ul>
-              </div> -->
-
 
               <div class="col-12 mb-4 position-relative">
                 <label class="form-label fw-semibold">
-                  District <span >*</span>
+                  District <span>*</span>
                 </label>
 
                 <div class="input-group">
@@ -180,40 +250,19 @@
                   </li>
 
                 </ul>
+
+
+                @if (
+                registrationForm.get('district')?.hasError('required') &&
+                registrationForm.get('district')?.touched
+                ) {
+                <small class="text-danger">
+                  Please select your district.
+                </small>
+                }
               </div>
 
               <!-- Qualification -->
-              <!-- <div class="col-12 mb-4">
-                <label class="form-label fw-semibold">Qualification</label>
-
-                <select class="form-select custom-input" formControlName="qualification">
-                  <option value="">Select Qualification</option>
-                  <option value="10th">10th</option>
-                  <option value="12th">12th</option>
-                  <option value="Btech">B.Tech</option>
-                  <option value="Graduate">Graduate</option>
-                </select>
-              </div> -->
-
-              <!-- <div class="col-12 mb-4 position-relative">
-                <label class="form-label fw-semibold">
-                  Qualification
-                </label>
-
-                <input type="text" class="form-control custom-input" placeholder="Search Qualification..."
-                  formControlName="qualification" (input)="filterQualifications()" autocomplete="off">
-
-                <ul class="list-group position-absolute w-100 shadow" *ngIf="filteredQualifications.length > 0">
-
-                  <li class="list-group-item list-group-item-action"
-                    *ngFor="let qualification of filteredQualifications" (click)="selectQualification(qualification)">
-
-                    {{ qualification }}
-
-                  </li>
-
-                </ul>
-              </div> -->
 
 
               <div class="col-12 mb-4 position-relative">
@@ -239,39 +288,18 @@
                   </li>
 
                 </ul>
+
+                @if (
+                registrationForm.get('qualification')?.hasError('required') &&
+                registrationForm.get('qualification')?.touched
+                ) {
+                <small class="text-danger">
+                  Please select your district.
+                </small>
+                }
               </div>
 
               <!-- Occupation -->
-              <!-- <div class="col-12 mb-4">
-                <label class="form-label fw-semibold">Occupation</label>
-
-                <select class="form-select custom-input" formControlName="occupation">
-                  <option value="">Select Occupation</option>
-                  <option value="Student">Student</option>
-                  <option value="Business">Business</option>
-                  <option value="Employee">Employee</option>
-                </select>
-              </div> -->
-
-              <!-- <div class="col-12 mb-4 position-relative">
-                <label class="form-label fw-semibold">
-                  Occupation
-                </label>
-
-                <input type="text" class="form-control custom-input" placeholder="Search Occupation..."
-                  formControlName="occupation" (input)="filterOccupations()" autocomplete="off">
-
-                <ul class="list-group position-absolute w-100 shadow" *ngIf="filteredOccupations.length > 0">
-
-                  <li class="list-group-item list-group-item-action" *ngFor="let occupation of filteredOccupations"
-                    (click)="selectOccupation(occupation)">
-
-                    {{ occupation }}
-
-                  </li>
-
-                </ul>
-              </div> -->
 
               <div class="col-12 mb-4 position-relative">
                 <label class="form-label fw-semibold">
@@ -302,6 +330,16 @@
                   </li>
 
                 </ul>
+
+
+                @if (
+                registrationForm.get('occupation')?.hasError('required') &&
+                registrationForm.get('occupation')?.touched
+                ) {
+                <small class="text-danger">
+                  Please select your district.
+                </small>
+                }
               </div>
             </div>
 
@@ -312,31 +350,9 @@
         </div>
 
         <div class="buttons d-flex justify-content-between pt-4 w-100">
-          <button style="width: 109;
-height: 38;
-gap: 4px;
-opacity: 1;
-border-radius: 50px;
-border-width: 1px;
-padding-top: 8px;
-padding-right: 16px;
-padding-bottom: 8px;
-padding-left: 16px;
-"><i class="bi bi-arrow-left"></i>
-            back</button>
-          <button type="button" (click)="onSubmit()" style="width: 140;
-height: 38;
-gap: 4px;
-opacity: 1;
-padding-top: 8px;
-padding-right: 24px;
-padding-bottom: 8px;
-padding-left: 24px;
-border-radius: 50px;
-background: linear-gradient(90.47deg, #4687FB 0%, #9050E0 100%);
-color: white;
-border: none;
-">register</button>
+          <button class="back-button" ><i class="bi bi-arrow-left"></i>
+            Back</button>
+          <button type="button" class="regi-button" (click)="onSubmit()"  >Register</button>
         </div>
 
       </div>
