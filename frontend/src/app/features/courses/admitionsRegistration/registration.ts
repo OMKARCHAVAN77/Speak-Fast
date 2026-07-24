@@ -21,7 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs/internal/Observable';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/district-list';
 import { OCCUPATIONS } from '../../../core/Shared-common-list/occupations-list';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment';
 
 
 function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
