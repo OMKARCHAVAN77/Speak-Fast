@@ -232,6 +232,47 @@ color: #475569;
   background-color: #f8f9fa;
 }
 
+.regi-button{
+width: 140;
+height: 38;
+gap: 4px;
+opacity: 1;
+padding-top: 8px;
+padding-right: 24px;
+padding-bottom: 8px;
+padding-left: 24px;
+border-radius: 50px;
+background: linear-gradient(90.47deg, #4687FB 0%, #9050E0 100%);
+color: white;
+border: none;
+
+font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+}
+
+.back-button {
+ width: 109;
+height: 38;
+gap: 4px;
+opacity: 1;
+border-radius: 50px;
+border-width: 1px;
+padding-top: 8px;
+padding-right: 16px;
+padding-bottom: 8px;
+padding-left: 16px;
+font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+}
+
 /*
 .list-group {
   max-height: 220px;
