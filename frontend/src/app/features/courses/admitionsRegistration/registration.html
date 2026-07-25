@@ -1,13 +1,13 @@
-<div class="registration-page">
+<div class="registration-page" >
 
   <div class="top-banner  d-flex flex-column justify-content-center align-items-center">
     <h1> Complete<span> your registration </span> </h1>
     <p>Just one more step to start your English learning journey!</p>
   </div>
 
-  <div class="container form-section">
+  <div class="container form-section" >
     <!-- Your cards and registration form -->
-    <div class="row cards-section">
+    <div class="row cards-section"  >
       <div class="col-lg-6 mb-4">
         <div class="left-card">
           <!-- Left Content -->
@@ -350,10 +350,19 @@
         </div>
 
         <div class="buttons d-flex justify-content-between pt-4 w-100">
-          <button class="back-button" ><i class="bi bi-arrow-left"></i>
-            Back</button>
-          <button type="button" class="regi-button" (click)="onSubmit()"  >Register</button>
+          <button class="back-button shadow-lg" ><i class="bi bi-arrow-left"></i> Back</button>
+
+          <button type="button" class="regi-button shadow-lg " (click)="onSubmit()"  [disabled]="isLoaderOn()"  >
+            @if (!isLoaderOn()) {
+                Register
+              } @else {
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Registering...
+              }
+            </button>
         </div>
+
+
 
       </div>
     </div>

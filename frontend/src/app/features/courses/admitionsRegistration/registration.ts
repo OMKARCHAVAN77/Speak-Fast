@@ -1,7 +1,7 @@
 import { OCCUPATIONS, QUALIFICATIONS,  } from '../../../core/Shared-common-list/registration-dummy-data';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -64,7 +64,7 @@ showDistrictDropdown = false;
 
   registrationForm!: FormGroup;
 
-
+  isLoaderOn= signal<boolean>(false);
   constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService) {
 
   }
@@ -200,26 +200,32 @@ selectOccupation(occupation: string) {
 }
   onSubmit() {
     console.log("form value is ",this.registrationForm.valid);
-    if (this.registrationForm.valid) {
 
-      this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
-        next:(data:any)=>{
-          console.log(data.massage)
-          this.toastr.success(
-            'User registered successfully!',
-            'Success'
-          );
-          this.registrationForm.reset();
-        },error:(err:any)=>{
-            alert("Success Messeage")
-          console.log(err)
+    if(this.registrationForm.valid){
+      this.isLoaderOn.set(true);
 
-            this.toastr.error(
-              'Registration failed!',
-              'Error'
+      setTimeout(()=>{
+        this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
+          next:(data:any)=>{
+            console.log(data.massage)
+            this.isLoaderOn.set(false);
+            this.toastr.success(
+              'User registered successfully!',
+              'Success'
             );
-        }
-      })
+            this.registrationForm.reset();
+          },error:(err:any)=>{
+
+            this.isLoaderOn.set(false);
+            console.log(err.m)
+
+              this.toastr.error(
+                'Registration failed!',
+                'Error'
+              );
+          }
+        })
+      },1000);
 
       // alert('Registration Successful');
       console.log(this.registrationForm.value);
@@ -234,42 +240,42 @@ selectOccupation(occupation: string) {
 
 
   get password() {
-  return this.registrationForm.get('password');
-}
+    return this.registrationForm.get('password');
+  }
 
-get passwordValue(): string {
-  return this.password?.value || '';
-}
+  get passwordValue(): string {
+    return this.password?.value || '';
+  }
 
-hasMinLength(): boolean {
-  return this.passwordValue.length >= 8;
-}
+  hasMinLength(): boolean {
+    return this.passwordValue.length >= 8;
+  }
 
-hasUppercase(): boolean {
-  return /^[A-Z]/.test(this.passwordValue); // First letter uppercase
-}
+  hasUppercase(): boolean {
+    return /^[A-Z]/.test(this.passwordValue); // First letter uppercase
+  }
 
-hasLowercase(): boolean {
-  return /[a-z]/.test(this.passwordValue);
-}
+  hasLowercase(): boolean {
+    return /[a-z]/.test(this.passwordValue);
+  }
 
-hasNumber(): boolean {
-  return /\d/.test(this.passwordValue);
-}
+  hasNumber(): boolean {
+    return /\d/.test(this.passwordValue);
+  }
 
-hasSpecialChar(): boolean {
-  return /[@$!%*?&#^()_\-+=]/.test(this.passwordValue);
-}
+  hasSpecialChar(): boolean {
+    return /[@$!%*?&#^()_\-+=]/.test(this.passwordValue);
+  }
 
 
-isPasswordValid(): boolean {
-  return (
-    this.hasMinLength() &&
-    this.hasUppercase() &&
-    this.hasLowercase() &&
-    this.hasNumber() &&
-    this.hasSpecialChar()
-  );
-}
+  isPasswordValid(): boolean {
+    return (
+      this.hasMinLength() &&
+      this.hasUppercase() &&
+      this.hasLowercase() &&
+      this.hasNumber() &&
+      this.hasSpecialChar()
+    );
+  }
 }
 
