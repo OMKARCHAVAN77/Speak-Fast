@@ -2,85 +2,36 @@ import mongoose from "mongoose";
 
 const studentSchema = new mongoose.Schema(
   {
-    firstName: {
-      type: String,
-      // required: [true, "First Name is required"],
-      trim: true,
-      minlength: [3, "First Name must be at least 3 characters"],
-      maxlength: [50, "First Name cannot exceed 50 characters"],
-    },
-
-    lastName: {
-      type: String,
-      // required: [true, "Last Name is required"],
-      trim: true,
-      minlength: [2, "Last Name must be at least 2 characters"],
-      maxlength: [50, "Last Name cannot exceed 50 characters"],
+    // Reference to User Collection
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      unique: true,
     },
 
     contactNumber: {
       type: String,
-      // required: [true, "Contact Number is required"],
-      unique: true,
-      trim: true,
-      match: [/^[6-9]\d{9}$/, "Invalid Contact Number"],
-    },
-
-    email: {
-      type: String,
-      // required: [true, "Email is required"],
-      unique: true,
-      lowercase: true,
-      trim: true,
-      match: [
-        /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/,
-        "Invalid Email Address",
-      ],
-    },
-
-    password: {
-      type: String,
-      // required: [true, "Password is required"],
-      minlength: [8, "Password must be at least 8 characters"],
-      select: false,
+      required: true,
     },
 
     district: {
       type: String,
-      // required: [true, "District is required"],
-      trim: true,
+      required: true,
     },
 
     qualification: {
       type: String,
-      // required: [true, "Qualification is required"],
-      trim: true,
+      required: true,
     },
 
     occupation: {
       type: String,
-      // required: [true, "Occupation is required"],
-      trim: true,
+      required: true,
     },
-
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
-      role: {
+    googleMeetLink: {
       type: String,
-      default: "student",
-    },
-
-    // Forgot Password Fields
-    passwordResetToken: {
-      type: String,
-      default: null,
-    },
-
-    passwordResetTokenExpiry: {
-      type: Date,
-      default: null,
+      default: ""
     },
 
     assignedTeacher: {
@@ -88,10 +39,14 @@ const studentSchema = new mongoose.Schema(
       ref: "Teacher",
       default: null,
     },
+    
+      isActive: {
+      type: Boolean,
+      default: true,
+    }
   },
   {
     timestamps: true,
-    versionKey: false,
   }
 );
 

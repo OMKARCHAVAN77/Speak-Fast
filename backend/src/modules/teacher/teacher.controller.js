@@ -1,127 +1,372 @@
 import {
-  registerTeacherService,
-  getAllTeachersService,
-  setPasswordService,
-  loginTeacherService,
-  filterTeacherService,
-} from "./teacher.service.js";
+  registerTeacherService,getAllTeachersService,getTeacherByIdService,updateTeacherService,deleteTeacherService,
+addTeacherSlotService,getTeacherSlotsService ,deleteTeacherSlotService,updateTeacherSlotService ,filterTeachersService} from "./teacher.service.js";
 
-const registerTeacher = async (req, res) => {
+
+// Register Teacher
+export const registerTeacher = async (req, res) => {
   try {
-    const photoFile =
-      req.files && req.files.length > 0 ? req.files[0] : null;
 
-    const result = await registerTeacherService(req.body, photoFile);
+    const result = await registerTeacherService(req.body, req.file);
 
-    if (result.error) {
-      return res.status(result.status).json({
-        message: result.message,
-      });
-    }
-
-    res.status(201).json({
+    return res.status(201).json({
+      success: true,
       message: result.message,
+      data: {
+        user: result.user,
+        teacher: result.teacher,
+      },
     });
-  } catch (err) {
-    console.error("REGISTER TEACHER ERROR:", err);
-    res.status(500).json({
-      message: "Server error",
-      error: err.message,
+
+  } catch (error) {
+
+    return res.status(400).json({
+      success: false,
+      message: error.message,
     });
+
   }
 };
 
-const getAllTeachers = async (req, res) => {
-  try {
-    const result = await getAllTeachersService();
 
-    res.status(200).json({
-      count: result.teachers.length,
-      teachers: result.teachers,
+// ===================================
+// Get All Teachers
+// ===================================
+export const getAllTeachers = async (req, res) => {
+
+  try {
+
+    const teachers = await getAllTeachersService();
+
+    return res.status(200).json({
+
+      success: true,
+
+      message: "Teachers fetched successfully.",
+
+      total: teachers.length,
+
+      data: teachers
+
     });
-  } catch (err) {
-    console.error("GET ALL TEACHERS ERROR:", err);
-    res.status(500).json({
-      message: "Server error",
-      error: err.message,
+
+  } catch (error) {
+
+    return res.status(500).json({
+
+      success: false,
+
+      message: error.message
+
     });
+
+  }
+
+};
+
+// ========================================
+// Get Teacher By Id
+// ========================================
+export const getTeacherById = async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const teacher = await getTeacherByIdService(id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Teacher fetched successfully.",
+      data: teacher,
+    });
+
+  } catch (error) {
+
+    return res.status(404).json({
+      success: false,
+      message: error.message,
+    });
+
   }
 };
 
-const setPassword = async (req, res) => {
+
+// Update Teacher
+
+export const updateTeacher = async (req, res) => {
+
   try {
-    const { email, token, newPassword, confirmPassword } = req.body;
 
-    if (!email || !token || !newPassword || !confirmPassword) {
-      return res.status(400).json({
-        message: "email, token, newPassword and confirmPassword are required",
-      });
-    }
+    const { id } = req.params;
 
-    const result = await setPasswordService(
-      email,
-      token,
-      newPassword,
-      confirmPassword
+    const teacher = await updateTeacherService(
+      id,
+      req.body,
+      {
+            returnDocument: "after"
+        }
     );
 
-    if (result.error) {
-      return res.status(result.status).json({ message: result.message });
-    }
-
-    res.status(200).json({ message: result.message });
-  } catch (err) {
-    console.error("SET PASSWORD ERROR:", err);
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-};
-
-const loginTeacher = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
-    }
-
-    const result = await loginTeacherService(email, password);
-
-    if (result.error) {
-      return res.status(result.status).json({ message: result.message });
-    }
-
-    req.session.teacher = result.teacher;
-
-    res.status(200).json({
-      message: "Login successful",
-      teacher: result.teacher,
+    return res.status(200).json({
+      success: true,
+      message: "Teacher updated successfully.",
+      data: teacher,
     });
-  } catch (err) {
-    console.error("LOGIN TEACHER ERROR:", err);
-    res.status(500).json({ message: "Server error", error: err.message });
-  }
-};
 
-const filterTeachers = async (req, res) => {
-  try {
-    const { date, time } = req.query;
+  } catch (error) {
 
-    const teachers = await filterTeacherService(date, time);
-
-    res.status(200).json({
-      count: teachers.length,
-      teachers,
+    return res.status(400).json({
+      success: false,
+      message: error.message,
     });
-  } catch (err) {
-    console.error("FILTER TEACHERS ERROR:", err);
-    res.status(500).json({ message: "Server error", error: err.message });
+
+  }
+
+};
+
+
+// Delete Teacher
+// ========================================
+export const deleteTeacher = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    await deleteTeacherService(id);
+
+    return res.status(200).json({
+      success: true,
+      message: "Teacher deleted successfully."
+    });
+
+  } catch (error) {
+
+    return res.status(400).json({
+      success: false,
+      message: error.message
+    });
+
   }
 };
 
-export {
-  registerTeacher,
-  getAllTeachers,
-  setPassword,
-  loginTeacher,
-  filterTeachers,
+// =============================================
+// Add Multiple Teacher Slots
+// =============================================
+export const addTeacherSlot = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const slots = await addTeacherSlotService(
+            id,
+            req.body
+        );
+
+        return res.status(201).json({
+
+            success: true,
+
+            message: "Slots added successfully.",
+
+            total: slots.length,
+
+            data: slots
+
+        });
+
+    } catch (error) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+
+// =============================================
+// Get Teacher Slots
+// =============================================
+export const getTeacherSlots = async (
+    req,
+    res
+) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const { status } = req.query;
+
+        const slots =
+            await getTeacherSlotsService(
+                id,
+                status
+            );
+
+        res.status(200).json({
+
+            success: true,
+
+            total: slots.length,
+
+            data: slots
+
+        });
+
+    } catch (error) {
+
+        res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+
+// =============================================
+// Delete Teacher Slot
+// =============================================
+export const deleteTeacherSlot = async (req, res) => {
+
+    try {
+
+        const { slotId } = req.params;
+
+        const slots = await deleteTeacherSlotService(slotId);
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Slot deleted successfully.",
+
+            total: slots.length,
+
+            data: slots
+
+        });
+
+    } catch (error) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+
+// =============================================
+// Update Teacher Slot
+// =============================================
+
+export const updateTeacherSlot = async (
+    req,
+    res
+)=>{
+
+
+    try{
+
+
+        const {
+            slotId
+        } = req.params;
+
+
+
+        const updatedSlot =
+        await updateTeacherSlotService(
+            slotId,
+            req.body,
+            {
+            returnDocument: "after"
+        }
+        );
+
+
+
+        return res.status(200).json({
+
+            success:true,
+
+            message:
+            "Slot updated successfully",
+
+            data:updatedSlot
+
+        });
+
+
+
+    }
+    catch(error){
+
+
+        return res.status(400).json({
+
+            success:false,
+
+            message:error.message
+
+        });
+
+
+    }
+
+
+};
+
+
+// =====================================
+// Filter Teacher By Date & Time
+// =====================================
+export const filterTeachers = async (req, res) => {
+
+    try {
+
+        const { date, time } = req.query;
+
+        const teachers = await filterTeachersService(date, time);
+
+        return res.status(200).json({
+
+            success: true,
+
+            total: teachers.length,
+
+            data: teachers
+
+        });
+
+    } catch (error) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
 };
