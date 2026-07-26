@@ -41,5 +41,6 @@ export const routes: Routes = [
     { path: 'login', component: Login },
     { path: 'courses', component: CourseRecommendation },
     { path: 'payment', component: Payment },
-    { path: 'setpassword', component: SetPassword }
+    { path: 'setpassword', component: SetPassword },
+    { path: '**', redirectTo:'login', pathMatch: 'full'}
 ];

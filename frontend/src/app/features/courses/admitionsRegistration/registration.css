@@ -1,6 +1,6 @@
 .registration-page{
     min-height: 100vh;
-    background: #f8f9fa;
+    background-color: #FFFFFF;
     position: relative;
 
 
@@ -232,6 +232,57 @@ color: #475569;
   background-color: #f8f9fa;
 }
 
+.regi-button{
+width: 140;
+height: 38;
+gap: 4px;
+opacity: 1;
+padding-top: 8px;
+padding-right: 24px;
+padding-bottom: 8px;
+padding-left: 24px;
+border-radius: 50px;
+background: linear-gradient(90.47deg, #4687FB 0%, #9050E0 100%);
+color: white;
+border: none;
+
+font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+}
+
+.back-button {
+ width: 109;
+height: 38;
+gap: 4px;
+opacity: 1;
+border-radius: 50px;
+border-width: 1px;
+padding-top: 8px;
+padding-right: 16px;
+padding-bottom: 8px;
+padding-left: 16px;
+font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 18px;
+line-height: 100%;
+letter-spacing: 0%;
+}
+
+input.ng-invalid.ng-dirty,
+input.ng-invalid.ng-touched{
+    border: 1px solid #dc3545;
+  box-shadow: 0 0 8px rgba(220, 53, 69, 0.8);
+}
+
+/* .form-control.ng-valid.ng-touched {
+  border-color: #32dc6b !important;
+  box-shadow: 0 0 8px rgba(107, 221, 90, 0.8) !important;
+} */
 /*
 .list-group {
   max-height: 220px;

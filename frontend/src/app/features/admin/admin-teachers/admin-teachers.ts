@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef,Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef,Component, EnvironmentInjector, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -10,6 +10,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
 import { TeacherService, Teacher } from '../../../core/services/teacher.service';
+import { environment } from '../../../../environments/environment';
+
 
 @Component({
   selector: 'app-admin-teachers',
@@ -32,12 +34,13 @@ export class AdminTeachers implements OnInit {
   searchTerm = '';
   teachers: Teacher[] = [];
   loading = false;
-environment: any;
+public environment = environment;
 
   constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
      console.log("Admin Teachers Component Loaded");
+
     this.loadTeachers();
   }
 
@@ -46,7 +49,7 @@ loadTeachers(): void {
   this.teacherService.getTeachers().subscribe({
     next: (res) => {
 
-      console.log("TEACHER API RESPONSE:", res);
+      // console.log("TEACHER API RESPONSE:", res);
       this.teachers = res.teachers;   // unwrap { count, teachers }
       this.loading = false;
 

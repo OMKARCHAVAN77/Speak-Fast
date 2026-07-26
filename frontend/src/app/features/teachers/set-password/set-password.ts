@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-set-password',
