@@ -11,9 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './reset-password.css',
 })
 export class ResetPassword {
-  constructor(private frogotstudentserve: StudentService, private snackBar: MatSnackBar, private router: Router){}
+  constructor(private frogotstudentserve: StudentService, private snackBar: MatSnackBar, private router: Router) { }
 
-   emailVal: string = '';
+  emailVal: string = '';
 
   // resetPassword(){
   //   const body = {
@@ -26,95 +26,77 @@ export class ResetPassword {
   // }
 
 
-  resetPassword(){
 
-  if(!this.emailVal){
+ resetPassword() {
+
+  if (!this.emailVal.trim()) {
 
     this.snackBar.open(
-
-      "Please enter your email",
-
+      "Please enter your email.",
       "Close",
-
       {
-
-        duration:3000,
-
-        horizontalPosition:"right",
-
-        verticalPosition:"top"
-
+        duration: 4000,
+        horizontalPosition: "right",
+        verticalPosition: "top",
+        panelClass: ["error-snackbar"]
       }
-
     );
 
     return;
-
   }
 
-  const body={
-
-    email:this.emailVal
-
+  const body = {
+    email: this.emailVal.trim()
   };
 
   this.frogotstudentserve
+    .forgotStudentPassword(body)
+    .subscribe({
 
-  .forgotStudentPassword(body)
+      next: (response: any) => {
 
-  .subscribe({
+        console.log("Forgot Password Success :", response);
 
-    next:(response: any)=>{
+        this.snackBar.open(
+          response.message,
+          "Close",
+          {
+            duration: 4000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["success-snackbar"]
+          }
+        );
 
-      console.log(response);
+        // Snackbar पूर्ण दिसल्यानंतरच Navigate करा
+        setTimeout(() => {
 
-      this.snackBar.open(
+          this.router.navigate([
+            "/forgotPassword/sentLink"
+          ]);
 
-        response.message,
+        }, 4000);
 
-        "Close",
+      },
 
-        {
+      error: (err: any) => {
 
-          duration:3000,
+        console.log("Forgot Password Error :", err);
 
-          panelClass:["success-snackbar"]
+        this.snackBar.open(
+          err?.error?.message || "Something went wrong.",
+          "Close",
+          {
+            duration: 4000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["error-snackbar"]
+          }
+        );
 
-        }
+      }
 
-      );
-
-      this.router.navigate(
-
-        ["/forgotPassword/sentLink"]
-
-      );
-
-    },
-
-    error:(err: any)=>{
-
-      console.log(err);
-
-      this.snackBar.open(
-
-        err.error.message,
-
-        "Close",
-
-        {
-
-          duration:3000,
-
-          panelClass:["error-snackbar"]
-
-        }
-
-      );
-
-    }
-
-  });
+    });
 
 }
 }
