@@ -28,7 +28,7 @@ Teacher CRUD
 router.post("/register",upload.single("photo"), registerTeacher);
 
 // Get All Teachers
-router.get("/",authenticate,authorize("admin"), getAllTeachers);
+router.get("/getAllTeachers",authenticate,authorize("admin"), getAllTeachers);
 
 // Filter Teachers by date/time
 router.get("/filter", filterTeachers);
