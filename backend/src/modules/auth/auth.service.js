@@ -1,141 +1,89 @@
+
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../user/user.model.js";
 import crypto from "crypto";
-import Admin from "../admin/admin.model.js";
-import sendMail from "../../utils/sendMail.js";
+import { sendForgotPasswordMail} from '../../utils/studentSendForgotPassInvitation.js'
 
-const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 मिनिटं — गरजेनुसार बदला
+export const setPasswordService = async (token, password) => {
 
-const loginAdmin = async (email, password) => {
-  const admin = await Admin.findOne({ email });
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
 
-  if (!admin) {
-    return {
-      error: true,
-      status: 401,
-      message: "Invalid email or password",
-    };
+  if (!user) {
+    throw new Error("Invalid or Expired Token");
   }
 
-  if (admin.password !== password) {
-    return {
-      error: true,
-      status: 401,
-      message: "Invalid email or password",
-    };
-  }
+  user.password = await bcrypt.hash(password, 10);
 
-  // जुनी session खूप वेळ (30 मिनिटांपेक्षा जास्त) active असेल तर ती stale मानून पुढे जाऊ द्या
-  const isStale =
-    admin.lastActive &&
-    Date.now() - new Date(admin.lastActive).getTime() > SESSION_TIMEOUT;
+  user.isPasswordSet = true;
 
-  if (admin.isLoggedIn && !isStale) {
-    return {
-      error: true,
-      status: 403,
-      message: "Admin already logged in from another session",
-    };
-  }
+  user.resetPasswordToken = null;
 
-  admin.isLoggedIn = true;
-  admin.lastActive = Date.now();
-  await admin.save();
+  user.resetPasswordExpires = null;
+
+  await user.save();
 
   return {
-    error: false,
-    admin: {
-      email: admin.email,
-      role: admin.role,
-    },
+    message: "Password Set Successfully",
   };
 };
 
-const logoutAdmin = async (email) => {
-  if (!email) return;
+// student forgot password service
+export const forgotPasswordService = async (email) => {
 
-  await Admin.updateOne(
-    { email },
-    { $set: { isLoggedIn: false } }
-  );
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const token = crypto.randomBytes(32).toString("hex");
+
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 60 * 60 * 1000;
+
+    await user.save();
+
+    await sendForgotPasswordMail(
+        user.email,
+        user.firstName,
+        token
+    );
+
+    return {
+        success: true,
+        message: "Reset password link sent successfully."
+    };
 };
 
-const forgotPasswordService = async (email) => {
-  const admin = await Admin.findOne({ email });
 
-  if (!admin) {
-    return {
-      error: true,
-      status: 404,
-      message: "No admin found with this email",
-    };
+// student reset password service
+
+export const resetPasswordService = async (token, password) => {
+
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() }
+  });
+
+  if (!user) {
+    throw new Error("Invalid or Expired Token");
   }
 
-  const token = crypto.randomBytes(32).toString("hex");
-  const tokenExpiry = Date.now() + 60 * 60 * 1000; // 1 hour
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-  admin.resetToken = token;
-  admin.resetTokenExpiry = tokenExpiry;
+  user.password = hashedPassword;
+  user.isPasswordSet = true;
+  user.resetPasswordToken = null;
+  user.resetPasswordExpires = null;
 
-  await admin.save();
-
-  const link = `http://localhost:5173/reset-password?token=${token}&email=${email}`;
-
-  const html = `
-    <h3>Password Reset Request</h3>
-    <p>Click the link below to reset your password:</p>
-    <a href="${link}">${link}</a>
-    <p>This link is valid for 1 hour. If you did not request this, please ignore this email.</p>
-  `;
-
-  await sendMail(email, "Reset Your Password", html);
+  await user.save();
 
   return {
-    error: false,
-    message: "Password reset link sent to your email",
+    success: true,
+    message: "Password reset successfully."
   };
-};
-
-const resetPasswordService = async (email, token, newPassword) => {
-  const admin = await Admin.findOne({ email });
-
-  if (!admin) {
-    return {
-      error: true,
-      status: 404,
-      message: "Admin not found",
-    };
-  }
-
-  if (admin.resetToken !== token) {
-    return {
-      error: true,
-      status: 400,
-      message: "Invalid or expired reset link",
-    };
-  }
-
-  if (admin.resetTokenExpiry < Date.now()) {
-    return {
-      error: true,
-      status: 400,
-      message: "Reset link has expired",
-    };
-  }
-
-  admin.password = newPassword;
-  admin.resetToken = undefined;
-  admin.resetTokenExpiry = undefined;
-
-  await admin.save();
-
-  return {
-    error: false,
-    message: "Password reset successful. Please login with your new password.",
-  };
-};
-
-export {
-  loginAdmin,
-  logoutAdmin,
-  forgotPasswordService,
-  resetPasswordService,
 };
