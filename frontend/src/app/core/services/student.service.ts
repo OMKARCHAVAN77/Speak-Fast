@@ -4,9 +4,9 @@ import { environment } from "../../../environments/environment";
 import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({
-    providedIn:'root'
+    providedIn: 'root'
 })
-export class StudentService{
+export class StudentService {
 
      teacherId = new BehaviorSubject<number|null>(null);
      soltId = new BehaviorSubject<String|null>(null);
@@ -51,7 +51,19 @@ export class StudentService{
       return  this.http.post(`${environment.apiUrl}/booking/register-book`,data)
     }
 
-    forgotStudentPassword(mail : any){
-        return this.http.post(`${environment.apiUrl}/students/forgot-password`, mail)
+    // student forgot password service
+    private baseUrl = "https://speak-fast.onrender.com/api/auth";
+
+    forgotStudentPassword(body: { email: string }) {
+        return this.http.post(`${this.baseUrl}/forgot-password`, body);
+    }
+
+    resetStudentPassword(token: string,body: {
+            password: string,
+            confirmPassword: string
+        }
+    ) {
+        return this.http.post(`${this.baseUrl}/auth/reset-password/${token}`, body
+        );
     }
 }
