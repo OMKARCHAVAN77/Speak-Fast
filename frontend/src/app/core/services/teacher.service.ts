@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-// import { environment } from '../../../environments/environments';
 
 export interface Teacher {
   _id: string;
@@ -26,8 +25,7 @@ export class TeacherService {
 
   getTeachers(): Observable<{ count: number; teachers: Teacher[] }> {
     return this.http.get<{ count: number; teachers: Teacher[] }>(
-      `${this.baseUrl}/all`,
-      { withCredentials: true }
+      `${this.baseUrl}/getAllTeachers`
     );
   }
 
@@ -53,16 +51,12 @@ export class TeacherService {
 
     return this.http.post<{ message: string }>(
       `${this.baseUrl}/register`,
-      formData,
-      { withCredentials: true }
+      formData
     );
   }
 
   deleteTeacher(id: string): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(
-      `${this.baseUrl}/${id}`,
-      { withCredentials: true }
-    );
+    return this.http.delete<{ message: string }>(`${this.baseUrl}/${id}`);
   }
 
   filterTeacherApi(date: string, time: string): Observable<any> {
@@ -70,9 +64,6 @@ export class TeacherService {
       .set('date', date)
       .set('time', time);
 
-    return this.http.get<any>(
-      `${this.baseUrl}/filter`,
-      { params }
-    );
+    return this.http.get<any>(`${this.baseUrl}/filter`, { params });
   }
 }
