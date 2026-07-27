@@ -117,6 +117,8 @@ export const registerAndBookService = async (body) => {
 
         slotId: slot._id,
 
+        slotTime: slot.time,
+
         courseName,
 
         coursePrice,
