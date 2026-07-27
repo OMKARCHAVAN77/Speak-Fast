@@ -21,12 +21,16 @@ export class StudentService {
         return this.http.post(`${this.baseUrl}/forgot-password`, body);
     }
 
-    resetStudentPassword(token: string,body: {
-            password: string,
-            confirmPassword: string
+    resetStudentPassword(
+        token: string,
+        body: {
+            password: string;
+            confirmPassword: string;
         }
     ) {
-        return this.http.post(`${this.baseUrl}/auth/reset-password/${token}`, body
+        return this.http.post(
+            `${this.baseUrl}/reset-password/${token}`,
+            body
         );
     }
 }
