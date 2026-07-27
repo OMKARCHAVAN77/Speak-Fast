@@ -21,7 +21,18 @@ import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/registra
 import { ToastrService } from 'ngx-toastr';
 
 
+interface formData{
+          firstName: '',
+          lastName: '',
+          contactNumber: '',
+          email:'',
+          password: '',
 
+          district: '',
+          qualification: '',
+          occupation:''
+
+}
 
 @Component({
   selector: 'app-registration',
@@ -43,10 +54,10 @@ MatNativeDateModule,
 export class RegistrationComponent implements OnInit {
 
 
- districts = MAHARASHTRA_DISTRICTS;
-searchDistrict = '';
-filteredDistricts: string[] = [];
-showDistrictDropdown = false;
+  districts = MAHARASHTRA_DISTRICTS;
+  searchDistrict = '';
+  filteredDistricts: string[] = [];
+  showDistrictDropdown = false;
 
   qualifications = QUALIFICATIONS
   filteredQualifications: string[] = [];
@@ -58,11 +69,14 @@ showDistrictDropdown = false;
   showOccupationDropdown = false;
   isPasswordHide: boolean = false;
 
+  payLoadFormData!:formData;
 
   showPassword = false;
   showConfirmPassword = false;
 
   registrationForm!: FormGroup;
+
+
 
   isLoaderOn= signal<boolean>(false);
   constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService) {
@@ -72,25 +86,26 @@ showDistrictDropdown = false;
 
   ngOnInit(): void {
       this.formInitialization();
+
   }
 
-  formInitialization() {
-      this.registrationForm = this.fb.group({
-        firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
-        lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
-        contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
-        email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
-        password: ['',[Validators.required,RegistrationValidator.password]],
-        confirmPassword: ['',Validators.required],
-        district: ['',Validators.required],
-        qualification: ['',Validators.required],
-        occupation: ['',Validators.required]
+    formInitialization() {
+        this.registrationForm = this.fb.group({
+          firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
+          email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
+          password: ['',[Validators.required,RegistrationValidator.password]],
+          confirmPassword: ['',Validators.required],
+          district: ['',Validators.required],
+          qualification: ['',Validators.required],
+          occupation: ['',Validators.required]
 
-      },
-  {
-    validators: RegistrationValidator.passwordChecking
-  });
-  }
+        },
+    {
+      validators: RegistrationValidator.passwordChecking
+    });
+    }
 
 
 
@@ -200,12 +215,33 @@ selectOccupation(occupation: string) {
 }
   onSubmit() {
     console.log("form value is ",this.registrationForm.valid);
+    const { confirmPassword, ...payload } = this.registrationForm.value;
+    //  this.payLoadFormData={...this.registrationForm.value};
+    // console.log("Obervable value ------- ",this.studentServ.getCourseName(),"second ",this.studentServ.getCoursePrice());
+    let val=this.registrationForm.value;
 
-    if(this.registrationForm.valid){
+    const payLoadMain = {
+        // ...payload,
+        firstName:'dsfkkdkskssf',
+        lastName:'iuhgryueiocnhjh',
+        contactNumber:'8345207845',
+        email:'murgudkolhapur@gmail.com',
+        password:'Ljhhgjg@12345',
+        district:'Kolhapur',
+        qualification:'12th',
+        occupation:'Student',
+        teacherId: '6a65a69673ef28a3f1eb5b2f',
+        slotId: '6a65a69673ef28a3f1eb5b32',
+        courseName:this.studentServ.getCourseName(),
+        coursePrice:this.studentServ.getCoursePrice()
+      }
+     console.log("main palyload ",payLoadMain);
+
+    // if(this.registrationForm.valid){
       this.isLoaderOn.set(true);
 
       setTimeout(()=>{
-        this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
+        this.studentServ.addStudentApi(payLoadMain).subscribe({
           next:(data:any)=>{
             console.log(data.massage)
             this.isLoaderOn.set(false);
@@ -217,7 +253,7 @@ selectOccupation(occupation: string) {
           },error:(err:any)=>{
 
             this.isLoaderOn.set(false);
-            console.log(err.m)
+            console.log(err)
 
               this.toastr.error(
                 'Registration failed!',
@@ -227,14 +263,13 @@ selectOccupation(occupation: string) {
         })
       },1000);
 
-      // alert('Registration Successful');
-      console.log(this.registrationForm.value);
 
-    } else {
 
-      this.registrationForm.markAllAsTouched();
+    // } else {
 
-    }
+    //   this.registrationForm.markAllAsTouched();
+
+    // }
 
   }
 

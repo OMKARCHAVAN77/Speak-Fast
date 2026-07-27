@@ -27,7 +27,7 @@ interface Student {
   progress: number;
   onLeave?: string;
 }
- 
+
 
 
 
@@ -58,7 +58,7 @@ ngOnInit(): void {
 }
 
 loadStudents() {
-  this.http.get<any>(`${environment.apiUrl}/students/getallstudent`)
+  this.http.get<any>('http://localhost:3000/api/student')
     .subscribe({
       next: (res) => {
         this.allStudentList.set(res.data);
@@ -106,4 +106,4 @@ loadStudents() {
     const phone = student.contactNumber.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${phone}`, '_blank');
   }
-}  
+}
