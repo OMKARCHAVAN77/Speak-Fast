@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <form class="drawer-form" (ngSubmit)="onSubmit()" #teacherForm="ngForm">
+  <form class="drawer-form" (ngSubmit)="onSubmit(teacherForm)" #teacherForm="ngForm">
     <div class="name-row">
       <div class="name-field">
         <label class="field-label">First Name</label>
@@ -154,8 +154,13 @@
       </div>
     </div>
     <!-- ===== END BOOK SLOTS ===== -->
-    <button type="submit" class="submit-btn">
-      <mat-icon class="btn-icon">add</mat-icon> Add Teacher
+
+    <!-- ===== SUBMIT ERROR ===== -->
+    <div class="slot-error" *ngIf="submitError">{{ submitError }}</div>
+
+    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+      <mat-icon class="btn-icon">{{ isSubmitting ? 'hourglass_empty' : 'add' }}</mat-icon>
+      {{ isSubmitting ? 'Adding...' : 'Add Teacher' }}
     </button>
   </form>
 </div>
