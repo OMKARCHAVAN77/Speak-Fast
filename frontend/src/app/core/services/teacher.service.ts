@@ -19,6 +19,9 @@ export interface Teacher {
   providedIn: 'root',
 })
 export class TeacherService {
+  deleteTeacher(_id: string) {
+    throw new Error('Method not implemented.');
+  }
 
   private baseUrl = `${environment.apiUrl}/teacher`;
 

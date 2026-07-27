@@ -1,76 +1,147 @@
-<div class="manage-teachers">
+<div class="page-wrap">
+
   <!-- Header -->
-  <div class="header">
-    <div class="header__title">
-      <h1>Manage Teachers</h1>
-      <span class="header__subtitle">Total: {{ totalTeachers }} teachers</span>
+  <div class="page-header">
+    <div class="title-block">
+      <h2 class="page-title">Teachers</h2>
+      <span class="count-pill">{{ totalTeachers }} total</span>
     </div>
 
-    <div class="header__actions">
+    <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
         <input
           matInput
           type="text"
           placeholder="Search Teachers..."
-          [(ngModel)]="searchTerm"
-        />
-        <mat-icon matSuffix class="filter-icon">tune</mat-icon>
+          [(ngModel)]="searchTerm" />
       </mat-form-field>
-    <div class="page-wrapper">
-        <button class="add-teacher-btn" (click)="openDrawer()">+ Add Teacher</button>
-    
-        <app-add-teacher-dialog [isOpen]="drawerOpen" (closeDrawer)="onDrawerClose()"
-            (addTeacher)="onTeacherAdded($event)"></app-add-teacher-dialog>
-    </div>
+
+      <button mat-flat-button class="add-btn" (click)="openDrawer()">
+        <mat-icon>add</mat-icon>
+        <span>Add Teacher</span>
+      </button>
     </div>
   </div>
 
-  <!-- Teacher List -->
-  <div class="teacher-list">
+  <!-- Table card -->
+  <div class="table-card">
 
     <!-- Loading state -->
-    <div class="empty-state" *ngIf="loading">
-      <p>Loading teachers...</p>
+    <div class="state-row" *ngIf="loading">
+      <span>Loading teachers…</span>
     </div>
 
-    <div class="teacher-card" *ngFor="let teacher of filteredTeachers">
-      <div class="teacher-card__main">
-        <div class="avatar">
-          <img
-            *ngIf="teacher.photo"
-            [src]="environment.apiUrl + '/uploads/' + teacher.photo"
-            [alt]="teacher.firstName + ' ' + teacher.lastName"
-            class="avatar-img"
-          />
-          <mat-icon *ngIf="!teacher.photo">person</mat-icon>
-        </div>
-
-        <div class="teacher-info">
-          <div class="teacher-info__name-row">
-            <span class="teacher-name">{{ teacher.firstName }} {{ teacher.lastName }}</span>
-          </div>
-          <span class="teacher-subjects">{{ teacher.email }}</span>
-        </div>
-      </div>
-
-      <div class="teacher-card__actions" *ngIf="teacher.googleMeetLink">
-        <a
-          [href]="teacher.googleMeetLink"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="meet-link-btn"
-        >
-          <mat-icon>videocam</mat-icon>
-          Join Meet
-        </a>
-      </div>
+    <!-- Empty state -->
+    <div class="state-row" *ngIf="!loading && filteredTeachers.length === 0">
+      <span>No teachers found.</span>
     </div>
 
-    <!-- Empty state (only after loading finishes) -->
-    <div class="empty-state" *ngIf="!loading && filteredTeachers.length === 0">
-      <mat-icon>search_off</mat-icon>
-      <p>No teachers match your search.</p>
-    </div>
+    <table class="student-table" *ngIf="!loading && filteredTeachers.length > 0">
+      <thead>
+        <tr>
+          <th class="col-name">
+            <span class="th-label">Name</span>
+            <mat-icon class="sort-icon">unfold_more</mat-icon>
+          </th>
+          <th class="col-contact">Contact</th>
+          <th class="col-aadhar">Aadhar No.</th>
+          <th class="col-timeslot">
+            <span class="th-label">Time Slot</span>
+            <mat-icon class="sort-icon">unfold_more</mat-icon>
+          </th>
+          <th class="col-class">Class</th>
+          <th class="col-action">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let teacher of filteredTeachers">
+          <!-- Name + Avatar -->
+          <td class="col-name">
+            <div class="name-cell">
+              <img
+                *ngIf="teacher.photo"
+                [src]="teacher.photo"
+                class="avatar avatar-photo"
+                alt="" />
+              <span *ngIf="!teacher.photo" class="avatar">
+                {{ teacher.firstName.charAt(0) }}{{ teacher.lastName.charAt(0) }}
+              </span>
+              <span class="name-text">{{ teacher.firstName }} {{ teacher.lastName }}</span>
+            </div>
+          </td>
+
+          <!-- Contact -->
+          <td class="col-contact">
+            <div class="contact-cell">
+              <div class="contact-line">
+                <mat-icon class="contact-icon">mail_outline</mat-icon>
+                <span>{{ teacher.email }}</span>
+              </div>
+              <div class="contact-line" *ngIf="teacher.contactNumber">
+                <mat-icon class="contact-icon">call</mat-icon>
+                <span>{{ teacher.contactNumber }}</span>
+              </div>
+            </div>
+          </td>
+
+          <!-- Aadhar -->
+          <td class="col-aadhar">{{ teacher.aadharNo || '-' }}</td>
+
+          <!-- Time Slot -->
+          <td class="col-timeslot">
+            <div class="timeslot-cell">
+              <span *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
+              <span *ngIf="!teacher.slots?.length">-</span>
+            </div>
+          </td>
+
+          <!-- Class / Meet button -->
+          <td class="col-class">
+            <a
+              *ngIf="teacher.googleMeetLink"
+              mat-flat-button
+              class="meet-btn"
+              [href]="teacher.googleMeetLink"
+              target="_blank"
+              rel="noopener">
+              <mat-icon class="meet-icon">videocam</mat-icon>
+              <span>Meet</span>
+            </a>
+            <span *ngIf="!teacher.googleMeetLink" class="no-meet">—</span>
+          </td>
+
+          <!-- Action -->
+          <td class="col-action">
+            <div class="action-cell">
+              <button
+                mat-icon-button
+                class="action-btn edit-btn"
+                matTooltip="Edit"
+                (click)="onEditTeacher(teacher)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                class="action-btn delete-btn"
+                matTooltip="Delete">
+                <mat-icon>delete_outline</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+  <!-- Add / Edit Teacher Dialog -->
+  <!-- Dialog owns its own backdrop + panel internally, driven by [isOpen] -->
+  <app-add-teacher-dialog
+    *ngIf="drawerOpen"
+    [isOpen]="drawerOpen"
+    (addTeacher)="onTeacherAdded($event)"
+    (closeDrawer)="onDrawerClose()">
+  </app-add-teacher-dialog>
+
 </div>
