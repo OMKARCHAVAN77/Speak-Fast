@@ -9,7 +9,7 @@ export const sendTeacherMail = async (
   token
 ) => {
   try {
-    const resetLink = `${process.env.FRONTEND_URL}/set-password?token=${token}&email=${teacherEmail}`;
+    const resetLink = `${process.env.FRONTEND_URL}/setpassword?token=${token}&email=${teacherEmail}`;
 
     const html = `
       <h2>Welcome to Speak Fast</h2>
