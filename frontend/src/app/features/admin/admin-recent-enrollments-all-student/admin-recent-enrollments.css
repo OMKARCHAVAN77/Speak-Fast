@@ -1,333 +1,340 @@
 :host {
-  --ink: #1f2430;
-  --muted: #6b7280;
-  --line: #e7e9ee;
-  --card-bg: #ffffff;
-  --page-bg: #ffffff;
-  --brand-blue: #1657d0;
-  --paid-red: #e53935;
   display: block;
-  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
-  background: var(--page-bg);
+  font-family: 'Poppins', 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-/* ---------- Page wrapper ---------- */
-
-.enrollments-page {
-  /* max-width: 1100px; */
-  margin: 0 auto;
-  /* padding: 24px 20px 48px; */
+.enrollments-card {
+  background: #ffffff;
+  border-radius: 16px;
+  /* padding: 28px 32px; */
 }
 
 /* ---------- Header ---------- */
-
-.page-header {
+.enrollments-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
-/* Title block */
-
-.title-block h1 {
-  margin: 0;
+.enrollments-title {
   font-size: 22px;
-  font-weight: 700;
-  color: var(--ink);
+  font-weight: 600;
+  color: #1b2559;
+  margin: 0;
 }
 
-.title-block .subtitle {
-  margin: 4px 0 0;
-  font-size: 13px;
-  color: var(--muted);
-}
-
-/* Actions block (search + date) */
-
-.actions-block {
+.header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.search-field {
-  width: 260px;
-}
-
-/* Remove the reserved hint/error space that adds extra height below the input */
-.search-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
-  display: none;
-}
-
-.search-field ::ng-deep .mat-mdc-text-field-wrapper {
-  height: 44px;
-}
-
-.search-field ::ng-deep .mat-mdc-form-field-infix {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  min-height: unset;
-}
-
-.search-field ::ng-deep .mat-mdc-form-field-flex {
-  align-items: center;
-  height: 44px;
-}
-
-/* Round the outline appearance border */
-.search-field ::ng-deep .mat-mdc-text-field-wrapper {
-  border-radius: 8px !important;
-  overflow: hidden;
-}
-
-.search-field ::ng-deep .mdc-notched-outline__leading {
-  border-radius: 8px 0 0 8px !important;
-  width: 12px !important;
-}
-
-.search-field ::ng-deep .mdc-notched-outline__trailing {
-  border-radius: 0 8px 8px 0 !important;
-  flex: 1 0 auto !important;
-}
-
-.search-field ::ng-deep .mdc-notched-outline__notch {
-  border-radius: 0 !important;
-  max-width: calc(100% - 24px) !important;
-}
-
-.search-icon {
-  color: var(--muted);
-  margin-right: 4px;
-}
-
-.filter-icon {
-  color: var(--muted);
-  cursor: pointer;
-}
-
-.date-btn {
-  height: 44px;
-  border-radius: 8px !important;
-  border-color: var(--line) !important;
-  color: var(--ink) !important;
+.search-box {
   display: flex;
   align-items: center;
   gap: 8px;
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 10px 18px;
+  min-width: 260px;
+  background: #fff;
+}
+
+.search-box .search-icon {
+  color: #a3a9bb;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #1b2559;
+  width: 100%;
+  background: transparent;
+}
+
+.search-box input::placeholder {
+  color: #a3a9bb;
+}
+
+.date-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 10px 20px;
+  background: #fff;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
   white-space: nowrap;
+}
+
+.date-btn:hover {
+  background: #f7f8fb;
 }
 
 .date-btn mat-icon {
   font-size: 18px;
-  height: 18px;
   width: 18px;
-  color: var(--muted);
+  height: 18px;
+  color: #6b7280;
 }
 
-/* ---------- Section label ---------- */
-
-.section-label {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 12px;
+.date-btn .clear-date-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #a3a9bb;
 }
 
-/* ---------- Enrollment list ---------- */
-
-.enrollment-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.date-btn .clear-date-icon:hover {
+  color: #e5484d;
 }
 
-.enrollment-card {
-  background: var(--card-bg);
-  border: 1px solid var(--line);
+.hidden-date-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Style the Angular Material calendar panel to match the theme */
+::ng-deep .mat-datepicker-content {
+  background-color: #f7f8fb !important;
   border-radius: 12px;
-  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .mat-calendar {
+  background-color: #f7f8fb;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #4f8ef7 !important;
+  color: #fff !important;
+}
+
+::ng-deep .mat-datepicker-toggle-active {
+  color: #4f8ef7 !important;
+}
+
+/* ---------- Table ---------- */
+.table-wrapper {
+  width: 100%;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1.7fr 1.9fr 1.7fr 1.2fr 1.2fr 1.4fr 1.1fr;
+  align-items: center;
+  column-gap: 16px;
+  padding: 20px 8px;
+  border-bottom: 1px solid #eef0f5;
+  border-radius: 10px;
+  transition: background-color 0.15s ease;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.table-row:hover {
+  background-color: #f7f8fb;
+}
+
+.table-head {
+  padding: 0 8px 16px;
+  border-bottom: 1px solid #eef0f5;
+}
+
+.table-head .col {
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  gap: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1b2559;
 }
 
-/* Avatar */
+.sort-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #a3a9bb;
+}
+
+.col-fee {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.table-head .col-fee {
+  justify-content: flex-end;
+}
+
+/* ---------- Name column ---------- */
+.col-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
 .avatar {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: var(--brand-blue);
+  background: #4f8ef7;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-.avatar mat-icon {
-  color: #ffffff;
-  font-size: 24px;
-  height: 24px;
-  width: 24px;
+.name-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1b2559;
 }
 
-/* Card body */
-
-.card-body {
-  flex: 1 1 auto;
-  min-width: 0;
+/* ---------- Contact column ---------- */
+.col-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.name-row {
+.contact-line {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+  gap: 8px;
+  font-size: 14px;
+  color: #1b2559;
 }
 
-.student-name {
+.contact-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #7d8398;
+}
+
+/* ---------- Plan column ---------- */
+.plan-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1b2559;
+}
+
+.teacher-text {
+  font-size: 13px;
+  color: #9aa0b4;
+  margin-top: 2px;
+}
+
+/* ---------- Date / Time columns ---------- */
+.col-date,
+.col-time {
+  font-size: 14px;
+  color: #1b2559;
+}
+
+/* ---------- Fee column ---------- */
+.fee-text {
   font-size: 15px;
   font-weight: 700;
-  color: var(--ink);
+  color: #1b2559;
 }
 
-/* .status-badge {
-  background: var(--paid-red);
-  color: #ffffff;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 2px 10px;
-  border-radius: 10px;
-  line-height: 18px;
-} */
-
-.details-grid {
+.pending-wrap {
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 6px;
-  column-gap: 24px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
 }
 
-.detail-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 12.5px;
-  color: var(--muted);
+.pending-badge {
+  background: #fbe3b8;
+  color: #8a5a12;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 999px;
   white-space: nowrap;
 }
 
-.detail-item mat-icon {
-  font-size: 15px;
-  height: 15px;
-  width: 15px;
-  color: #9aa1ac;
-}
-
-.detail-item.fee {
-  color: var(--ink);
-  font-weight: 500;
-}
-
-/* Details button */
-
-/* .details-btn {
-  flex: 0 0 auto;
-  height: 36px;
-  border-radius: 8px !important;
-  border-color: var(--line) !important;
-  color: var(--ink) !important;
+.action-btns {
   display: flex;
-  align-items: center;
-  gap: 6px;
+  gap: 8px;
+}
+
+.accept-btn,
+.reject-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
   font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #fff;
 }
 
-.details-btn mat-icon {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
-  color: var(--muted);
-} */
-
-/* ---------- Tablet ---------- */
-
-@media (max-width: 1024px) {
-  .details-grid {
-    column-gap: 16px;
-  }
-
-  .search-field {
-    width: 220px;
-  }
+.accept-btn {
+  background: #2fa84f;
 }
 
+.accept-btn:hover {
+  background: #268a41;
+}
+
+.reject-btn {
+  background: #e5484d;
+}
+
+.reject-btn:hover {
+  background: #cc3d42;
+}
+
+/* ---------- Empty state ---------- */
+.empty-state {
+  text-align: center;
+  padding: 32px 0;
+  color: #9aa0b4;
+  font-size: 14px;
+}
+
+/* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .enrollment-card {
+  .table-row {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+    padding: 18px 8px;
+  }
+
+  .col-fee {
+    justify-content: flex-start;
+  }
+
+  .pending-wrap {
     align-items: flex-start;
-    flex-wrap: wrap;
   }
 
-  .details-btn {
-    margin-left: 60px;
+  .table-head {
+    display: none;
   }
-}
-
-/* ---------- Mobile ---------- */
-
-@media (max-width: 600px) {
-  .enrollments-page {
-    padding: 16px 14px 32px;
-  }
-
-  .page-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .actions-block {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .search-field,
-  .date-btn {
-    width: 100%;
-  }
-
-  .date-btn {
-    justify-content: center;
-  }
-
-  .enrollment-card {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 16px;
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-  }
-
-  .details-grid {
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .detail-item {
-    white-space: normal;
-  }
-
-  /* .details-btn {
-    margin-left: 0;
-    width: 100%;
-    justify-content: center;
-  } */
 }
