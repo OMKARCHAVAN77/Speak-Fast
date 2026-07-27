@@ -27,15 +27,16 @@ export class ResetPassword {
 
 
 
-  resetPassword() {
+  resetPassword(): void {
 
-    if (!this.emailVal.trim()) {
+    // Email Validation
+    if (!this.emailVal || this.emailVal.trim() === "") {
 
       this.snackBar.open(
-        "Please enter your email.",
+        "Please enter your registered email.",
         "Close",
         {
-          duration: 4000,
+          duration: 3000,
           horizontalPosition: "right",
           verticalPosition: "top",
           panelClass: ["error-snackbar"]
@@ -53,47 +54,50 @@ export class ResetPassword {
       .forgotStudentPassword(body)
       .subscribe({
 
-        next: (response: any) => {
+      next: (response: any) => {
 
-          console.log("Forgot Password Success :", response);
+        console.log("Forgot Password Success", response);
 
-          this.snackBar.open(
-            response.message,
-            "Close",
-            {
-              duration: 4000,
-              horizontalPosition: "right",
-              verticalPosition: "top",
-              panelClass: ["success-snackbar"]
-            }
-          );
+        this.snackBar.open(
+          response.message || "Password reset link sent successfully.",
+          "Close",
+          {
+            duration: 4000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["success-snackbar"]
+          }
+        );
 
-          // Snackbar पूर्ण दिसल्यानंतरच Navigate करा
-          setTimeout(() => {
+        setTimeout(() => {
+          this.router.navigate(['/fogotPassword/sentLink']);
+        }, 4000);
 
-            this.router.navigate([
-              "/forgotPassword/sentLink"
-            ]);
-
-          }, 4000);
-
-        },
+      },
 
         error: (err: any) => {
 
-          console.log("Forgot Password Error :", err);
+          console.log("Forgot Password Error", err);
 
           this.snackBar.open(
-            err?.error?.message || "Something went wrong.",
+
+            err?.error?.message ||
+
+            "Unable to send reset password link.",
+
             "Close",
+
             {
-              duration: 4000,
+              duration: 3000,
               horizontalPosition: "right",
               verticalPosition: "top",
               panelClass: ["error-snackbar"]
             }
+
           );
+
         }
+
       });
 
   }
