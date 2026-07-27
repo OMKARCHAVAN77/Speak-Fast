@@ -3,13 +3,17 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
 export const sendForgotPasswordMail = async (
   studentEmail,
   studentName,
   token
 ) => {
   try {
+    console.log("[forgot-password] sending reset email", {
+      studentEmail,
+      studentName,
+      token,
+    });
 
     // const resetLink =
     //   `${process.env.FRONTEND_URL}/reset-password/${token}`;

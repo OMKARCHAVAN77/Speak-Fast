@@ -36,8 +36,8 @@ export class ConfirmPassword {
 
   ngOnInit() {
     this.token = this.route.snapshot.paramMap.get('token'); 
-    this.token = this.route.snapshot.queryParamMap.get('token');
-    this.email = this.route.snapshot.queryParamMap.get('email');
+    // this.token = this.route.snapshot.queryParamMap.get('token');
+    // this.email = this.route.snapshot.queryParamMap.get('email');
   }
 
   togglePassword() {

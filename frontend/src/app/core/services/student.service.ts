@@ -52,7 +52,7 @@ export class StudentService {
     }
 
     // student forgot password service
-    private baseUrl = "https://speak-fast.onrender.com/api/auth";
+    private baseUrl = `${environment.apiUrl}/auth`;
 
     forgotStudentPassword(body: { email: string }) {
         return this.http.post(`${this.baseUrl}/forgot-password`, body);

@@ -30,7 +30,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'resetpassword', pathMatch: 'full' },
             { path: 'resetpassword', component: ResetPassword },
             { path: 'sentLink', component: LinkSent },
-            { path: 'confirmPassword', component: ConfirmPassword },
+            { path: 'confirmPassword/:token', component: ConfirmPassword },
             { path: 'passwordChanged', component: PasswordChanged }
 
         ]
