@@ -156,8 +156,8 @@ logingForm!: FormGroup;
 
   formInitializer(){
     this.logingForm= this.fb.group({
-      email: ['som@gmail.com',[Validators.required,RegistrationValidator.isEmailCorrect]],
-      password:['Welcome@123456',[Validators.required]],
+      email: ['',[Validators.required,RegistrationValidator.isEmailCorrect]],
+      password:['',[Validators.required]],
         isChecked:[false,[Validators.requiredTrue]]
     })
   }

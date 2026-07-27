@@ -11,51 +11,14 @@
     <h1 class="welcome-heading">Welcome Back!</h1>
     <p class="welcome-subtext">The best English language training institute in Pune</p>
 
-    <form  [formGroup]="logingForm">
+    <form [formGroup]="logingForm">
 
-      <!-- <mat-radio-group [(ngModel)]="selectedRole" name="role">
-  <mat-radio-button value="teacher">Teacher</mat-radio-button>
-  <mat-radio-button value="admin">Admin</mat-radio-button>
-  <mat-radio-button value="student">Student</mat-radio-button>
-</mat-radio-group> -->
-
-      <!-- <div class="role-tabs" role="tablist">
-
-  <button
-    type="button"
-    class="role-tab"
-    [class.active]="selectedRole === 'admin'"
-    (click)="selectedRole = 'admin'">
-    <mat-icon>person</mat-icon>
-    <span>Admin</span>
-  </button>
-
-
-
-  <button
-    type="button"
-    class="role-tab"
-    [class.active]="selectedRole === 'teacher'"
-    (click)="selectedRole = 'teacher'">
-    <mat-icon>auto_stories</mat-icon>
-    <span>Teacher</span>
-  </button>
-
-  <button
-    type="button"
-    class="role-tab"
-    [class.active]="selectedRole === 'student'"
-    (click)="selectedRole = 'student'">
-    <mat-icon>school</mat-icon>
-    <span>Student</span>
-  </button>
-</div> -->
 
       <!-- Email -->
 
       <div class="email-wrapper">
         <Label id="email-">Email Address</Label>
-        <input id="email" type="text"  formControlName="email" placeholder="Enter your email here">
+        <input id="email" type="text" formControlName="email" placeholder="Enter your email here">
         @if(logingForm.get('email')?.hasError('required') && logingForm.get('email')?.touched){
         <small class="text-danger">field is required</small>
         }
@@ -69,8 +32,8 @@
         <label>Password</label>
 
         <div class="position-relative ">
-          <input [type]="showPassword ? 'text' : 'password'" class="form-control"
-            formControlName="password" placeholder="Enter your password">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control"  formControlName="password"
+            placeholder="Enter your password">
 
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()">
           </i>
@@ -80,34 +43,30 @@
         }
       </div>
 
-      <!-- Error Message -->
-      <!-- <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px; font-size: 14px;">
-        {{ errorMessage }}
-      </div> -->
 
       <!-- Remember me / Forgot password -->
       <div class="check-out-wrapper top-row ">
         <div class="mb-3 form-check">
-
-
-            <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isChecked"
-              >
-            @if(logingForm.get('isChecked')?.hasError('requiredTrue') && logingForm.get('isChecked')?.untouched){
-            <small class="text-danger">field is required</small>
-            }
-
-
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isChecked">
           <label class="form-check-label" for="exampleCheck1">Remember me</label>
 
+          @if ( logingForm.get('isChecked')?.hasError('required') && logingForm.get('isChecked')?.touched
+          ) {
+          <small class="text-danger d-block">
+            Please check this box.
+          </small>
+          }
         </div>
 
-        <a routerLink="/forgotPassword" class="forgot-link" >
+
+
+        <a routerLink="/forgotPassword" class="forgot-link">
           Forgot password?
         </a>
       </div>
 
       <!-- Login Button -->
-      <button mat-raised-button type="submit" class="btn-login w-100" (click)="submitData()"   >
+      <button mat-raised-button type="submit" class="btn-login w-100" (click)="submitData()">
         <div class="text-white">
           Login&nbsp;
         </div>
