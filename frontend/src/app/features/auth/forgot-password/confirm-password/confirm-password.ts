@@ -4,11 +4,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
-import { environment } from '../../../../../environments/environments';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-confirm-password',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule,  FormsModule, ReactiveFormsModule],
   templateUrl: './confirm-password.html',
   styleUrl: './confirm-password.css',
 })

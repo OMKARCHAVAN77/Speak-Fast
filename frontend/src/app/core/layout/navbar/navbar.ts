@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment';
 
 interface NavLink {
   label: string;
@@ -44,13 +44,13 @@ export class Navbar {
     this.isMenuOpen = false;
   }
 
-  onCallNow(): void {
-    window.location.href = 'tel:+10000000000';
-  }
+  // onCallNow(): void {
+  //   window.location.href = 'tel:+10000000000';
+  // }
 
-  onLogIn(): void {
-    console.log('Log In clicked');
-  }
+  // onLogIn(): void {
+  //   console.log('Log In clicked');
+  // }
 
   onLogout(): void {
   this.http.post<any>(this.logoutUrl, {}, { withCredentials: true }).subscribe({

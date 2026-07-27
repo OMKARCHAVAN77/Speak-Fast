@@ -1,42 +1,36 @@
-import { Router } from "express";
-import { register,loginStudent,forgotPassword,getAllStudents, resetPassword ,getStudentProfile } from "../student/student.controller.js";
+import express from "express";
+import { authenticate } from "../../middlewares/auth.middleware.js";
+import { authorize } from "../../middlewares/role.middleware.js";
 
-const router = Router();
+import {
+    // registerStudent,
+    getAllStudents,
+    getStudentById,
+    updateStudent,
+    deleteStudent
+} from "./student.controller.js";
 
-/**
- * Student Registration
- * POST /api/students/register
- */
-// student register API
-router.post("/register", register);
-
-// student login API
-router.post("/login", loginStudent);
-
-// student login API
-router.post("/forgot-password", forgotPassword );
-
-// get all student API
-router.get("/getallstudent", getAllStudents );
+const router = express.Router();
 
 
-// book slot
+// ==========================================
+// Student Registration he logic me booking folder madhe ahe
+// ==========================================
+// router.post(
+//     "/register",
+//     registerStudent
+// );
 
+// get all student
+router.get("/",authenticate,authorize("admin"), getAllStudents);
 
+// get single student
+router.get("/:id",authenticate,authorize("student"), getStudentById);
 
-import { bookSlot } from "../student/student.controller.js";
+// update single student
+router.put("/:id", updateStudent);
 
-//  book slot
-router.post("/book-slot", bookSlot);
-
-// get student profile
-router.get("/profile/:studentId", getStudentProfile);
-
-
-
-// reset student password
-// router.patch("/reset-password/:token", resetPassword);
-router.post("/reset-password", resetPassword);
+// Delete single student
+router.delete("/:id", deleteStudent);
 
 export default router;
-

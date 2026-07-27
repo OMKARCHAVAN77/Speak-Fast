@@ -1,162 +1,189 @@
-import asyncHandler from "../../middlewares/asyncHandler.js";
-import ApiResponse from "../../utils/ApiResponse.js";
-import { registerStudent, loginStudentService ,forgotPasswordService,getAllStudentsService, resetPasswordService,bookSlotService ,getStudentProfileService  } from "../student/student.service.js";
+import {
+    // registerStudentService,
+    getAllStudentsService,
+    getStudentByIdService,
+    updateStudentService,
+    deleteStudentService
+} from "./student.service.js";
 
 
-//student registration controller 
+// ==========================================
+// Register Student he logic me booking folder madhe ahe
+// ==========================================
+// export const registerStudent = async (req, res) => {
 
-const register = asyncHandler(async (req, res) => {
-  const student = await registerStudent(req.body);
-
-  return res.status(201).json(
-    new ApiResponse(
-      201,
-      "Student Registered Successfully",
-      student
-    )
-  );
-});
-export { register };
-
-
-// student login controller
-const loginStudent = asyncHandler(async (req, res) => {
-
-    const result = await loginStudentService(req.body);
-
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            "Login Successful",
-            result
-        )
-    );
-
-});
-export { loginStudent };
-
-
-// student forgot password controller
-const forgotPassword = asyncHandler( async (req, res) => {
-
-    const { email } = req.body;
-
-    await forgotPasswordService(email);
-
-    return res.status(200).json(
-
-      new ApiResponse(
-        200,
-        "Password reset link sent successfully."
-      )
-    );
-  }
-);
-export { forgotPassword };
-
-
-// get all student controller
-const getAllStudents = asyncHandler(async (req, res) => {
-
-    const students = await getAllStudentsService();
-
-    return res.status(200).json(
-        new ApiResponse(
-            200,
-            "Students fetched successfully.",
-            students
-        )
-    );
-});
-export { getAllStudents };
-
-
-// Reset Student Password Controller
-const resetPassword = asyncHandler(async (req, res) => {
-  const { email, token, newPassword } = req.body;
-  await resetPasswordService(email, token, newPassword);
-  return res.status(200).json(new ApiResponse(200, "Password reset successful."));
-});
-export {resetPassword}
-
-
-// book slot teacher
-// const bookSlot = async (req, res) => {
 //     try {
 
-//         const { teacherId, slotId, studentId } = req.body;
-
-//         const booking = await bookSlotService(
-//             teacherId,
-//             slotId,
-//             studentId
+//         const student = await registerStudentService(
+//             req.body
 //         );
 
-//         res.status(200).json({
+//         return res.status(201).json({
+
 //             success: true,
-//             message: "Slot booked successfully",
-//             data: booking
+
+//             message: "Student registered successfully.",
+
+//             data: student
+
 //         });
 
 //     } catch (error) {
 
-//         res.status(400).json({
+//         return res.status(400).json({
+
 //             success: false,
+
 //             message: error.message
+
 //         });
 
 //     }
+
 // };
-const bookSlot = async (req, res) => {
+
+
+// ==========================================
+// Get All Students
+// ==========================================
+export const getAllStudents = async (req, res) => {
+
     try {
 
-        const { teacherId, slotId, studentId } = req.body;
+        const students = await getAllStudentsService();
 
-        const booking = await bookSlotService(
-            teacherId,
-            slotId,
-            studentId
-        );
+        return res.status(200).json({
 
-        res.status(200).json({
             success: true,
-            message: "Slot booked successfully",
-            data: booking
+
+            total: students.length,
+
+            data: students
+
         });
 
     } catch (error) {
 
-        res.status(400).json({
+        return res.status(400).json({
+
             success: false,
+
             message: error.message
+
         });
+
     }
+
 };
-export { bookSlot };
 
 
-// student profile controller
- const getStudentProfile = async (req, res) => {
+// ==========================================
+// Get Student By ID
+// ==========================================
+export const getStudentById = async (req, res) => {
 
     try {
 
-        const { studentId } = req.params;
+        const { id } = req.params;
 
-        const student = await getStudentProfileService(studentId);
+        const student = await getStudentByIdService(id);
 
-        res.status(200).json({  
+        return res.status(200).json({
+
             success: true,
+
             data: student
+
         });
 
-    } catch (err) {
+    } catch (error) {
 
-        res.status(500).json({
+        return res.status(400).json({
+
             success: false,
-            message: err.message
+
+            message: error.message
+
         });
 
     }
 
 };
-export {getStudentProfile}
+
+
+
+// ==========================================
+// Update Student
+// ==========================================
+export const updateStudent = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        const student = await updateStudentService(
+            id,
+            req.body,
+            {
+              returnDocument: "after"
+             }
+        );
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Student updated successfully.",
+
+            data: student
+
+        });
+
+    } catch (error) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};
+
+
+
+// ==========================================
+// Delete Student
+// ==========================================
+export const deleteStudent = async (req, res) => {
+
+    try {
+
+        const { id } = req.params;
+
+        await deleteStudentService(id);
+
+        return res.status(200).json({
+
+            success: true,
+
+            message: "Student deleted successfully."
+
+        });
+
+    } catch (error) {
+
+        return res.status(400).json({
+
+            success: false,
+
+            message: error.message
+
+        });
+
+    }
+
+};

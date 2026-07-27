@@ -10,7 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
@@ -21,6 +21,7 @@ type UserType = 'student' | 'teacher' | 'admin';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+
     MatIconModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',

@@ -1,13 +1,13 @@
+import { OCCUPATIONS, QUALIFICATIONS,  } from '../../../core/Shared-common-list/registration-dummy-data';
+import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
-  Validators
+  Validators,
 } from '@angular/forms';
 import { StudentService } from '../../../core/services/student.service';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -16,41 +16,22 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { environment } from '../../../../environments/environments';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/registration-dummy-data';
+import { ToastrService } from 'ngx-toastr';
 
 
-function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-  const password = group.get('password')?.value;
-  const confirmPassword = group.get('confirmPassword')?.value;
-  const confirmControl = group.get('confirmPassword');
+interface formData{
+          firstName: '',
+          lastName: '',
+          contactNumber: '',
+          email:'',
+          password: '',
 
-  if (!confirmControl) {
-    return null;
-  }
+          district: '',
+          qualification: '',
+          occupation:''
 
-  if (password && confirmPassword && password !== confirmPassword) {
-    confirmControl.setErrors({ ...confirmControl.errors, mismatch: true });
-    return { mismatch: true };
-  }
-
-
-  if (confirmControl.hasError('mismatch')) {
-    const { mismatch, ...rest } = confirmControl.errors ?? {};
-    confirmControl.setErrors(Object.keys(rest).length ? rest : null);
-  }
-
-  return null;
-}
-
-
-function optionInListValidator(options: string[]) {
-  return (control: AbstractControl): ValidationErrors | null => {
-    const value = control.value;
-    if (!value) {
-      return null; // let Validators.required handle the empty case
-    }
-    return options.includes(value) ? null : { notInList: true };
-  };
 }
 
 @Component({
@@ -64,6 +45,8 @@ MatIconModule,
 MatSelectModule,
 MatDatepickerModule,
 MatNativeDateModule,
+
+    MatAutocompleteModule
 ],
   templateUrl: './registration.html',
   styleUrl: './registration.css'
@@ -71,140 +54,263 @@ MatNativeDateModule,
 export class RegistrationComponent implements OnInit {
 
 
+  districts = MAHARASHTRA_DISTRICTS;
+  searchDistrict = '';
+  filteredDistricts: string[] = [];
+  showDistrictDropdown = false;
 
-  // registrationForm: FormGroup;
+  qualifications = QUALIFICATIONS
+  filteredQualifications: string[] = [];
+  showQualificationDropdown = false;
+  // searchQualification='';
 
-  districts = [
-    'Pune',
-    'Mumbai',
-    'Kolhapur',
-    'Sangli',
-    'Satara',
-    'Nashik',
-    'Nagpur',
-    'Solapur'
-  ];
+  occupations = OCCUPATIONS;
+  filteredOccupations: string[] = [];
+  showOccupationDropdown = false;
+  isPasswordHide: boolean = false;
 
-  qualifications = [
-    '10th',
-    '12th',
-    'Diploma',
-    'Graduate',
-    'Post Graduate',
-    'Other'
-  ];
+  payLoadFormData!:formData;
 
-  occupations = [
-    'Student',
-    'Business',
-    'Employee',
-    'Self Employed',
-    'Housewife',
-    'Other'
-  ];
-
-  // NEW: controls whether password fields render as plain text or masked
   showPassword = false;
   showConfirmPassword = false;
 
-  // NEW: searchable dropdown state for District and Qualification
-  showDistrictDropdown = false;
-  showQualificationDropdown = false;
-  filteredDistricts: string[] = this.districts;
-  filteredQualifications: string[] = this.qualifications;
   registrationForm!: FormGroup;
 
-constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient) {
 
 
+  isLoaderOn= signal<boolean>(false);
+  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService) {
 
   }
 
 
   ngOnInit(): void {
       this.formInitialization();
-  }
-  formInitialization() {
-      this.registrationForm = this.fb.group({
-        firstName: ['swai'],
-        lastName: ['shettvy'],
-        contactNumber: ['9223165720'],
-        email: ['saishetety.ux@gmail.com'],
-        password: ['Saisheqtty@123'],
-        confirmPassword: ['Saiswhetty@123'],
-        district: ['kolhapeur'],
-        qualification: ['wwBtech'],
-        occupation: ['Studeent']
 
-      });
   }
 
-  onSubmit() {
-    console.log("form value is ",this.registrationForm.valid);
-    if (this.registrationForm.valid) {
+    formInitialization() {
+        this.registrationForm = this.fb.group({
+          firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
+          email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
+          password: ['',[Validators.required,RegistrationValidator.password]],
+          confirmPassword: ['',Validators.required],
+          district: ['',Validators.required],
+          qualification: ['',Validators.required],
+          occupation: ['',Validators.required]
 
-
-      this.http.post (`${environment.apiUrl}/students/register`,this.registrationForm.value).subscribe({
-        next:(data:any)=>{
-          console.log(data.massage)
-          alert('sucessfully registered');
-          this.registrationForm.reset();
-        },error:(err:any)=>{
-            alert("Success Messeage")
-          console.log(err)
-                    alert('fail registertion');
-        }
-      })
-
-      // alert('Registration Successful');
-      console.log(this.registrationForm.value);
-
-    } else {
-
-      this.registrationForm.markAllAsTouched();
-
+        },
+    {
+      validators: RegistrationValidator.passwordChecking
+    });
     }
 
+
+
+    togglePassword(){
+      this.isPasswordHide=!this.isPasswordHide;
+    }
+
+    filterDistricts() {
+    const search =
+      this.registrationForm.get('district')?.value?.toLowerCase() || '';
+
+    this.filteredDistricts = this.districts.filter(d =>
+      d.toLowerCase().includes(search)
+    );
+
+    this.showDistrictDropdown = true;
   }
 
-  
+  showAllDistricts() {
+    this.filteredDistricts = [...this.districts];
+    this.showDistrictDropdown = true;
+  }
 
+  toggleDistrictDropdown() {
+    this.showDistrictDropdown = !this.showDistrictDropdown;
+
+    if (this.showDistrictDropdown) {
+      this.filteredDistricts = [...this.districts];
+    }
+  }
+
+  selectDistrict(district: string) {
+    this.registrationForm.patchValue({
+      district
+    });
+
+    this.showDistrictDropdown = false;
+  }
+
+
+
+
+filterQualifications() {
+  const search =
+    this.registrationForm.get('qualification')?.value?.toLowerCase() || '';
+
+    this.filteredQualifications = this.qualifications.filter(q =>
+      q.toLowerCase().includes(search)
+    );
+
+    this.showQualificationDropdown = true;
+  }
+
+  showAllQualifications() {
+    this.filteredQualifications = [...this.qualifications];
+    this.showQualificationDropdown = true;
+  }
+
+  toggleQualificationDropdown() {
+    this.showQualificationDropdown = !this.showQualificationDropdown;
+
+    if (this.showQualificationDropdown) {
+      this.filteredQualifications = [...this.qualifications];
+    }
+  }
+
+  selectQualification(qualification: string) {
+    this.registrationForm.patchValue({
+      qualification
+    });
+
+    this.showQualificationDropdown = false;
+  }
+
+
+
+  filterOccupations() {
+  const search =
+    this.registrationForm.get('occupation')?.value?.toLowerCase() || '';
+
+  this.filteredOccupations = this.occupations.filter(o =>
+    o.toLowerCase().includes(search)
+  );
+
+  this.showOccupationDropdown = true;
 }
-//   ngOnInit(): void {
 
-//     this.initializeForm();
+showAllOccupations() {
+  this.filteredOccupations = [...this.occupations];
+  this.showOccupationDropdown = true;
+}
+
+toggleOccupationDropdown() {
+  this.showOccupationDropdown = !this.showOccupationDropdown;
+
+  if (this.showOccupationDropdown) {
+    this.filteredOccupations = [...this.occupations];
+  }
+}
+
+selectOccupation(occupation: string) {
+  this.registrationForm.patchValue({
+    occupation: occupation
+  });
+
+  this.showOccupationDropdown = false;
+}
+  onSubmit() {
+    console.log("form value is ",this.registrationForm.valid);
+    const { confirmPassword, ...payload } = this.registrationForm.value;
+    //  this.payLoadFormData={...this.registrationForm.value};
+    // console.log("Obervable value ------- ",this.studentServ.getCourseName(),"second ",this.studentServ.getCoursePrice());
+    let val=this.registrationForm.value;
+
+    const payLoadMain = {
+        // ...payload,
+        firstName:'dsfkkdkskssf',
+        lastName:'iuhgryueiocnhjh',
+        contactNumber:'8345207845',
+        email:'murgudkolhapur@gmail.com',
+        password:'Ljhhgjg@12345',
+        district:'Kolhapur',
+        qualification:'12th',
+        occupation:'Student',
+        teacherId: '6a65a69673ef28a3f1eb5b2f',
+        slotId: '6a65a69673ef28a3f1eb5b32',
+        courseName:this.studentServ.getCourseName(),
+        coursePrice:this.studentServ.getCoursePrice()
+      }
+     console.log("main palyload ",payLoadMain);
+
+    // if(this.registrationForm.valid){
+      this.isLoaderOn.set(true);
+
+      setTimeout(()=>{
+        this.studentServ.addStudentApi(payLoadMain).subscribe({
+          next:(data:any)=>{
+            console.log(data.massage)
+            this.isLoaderOn.set(false);
+            this.toastr.success(
+              'User registered successfully!',
+              'Success'
+            );
+            this.registrationForm.reset();
+          },error:(err:any)=>{
+
+            this.isLoaderOn.set(false);
+            console.log(err)
+
+              this.toastr.error(
+                'Registration failed!',
+                'Error'
+              );
+          }
+        })
+      },1000);
 
 
-//   }
 
-//   initializeForm():void{
-//       this.registrationForm = this.fb.group({
-//         firstName: ['sai'],
-//         lastName: ['shetty'],
-//         contactNumber: ['9423165720'],
-//         email: ['saishetty.ux@gmail.com'],
-//         password: ['Saishetty@123'],
-//         confirmPassword: ['Saishetty@123'],
-//         district: ['kolhapur'],
-//         qualification: ['Btech'],
-//         occupation: ['Student']
+    // } else {
 
-//       });
-//   }
+    //   this.registrationForm.markAllAsTouched();
 
-//   onSubmit():void{
-//         console.log("value is ",this.registrationForm.value);
-//         this.http.post(`http://${environment.apiUrl}/students/register`,this.registrationForm.value)
-//          .subscribe({
-//             next: (response) => {
-//               console.log(response);
-//               alert('Student registered successfully!');
-//             },
-//             error: (err) => {
-//               console.error(err);
-//               alert('Registration failed!');
-//             }
-//           });
+    // }
 
-//   }
-// }
+  }
+
+
+  get password() {
+    return this.registrationForm.get('password');
+  }
+
+  get passwordValue(): string {
+    return this.password?.value || '';
+  }
+
+  hasMinLength(): boolean {
+    return this.passwordValue.length >= 8;
+  }
+
+  hasUppercase(): boolean {
+    return /^[A-Z]/.test(this.passwordValue); // First letter uppercase
+  }
+
+  hasLowercase(): boolean {
+    return /[a-z]/.test(this.passwordValue);
+  }
+
+  hasNumber(): boolean {
+    return /\d/.test(this.passwordValue);
+  }
+
+  hasSpecialChar(): boolean {
+    return /[@$!%*?&#^()_\-+=]/.test(this.passwordValue);
+  }
+
+
+  isPasswordValid(): boolean {
+    return (
+      this.hasMinLength() &&
+      this.hasUppercase() &&
+      this.hasLowercase() &&
+      this.hasNumber() &&
+      this.hasSpecialChar()
+    );
+  }
+}
+

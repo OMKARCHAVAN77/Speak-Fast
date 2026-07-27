@@ -1,20 +1,16 @@
 import express from "express";
-import isAdmin from "../../middlewares/auth.middleware.js";
-
-import {
-  login,
-  logout,
-  dashboard,
-  forgotPassword,
-  resetPassword,
-} from "./auth.controller.js";
+import { setPassword ,forgotPasswordController , resetPasswordController } from "./auth.controller.js";
 
 const router = express.Router();
 
-router.post("/login", login);
-router.post("/logout", logout);
-router.get("/dashboard", isAdmin, dashboard);
-router.post("/forgot-password", forgotPassword);
-router.post("/reset-password", resetPassword);
+//teacher set password
+router.post("/setpassword/:token", setPassword);
+
+
+//  student forgot password
+router.post("/forgot-password", forgotPasswordController);
+
+// student reset password
+router.post("/reset-password/:token",resetPasswordController);
 
 export default router;

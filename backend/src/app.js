@@ -1,130 +1,48 @@
-import express from "express";
-import session from "express-session";
-import cors from "cors";
-import helmet from "helmet";
-import morgan from "morgan";
-import cookieParser from "cookie-parser";
-
-import authRoutes from "./modules/auth/auth.routes.js";
+import express from 'express';
+import cors from 'cors';
+import userRoutes from "./modules/user/user.routes.js";
 import teacherRoutes from "./modules/teacher/teacher.routes.js";
+import bookingRoutes from "./modules/booking/booking.routes.js";
 import studentRoutes from "./modules/student/student.routes.js";
+import { register } from 'node:module';
+import authRoutes from "./modules/auth/auth.routes.js";
+import errorHandler from './middlewares/error.middleware.js';
+
+
+
+
+
+
+
 
 const app = express();
 
-
-// ================= Middleware =================
-
+// Middlewares
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// user login and register
+app.use("/api/user", userRoutes);
 
 
-// ================= Security =================
-
-// Helmet
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false,
-  })
-);
-
-
-// ================= CORS =================
-
-const allowedOrigins = [
-  "http://localhost:4200",
-  "https://speak-fast.vercel.app"
-];
-
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-
-      // allow Postman / server requests
-      if (!origin) {
-        return callback(null, true);
-      }
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("Not allowed by CORS"));
-    },
-
-    credentials: true,
-
-    methods: [
-      "GET",
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE",
-      "OPTIONS"
-    ],
-
-    allowedHeaders: [
-      "Content-Type",
-      "Authorization"
-    ]
-  })
-);
-
-
-// ================= Logger =================
-
-app.use(morgan("dev"));
-
-
-// ================= Cookie =================
-
-app.use(cookieParser());
-
-
-app.set("trust proxy", 1);
-
-// ================= Session =================
-
-app.use(
-  session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: true,
-      httpOnly: true,
-      sameSite: "none"
-    }
-  })
-);
-
-
-// ================= Routes =================
-
+// Auth Routes set teacher password ,forgot student pass , reset student pass
 app.use("/api/auth", authRoutes);
 
+// student api
+app.use("/api/student", studentRoutes);
+
+// Teacher Routes
 app.use("/api/teacher", teacherRoutes);
 
-app.use("/api/students", studentRoutes);
-
-app.use("/uploads", express.static("uploads"));
-
-
-// ================= Error Handler =================
-
-app.use((err, req, res, next) => {
-
-  console.error(err);
-
-  res.status(err.statusCode || 500).json({
-    success: false,
-    message: err.message || "Internal Server Error"
-  });
-
-});
+// Booking routes
+app.use("/api/booking",bookingRoutes);
 
 
-console.log("Server middleware loaded");
+
+// global error handler (Alway last )
+app.use(errorHandler);
+
+
 
 
 export default app;
