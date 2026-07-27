@@ -18,7 +18,10 @@ import errorHandler from './middlewares/error.middleware.js';
 const app = express();
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:4200",
+  credentials: true
+}));
 app.use(express.json());
 
 // user login and register

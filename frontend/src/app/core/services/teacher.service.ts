@@ -65,16 +65,19 @@ export class TeacherService {
   }
 
   // Filter Teachers
-  filterTeacherApi(date: string, time: string): Observable<any> {
+  filterTeacherApi(date: string, time?: string): Observable<any> {
 
-    const params = new HttpParams()
-      .set('date', date)
-      .set('time', time);
+  let params = new HttpParams().set('date', date);
 
-    return this.http.get<any>(
-      `${this.baseUrl}/filter`,
-      { params }
-    );
+  if (time) {
+    params = params.set('time', time);
   }
+
+  return this.http.get<any>(
+    `${this.baseUrl}/filter`,
+    { params }
+  );
+}
+  
 
 }

@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TeacherService } from '../../core/services/teacher.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { StudentService } from '../../core/services/student.service';
 
 interface Slot {
   _id: string;
@@ -67,7 +68,7 @@ ngOnInit(): void {
 
   // API format
   this.formattedDate = this.formatDate(this.selectedDate);
-
+ this.loadTeachers(); 
 }
 formatDate(date: Date): string {
 
@@ -75,19 +76,22 @@ formatDate(date: Date): string {
 
 }
 
-constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef, private router: Router) {}  
+constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef,
+   private router: Router,
+  private studServ:StudentService) {}  
 loadTeachers(): void {
 
-  if (!this.formattedDate || !this.selectedTime) {
-    return;
-  }
+ if (!this.formattedDate) {
+  return;
+}
 
   console.log('Calling API...');
   console.log(this.formattedDate);
   console.log(this.selectedTime);
 
   this.teacherService
-  .filterTeacherApi(this.formattedDate, this.selectedTime)
+  .filterTeacherApi( this.formattedDate,
+  this.selectedTime || undefined)
   .subscribe({
     next: (res: any) => {
   console.log("API Response:", res.data);
@@ -126,9 +130,7 @@ onDateChange(event: any): void {
 
   console.log("Selected Date :", this.formattedDate);
 
-  if (this.selectedTime) {
-    this.loadTeachers();
-  }
+ this.loadTeachers();
 }
 
   selectTime(slot: string): void {
@@ -170,10 +172,14 @@ bookSeat() {
     return;
   }
 
-  console.log("Teacher Id :", this.selectedTeacherId);
-  console.log("Slot Id :", this.selectedSlotId);
+  console.log("Teacher Id :", typeof(this.selectedTeacherId));
+  console.log("Slot Id :", this.selectedSlotId); 
+   
+  // let TeacherId=this.selectedTeacherId();
 
-  // Booking API success नंतर
+// this.studServ.setTeacherId(this.selectedTeacherId);
+ this.studServ.setSlotId( this.selectedSlotId);
+  
 
   this.router.navigate(['/courses']);
 
