@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TeacherService } from '../../core/services/teacher.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { StudentService } from '../../core/services/student.service';
 
 interface Slot {
   _id: string;
@@ -75,7 +76,9 @@ formatDate(date: Date): string {
 
 }
 
-constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef, private router: Router) {}  
+constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef,
+   private router: Router,
+  private studServ:StudentService) {}  
 loadTeachers(): void {
 
   if (!this.formattedDate || !this.selectedTime) {
@@ -170,10 +173,14 @@ bookSeat() {
     return;
   }
 
-  console.log("Teacher Id :", this.selectedTeacherId);
-  console.log("Slot Id :", this.selectedSlotId);
+  console.log("Teacher Id :", typeof(this.selectedTeacherId));
+  console.log("Slot Id :", this.selectedSlotId); 
+   
+  // let TeacherId=this.selectedTeacherId();
 
-  // Booking API success नंतर
+this.studServ.setTeacherId(this.selectedTeacherId);
+ this.studServ.setSlotId( this.selectedSlotId);
+  
 
   this.router.navigate(['/courses']);
 
