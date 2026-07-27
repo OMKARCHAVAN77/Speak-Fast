@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink, RouterModule } from '@angular/router';
 import { CourseService } from '../../../core/services/course-service';
+import { StudentService } from '../../../core/services/student.service';
 
 // interface Plan {
 //   name: string;
@@ -48,7 +49,7 @@ export interface Plan {
 })
 export class CourseRecommendation {
 
-constructor(private router: Router, private courseserve : CourseService){}
+constructor(private router: Router, private courseserve : CourseService, private studServ: StudentService){}
 
   plans: Plan[] = [
     {
@@ -106,12 +107,14 @@ constructor(private router: Router, private courseserve : CourseService){}
   enroll(plan: Plan): void {
     console.log('Enrolling in', plan.name);
     this.courseserve.setPlan(plan);
+    this.studServ.setCourseName(plan.name);
+    this.studServ.setCoursePrice((plan.price).toString())
 
-  this.router.navigate(['/payment']);
+  this.router.navigate(['/registration']);
   }
 
 
 
 
-  
+
 }
