@@ -32,6 +32,7 @@ export class SetPassword {
     private router: Router,
     private http: HttpClient
   ) {}
+  
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
