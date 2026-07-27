@@ -98,7 +98,7 @@ static password(control: AbstractControl): ValidationErrors | null {
       return null;
     }
 
-    return /^[a-z]+@[a-z]+\.[a-z]/.test(value)
+    return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(value)
       ? null
       : {
           isEmailCorrect: true
