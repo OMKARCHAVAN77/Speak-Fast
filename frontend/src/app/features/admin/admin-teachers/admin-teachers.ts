@@ -72,17 +72,17 @@ export class AdminTeachers implements OnInit {
     });
   }
 
-  onDeleteTeacher(teacher: Teacher): void {
-    if (!confirm(`Delete ${teacher.firstName} ${teacher.lastName}?`)) return;
+  // onDeleteTeacher(teacher: Teacher): void {
+  //   if (!confirm(`Delete ${teacher.firstName} ${teacher.lastName}?`)) return;
 
-    this.teacherService.deleteTeacher(teacher._id).subscribe({
-      next: () => {
-        this.teachers = this.teachers.filter(t => t._id !== teacher._id);
-        this.cdr.detectChanges();
-      },
-      error: (err: any) => console.error('Failed to delete teacher:', err)
-    });
-  }
+  //   this.teacherService.deleteTeacher(teacher._id).subscribe({
+  //     next: () => {
+  //       this.teachers = this.teachers.filter(t => t._id !== teacher._id);
+  //       this.cdr.detectChanges();
+  //     },
+  //     error: (err: any) => console.error('Failed to delete teacher:', err)
+  //   });
+  // }
 
   onEditTeacher(teacher: Teacher): void {
     this.teacherBeingEdited = teacher;

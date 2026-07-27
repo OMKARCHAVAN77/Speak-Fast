@@ -19,24 +19,29 @@ export interface Teacher {
   providedIn: 'root',
 })
 export class TeacherService {
+
   private baseUrl = `${environment.apiUrl}/teacher`;
 
   constructor(private http: HttpClient) {}
 
+  // Get All Teachers
   getTeachers(): Observable<{ count: number; teachers: Teacher[] }> {
     return this.http.get<{ count: number; teachers: Teacher[] }>(
-      `${this.baseUrl}/getAllTeachers`
+      `${this.baseUrl}/all`,
+      { withCredentials: true }
     );
   }
 
+  // Register Teacher
   addTeacher(teacher: any): Observable<{ message: string }> {
+
     const formData = new FormData();
 
     formData.append('firstName', teacher.firstName);
     formData.append('lastName', teacher.lastName);
     formData.append('email', teacher.email);
     formData.append('contactNumber', teacher.contactNumber || '');
-    formData.append('aadharNo', teacher.aadharNo || teacher.aadharNumber || '');
+    formData.append('aadharNo',teacher.aadharNo || teacher.aadharNumber || '');
     formData.append('googleMeetLink', teacher.googleMeetLink || '');
 
     const transformedSlots = teacher.slots.map((s: any) => ({
@@ -51,19 +56,22 @@ export class TeacherService {
 
     return this.http.post<{ message: string }>(
       `${this.baseUrl}/register`,
-      formData
+      formData,
+      { withCredentials: true }
     );
   }
 
-  deleteTeacher(id: string): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(`${this.baseUrl}/${id}`);
-  }
-
+  // Filter Teachers
   filterTeacherApi(date: string, time: string): Observable<any> {
+
     const params = new HttpParams()
       .set('date', date)
       .set('time', time);
 
-    return this.http.get<any>(`${this.baseUrl}/filter`, { params });
+    return this.http.get<any>(
+      `${this.baseUrl}/filter`,
+      { params }
+    );
   }
+
 }
