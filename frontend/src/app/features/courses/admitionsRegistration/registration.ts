@@ -221,23 +221,23 @@ selectOccupation(occupation: string) {
     let val=this.registrationForm.value;
 
     const payLoadMain = {
-        // ...payload,
-        firstName:'dsfkkdkskssf',
-        lastName:'iuhgryueiocnhjh',
-        contactNumber:'8345207845',
-        email:'murgudkolhapur@gmail.com',
-        password:'Ljhhgjg@12345',
-        district:'Kolhapur',
-        qualification:'12th',
-        occupation:'Student',
+        ...payload,
+        // firstName:'dsfkkdkskssf',
+        // lastName:'iuhgryueiocnhjh',
+        // contactNumber:'8345207845',
+        // email:'murgudkolhapur@gmail.com',
+        // password:'Ljhhgjg@12345',
+        // district:'Kolhapur',
+        // qualification:'12th',
+        // occupation:'Student',
         teacherId: '6a65a69673ef28a3f1eb5b2f',
-        slotId: '6a65a69673ef28a3f1eb5b32',
+        slotId: '6a65a7ea73ef28a3f1eb5b42',
         courseName:this.studentServ.getCourseName(),
         coursePrice:this.studentServ.getCoursePrice()
       }
      console.log("main palyload ",payLoadMain);
 
-    // if(this.registrationForm.valid){
+    if(this.registrationForm.valid){
       this.isLoaderOn.set(true);
 
       setTimeout(()=>{
@@ -265,11 +265,11 @@ selectOccupation(occupation: string) {
 
 
 
-    // } else {
+    } else {
 
-    //   this.registrationForm.markAllAsTouched();
+      this.registrationForm.markAllAsTouched();
 
-    // }
+    }
 
   }
 
