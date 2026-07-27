@@ -68,7 +68,7 @@ ngOnInit(): void {
 
   // API format
   this.formattedDate = this.formatDate(this.selectedDate);
-
+ this.loadTeachers(); 
 }
 formatDate(date: Date): string {
 
@@ -81,16 +81,17 @@ constructor(private teacherService: TeacherService, private cdr: ChangeDetectorR
   private studServ:StudentService) {}  
 loadTeachers(): void {
 
-  if (!this.formattedDate || !this.selectedTime) {
-    return;
-  }
+ if (!this.formattedDate) {
+  return;
+}
 
   console.log('Calling API...');
   console.log(this.formattedDate);
   console.log(this.selectedTime);
 
   this.teacherService
-  .filterTeacherApi(this.formattedDate, this.selectedTime)
+  .filterTeacherApi( this.formattedDate,
+  this.selectedTime || undefined)
   .subscribe({
     next: (res: any) => {
   console.log("API Response:", res.data);
@@ -129,9 +130,7 @@ onDateChange(event: any): void {
 
   console.log("Selected Date :", this.formattedDate);
 
-  if (this.selectedTime) {
-    this.loadTeachers();
-  }
+ this.loadTeachers();
 }
 
   selectTime(slot: string): void {
@@ -178,7 +177,7 @@ bookSeat() {
    
   // let TeacherId=this.selectedTeacherId();
 
-this.studServ.setTeacherId(this.selectedTeacherId);
+// this.studServ.setTeacherId(this.selectedTeacherId);
  this.studServ.setSlotId( this.selectedSlotId);
   
 
