@@ -4,7 +4,7 @@ import { setPassword ,forgotPasswordController , resetPasswordController } from 
 const router = express.Router();
 
 //teacher set password
-router.post("/set-password/:token", setPassword);
+router.post("/setpassword/:token", setPassword);
 
 
 //  student forgot password

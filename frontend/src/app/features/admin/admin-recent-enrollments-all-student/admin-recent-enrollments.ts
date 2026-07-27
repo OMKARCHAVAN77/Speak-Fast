@@ -2,114 +2,150 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
-import { number } from '../../../../../node_modules/zod/src/v4/core/regexes';
-import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
 
 export interface Enrollment {
   name: string;
-  // status: string;
+  initials: string;
   email: string;
   phone: string;
+  plan: string;
   teacher: string;
-  // course: string;
-  // enrolledDate: string;
-  // endDate: string;  
-  // time?: string;
-  // fee: string;
+  enrolledDate: string;
+  endDate: string;
+  timeSlot: string;
+  fee: string;
+  status: 'paid' | 'pending';
 }
 
 @Component({
   selector: 'app-admin-recent-enrollments',
-  imports: [CommonModule,    FormsModule,
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
     MatIconModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule],
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [DatePipe],
   templateUrl: './admin-recent-enrollments.html',
   styleUrl: './admin-recent-enrollments.css',
 })
 export class AdminRecentEnrollments {
-   searchText = '';
+  searchText = '';
   totalEnrollments = 13;
- 
+  selectedDate: Date | null = null;
+
+  constructor(private datePipe: DatePipe) {}
+
   enrollments: Enrollment[] = [
     {
       name: 'Satish Kumar',
-      // status: 'Paid',
+      initials: 'SK',
       email: 'satish@email.com',
       phone: '+1234567890',
+      plan: 'Premium • 3 Months',
       teacher: 'Mike Chen',
-      // course: 'Full course (3 Months)',
-      // enrolledDate: 'Jan 02, 2026',
-      // endDate: 'April 15, 2026',
-      // fee: '15,000'
+      enrolledDate: 'Jan 02, 2026',
+      endDate: 'Apr 15, 2026',
+      timeSlot: '10:00 - 11:00 AM',
+      fee: '₹12,000',
+      status: 'paid',
     },
     {
       name: 'Rajesh Chouhan',
-      // status: 'Paid',
+      initials: 'RC',
       email: 'rajesh@email.com',
       phone: '+1234567890',
+      plan: 'Premium • 3 Months',
       teacher: 'Mike Chen',
-      // course: 'Full course (3 Months)',
-      // enrolledDate: 'Jan 04, 2026',
-      // endDate: 'April 15, 2026',
-      // time: '12:00am to 01:00am',
-      // fee: '15,000'
+      enrolledDate: 'Jan 04, 2026',
+      endDate: 'Apr 15, 2026',
+      timeSlot: '12:00 - 01:00 PM',
+      fee: '₹15,000',
+      status: 'paid',
     },
     {
       name: 'Sudhir Shetty',
-      // status: 'Paid',
+      initials: 'SS',
       email: 'sudhir@email.com',
       phone: '+1234567890',
+      plan: 'Premium • 3 Months',
       teacher: 'Mike Chen',
-      // course: 'Full course (3 Months)',
-      // enrolledDate: 'Jan 04, 2026',
-      // endDate: 'April 15, 2026',
-      // time: '12:00am to 01:00am',
-      // fee: '15,000'
+      enrolledDate: 'Jan 04, 2026',
+      endDate: 'Apr 15, 2026',
+      timeSlot: '12:00 - 01:00 PM',
+      fee: '',
+      status: 'pending',
     },
     {
       name: 'Suman Patil',
-      // status: 'Paid',
+      initials: 'SP',
       email: 'suman@email.com',
       phone: '+1234567890',
+      plan: 'Premium • 3 Months',
       teacher: 'Mike Chen',
-      // course: 'Full course (3 Months)',
-      // enrolledDate: 'Jan 07, 2026',
-      // endDate: 'April 15, 2026',
-      // time: '12:00am to 01:00am',
-      // fee: '15,000'
+      enrolledDate: 'Jan 07, 2026',
+      endDate: 'Apr 15, 2026',
+      timeSlot: '12:00 - 01:00 PM',
+      fee: '₹15,000',
+      status: 'paid',
     },
     {
       name: 'Sanjay Gupta',
-      // status: 'Paid',
+      initials: 'SG',
       email: 'sanjay@email.com',
       phone: '+1234567890',
+      plan: 'Premium • 3 Months',
       teacher: 'Mike Chen',
-      // course: 'Full course (3 Months)',
-      // enrolledDate: 'Jan 10, 2026',
-      // endDate: 'April 15, 2026',
-      // time: '12:00am to 01:00am',
-      // fee: '15,000'
-    }
+      enrolledDate: 'Jan 10, 2026',
+      endDate: 'Apr 15, 2026',
+      timeSlot: '12:00 - 01:00 PM',
+      fee: '₹15,000',
+      status: 'paid',
+    },
   ];
- 
+
   get filteredEnrollments(): Enrollment[] {
+    let result = this.enrollments;
+
     const term = this.searchText.trim().toLowerCase();
-    if (!term) {
-      return this.enrollments;
+    if (term) {
+      result = result.filter((e) => e.name.toLowerCase().includes(term));
     }
-    return this.enrollments.filter(e => e.name.toLowerCase().includes(term));
+
+    if (this.selectedDate) {
+      const formatted = this.datePipe.transform(this.selectedDate, 'MMM d, y');
+      result = result.filter((e) => e.enrolledDate === formatted);
+    }
+
+    return result;
   }
- 
-  // onSelectDate(): void {
-  //   // Hook up a date range picker here as needed
-  // }
- 
-  // viewDetails(enrollment: Enrollment): void {
-  //   // Navigate to / open the details view for this enrollment
-  //   console.log('View details for', enrollment.name);
-  // }
+
+  onDateSelected(date: Date | null): void {
+    this.selectedDate = date;
+  }
+
+  clearDate(event: Event): void {
+    event.stopPropagation();
+    this.selectedDate = null;
+  }
+
+  onAccept(enrollment: Enrollment): void {
+    enrollment.status = 'paid';
+    // fee assignment / API call goes here
+  }
+
+  onReject(enrollment: Enrollment): void {
+    this.enrollments = this.enrollments.filter((e) => e !== enrollment);
+    // API call to reject goes here
+  }
 }

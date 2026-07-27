@@ -52,7 +52,7 @@
   flex-wrap: nowrap;
   gap: clamp(24px, 4.0vw, 60px);
   flex: 1 1 auto;
-  justify-content: center;
+  justify-content: flex-end;
   margin-left: clamp(0px, 30vw, 450px);
   margin-right: auto;
 }
@@ -74,7 +74,7 @@
 
 .nav-link.active {
   color: #3F78F5;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: 700;
 }
 
@@ -131,7 +131,8 @@
   font-size: 14px;
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
-  text-transform: none;
+  text-transform: none;    
+  margin: 0 35px 0 35px;
   padding: 0 28px !important;
   line-height: 1 !important;
   white-space: nowrap;
