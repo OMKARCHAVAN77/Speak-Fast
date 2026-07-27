@@ -1,125 +1,140 @@
-<div class="students-page">
+<div class="enrollments-wrapper">
 
-  <!-- Header -->
-  <div class="page-header">
-    <div class="header-title">
-      <h1>All Students</h1>
-      <span class="total-count">Total: {{ studentLength() }} students</span>
-    </div>
+  <!-- Header row -->
+  <div class="header-row">
+    <div class="title-count">{{ studentLength() }} total enrollments</div>
 
-    <div class="header__actions">
+    <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
         <input
           matInput
           type="text"
           placeholder="Search Students..."
-          [(ngModel)]="searchTerm"
-        />
-        <mat-icon matSuffix class="filter-icon">tune</mat-icon>
+          [(ngModel)]="searchTerm" />
       </mat-form-field>
 
-      <button mat-flat-button color="primary" class="add-btn" >
-        <mat-icon>add</mat-icon>
-        Add student
+      <button mat-stroked-button class="date-btn" (click)="picker.open()">
+        <mat-icon>calendar_today</mat-icon>
+        <span>{{ selectedDate ? (selectedDate | date:'MMM d, y') : 'Select Date' }}</span>
+        <mat-icon *ngIf="selectedDate" class="clear-date-icon" (click)="clearDate($event)">close</mat-icon>
+
+        <input
+          [matDatepicker]="picker"
+          [ngModel]="selectedDate"
+          (dateChange)="onDateSelected($event.value)"
+          class="hidden-date-input"
+        />
+        <mat-datepicker #picker></mat-datepicker>
       </button>
     </div>
   </div>
 
-  <!-- Student Cards -->
-  <div class="students-list">
-    <div class="student-card" *ngFor="let student of filteredStudents">
+  <!-- Table -->
+  <div class="table-card">
+    <table class="enrollments-table">
+      <thead>
+        <tr>
+          <th class="col-name">
+            Name <mat-icon class="sort-icon">unfold_more</mat-icon>
+          </th>
+          <th class="col-contact">Contact</th>
+          <th class="col-plan">Plan</th>
+          <th class="col-date">
+            Enrolled <mat-icon class="sort-icon">unfold_more</mat-icon>
+          </th>
+          <th class="col-date">
+            End <mat-icon class="sort-icon">unfold_more</mat-icon>
+          </th>
+          <th class="col-slot">Time Slot</th>
+          <th class="col-action">Action</th>
+        </tr>
+      </thead>
 
-      <div class="card-top">
-        <div class="student-info">
-          <div class="avatar">
-            <mat-icon>person</mat-icon>
-          </div>
-
-          <div class="details">
-            <div class="name-row">
-              <span class="student-name">{{ student.firstName }}</span>
-              <span class="student-name">{{ student.lastName }}</span>
-              <span class="leave-badge" *ngIf="student.onLeave">
-                {{ student.onLeave }}
-              </span>
+      <tbody>
+        <tr *ngFor="let student of filteredStudents">
+          <!-- Name -->
+          <td class="col-name">
+            <div class="name-cell">
+              <div class="avatar">
+                {{ (student.firstName?.charAt(0) || '') + (student.lastName?.charAt(0) || '') }}
+              </div>
+              <span class="name-text">{{ student.firstName }} {{ student.lastName }}</span>
             </div>
+          </td>
 
-            <div class="contact-row">
-              <span class="contact-item">
-                <mat-icon class="mini-icon">mail_outline</mat-icon>
-                {{ student.email }}
-              </span>
-              <span class="contact-item">
-                <mat-icon class="mini-icon">call</mat-icon>
-                {{ student.contactNumber }}
-              </span>
+          <!-- Contact -->
+          <td class="col-contact">
+            <div class="contact-line">
+              <mat-icon class="contact-icon">mail</mat-icon>
+              <span>{{ student.email }}</span>
             </div>
+            <div class="contact-line">
+              <mat-icon class="contact-icon">call</mat-icon>
+              <span>{{ student.contactNumber }}</span>
+            </div>
+          </td>
 
-            <!-- <div class="meta-row">
-              <span class="meta-item">Course: {{ student.course }}</span>
-              <span class="meta-item">
-                <mat-icon class="mini-icon">event</mat-icon>
-                Enrolled: {{ student.enrolled }}
-              </span>
-              <span class="meta-item">
-                <mat-icon class="mini-icon">event</mat-icon>
-                End: {{ student.end }}
-              </span>
-            </div> -->
-          </div>
-        </div>
+          <!-- Plan -->
+          <td class="col-plan">
+            <div class="plan-name">{{ student.plan }}</div>
+            <div class="plan-teacher">with {{ student.teacher }}</div>
+          </td>
 
-        <div class="card-actions">
-          <!-- <button
-            mat-stroked-button
-            class="whatsapp-btn"
-            (click)="onWhatsApp(student)"
-          >
-            <mat-icon>chat</mat-icon>
-            <span>WhatsApp</span>
-          </button>
-          <button
-            mat-icon-button
-            matTooltip="Edit"
-            (click)="onEdit(student)"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            matTooltip="Delete"
-            (click)="onDelete(student)"
-          >
-            <mat-icon>delete_outline</mat-icon>
-          </button> -->
-        </div>
-      </div>
+          <!-- Enrolled -->
+          <td class="col-date">{{ student.enrolledDate }}</td>
 
-      <!-- Progress bar -->
-      <!-- <div class="progress-section">
-        <div class="progress-labels">
-          <span>Basic</span>
-          <span>Advance</span>
-          <span class="practice-label">
-            Practice <strong>{{ student.progress }}%</strong>
-          </span>
-        </div>
-        <mat-progress-bar
-          mode="determinate"
-          [value]="student.progress"
-          class="student-progress"
-        ></mat-progress-bar>
+          <!-- End -->
+          <td class="col-date">{{ student.endDate }}</td>
 
-        
-      </div> -->
-      
-    </div>
+          <!-- Time Slot -->
+          <td class="col-slot">{{ student.timeSlot }}</td>
 
-    <div class="no-results" *ngIf="filteredStudents.length === 0">
-      <mat-icon>search_off</mat-icon>
-      <p>No students found</p>
-    </div>
+          <!-- Action -->
+          <td class="col-action">
+            <ng-container *ngIf="student.status !== 'pending'; else pendingActions">
+              <button
+                mat-icon-button
+                class="edit-btn"
+                aria-label="Edit"
+                (click)="onEdit(student)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                class="delete-btn"
+                aria-label="Delete"
+                (click)="onDelete(student)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-container>
+
+            <ng-template #pendingActions>
+              <div class="pending-block">
+                <span class="pending-badge">Pending</span>
+                <div class="pending-buttons">
+                  <button
+                    mat-flat-button
+                    class="accept-btn"
+                    (click)="onAccept(student)"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    mat-flat-button
+                    class="reject-btn"
+                    (click)="onDelete(student)"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            </ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-
 </div>
