@@ -11,9 +11,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './reset-password.css',
 })
 export class ResetPassword {
-  constructor(private frogotstudentserve: StudentService, private snackBar: MatSnackBar, private router: Router){}
+  constructor(private frogotstudentserve: StudentService, private snackBar: MatSnackBar, private router: Router) { }
 
-   emailVal: string = '';
+  emailVal: string = '';
 
   // resetPassword(){
   //   const body = {
@@ -26,95 +26,79 @@ export class ResetPassword {
   // }
 
 
-  resetPassword(){
 
-  if(!this.emailVal){
+  resetPassword(): void {
 
-    this.snackBar.open(
-
-      "Please enter your email",
-
-      "Close",
-
-      {
-
-        duration:3000,
-
-        horizontalPosition:"right",
-
-        verticalPosition:"top"
-
-      }
-
-    );
-
-    return;
-
-  }
-
-  const body={
-
-    email:this.emailVal
-
-  };
-
-  this.frogotstudentserve
-
-  .forgotStudentPassword(body)
-
-  .subscribe({
-
-    next:(response: any)=>{
-
-      console.log(response);
+    // Email Validation
+    if (!this.emailVal || this.emailVal.trim() === "") {
 
       this.snackBar.open(
-
-        response.message,
-
+        "Please enter your registered email.",
         "Close",
-
         {
-
-          duration:3000,
-
-          panelClass:["success-snackbar"]
-
+          duration: 3000,
+          horizontalPosition: "right",
+          verticalPosition: "top",
+          panelClass: ["error-snackbar"]
         }
-
       );
 
-      this.router.navigate(
-
-        ["/forgotPassword/sentLink"]
-
-      );
-
-    },
-
-    error:(err: any)=>{
-
-      console.log(err);
-
-      this.snackBar.open(
-
-        err.error.message,
-
-        "Close",
-
-        {
-
-          duration:3000,
-
-          panelClass:["error-snackbar"]
-
-        }
-
-      );
-
+      return;
     }
 
-  });
+    const body = {
+      email: this.emailVal.trim()
+    };
 
-}
+    this.frogotstudentserve
+      .forgotStudentPassword(body)
+      .subscribe({
+
+      next: (response: any) => {
+
+        console.log("Forgot Password Success", response);
+
+        this.snackBar.open(
+          response.message || "Password reset link sent successfully.",
+          "Close",
+          {
+            duration: 4000,
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            panelClass: ["success-snackbar"]
+          }
+        );
+
+        setTimeout(() => {
+          this.router.navigate(['/fogotPassword/sentLink']);
+        }, 4000);
+
+      },
+
+        error: (err: any) => {
+
+          console.log("Forgot Password Error", err);
+
+          this.snackBar.open(
+
+            err?.error?.message ||
+
+            "Unable to send reset password link.",
+
+            "Close",
+
+            {
+              duration: 3000,
+              horizontalPosition: "right",
+              verticalPosition: "top",
+              panelClass: ["error-snackbar"]
+            }
+
+          );
+
+        }
+
+      });
+
+  }
 }
