@@ -1,44 +1,33 @@
 :host {
   display: block;
-  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
 }
 
-.students-page {
-  /* padding: 20px 24px; */
- 
-  min-height: 100vh;
-  box-sizing: border-box;
-}
+/* .enrollments-wrapper {
+  padding: 8px 4px;
+} */
 
-/* ---------- Header ---------- */
-.page-header {
+/* ---------- Header row ---------- */
+
+.header-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
+  justify-content: space-between;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
-.header-title h1 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
+.title-count {
+  font-size: 20px;
+  font-weight: 600;
   color: #1a1a1a;
 }
 
-.total-count {
-  font-size: 13px;
-  color: #8a8a8a;
-}
-
-.header__actions {
+.header-actions {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 12px;
-  
- 
-  
 }
 
 .search-field {
@@ -92,557 +81,294 @@
   font-size: 16px;
  
 }
-
-.add-btn {
+/* Tighten default Material form field spacing */
+::ng-deep .search-field .mat-mdc-text-field-wrapper {
   height: 44px;
   border-radius: 8px;
-  background-color: #c0182b !important;
-  color: #fff !important;
-  border-radius: 8px !important;
-  font-weight: 600;
-  white-space: nowrap;
-  
 }
 
-.add-btn mat-icon {
-  margin-right: 4px;
+::ng-deep .search-field .mat-mdc-form-field-flex {
+  align-items: center;
+  height: 44px;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-infix {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: unset;
+}
+
+.date-btn {
+  position: relative;
+  height: 44px;
+  border-radius: 12px !important;
+  border-color: black !important;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.date-btn mat-icon {
   font-size: 18px;
-  width: 18px;
   height: 18px;
   width: 18px;
+  color: #666;
+}
+
+.date-btn .clear-date-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  color: #a0a5ab;
+}
+
+.date-btn .clear-date-icon:hover {
+  color: #e0483e;
+}
+
+.hidden-date-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Style the Angular Material calendar panel to match the theme */
+::ng-deep .mat-datepicker-content {
+  background-color: #fafbfc !important;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .mat-calendar {
+  background-color: #fafbfc;
+}
+
+::ng-deep .mat-calendar-body-selected {
+  background-color: #4a7dfc !important;
+  color: #fff !important;
+}
+
+::ng-deep .mat-datepicker-toggle-active {
+  color: #4a7dfc !important;
+}
+
+/* ---------- Table card ---------- */
+
+.table-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #eef0f2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
+}
+
+.enrollments-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.enrollments-table thead tr {
+  border-bottom: 1px solid #eef0f2;
+}
+
+.enrollments-table th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #8a8f98;
+  padding: 16px 20px;
+  white-space: nowrap;
+}
+
+.sort-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  vertical-align: middle;
+  color: #c2c6cc;
+  margin-left: 2px;
+}
+
+.enrollments-table tbody tr {
+  border-bottom: 1px solid #f2f3f5;
+  transition: background-color 0.15s ease;
+}
+
+.enrollments-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.enrollments-table tbody tr:hover {
+  background-color: #fafbfc;
+}
+
+.enrollments-table td {
+  padding: 14px 20px;
+  font-size: 14px;
+  color: #333;
   vertical-align: middle;
 }
 
-/* ---------- Student list ---------- */
-.students-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+/* ---------- Name column ---------- */
 
-.student-card {
-  background: #fff;
-  border: 1px solid #ececec;
-  border-radius: 12px;
-  padding: 14px 18px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-}
-
-.card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.student-info {
-  display: flex;
-  gap: 12px;
-  flex: 1;
-  min-width: 240px;
-}
-
-.avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #1e2a5e;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.avatar mat-icon {
-  color: #fff;
-  font-size: 22px;
-  width: 22px;
-  height: 22px;
-}
-
-.details {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.name-row {
+.name-cell {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
 }
 
-.student-name {
-  font-weight: 700;
-  font-size: 14.5px;
-  color: #1a1a1a;
-}
-
-.leave-badge {
-  background: #e8453c;
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #4a7dfc;
   color: #fff;
-  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
   font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 12px;
-  white-space: nowrap;
-}
-
-.contact-row,
-.meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  font-size: 12.5px;
-  color: #6b6b6b;
-}
-
-.contact-item,
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-}
-
-.mini-icon {
-  font-size: 15px;
-  width: 15px;
-  height: 15px;
-  color: #9a9a9a;
-}
-
-/* ---------- Actions ---------- */
-.card-actions {
-  display: flex;
-  align-items: center;
-  gap: 4px;
   flex-shrink: 0;
 }
 
-.whatsapp-btn {
-  border-radius: 20px !important;
-  font-size: 12.5px;
-  color: #4a4a4a !important;
-  border-color: #d8d8d8 !important;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 0 12px !important;
-  height: 34px;
-  line-height: 34px;
-}
-
-.whatsapp-btn mat-icon {
-  font-size: 16px;
-  width: 16px;
-  height: 16px;
-  color: #25d366;
-}
-
-.card-actions button[mat-icon-button] {
-  color: #7a7a7a;
-  width: 34px;
-  height: 34px;
-  line-height: 34px;
-}
-
-.card-actions button[mat-icon-button] mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-}
-
-/* ---------- Progress ---------- */
-.progress-section {
-  margin-top: 12px;
-}
-
-.progress-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #8a8a8a;
-  margin-bottom: 4px;
-}
-
-.practice-label strong {
+.name-text {
+  font-weight: 500;
   color: #1a1a1a;
-  font-weight: 700;
+  white-space: nowrap;
 }
 
-.student-progress {
-  height: 6px !important;
-  border-radius: 4px;
+/* ---------- Contact column ---------- */
+
+.col-contact {
+  min-width: 190px;
 }
 
-::ng-deep .student-progress .mdc-linear-progress__bar-inner {
-  border-color: #2b6bff !important;
-}
-
-::ng-deep .student-progress .mdc-linear-progress__buffer-bar {
-  background-color: #dff3e8 !important;
-}
-
-.no-results {
-  text-align: center;
-  padding: 40px;
-  color: #9a9a9a;
-}
-
-.no-results mat-icon {
-  font-size: 40px;
-  width: 40px;
-  height: 40px;
-}
-
-/* ============ BASE / DESKTOP: search box + add button in one row ============ */
-.header__actions {
+.contact-line {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: nowrap;
 }
 
-.search-field {
-  order: 1;
+.contact-icon {
+  font-size: 15px;
+  height: 15px;
+  width: 15px;
+  color: #a0a5ab;
 }
 
-.add-btn {
-  order: 2;
+/* ---------- Plan column ---------- */
+
+.col-plan {
+  min-width: 150px;
 }
 
-.filter-icon {
-  order: 3;
+.plan-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  font-size: 13.5px;
 }
 
-/* ============ LARGE DESKTOP (≥1440px) ============ */
-@media (min-width: 1440px) {
-  .students-page {
-    padding: 24px 32px;
-  }
+.plan-teacher {
+  color: #9aa0a6;
+  font-size: 12.5px;
+  font-style: italic;
+  margin-top: 2px;
 }
 
-/* ============ LAPTOP / SMALL DESKTOP (≤1024px) — still one row ============ */
-@media (max-width: 1024px) {
-  .header__actions {
-    flex-direction: row;
-    width: auto;
-  }
+/* ---------- Date / Slot columns ---------- */
 
-  .search-field {
-    width: 200px;
-  }
-
-  .student-info {
-    min-width: 200px;
-  }
+.col-date,
+.col-slot {
+  color: #333;
+  font-size: 13.5px;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
-/* ============ TABLET (≤900px) — still one row, slightly tighter ============ */
-@media (max-width: 900px) {
-  .students-page {
-    padding: 18px;
-  }
+/* ---------- Action column ---------- */
 
-  .student-card {
-    padding: 13px 15px;
-  }
-
-  .search-field {
-    width: 180px;
-  }
+.col-action {
+  white-space: nowrap;
 }
 
-/* ============ TABLET / SMALL LAPTOP (≤768px) — switch to stacked ============ */
-@media (max-width: 768px) {
-  .students-page {
-    padding: 16px;
-  }
-
-  .page-header {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-  }
-
-  .header-title h1 {
-    font-size: clamp(18px, 3vw, 20px);
-  }
-
-  /* Stack search + button vertically from here down */
-  .header__actions {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    gap: 10px;
-  }
-
-  .search-field {
-    width: 100%;
-  }
-
-  .add-btn {
-    width: 100%;
-    justify-content: center;
-    height: 42px;
-    padding: 0 14px;
-  }
-
-  .student-card {
-    padding: 12px 14px;
-  }
-
-  .card-top {
-    gap: 10px;
-  }
-
-  .student-info {
-    min-width: 100%;
-    flex: 1 1 100%;
-  }
-
-  .card-actions {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    margin-top: 4px;
-  }
-
-  .contact-row,
-  .meta-row {
-    gap: 10px;
-    font-size: 12px;
-  }
+.edit-btn,
+.delete-btn {
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 8px !important;
 }
 
-/* ============ LARGE MOBILE / SMALL TABLET (≤640px) ============ */
-@media (max-width: 640px) {
-  .students-page {
-    padding: 14px;
-  }
-
-  .student-card {
-    padding: 12px;
-  }
+.edit-btn {
+  background-color: #f2f3f5;
+  color: #555;
+  margin-right: 8px;
 }
 
-/* ============ MOBILE VIEW (≤576px) ============ */
-@media (max-width: 576px) {
-  .students-page {
-    padding: 12px;
-  }
-
-  .page-header {
-    flex-direction: column;
-    align-items: stretch;
-    margin-bottom: 16px;
-    gap: 10px;
-  }
-
-  .header-title h1 {
-    font-size: clamp(17px, 5vw, 18px);
-  }
-
-  .total-count {
-    font-size: 12px;
-  }
-
-  .header__actions {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    width: 100%;
-  }
-
-  /* Search box on top */
-  .search-field {
-    width: 100%;
-    order: 1;
-  }
-
-  /* Add Student button below search */
-  .add-btn {
-    order: 2;
-    width: 100%;
-    justify-content: center;
-    height: 42px;
-    font-size: 13.5px;
-  }
-
-  .filter-icon {
-    order: 3;
-    align-self: flex-end;
-  }
-
-  /* ---- Student card ---- */
-  .student-card {
-    padding: 12px;
-    border-radius: 10px;
-  }
-
-  .card-top {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .student-info {
-    gap: 10px;
-  }
-
-  .avatar {
-    width: 36px;
-    height: 36px;
-  }
-
-  .avatar mat-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
-  }
-
-  .student-name {
-    font-size: 13.5px;
-  }
-
-  .leave-badge {
-    font-size: 10.5px;
-    padding: 2px 8px;
-  }
-
-  .name-row {
-    gap: 8px;
-  }
-
-  .contact-row,
-  .meta-row {
-    gap: 8px 12px;
-    font-size: 11.5px;
-  }
-
-  .mini-icon {
-    font-size: 14px;
-    width: 14px;
-    height: 14px;
-  }
-
-  /* ---- Actions row: scrollable on small screens ---- */
-  .card-actions {
-    gap: 4px;
-    overflow-x: auto;
-    padding-bottom: 2px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .card-actions::-webkit-scrollbar {
-    display: none;
-  }
-
-  .whatsapp-btn {
-    font-size: 11.5px;
-    height: 32px;
-    line-height: 32px;
-    padding: 0 10px !important;
-    flex-shrink: 0;
-  }
-
-  .card-actions button[mat-icon-button] {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    flex-shrink: 0;
-  }
-
-  /* ---- Progress ---- */
-  .progress-section {
-    margin-top: 10px;
-  }
-
-  .progress-labels {
-    font-size: 11px;
-  }
-
-  .no-results {
-    padding: 28px 16px;
-  }
-
-  .no-results mat-icon {
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
-  }
+.edit-btn mat-icon,
+.delete-btn mat-icon {
+  font-size: 18px;
+  height: 25px;
+  width: 18px;
+  line-height: 18px;
 }
 
-/* ============ SMALL MOBILE (≤400px) ============ */
-@media (max-width: 400px) {
-  .students-page {
-    padding: 10px;
-  }
-
-  .header-title h1 {
-    font-size: 16.5px;
-  }
-
-  .add-btn {
-    height: 40px;
-    font-size: 13px;
-  }
-
-  .student-card {
-    padding: 10px;
-  }
-
-  .student-name {
-    font-size: 13px;
-  }
-
-  .contact-row,
-  .meta-row {
-    font-size: 11px;
-  }
+.delete-btn {
+  background-color: #fdeceb;
+  color: #e0483e;
 }
 
-/* ============ VERY SMALL MOBILE (≤360px) ============ */
-@media (max-width: 360px) {
-  .students-page {
-    padding: 10px;
-  }
+/* Pending state */
 
-  .student-card {
-    padding: 10px;
-  }
-
-  .student-name {
-    font-size: 13px;
-  }
-
-  .contact-row,
-  .meta-row {
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .whatsapp-btn span {
-    display: none; /* icon-only on very small screens */
-  }
+.pending-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-/* ============ VERY NARROW / FOLDABLE DEVICES (≤320px) ============ */
-@media (max-width: 320px) {
-  .students-page {
-    padding: 8px;
-  }
+.pending-badge {
+  background-color: #fff2d9;
+  color: #d38a13;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
 
-  .add-btn {
-    height: 38px;
-    font-size: 12.5px;
-  }
+.pending-buttons {
+  display: flex;
+  gap: 8px;
+}
 
-  .student-card {
-    padding: 8px;
-  }
+.accept-btn,
+.reject-btn {
+  border-radius: 8px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  padding: 0 14px !important;
+  line-height: 32px !important;
+  min-width: unset !important;
+}
+
+.accept-btn {
+  background-color: #22c55e !important;
+  color: #fff !important;
+}
+
+.reject-btn {
+  background-color: #ef4444 !important;
+  color: #fff !important;
 }

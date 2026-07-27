@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-// import { environment } from '../../../environments/environments';
 
 export interface Teacher {
   _id: string;
@@ -63,16 +62,19 @@ export class TeacherService {
   }
 
   // Filter Teachers
-  filterTeacherApi(date: string, time: string): Observable<any> {
+  filterTeacherApi(date: string, time?: string): Observable<any> {
 
-    const params = new HttpParams()
-      .set('date', date)
-      .set('time', time);
+  let params = new HttpParams().set('date', date);
 
-    return this.http.get<any>(
-      `${this.baseUrl}/filter`,
-      { params }
-    );
+  if (time) {
+    params = params.set('time', time);
   }
+
+  return this.http.get<any>(
+    `${this.baseUrl}/filter`,
+    { params }
+  );
+}
+  
 
 }

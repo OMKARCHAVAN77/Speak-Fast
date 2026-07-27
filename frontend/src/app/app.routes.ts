@@ -21,7 +21,7 @@ import { Teachers } from './features/teachers/teachers';
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'home', component: Home },
-    { path: 'admin', component: Admin, children: adminRoutes },
+    { path: 'admin', component: Admin },
     { path: 'teachers', component: Teachers },
     { path: 'registration', component: RegistrationComponent },
     {

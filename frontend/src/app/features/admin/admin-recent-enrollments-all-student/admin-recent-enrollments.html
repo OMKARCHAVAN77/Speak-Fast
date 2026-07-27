@@ -1,88 +1,98 @@
-<div class="enrollments-page">
+<div class="enrollments-card">
 
   <!-- Header -->
-  <header class="page-header">
-    <div class="title-block">
-      <h1>All Students</h1>
-      <p class="subtitle">Total: {{ totalEnrollments }} New Enrollments</p>
-    </div>
+  <div class="enrollments-header">
+    <h2 class="enrollments-title">{{ totalEnrollments }} New enrollments today</h2>
 
-    <div class="actions-block" >
-      <mat-form-field appearance="outline" class="search-field" style="" >
-        <mat-icon matPrefix class="search-icon">search</mat-icon>
+    <div class="header-actions">
+      <div class="search-box">
+        <mat-icon class="search-icon">search</mat-icon>
         <input
-          matInput
           type="text"
           placeholder="Search Students..."
-          [(ngModel)]="searchText" style=" " 
+          [(ngModel)]="searchText"
         />
-        <mat-icon matSuffix class="filter-icon">tune</mat-icon>
-      </mat-form-field>
+      </div>
 
-      <!-- <button mat-stroked-button class="date-btn" (click)="onSelectDate()">
-        <span>Select Date</span>
+      <button class="date-btn" (click)="picker.open()">
         <mat-icon>calendar_today</mat-icon>
-      </button> -->
+        <span>{{ selectedDate ? (selectedDate | date:'MMM d, y') : 'Select Date' }}</span>
+        <mat-icon *ngIf="selectedDate" class="clear-date-icon" (click)="clearDate($event)">close</mat-icon>
+
+        <input
+          #dateInput
+          [matDatepicker]="picker"
+          [ngModel]="selectedDate"
+          (dateChange)="onDateSelected($event.value)"
+          class="hidden-date-input"
+        />
+        <mat-datepicker #picker></mat-datepicker>
+      </button>
     </div>
-  </header>
-
-  <!-- Section label -->
-  <div class="section-label">Today</div>
-
-  <!-- Enrollment list -->
-  <div class="enrollment-list">
-    <article class="enrollment-card" *ngFor="let enrollment of filteredEnrollments">
-
-      <div class="avatar">
-        <mat-icon>person</mat-icon>
-      </div>
-
-      <div class="card-body">
-        <div class="name-row">
-          <span class="student-name">{{ enrollment.name }}</span>
-          <!-- <span class="status-badge">{{ enrollment.status }}</span> -->
-        </div>
-
-        <div class="details-grid">
-          <span class="detail-item">
-            <mat-icon>mail_outline</mat-icon>{{ enrollment.email }}
-          </span>
-          <span class="detail-item">
-            <mat-icon>call</mat-icon>{{ enrollment.phone }}
-          </span>
-          <span class="detail-item">
-            <mat-icon>outlined_flag</mat-icon>Teacher: {{ enrollment.teacher }}
-          </span>
-          <!-- <span class="detail-item">
-            <mat-icon>menu_book</mat-icon>Course: {{ enrollment.course }}
-          </span> -->
-
-          <!-- <span class="detail-item">
-            <mat-icon>event</mat-icon>Enrolled: {{ enrollment.enrolledDate }}
-          </span>
-          <span class="detail-item">
-            <mat-icon>event</mat-icon>End Date : {{ enrollment.endDate }}
-          </span>
-          <span class="detail-item" *ngIf="enrollment.time; else courseAgain">
-            <mat-icon>schedule</mat-icon>Time: {{ enrollment.time }}
-          </span>
-          <ng-template #courseAgain>
-            <span class="detail-item">
-              <mat-icon>menu_book</mat-icon>Course: {{ enrollment.course }}
-            </span>
-          </ng-template>
-          <span class="detail-item fee">
-            <mat-icon>currency_rupee</mat-icon>Fee: {{ enrollment.fee }}
-          </span> -->
-        </div>
-      </div>
-
-      <!-- <button mat-stroked-button class="details-btn" (click)="viewDetails(enrollment)">
-        <mat-icon>info_outline</mat-icon>
-        <span>Details</span>
-      </button> -->
-
-    </article>
   </div>
 
+  <!-- Table -->
+  <div class="table-wrapper">
+    <div class="table-row table-head">
+      <div class="col col-name">
+        Name <mat-icon class="sort-icon">unfold_more</mat-icon>
+      </div>
+      <div class="col col-contact">Contact</div>
+      <div class="col col-plan">Plan</div>
+      <div class="col col-date">
+        Enrolled <mat-icon class="sort-icon">unfold_more</mat-icon>
+      </div>
+      <div class="col col-date">
+        End <mat-icon class="sort-icon">unfold_more</mat-icon>
+      </div>
+      <div class="col col-time">Time Slot</div>
+      <div class="col col-fee">FEE</div>
+    </div>
+
+    <div class="table-row" *ngFor="let e of filteredEnrollments">
+      <div class="col col-name">
+        <div class="avatar">{{ e.initials }}</div>
+        <span class="name-text">{{ e.name }}</span>
+      </div>
+
+      <div class="col col-contact">
+        <div class="contact-line">
+          <mat-icon class="contact-icon">mail</mat-icon>
+          <span>{{ e.email }}</span>
+        </div>
+        <div class="contact-line">
+          <mat-icon class="contact-icon">call</mat-icon>
+          <span>{{ e.phone }}</span>
+        </div>
+      </div>
+
+      <div class="col col-plan">
+        <div class="plan-text">{{ e.plan }}</div>
+        <div class="teacher-text">with {{ e.teacher }}</div>
+      </div>
+
+      <div class="col col-date">{{ e.enrolledDate }}</div>
+      <div class="col col-date">{{ e.endDate }}</div>
+      <div class="col col-time">{{ e.timeSlot }}</div>
+
+      <div class="col col-fee">
+        <ng-container *ngIf="e.status === 'paid'; else pendingBlock">
+          <span class="fee-text">{{ e.fee }}</span>
+        </ng-container>
+        <ng-template #pendingBlock>
+          <div class="pending-wrap">
+            <span class="pending-badge">Pending</span>
+            <div class="action-btns">
+              <button class="accept-btn" (click)="onAccept(e)">Accept</button>
+              <button class="reject-btn" (click)="onReject(e)">Reject</button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="filteredEnrollments.length === 0">
+      No students found.
+    </div>
+  </div>
 </div>
