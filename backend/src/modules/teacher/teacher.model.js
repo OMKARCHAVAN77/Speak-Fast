@@ -3,9 +3,10 @@ import mongoose from "mongoose";
 const slotSchema = new mongoose.Schema(
   {
     date: {
-      type: String, // Example: "2026-07-25"
-      required: true,
-    },
+    type: String,
+    default: () => new Date().toISOString().split("T")[0], // YYYY-MM-DD
+    required: true
+  },
 
     time: {
       type: String, // Example: "10:00 AM"
@@ -47,25 +48,6 @@ const teacherSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-    },
-
-    specialization: {
-      type: String,
-      required: true,
-    },
-
-    experience: {
-      type: Number,
-      default: 0,
-    },
-
-    qualification: {
-      type: String,
-      required: true,
-    },
-
-    bio: {
-      type: String,
     },
 
     photo: {
