@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormsModule, NgForm, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,6 +11,8 @@ import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import { RegistrationValidator } from '../../../core/Validators/regist_validators.validator';
+import { ToastrService } from 'ngx-toastr';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
@@ -21,12 +23,11 @@ type UserType = 'student' | 'teacher' | 'admin';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-
-    MatIconModule, RouterLink],
+    MatIconModule, RouterLink, ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login {
+export class Login implements OnInit {
   // email: string = '';
   // password: string = '';
   // rememberMe: boolean = true;
@@ -129,25 +130,37 @@ export class Login {
   //   console.log('Forgot password clicked');
   // }
 
-  email: string = '';
-  password: string = '';
-  rememberMe: boolean = true;
+
   hidePassword: boolean = true;
   showPassword = false;
   isLoading: boolean = false;
-  selectedRole: UserType = 'teacher';
+  getRole!:string;
 
   // Donhi endpoints ithe declare kele — adhi phakt teacherLoginUrl hota
   // student login add kela
-  private teacherLoginUrl = `${environment.apiUrl}/teacher/login`;
-private adminLoginUrl = `${environment.apiUrl}/auth/login`;
-private studentLoginUrl = `${environment.apiUrl}/students/login`;
 
+logingForm!: FormGroup;
   constructor(
     private http: HttpClient,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private fb: FormBuilder
+    ,private toastr: ToastrService,
   ) {}
+
+
+
+  ngOnInit(): void {
+      this.formInitializer();
+  }
+
+  formInitializer(){
+    this.logingForm= this.fb.group({
+      email: ['',[Validators.required,RegistrationValidator.isEmailCorrect]],
+      password:['',[Validators.required]],
+        isChecked:[false,[Validators.requiredTrue]]
+    })
+  }
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -157,107 +170,56 @@ private studentLoginUrl = `${environment.apiUrl}/students/login`;
     this.hidePassword = !this.hidePassword;
   }
 
-  onLogin(): void {
 
 
-    console.log("EMAIL:", this.email);
-  console.log("PASSWORD:", this.password);
-  console.log("ROLE:", this.selectedRole);
+  submitData(){
+    const{isChecked, ...payload}={...this.logingForm.value }
+    console.log("inside submi .. ",payload)
+    console.log("inside submi value .. ",this.logingForm.valid);
+    if(this.logingForm.valid){
+      console.log("inside if condition");
 
-    if (!this.email || !this.password) {
-      this.showToast('Please enter both email and password.', 'error');
-      return;
-    }
+      // setTimeout(()=>{
+        this.http.post(`${environment.apiUrl}/user/login`,payload).subscribe({
+          next:(x:any)=>{
+            console.log(x.data.user.role);
+            this.getRole=x.data.user.role;
+            const loacalStorage =x.data.token;
+            // this.router.navigate('')
 
-    this.isLoading = true;
+            this.toastr.success(
+              'User login successfully!',
+              'Success'
+            );
+            // this.logingForm.reset();
+            if(this.getRole === 'student'){
+              this.router.navigate(['/student-achievement'])
+            }else if(this.getRole === 'teacher'){
+              this.router.navigate(['/teachers'])
+            }else if(this.getRole === 'admin'){
+              localStorage.setItem('token', loacalStorage );
+              this.router.navigate(['/admin']);
+            }
+          },error:(err:any)=>{
 
-    const payload = {
-      email: this.email,
-      password: this.password
-    };
+            console.log(err)
 
-    // selectedRole var based teenpaiki ekach API call hoil
-    const loginUrl = this.getLoginUrl(this.selectedRole);
+              this.toastr.error(
+                'login failed!',
+                'Error'
+              );
 
-    this.http.post<any>(loginUrl, payload, { withCredentials: true }).subscribe({
-      next: (res) => this.handleLoginSuccess(res),
-      error: (err) => this.handleLoginError(err)
-    });
-  }
 
-  private getLoginUrl(role: UserType): string {
-    switch (role) {
-      case 'admin':
-        return this.adminLoginUrl;
-      case 'student':
-        return this.studentLoginUrl;
-      case 'teacher':
-      default:
-        return this.teacherLoginUrl;
-    }
-  }
-
-  private handleLoginSuccess(res: any): void {
-    this.isLoading = false;
-
-    // selectedRole based var response cha key nivadaycha (res.admin / res.teacher / res.student)
-    const user = this.getUserFromResponse(res, this.selectedRole);
-    const role: UserType = user?.role || this.selectedRole;
-
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('userRole', role);
-
-    // setTimeout ne NG0100 (ExpressionChangedAfterItHasBeenCheckedError) taalla
-    setTimeout(() => this.showToast('Login successful!', 'success'));
-
-    this.navigateByRole(role);
-  }
-
-  private getUserFromResponse(res: any, role: UserType): any {
-    switch (role) {
-      case 'admin':
-        return res.admin;
-      case 'student':
-        return res.student;
-      case 'teacher':
-      default:
-        return res.teacher;
+          }
+        })
+      // },1000)
+    }else{
+      this.logingForm.markAllAsTouched();
     }
   }
 
-  private handleLoginError(err: any): void {
-    this.isLoading = false;
-    const message = err?.error?.message || 'Login failed. Please try again.';
 
-    setTimeout(() => this.showToast(message, 'error'));
 
-    console.error('LOGIN ERROR:', err.status, err.error);
-  }
 
-  private navigateByRole(role: UserType): void {
-    switch (role) {
-      case 'admin':
-        this.router.navigate(['/admin']);
-        break;
-      case 'teacher':
-        this.router.navigate(['/teachers']);
-        break;
-      case 'student':
-        this.router.navigate(['/home']);
-        break;
-    }
-  }
 
-  private showToast(message: string, type: 'success' | 'error'): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      panelClass: type === 'error' ? ['toast-error'] : ['toast-success'],
-      horizontalPosition: 'right',
-      verticalPosition: 'top'
-    });
-  }
-
-  onForgotPassword(): void {
-    console.log('Forgot password clicked');
-  }
 }

@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { TeacherService } from '../../../../core/services/teacher.service';
+import { AdminService } from '../../../../core/services/admin.service';
 
 interface BookedSlot {
-  startTime: string;
+  date: string;
+  time: string;
 }
 
 @Component({
@@ -16,7 +19,7 @@ interface BookedSlot {
 export class AddTeacherDialog implements OnInit {
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
-  @Output() addTeacher = new EventEmitter<any>();
+  @Output() addTeacher = new EventEmitter<void>();
 
   aadharOptions = ['Verified', 'Not Verified', 'Pending'];
 
@@ -29,25 +32,36 @@ export class AddTeacherDialog implements OnInit {
 
   slotError = '';
 
+  isSubmitting = false;
+  submitError = '';
+
   teacher = {
     firstName: '',
     lastName: '',
+    email: '',
+    password: '',
+    role:'teacher',
     contactNumber: '',
     aadharNo: '',
-    email: '',
-    googleMeetLink: '',
+    // specialization: '',
+    // experience: '',
+    // qulification : '',
+    // bio:'',
     photo: null as File | null,
+    googleMeetLink: '',
     startTime: '',
     slots: [] as BookedSlot[]
   };
 
-  constructor(private elRef: ElementRef) {}
+  constructor(
+    private elRef: ElementRef,
+    private adminServe: AdminService
+  ) {}
 
   ngOnInit(): void {
     this.setDefaultTime();
   }
 
-  // ============ AUTO TIME ============
   private setDefaultTime(): void {
     const now = new Date();
     const roundedStart = this.roundToNext15Min(now);
@@ -59,44 +73,40 @@ export class AddTeacherDialog implements OnInit {
     return new Date(Math.ceil(date.getTime() / ms) * ms);
   }
 
-  // ============ AUTO TIME FORMAT ============
-private formatTime12h(date: Date): string {
-  let hours = date.getHours();
-  const minutes = date.getMinutes();
+  private formatTime12h(date: Date): string {
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
 
-  const period = hours < 12 ? 'am' : 'pm';
+    const period = hours < 12 ? 'am' : 'pm';
 
-  hours = hours % 12;
-  if (hours === 0) hours = 12;
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
 
-  const hh = String(hours).padStart(2, '0');
-  const mm = String(minutes).padStart(2, '0');
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(minutes).padStart(2, '0');
 
-  return `${hh}:${mm}${period}`;
-}
-// ============ END AUTO TIME ============
-
-
-private generateTimeSlots(): string[] {
-  const slots: string[] = [];
-
-  for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 15) {
-
-      const period = h < 12 ? 'am' : 'pm';
-
-      let hour12 = h % 12;
-      if (hour12 === 0) hour12 = 12;
-
-      const hh = String(hour12).padStart(2, '0');
-      const mm = String(m).padStart(2, '0');
-
-      slots.push(`${hh}:${mm}${period}`);
-    }
+    return `${hh}:${mm}${period}`;
   }
 
-  return slots;
-}
+  private generateTimeSlots(): string[] {
+    const slots: string[] = [];
+
+    for (let h = 0; h < 24; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        const period = h < 12 ? 'am' : 'pm';
+
+        let hour12 = h % 12;
+        if (hour12 === 0) hour12 = 12;
+
+        const hh = String(hour12).padStart(2, '0');
+        const mm = String(m).padStart(2, '0');
+
+        slots.push(`${hh}:${mm}${period}`);
+      }
+    }
+
+    return slots;
+  }
 
   toggleTimeDropdown(field: 'start', event: Event): void {
     event.stopPropagation();
@@ -115,7 +125,6 @@ private generateTimeSlots(): string[] {
     }
   }
 
-  // ============ BOOK SLOTS LIST ============
   canAddSlot(): boolean {
     return !!this.teacher.startTime;
   }
@@ -129,7 +138,7 @@ private generateTimeSlots(): string[] {
     }
 
     const isDuplicate = this.teacher.slots.some(
-      s => s.startTime === this.teacher.startTime
+      s => s.time === this.teacher.startTime
     );
     if (isDuplicate) {
       this.slotError = 'This time slot has already been added.';
@@ -137,14 +146,14 @@ private generateTimeSlots(): string[] {
     }
 
     this.teacher.slots.push({
-      startTime: this.teacher.startTime
-    });
+    date: new Date().toISOString().split('T')[0],
+    time: this.teacher.startTime
+  });
   }
 
   removeSlot(index: number): void {
     this.teacher.slots.splice(index, 1);
   }
-  // ============ END BOOK SLOTS LIST ============
 
   onPhotoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -173,25 +182,63 @@ private generateTimeSlots(): string[] {
   }
 
   onDelete(): void {
+    this.resetForm();
+  }
+
+  private resetForm(): void {
     this.teacher = {
       firstName: '',
       lastName: '',
+      email: '',
+      password: '',
+      role: 'teacher',
       contactNumber: '',
       aadharNo: '',
-      email: '',
-      googleMeetLink: '',
+      // specialization: '',
+      // experience: '',
+      // qulification: '',
+      // bio: '',
       photo: null as File | null,
+      googleMeetLink: '',
       startTime: '',
-      slots: []
+      slots: [] as BookedSlot[]
     };
+    this.photoFile = null;
+    this.photoFileName = '';
+    this.slotError = '';
+    this.submitError = '';
     this.setDefaultTime();
   }
 
-  onSubmit(): void {
-      console.log("teacher registration value:", this.teacher);
-    this.addTeacher.emit(this.teacher);
-    this.onClose();
-    // console.log("teacher registration value",this.addTeacher.emit(this.teacher));
+  onSubmit(form: NgForm): void {
+    console.log(this.teacher);
     
+    this.submitError = '';
+
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    if (this.teacher.slots.length === 0) {
+      this.slotError = 'Add at least one slot before submitting.';
+      return;
+    }
+
+    this.isSubmitting = true;
+      console.log(this.teacher);
+    this.adminServe.addTeacher(this.teacher).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.addTeacher.emit();
+        this.resetForm();
+        this.onClose();
+      },
+      error: (err: any) => {
+        this.isSubmitting = false;
+        this.submitError = err?.error?.message || 'Failed to add teacher. Please try again.';
+        console.error('Add teacher failed:', err);
+      }
+    });
   }
 }
