@@ -13,6 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { RegistrationValidator } from '../../../core/Validators/regist_validators.validator';
 import { ToastrService } from 'ngx-toastr';
+import { AuthSer } from '../../../core/services/auth.service';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
@@ -184,9 +185,10 @@ logingForm!: FormGroup;
           next:(x:any)=>{
             console.log(x.data.user.role);
             this.getRole=x.data.user.role;
-            const loacalStorage =x.data.token;
+            const tokenValue =x.data.token;
             // this.router.navigate('')
-
+              localStorage.setItem('token', tokenValue );
+              localStorage.setItem('roles', this.getRole );
             this.toastr.success(
               'User login successfully!',
               'Success'
@@ -197,7 +199,7 @@ logingForm!: FormGroup;
             }else if(this.getRole === 'teacher'){
               this.router.navigate(['/teachers'])
             }else if(this.getRole === 'admin'){
-              localStorage.setItem('token', loacalStorage );
+
               this.router.navigate(['/admin']);
             }
           },error:(err:any)=>{

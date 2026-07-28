@@ -19,6 +19,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/registration-dummy-data';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
 interface formData{
@@ -79,7 +80,7 @@ export class RegistrationComponent implements OnInit {
 
 
   isLoaderOn= signal<boolean>(false);
-  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService,private route: Router) {
 
   }
 
@@ -222,16 +223,8 @@ selectOccupation(occupation: string) {
 
     const payLoadMain = {
         ...payload,
-        // firstName:'dsfkkdkskssf',
-        // lastName:'iuhgryueiocnhjh',
-        // contactNumber:'8345207845',
-        // email:'murgudkolhapur@gmail.com',
-        // password:'Ljhhgjg@12345',
-        // district:'Kolhapur',
-        // qualification:'12th',
-        // occupation:'Student',
-        teacherId: '6a65a69673ef28a3f1eb5b2f',
-        slotId: '6a65a7ea73ef28a3f1eb5b42',
+        teacherId: this.studentServ.getTeacherId()  ,
+        slotId: this.studentServ.getSlotId(),
         courseName:this.studentServ.getCourseName(),
         coursePrice:this.studentServ.getCoursePrice()
       }
@@ -250,6 +243,7 @@ selectOccupation(occupation: string) {
               'Success'
             );
             this.registrationForm.reset();
+            this.route.navigate(['payment']);
           },error:(err:any)=>{
 
             this.isLoaderOn.set(false);
