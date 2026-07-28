@@ -100,7 +100,7 @@
 .chip-avatar {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
+  /* border-radius: 30%; */
   object-fit: cover;
 }
 .chip-icon-wrap {
@@ -454,6 +454,9 @@
 }
 ::ng-deep .booking-time-menu.mat-mdc-menu-panel {
   background-color: #fff !important;
+   min-width: 200px !important;
+  max-width: 200px !important;
+  width: 200px !important;
 }
 ::ng-deep .booking-time-menu .mat-mdc-menu-content {
   background-color: #fff !important;
