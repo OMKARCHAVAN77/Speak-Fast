@@ -98,15 +98,6 @@ loadTeachers(): void {
 
       next: (res: any) => {
 
-<<<<<<< HEAD
-  console.log(this.teachers);
-},
-    error: (err) => {
-       this.showTeachers = false;
-      console.error(err);
-    }
-  });
-=======
         console.log("API Response:", res);
 
         const teachers = res?.data || [];
@@ -142,7 +133,6 @@ loadTeachers(): void {
       }
 
     });
->>>>>>> df223c88441c96de1ec1c8a93169a433c52f47c3
 
 }
 
