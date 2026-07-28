@@ -149,7 +149,7 @@
     <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
       <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
         <mat-icon class="slot-icon">schedule</mat-icon>
-        <span class="slot-text">{{ slot.startTime }}</span>
+        <span class="slot-text">{{ slot.time}}</span>
         <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
       </div>
     </div>

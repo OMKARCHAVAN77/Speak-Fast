@@ -6,7 +6,8 @@ import { TeacherService } from '../../../../core/services/teacher.service';
 import { AdminService } from '../../../../core/services/admin.service';
 
 interface BookedSlot {
-  startTime: string;
+  date: string;
+  time: string;
 }
 
 @Component({
@@ -42,10 +43,10 @@ export class AddTeacherDialog implements OnInit {
     role:'teacher',
     contactNumber: '',
     aadharNo: '',
-    specialization: '',
-    experience: '',
-    qulification : '',
-    bio:'',
+    // specialization: '',
+    // experience: '',
+    // qulification : '',
+    // bio:'',
     photo: null as File | null,
     googleMeetLink: '',
     startTime: '',
@@ -137,7 +138,7 @@ export class AddTeacherDialog implements OnInit {
     }
 
     const isDuplicate = this.teacher.slots.some(
-      s => s.startTime === this.teacher.startTime
+      s => s.time === this.teacher.startTime
     );
     if (isDuplicate) {
       this.slotError = 'This time slot has already been added.';
@@ -145,8 +146,9 @@ export class AddTeacherDialog implements OnInit {
     }
 
     this.teacher.slots.push({
-      startTime: this.teacher.startTime
-    });
+    date: new Date().toISOString().split('T')[0],
+    time: this.teacher.startTime
+  });
   }
 
   removeSlot(index: number): void {
@@ -192,10 +194,10 @@ export class AddTeacherDialog implements OnInit {
       role: 'teacher',
       contactNumber: '',
       aadharNo: '',
-      specialization: '',
-      experience: '',
-      qulification: '',
-      bio: '',
+      // specialization: '',
+      // experience: '',
+      // qulification: '',
+      // bio: '',
       photo: null as File | null,
       googleMeetLink: '',
       startTime: '',
@@ -224,7 +226,7 @@ export class AddTeacherDialog implements OnInit {
     }
 
     this.isSubmitting = true;
-
+      console.log(this.teacher);
     this.adminServe.addTeacher(this.teacher).subscribe({
       next: () => {
         this.isSubmitting = false;

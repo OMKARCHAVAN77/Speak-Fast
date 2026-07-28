@@ -17,10 +17,7 @@ export interface Teacher {
   userId: TeacherUser;
   contactNumber: string;
   aadharNo: string;
-  specialization?: string;
-  qualification?: string;
-  experience?: string;
-  bio?: string;
+
   photo: string | null;
   googleMeetLink: string;
   slots: any[];
@@ -61,6 +58,7 @@ export class TeacherService {
 
     return this.http.get<any>(
       `${this.baseUrl}/filter`,
+      // 'http://localhost:3000/api/teacher/filter',
       { params, withCredentials: true }
     );
   }
