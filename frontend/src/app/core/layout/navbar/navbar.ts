@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { filter } from 'rxjs';
 
 interface NavLink {
   label: string;
@@ -31,7 +32,7 @@ interface NavLink {
 
 export class Navbar {
 
-  constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar) {}
+  constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar, private route: Router) {}
   private logoutUrl = `${environment.apiUrl}/auth/logout`;
 
   isMenuOpen = false;
@@ -53,6 +54,15 @@ export class Navbar {
   // }
 
   onLogout(): void {
+
+    this.route.events
+  .pipe(filter(event => event instanceof NavigationEnd))
+  .subscribe((event:NavigationEnd)=>{
+      console.log('Current URL:', event.url);
+      console.log('After Redirects:', event.urlAfterRedirects);
+
+  })
+
   this.http.post<any>(this.logoutUrl, {}, { withCredentials: true }).subscribe({
     next: (res) => {
       // Local storage clear kara

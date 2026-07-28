@@ -15,6 +15,7 @@ import { adminRoutes } from './features/admin/admin-route.routes';
 import { SetPassword } from './features/teachers/set-password/set-password';
 import { LinkSent } from './features/auth/forgot-password/link-sent/link-sent';
 import { Teachers } from './features/teachers/teachers';
+import { inject } from '@angular/core';
 
 
 

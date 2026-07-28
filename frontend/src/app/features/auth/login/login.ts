@@ -13,6 +13,7 @@ import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { RegistrationValidator } from '../../../core/Validators/regist_validators.validator';
 import { ToastrService } from 'ngx-toastr';
+import { AuthSer } from '../../../core/services/auth.service';
 
 type UserType = 'student' | 'teacher' | 'admin';
 
@@ -146,6 +147,7 @@ logingForm!: FormGroup;
     private snackBar: MatSnackBar,
     private fb: FormBuilder
     ,private toastr: ToastrService,
+    private authServ: AuthSer
   ) {}
 
 
@@ -180,7 +182,7 @@ logingForm!: FormGroup;
       console.log("inside if condition");
 
       // setTimeout(()=>{
-        this.http.post(`${environment.apiUrl}/user/login`,payload).subscribe({
+        this.authServ.checkLogin(payload).subscribe({
           next:(x:any)=>{
             console.log(x.data.user.role);
             this.getRole=x.data.user.role;
