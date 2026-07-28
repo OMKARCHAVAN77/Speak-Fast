@@ -26,7 +26,7 @@ export class AdminService {
 
     return this.http.get(
       `${environment.apiUrl}/teacher/getAllTeachers`,
-      
+
     );
   }
 

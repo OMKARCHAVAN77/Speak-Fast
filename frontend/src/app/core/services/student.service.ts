@@ -48,7 +48,7 @@ export class StudentService {
     }
 
     addStudentApi(data:any){
-      return  this.http.post(`${environment.apiUrl}/booking/register-book`,data)
+      return  this.http.post(`${environment.apiUrl}/booking/register-book`,data);
     }
 
     // student forgot password service
