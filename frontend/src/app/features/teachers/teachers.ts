@@ -54,9 +54,9 @@ minDate: Date = new Date();
   formattedDate:any;
    teachers: Teacher[] =[];
    showTeachers = false;
-   
 
-   
+
+
 ngOnInit(): void {
 
   // Set today's date
@@ -68,7 +68,7 @@ ngOnInit(): void {
 
   // API format
   this.formattedDate = this.formatDate(this.selectedDate);
- this.loadTeachers(); 
+ this.loadTeachers();
 }
 formatDate(date: Date): string {
 
@@ -78,7 +78,7 @@ formatDate(date: Date): string {
 
 constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef,
    private router: Router,
-  private studServ:StudentService) {}  
+  private studServ:StudentService) {}
 loadTeachers(): void {
 
   if (!this.formattedDate) {
@@ -184,11 +184,11 @@ selectSlot(teacherId: string, slotId: string) {
 
 }
 
- 
+
 
   selectTeacher(id: string): void {
     this.selectedTeacherId = id;
-    
+
   }
 
 bookSeat() {
@@ -199,13 +199,13 @@ bookSeat() {
   }
 
   console.log("Teacher Id :", typeof(this.selectedTeacherId));
-  console.log("Slot Id :", this.selectedSlotId); 
-   
+  console.log("Slot Id :", this.selectedSlotId);
+
   // let TeacherId=this.selectedTeacherId();
 
-// this.studServ.setTeacherId(this.selectedTeacherId);
+  this.studServ.setTeacherId(this.selectedTeacherId);
  this.studServ.setSlotId( this.selectedSlotId);
-  
+
 
   this.router.navigate(['/courses']);
 
