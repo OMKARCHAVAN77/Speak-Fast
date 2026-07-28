@@ -9,110 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-// import { environment } from '../../../../environments/environments';
-
-
-
-
-interface Student {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  course: string;
-  enrolled: string;
-  end: string;
-  progress: number;
-  onLeave?: string;
-}
-
-// ---- STATIC MOCK DATA (for local UI testing, remove when API is wired) ----
-const MOCK_STUDENTS: any[] = [
-  {
-    _id: '1',
-    firstName: 'Pravin',
-    lastName: 'Jadhav',
-    email: 'parvin.j@email.com',
-    contactNumber: '+1234567890',
-    plan: 'Premium • 3 Months',
-    teacher: 'Anith Rathod',
-    enrolledDate: 'Jan 02, 2026',
-    endDate: 'Apr 15, 2026',
-    timeSlot: '10:00 - 11:00 AM',
-    status: 'paid',
-  },
-  {
-    _id: '2',
-    firstName: 'Pravin',
-    lastName: 'Jadhav',
-    email: 'parvin.j@email.com',
-    contactNumber: '+1234567890',
-    plan: 'Premium • 3 Months',
-    teacher: 'Anith Rathod',
-    enrolledDate: 'Jan 02, 2026',
-    endDate: 'Apr 15, 2026',
-    timeSlot: '10:00 - 11:00 AM',
-    status: 'paid',
-  },
-  {
-    _id: '3',
-    firstName: 'Pravin',
-    lastName: 'Jadhav',
-    email: 'parvin.j@email.com',
-    contactNumber: '+1234567890',
-    plan: 'Premium • 3 Months',
-    teacher: 'Anith Rathod',
-    enrolledDate: 'Jan 02, 2026',
-    endDate: 'Apr 15, 2026',
-    timeSlot: '10:00 - 11:00 AM',
-    status: 'paid',
-  },
-  {
-    _id: '4',
-    firstName: 'Pravin',
-    lastName: 'Jadhav',
-    email: 'parvin.j@email.com',
-    contactNumber: '+1234567890',
-    plan: 'Premium • 3 Months',
-    teacher: 'Anith Rathod',
-    enrolledDate: 'Jan 02, 2026',
-    endDate: 'Apr 15, 2026',
-    timeSlot: '10:00 - 11:00 AM',
-    status: 'paid',
-  },
-  {
-    _id: '5',
-    firstName: 'Pravin',
-    lastName: 'Jadhav',
-    email: 'parvin.j@email.com',
-    contactNumber: '+1234567890',
-    plan: 'Premium • 3 Months',
-    teacher: 'Anith Rathod',
-    enrolledDate: 'Jan 02, 2026',
-    endDate: 'Apr 15, 2026',
-    timeSlot: '10:00 - 11:00 AM',
-    status: 'paid',
-  },
-  {
-    _id: '6',
-    firstName: 'Pravin',
-    lastName: 'Jadhav',
-    email: 'parvin.j@email.com',
-    contactNumber: '+1234567890',
-    plan: 'Premium • 3 Months',
-    teacher: 'Anith Rathod',
-    enrolledDate: 'Jan 02, 2026',
-    endDate: 'Apr 15, 2026',
-    timeSlot: '10:00 - 11:00 AM',
-    status: 'pending',
-  },
-];
-
-
+import { AdminService } from '../../../core/services/admin.service';
 
 @Component({
   selector: 'app-admin-allstudents',
@@ -138,32 +38,63 @@ export class AdminAllStudents implements OnInit {
   selectedDate: Date | null = null;
   allStudentList = signal<any[]>([]);
   studentLength = signal<number>(0);
+  students: any;
 
-  constructor(private http: HttpClient, private datePipe: DatePipe) {}
+  constructor(private adminServ: AdminService, private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.loadStudents();
+
   }
 
+  getAllStudents() {
+  this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
+    next: (res: any) => {
+
+     const students = res.data.map((student: any) => ({
+
+  firstName: student.userId?.firstName ?? "",
+
+  lastName: student.userId?.lastName ?? "",
+
+  contactNumber: student.contactNumber ?? "",
+
+  email: student.userId?.email ?? "",
+
+  plan: student.bookings?.[0]?.courseName ?? "",
+
+  teacher: student.assignedTeacher?.userId
+    ? `${student.assignedTeacher.userId.firstName ?? ""} ${student.assignedTeacher.userId.lastName ?? ""}`
+    : "Not Assigned",
+
+  timeSlot: student.bookings?.[0]?.slotTime ?? "",
+
+  enrolledDate: student.bookings?.[0]?.createdAt
+    ? this.datePipe.transform(
+        student.bookings[0].createdAt,
+        'MMM d, y'
+      )
+    : "",
+
+  _id: student._id
+
+}));
+
+      this.allStudentList.set(students);
+      this.studentLength.set(students.length);
+
+      console.log(this.allStudentList());
+
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  });
+}
+
   loadStudents() {
-    // ---- Using static mock data for local check ----
-    // Comment this block out and uncomment the HTTP call below once the API is ready.
-    this.allStudentList.set(MOCK_STUDENTS);
-    this.studentLength.set(MOCK_STUDENTS.length);
-    console.log(this.allStudentList());
+    this.getAllStudents()
 
-    // this.http.get<any>(`${environment.apiUrl}/students/getallstudent`)
-    //   .subscribe({
-    //     next: (res) => {
-    //       this.allStudentList.set(res.data);
-    //       this.studentLength.set(res.data.length);
-
-    //       console.log(this.allStudentList());
-    //     },
-    //     error: (err) => {
-    //       console.error(err);
-    //     }
-    //   });
   }
 
   get filteredStudents(): any[] {

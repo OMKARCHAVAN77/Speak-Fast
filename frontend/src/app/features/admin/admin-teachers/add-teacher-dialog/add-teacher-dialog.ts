@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { TeacherService } from '../../../../core/services/teacher.service';
+import { AdminService } from '../../../../core/services/admin.service';
 
 interface BookedSlot {
-  startTime: string;
+  date: string;
+  time: string;
 }
 
 @Component({
@@ -16,7 +19,9 @@ interface BookedSlot {
 export class AddTeacherDialog {
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
-  @Output() addTeacher = new EventEmitter<any>();
+  @Output() addTeacher = new EventEmitter<void>();
+
+  aadharOptions = ['Verified', 'Not Verified', 'Pending'];
 
   photoFile: File | null = null;
   photoFileName: string = '';
@@ -27,25 +32,52 @@ export class AddTeacherDialog {
 
   slotError = '';
 
+  isSubmitting = false;
+  submitError = '';
+
   teacher = {
     firstName: '',
     lastName: '',
-    aadharNo: '',
     email: '',
-    googleMeetLink: '',
+    password: '',
+    role:'teacher',
+    contactNumber: '',
+    aadharNo: '',
+    // specialization: '',
+    // experience: '',
+    // qulification : '',
+    // bio:'',
     photo: null as File | null,
+    googleMeetLink: '',
     startTime: '',
     slots: [] as BookedSlot[],
   };
 
-  constructor(private elRef: ElementRef) {}
+  constructor(
+    private elRef: ElementRef,
+    private adminServe: AdminService
+  ) {}
 
-  // ============ TIME FORMAT: "hh:mm AM/PM" ============
+  ngOnInit(): void {
+    this.setDefaultTime();
+  }
+
+  private setDefaultTime(): void {
+    const now = new Date();
+    const roundedStart = this.roundToNext15Min(now);
+    this.teacher.startTime = this.formatTime12h(roundedStart);
+  }
+
+  private roundToNext15Min(date: Date): Date {
+    const ms = 1000 * 60 * 15;
+    return new Date(Math.ceil(date.getTime() / ms) * ms);
+  }
+
   private formatTime12h(date: Date): string {
     let hours = date.getHours();
     const minutes = date.getMinutes();
 
-    const period = hours < 12 ? 'AM' : 'PM';
+    const period = hours < 12 ? 'am' : 'pm';
 
     hours = hours % 12;
     if (hours === 0) hours = 12;
@@ -53,7 +85,7 @@ export class AddTeacherDialog {
     const hh = String(hours).padStart(2, '0');
     const mm = String(minutes).padStart(2, '0');
 
-    return `${hh}:${mm} ${period}`;
+    return `${hh}:${mm}${period}`;
   }
 
   private generateTimeSlots(): string[] {
@@ -69,7 +101,7 @@ export class AddTeacherDialog {
         const hh = String(hour12).padStart(2, '0');
         const mm = String(m).padStart(2, '0');
 
-        slots.push(`${hh}:${mm} ${period}`);
+        slots.push(`${hh}:${mm}${period}`);
       }
     }
 
@@ -93,7 +125,6 @@ export class AddTeacherDialog {
     }
   }
 
-  // ============ TIME SLOTS LIST ============
   canAddSlot(): boolean {
     return !!this.teacher.startTime;
   }
@@ -107,7 +138,7 @@ export class AddTeacherDialog {
     }
 
     const isDuplicate = this.teacher.slots.some(
-      (s) => s.startTime === this.teacher.startTime
+      s => s.time === this.teacher.startTime
     );
     if (isDuplicate) {
       this.slotError = 'This time slot has already been added.';
@@ -115,19 +146,13 @@ export class AddTeacherDialog {
     }
 
     this.teacher.slots.push({
-      startTime: this.teacher.startTime,
-    });
+    date: new Date().toISOString().split('T')[0],
+    time: this.teacher.startTime
+  });
   }
 
   removeSlot(index: number): void {
     this.teacher.slots.splice(index, 1);
-  }
-
-  // ============ PHOTO UPLOAD ============
-  onBrowseClick(event: Event): void {
-    event.stopPropagation();
-    const input = this.elRef.nativeElement.querySelector('.upload-input-hidden');
-    input?.click();
   }
 
   onPhotoSelected(event: Event): void {
@@ -182,23 +207,63 @@ export class AddTeacherDialog {
   }
 
   onDelete(): void {
+    this.resetForm();
+  }
+
+  private resetForm(): void {
     this.teacher = {
       firstName: '',
       lastName: '',
-      aadharNo: '',
       email: '',
-      googleMeetLink: '',
+      password: '',
+      role: 'teacher',
+      contactNumber: '',
+      aadharNo: '',
+      // specialization: '',
+      // experience: '',
+      // qulification: '',
+      // bio: '',
       photo: null as File | null,
+      googleMeetLink: '',
       startTime: '',
-      slots: [],
+      slots: [] as BookedSlot[]
     };
     this.photoFile = null;
     this.photoFileName = '';
+    this.slotError = '';
+    this.submitError = '';
+    this.setDefaultTime();
   }
 
-  onSubmit(): void {
-    console.log('teacher registration value:', this.teacher);
-    this.addTeacher.emit(this.teacher);
-    this.onClose();
+  onSubmit(form: NgForm): void {
+    console.log(this.teacher);
+    
+    this.submitError = '';
+
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+    if (this.teacher.slots.length === 0) {
+      this.slotError = 'Add at least one slot before submitting.';
+      return;
+    }
+
+    this.isSubmitting = true;
+      console.log(this.teacher);
+    this.adminServe.addTeacher(this.teacher).subscribe({
+      next: () => {
+        this.isSubmitting = false;
+        this.addTeacher.emit();
+        this.resetForm();
+        this.onClose();
+      },
+      error: (err: any) => {
+        this.isSubmitting = false;
+        this.submitError = err?.error?.message || 'Failed to add teacher. Please try again.';
+        console.error('Add teacher failed:', err);
+      }
+    });
   }
 }

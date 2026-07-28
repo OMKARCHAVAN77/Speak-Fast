@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { TeacherService } from '../../core/services/teacher.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { StudentService } from '../../core/services/student.service';
 
 interface Slot {
   _id: string;
@@ -67,7 +68,7 @@ ngOnInit(): void {
 
   // API format
   this.formattedDate = this.formatDate(this.selectedDate);
-
+ this.loadTeachers(); 
 }
 formatDate(date: Date): string {
 
@@ -75,10 +76,12 @@ formatDate(date: Date): string {
 
 }
 
-constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef, private router: Router) {}  
+constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef,
+   private router: Router,
+  private studServ:StudentService) {}  
 loadTeachers(): void {
 
-  if (!this.formattedDate || !this.selectedTime) {
+  if (!this.formattedDate) {
     return;
   }
 
@@ -87,22 +90,49 @@ loadTeachers(): void {
   console.log(this.selectedTime);
 
   this.teacherService
-  .filterTeacherApi(this.formattedDate, this.selectedTime)
-  .subscribe({
-    next: (res: any) => {
-  console.log("API Response:", res.data);
+    .filterTeacherApi(
+      this.formattedDate,
+      this.selectedTime || undefined
+    )
+    .subscribe({
 
-  this.teachers = [...res.data];
-       this.showTeachers = this.teachers.length > 0;
-  this.cdr.detectChanges();
+      next: (res: any) => {
 
-  console.log(this.teachers);
-},
-    error: (err) => { 
-       this.showTeachers = false;
-      console.error(err);
-    }
-  });
+        console.log("API Response:", res);
+
+        const teachers = res?.data || [];
+
+        this.teachers = teachers.map((teacher:any)=>({
+
+  ...teacher,
+
+  firstName: teacher.firstName ?? "",
+  lastName: teacher.lastName ?? "",
+  email: teacher.email ?? "",
+
+  slots: teacher.slots ?? []
+
+}));
+
+        this.showTeachers = this.teachers.length > 0;
+
+        this.cdr.detectChanges();
+
+        console.log("Filtered Teachers:", this.teachers);
+      },
+
+      error: (err) => {
+
+        this.teachers = [];
+        this.showTeachers = false;
+
+        console.error(
+          "Failed to load teachers:",
+          err.error?.message || err.message
+        );
+      }
+
+    });
 
 }
 
@@ -126,9 +156,7 @@ onDateChange(event: any): void {
 
   console.log("Selected Date :", this.formattedDate);
 
-  if (this.selectedTime) {
-    this.loadTeachers();
-  }
+ this.loadTeachers();
 }
 
   selectTime(slot: string): void {
@@ -170,10 +198,14 @@ bookSeat() {
     return;
   }
 
-  console.log("Teacher Id :", this.selectedTeacherId);
-  console.log("Slot Id :", this.selectedSlotId);
+  console.log("Teacher Id :", typeof(this.selectedTeacherId));
+  console.log("Slot Id :", this.selectedSlotId); 
+   
+  // let TeacherId=this.selectedTeacherId();
 
-  // Booking API success नंतर
+// this.studServ.setTeacherId(this.selectedTeacherId);
+ this.studServ.setSlotId( this.selectedSlotId);
+  
 
   this.router.navigate(['/courses']);
 

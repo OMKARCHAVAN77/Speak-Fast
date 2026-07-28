@@ -6,7 +6,7 @@
     <mat-icon class="close-icon" (click)="onClose()">close</mat-icon>
   </div>
 
-  <form class="drawer-form" (ngSubmit)="onSubmit()" #teacherForm="ngForm">
+  <form class="drawer-form" (ngSubmit)="onSubmit(teacherForm)" #teacherForm="ngForm">
     <div class="name-row">
       <div class="name-field">
         <label class="field-label">First Name<span class="required-star">*</span></label>
@@ -142,14 +142,19 @@
     <!-- ===== ADDED SLOTS LIST ===== -->
     <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
       <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
-        <span class="slot-text">{{ slot.startTime }}</span>
+        <mat-icon class="slot-icon">schedule</mat-icon>
+        <span class="slot-text">{{ slot.time}}</span>
         <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
       </div>
     </div>
-    <!-- ===== END ADD TIME SLOT ===== -->
+    <!-- ===== END BOOK SLOTS ===== -->
 
-    <button type="submit" class="submit-btn">
-      <mat-icon class="btn-icon">add</mat-icon> Add Teacher
+    <!-- ===== SUBMIT ERROR ===== -->
+    <div class="slot-error" *ngIf="submitError">{{ submitError }}</div>
+
+    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+      <mat-icon class="btn-icon">{{ isSubmitting ? 'hourglass_empty' : 'add' }}</mat-icon>
+      {{ isSubmitting ? 'Adding...' : 'Add Teacher' }}
     </button>
   </form>
 </div>

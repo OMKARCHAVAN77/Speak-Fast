@@ -8,18 +8,18 @@ import { BehaviorSubject, Observable } from "rxjs";
 })
 export class StudentService {
 
-     teacherId = new BehaviorSubject<number|null>(null);
+     teacherId = new BehaviorSubject<String|null>(null);
      soltId = new BehaviorSubject<String|null>(null);
      courseName = new BehaviorSubject<String|null>(null);
      coursePrice = new BehaviorSubject<String|null>(null);
 
     constructor(private http:HttpClient){}
 
-    setTeacherId(data: number){
+    setTeacherId(data: String){
        this.teacherId.next(data);
     }
 
-    getTeacherId():number|null{
+    getTeacherId():String|null{
       return this.teacherId.getValue();
     }
 
@@ -52,7 +52,7 @@ export class StudentService {
     }
 
     // student forgot password service
-    private baseUrl = "https://speak-fast.onrender.com/api/auth";
+    private baseUrl = `${environment.apiUrl}/auth`;
 
     forgotStudentPassword(body: { email: string }) {
         return this.http.post(`${this.baseUrl}/forgot-password`, body);

@@ -74,8 +74,16 @@ export const getAllStudentsService = async () => {
         })
         .populate({
             path: "assignedTeacher",
-            select: "specialization experience googleMeetLink userId"
-        });
+            // select: "specialization experience googleMeetLink userId ",
+            select: " googleMeetLink userId ",
+             populate: {
+                path: "userId",
+                select: "firstName lastName email"
+            }
+        }).
+        populate({
+             path: "bookings"
+        });;
 
     return students;
 };

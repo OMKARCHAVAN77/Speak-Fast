@@ -1,108 +1,74 @@
 <div class="login-page">
 
 
-  <div class="login-card " >
+  <div class="login-card ">
     <!-- Logo -->
     <div class="logo-wrap">
       <img src="../../../../assets/speakFast-logo.png" alt="Speak Fast's English Academy Logo">
     </div>
 
     <!-- Heading -->
-    <h1 class="welcome-heading" >Welcome Back!</h1>
-    <p class="welcome-subtext" >The best English language training institute in Pune</p>
+    <h1 class="welcome-heading">Welcome Back!</h1>
+    <p class="welcome-subtext">The best English language training institute in Pune</p>
 
-    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+    <form [formGroup]="logingForm">
 
-      <!-- <mat-radio-group [(ngModel)]="selectedRole" name="role">
-  <mat-radio-button value="teacher">Teacher</mat-radio-button>
-  <mat-radio-button value="admin">Admin</mat-radio-button>
-  <mat-radio-button value="student">Student</mat-radio-button>
-</mat-radio-group> -->
-
-<!-- <div class="role-tabs" role="tablist">
-
-  <button
-    type="button"
-    class="role-tab"
-    [class.active]="selectedRole === 'admin'"
-    (click)="selectedRole = 'admin'">
-    <mat-icon>person</mat-icon>
-    <span>Admin</span>
-  </button>
-
-  
-
-  <button
-    type="button"
-    class="role-tab"
-    [class.active]="selectedRole === 'teacher'"
-    (click)="selectedRole = 'teacher'">
-    <mat-icon>auto_stories</mat-icon>
-    <span>Teacher</span>
-  </button>
-
-  <button
-    type="button"
-    class="role-tab"
-    [class.active]="selectedRole === 'student'"
-    (click)="selectedRole = 'student'">
-    <mat-icon>school</mat-icon>
-    <span>Student</span>
-  </button>
-  
-</div> -->
 
       <!-- Email -->
 
-      <div class="email-wrapper" >
-        <Label id="email-" >Email Address</Label>
-        <input 
-  id="email"
-  type="text"
-  name="email"
-  [(ngModel)]="email"
-  placeholder="Enter your email here">
+      <div class="email-wrapper">
+        <Label id="email-">Email Address</Label>
+        <input id="email" type="text" formControlName="email" placeholder="Enter your email here">
+        @if(logingForm.get('email')?.hasError('required') && logingForm.get('email')?.touched){
+        <small class="text-danger">field is required</small>
+        }
+        @if(logingForm.get('email')?.hasError('isEmailCorrect') && logingForm.get('email')?.touched){
+        <small class="text-danger">Enter your full email id</small>
+        }
       </div>
 
       <!-- Password -->
       <div class="password-wrapper">
-        <label >Password</label>
+        <label>Password</label>
 
         <div class="position-relative ">
-          <input 
-  [type]="showPassword ? 'text' : 'password'"
-  class="form-control"
-  name="password"
-  [(ngModel)]="password"
-  placeholder="Enter your password">
+          <input [type]="showPassword ? 'text' : 'password'" class="form-control"  formControlName="password"
+            placeholder="Enter your password">
 
-          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()" >
+          <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()">
           </i>
         </div>
+        @if(logingForm.get('password')?.hasError('required') && logingForm.get('password')?.touched){
+        <small class="text-danger">field is required</small>
+        }
       </div>
 
-      <!-- Error Message -->
-      <!-- <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px; font-size: 14px;">
-        {{ errorMessage }}
-      </div> -->
 
       <!-- Remember me / Forgot password -->
-      <div class="check-out-wrapper top-row" >
-        <div class="mb-3 form-check" >
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" [(ngModel)]="rememberMe" name="rememberMe">
+      <div class="check-out-wrapper top-row ">
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isChecked">
           <label class="form-check-label" for="exampleCheck1">Remember me</label>
+
+          @if ( logingForm.get('isChecked')?.hasError('required') && logingForm.get('isChecked')?.touched
+          ) {
+          <small class="text-danger d-block">
+            Please check this box.
+          </small>
+          }
         </div>
 
-        <a routerLink="/forgotPassword" class="forgot-link"
-          (click)="onForgotPassword()">
+
+
+        <a routerLink="/forgotPassword" class="forgot-link">
           Forgot password?
         </a>
       </div>
 
       <!-- Login Button -->
-      <button mat-raised-button type="submit" class="btn-login w-100" [disabled]="isLoading">
+      <button mat-raised-button type="submit" class="btn-login w-100" (click)="submitData()">
         <div class="text-white">
-          {{ isLoading ? 'Logging in...' : 'Login' }}&nbsp;<mat-icon class="text-white">arrow_forward</mat-icon>
+          Login&nbsp;
         </div>
       </button>
 
