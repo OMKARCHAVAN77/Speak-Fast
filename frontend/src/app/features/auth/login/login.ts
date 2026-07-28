@@ -197,7 +197,7 @@ logingForm!: FormGroup;
             if(this.getRole === 'student'){
               this.router.navigate(['/student-achievement'])
             }else if(this.getRole === 'teacher'){
-              this.router.navigate(['/teachers'])
+              this.router.navigate(['/teacherDashbord'])
             }else if(this.getRole === 'admin'){
 
               this.router.navigate(['/admin']);
