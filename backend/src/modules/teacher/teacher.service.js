@@ -39,10 +39,7 @@ export const registerTeacherService = async (body, file) => {
     password,
     contactNumber,
     aadharNo,
-    specialization,
-    qualification,
-    experience,
-    bio,
+    
     googleMeetLink,
     slots
   } = body;
@@ -84,6 +81,7 @@ export const registerTeacherService = async (body, file) => {
     email: email.toLowerCase(),
     password: hashedPassword,
     role: "teacher",
+    isActive: true
   });
 
   // Generate Reset Token
@@ -104,10 +102,7 @@ export const registerTeacherService = async (body, file) => {
     userId: user._id,
     contactNumber,
     aadharNo,
-    specialization,
-    qualification,
-    experience,
-    bio,
+   
     googleMeetLink,
     photo: media,
      slots: teacherSlots
@@ -194,10 +189,7 @@ export const updateTeacherService = async (teacherId, body) => {
     email,
     contactNumber,
     aadharNo,
-    specialization,
-    qualification,
-    experience,
-    bio,
+   
     googleMeetLink,
     photo,
   } = body;
@@ -231,10 +223,7 @@ export const updateTeacherService = async (teacherId, body) => {
     {
       contactNumber,
       aadharNo,
-      specialization,
-      qualification,
-      experience,
-      bio,
+      
       googleMeetLink,
       photo,
     },
@@ -512,51 +501,52 @@ export const filterTeachersService = async (date, time) => {
     select: "firstName lastName email"
   });
 
-  // Return only matching slots
-  const result = teachers.map((teacher) => {
 
-    const matchingSlots = teacher.slots.filter((slot) => {
+  const result = teachers
+    .filter((teacher) => teacher.userId) // null userId remove
+    .map((teacher) => {
 
-      if (time) {
+      const matchingSlots = teacher.slots.filter((slot) => {
+
+        if (time) {
+          return (
+            slot.date === date &&
+            slot.time === time &&
+            slot.isBooked === false
+          );
+        }
+
         return (
           slot.date === date &&
-          slot.time === time &&
           slot.isBooked === false
         );
-      }
 
-      return (
-        slot.date === date &&
-        slot.isBooked === false
-      );
+      });
+
+
+      return {
+
+        _id: teacher._id,
+
+        firstName: teacher.userId?.firstName || "",
+
+        lastName: teacher.userId?.lastName || "",
+
+        email: teacher.userId?.email || "",
+
+        photo: teacher.photo,
+
+        slots: matchingSlots
+
+      };
 
     });
 
-    return {
 
-      _id: teacher._id,
+  return result.filter(
+    (teacher) => teacher.slots.length > 0
+  );
 
-      firstName: teacher.userId.firstName,
-
-      lastName: teacher.userId.lastName,
-
-      email: teacher.userId.email,
-
-      specialization: teacher.specialization,
-
-      qualification: teacher.qualification,
-
-      experience: teacher.experience,
-
-      photo: teacher.photo,
-
-      slots: matchingSlots
-
-    };
-
-  });
-
-  return result.filter((teacher) => teacher.slots.length > 0);
 };
 
 
