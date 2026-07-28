@@ -8,8 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
+
 import { TeacherService, Teacher } from '../../../core/services/teacher.service';
+import { AdminService } from '../../../core/services/admin.service';
 
 @Component({
   selector: 'app-admin-teachers',
@@ -37,7 +40,11 @@ export class AdminTeachers implements OnInit {
   drawerOpen = false;
   teacherBeingEdited: Teacher | null = null;
 
-  constructor(private teacherService: TeacherService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private teacherService: TeacherService,
+    private adminService: AdminService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadTeachers();
@@ -45,44 +52,66 @@ export class AdminTeachers implements OnInit {
 
   loadTeachers(): void {
     this.loading = true;
-    this.teacherService.getTeachers().subscribe({
-      next: (res) => {
-        console.log('TEACHER API RESPONSE:', res);
-        this.teachers = res.teachers; // unwrap { count, teachers }
-        this.loading = false;
+
+    // this.adminService.getAllTeachers().subscribe({
+    //   next: (res: any) => {
+    //     console.log('TEACHER API RESPONSE:', res);
+    //     console.log(res);
+    //     console.log(res.data);
+
+    //     this.teachers = res.data || [];
+    //     this.loading = false;
+
+    //     this.cdr.detectChanges();
+    //   },
+    //   error: (err: any) => {
+    //     console.error('Failed to load teachers:', err);
+    //     this.loading = false;
+    //   }
+    // });
+
+
+    this.adminService.getAllTeachers().subscribe({
+  next: (res: any) => {
+    console.log('TEACHER API RESPONSE:', res);
+
+    this.teachers = (res.data || []).filter(
+      (teacher: any) => teacher.userId !== null
+    );
+
+    console.log('FILTERED TEACHERS:', this.teachers);
+
+    this.loading = false;
+    this.cdr.detectChanges();
+  },
+
+  error: (err: any) => {
+    console.error('Failed to load teachers:', err);
+    this.loading = false;
+  }
+});
+}
+
+  onTeacherAdded(): void {
+    this.loadTeachers();
+    this.onDrawerClose();
+  }
+
+  onDeleteTeacher(teacher: Teacher): void {
+    if (!confirm(`Delete ${teacher.userId.firstName} ${teacher.userId.lastName}?`)) {
+      return;
+    }
+
+    this.teacherService.deleteTeacher(teacher._id).subscribe({
+      next: () => {
+        this.teachers = this.teachers.filter(t => t._id !== teacher._id);
         this.cdr.detectChanges();
       },
       error: (err: any) => {
-        console.error('Failed to load teachers:', err);
-        this.loading = false;
+        console.error('Failed to delete teacher:', err);
       }
     });
   }
-
-  onTeacherAdded(teacher: any): void {
-    this.teacherService.addTeacher(teacher).subscribe({
-      next: (res) => {
-        console.log(res.message);
-        this.loadTeachers();
-        this.onDrawerClose();
-      },
-      error: (err: any) => {
-        console.error('Failed to add teacher:', err);
-      }
-    });
-  }
-
-  // onDeleteTeacher(teacher: Teacher): void {
-  //   if (!confirm(`Delete ${teacher.firstName} ${teacher.lastName}?`)) return;
-
-  //   this.teacherService.deleteTeacher(teacher._id).subscribe({
-  //     next: () => {
-  //       this.teachers = this.teachers.filter(t => t._id !== teacher._id);
-  //       this.cdr.detectChanges();
-  //     },
-  //     error: (err: any) => console.error('Failed to delete teacher:', err)
-  //   });
-  // }
 
   onEditTeacher(teacher: Teacher): void {
     this.teacherBeingEdited = teacher;
@@ -91,11 +120,15 @@ export class AdminTeachers implements OnInit {
 
   get filteredTeachers(): Teacher[] {
     const term = this.searchTerm.trim().toLowerCase();
-    if (!term) return this.teachers;
+
+    if (!term) {
+      return this.teachers;
+    }
+
     return this.teachers.filter(
       t =>
-        `${t.firstName} ${t.lastName}`.toLowerCase().includes(term) ||
-        t.email.toLowerCase().includes(term)
+        `${t.userId.firstName} ${t.userId.lastName}`.toLowerCase().includes(term) ||
+        t.userId.email.toLowerCase().includes(term)
     );
   }
 

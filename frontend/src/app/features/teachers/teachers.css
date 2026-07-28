@@ -39,7 +39,7 @@
   gap: 40px;
   padding: 48px 32px 80px;
   background: url('../../../assets/Group1.png') no-repeat right bottom;
-  background-size: 300px auto;
+  background-size:  auto;
   max-width: 1440px;
   margin: 0 auto;
   flex-wrap: wrap;
@@ -100,7 +100,7 @@
 .chip-avatar {
   width: 34px;
   height: 34px;
-  border-radius: 50%;
+  /* border-radius: 30%; */
   object-fit: cover;
 }
 .chip-icon-wrap {
@@ -454,6 +454,9 @@
 }
 ::ng-deep .booking-time-menu.mat-mdc-menu-panel {
   background-color: #fff !important;
+   min-width: 200px !important;
+  max-width: 200px !important;
+  width: 200px !important;
 }
 ::ng-deep .booking-time-menu .mat-mdc-menu-content {
   background-color: #fff !important;
