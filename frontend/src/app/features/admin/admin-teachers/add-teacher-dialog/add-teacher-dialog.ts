@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,16 +13,14 @@ interface BookedSlot {
   templateUrl: './add-teacher-dialog.html',
   styleUrls: ['./add-teacher-dialog.css'],
 })
-export class AddTeacherDialog implements OnInit {
+export class AddTeacherDialog {
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<any>();
 
-  aadharOptions = ['Verified', 'Not Verified', 'Pending'];
-
   photoFile: File | null = null;
   photoFileName: string = '';
-  photoPreview!: null;
+  isDragOver = false;
 
   activeField: 'start' | null = null;
   timeSlots: string[] = this.generateTimeSlots();
@@ -32,71 +30,51 @@ export class AddTeacherDialog implements OnInit {
   teacher = {
     firstName: '',
     lastName: '',
-    contactNumber: '',
     aadharNo: '',
     email: '',
     googleMeetLink: '',
     photo: null as File | null,
     startTime: '',
-    slots: [] as BookedSlot[]
+    slots: [] as BookedSlot[],
   };
 
   constructor(private elRef: ElementRef) {}
 
-  ngOnInit(): void {
-    this.setDefaultTime();
+  // ============ TIME FORMAT: "hh:mm AM/PM" ============
+  private formatTime12h(date: Date): string {
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const period = hours < 12 ? 'AM' : 'PM';
+
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
+
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(minutes).padStart(2, '0');
+
+    return `${hh}:${mm} ${period}`;
   }
 
-  // ============ AUTO TIME ============
-  private setDefaultTime(): void {
-    const now = new Date();
-    const roundedStart = this.roundToNext15Min(now);
-    this.teacher.startTime = this.formatTime12h(roundedStart);
-  }
+  private generateTimeSlots(): string[] {
+    const slots: string[] = [];
 
-  private roundToNext15Min(date: Date): Date {
-    const ms = 1000 * 60 * 15;
-    return new Date(Math.ceil(date.getTime() / ms) * ms);
-  }
+    for (let h = 0; h < 24; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        const period = h < 12 ? 'am' : 'pm';
 
-  // ============ AUTO TIME FORMAT ============
-private formatTime12h(date: Date): string {
-  let hours = date.getHours();
-  const minutes = date.getMinutes();
+        let hour12 = h % 12;
+        if (hour12 === 0) hour12 = 12;
 
-  const period = hours < 12 ? 'am' : 'pm';
+        const hh = String(hour12).padStart(2, '0');
+        const mm = String(m).padStart(2, '0');
 
-  hours = hours % 12;
-  if (hours === 0) hours = 12;
-
-  const hh = String(hours).padStart(2, '0');
-  const mm = String(minutes).padStart(2, '0');
-
-  return `${hh}:${mm}${period}`;
-}
-// ============ END AUTO TIME ============
-
-
-private generateTimeSlots(): string[] {
-  const slots: string[] = [];
-
-  for (let h = 0; h < 24; h++) {
-    for (let m = 0; m < 60; m += 15) {
-
-      const period = h < 12 ? 'am' : 'pm';
-
-      let hour12 = h % 12;
-      if (hour12 === 0) hour12 = 12;
-
-      const hh = String(hour12).padStart(2, '0');
-      const mm = String(m).padStart(2, '0');
-
-      slots.push(`${hh}:${mm}${period}`);
+        slots.push(`${hh}:${mm} ${period}`);
+      }
     }
-  }
 
-  return slots;
-}
+    return slots;
+  }
 
   toggleTimeDropdown(field: 'start', event: Event): void {
     event.stopPropagation();
@@ -115,7 +93,7 @@ private generateTimeSlots(): string[] {
     }
   }
 
-  // ============ BOOK SLOTS LIST ============
+  // ============ TIME SLOTS LIST ============
   canAddSlot(): boolean {
     return !!this.teacher.startTime;
   }
@@ -129,7 +107,7 @@ private generateTimeSlots(): string[] {
     }
 
     const isDuplicate = this.teacher.slots.some(
-      s => s.startTime === this.teacher.startTime
+      (s) => s.startTime === this.teacher.startTime
     );
     if (isDuplicate) {
       this.slotError = 'This time slot has already been added.';
@@ -137,20 +115,52 @@ private generateTimeSlots(): string[] {
     }
 
     this.teacher.slots.push({
-      startTime: this.teacher.startTime
+      startTime: this.teacher.startTime,
     });
   }
 
   removeSlot(index: number): void {
     this.teacher.slots.splice(index, 1);
   }
-  // ============ END BOOK SLOTS LIST ============
+
+  // ============ PHOTO UPLOAD ============
+  onBrowseClick(event: Event): void {
+    event.stopPropagation();
+    const input = this.elRef.nativeElement.querySelector('.upload-input-hidden');
+    input?.click();
+  }
 
   onPhotoSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    this.setPhoto(file);
+  }
 
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      this.setPhoto(file);
+    }
+  }
+
+  private setPhoto(file: File): void {
     this.photoFile = file;
     this.photoFileName = file.name;
     this.teacher.photo = file;
@@ -158,7 +168,6 @@ private generateTimeSlots(): string[] {
 
   removePhoto(event: Event): void {
     event.stopPropagation();
-    this.photoPreview = null;
     this.photoFile = null;
     this.photoFileName = '';
     this.teacher.photo = null;
@@ -176,22 +185,20 @@ private generateTimeSlots(): string[] {
     this.teacher = {
       firstName: '',
       lastName: '',
-      contactNumber: '',
       aadharNo: '',
       email: '',
       googleMeetLink: '',
       photo: null as File | null,
       startTime: '',
-      slots: []
+      slots: [],
     };
-    this.setDefaultTime();
+    this.photoFile = null;
+    this.photoFileName = '';
   }
 
   onSubmit(): void {
-      console.log("teacher registration value:", this.teacher);
+    console.log('teacher registration value:', this.teacher);
     this.addTeacher.emit(this.teacher);
     this.onClose();
-    // console.log("teacher registration value",this.addTeacher.emit(this.teacher));
-    
   }
 }
