@@ -74,6 +74,7 @@ export const registerTeacherService = async (body, file) => {
   // Hash Password
   const hashedPassword = await bcrypt.hash(password, 10);
 
+
   // Create User
   const user = await User.create({
     firstName,
