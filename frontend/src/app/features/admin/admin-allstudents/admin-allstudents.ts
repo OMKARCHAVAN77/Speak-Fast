@@ -51,31 +51,34 @@ export class AdminAllStudents implements OnInit {
   this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
     next: (res: any) => {
 
-      const students = res.data.map((student: any) => ({
+     const students = res.data.map((student: any) => ({
 
-        firstName: student.userId?.firstName,
+  firstName: student.userId?.firstName ?? "",
 
-        lastName: student.userId?.lastName,
+  lastName: student.userId?.lastName ?? "",
 
-        contactNumber: student.contactNumber,
+  contactNumber: student.contactNumber ?? "",
 
-        email: student.userId?.email,
+  email: student.userId?.email ?? "",
 
-        plan: student.bookings?.[0]?.courseName ?? "",
+  plan: student.bookings?.[0]?.courseName ?? "",
 
-        teacher: student.assignedTeacher
-          ? `${student.assignedTeacher.userId.firstName} ${student.assignedTeacher.userId.lastName}`
-          : "Not Assigned",
+  teacher: student.assignedTeacher?.userId
+    ? `${student.assignedTeacher.userId.firstName ?? ""} ${student.assignedTeacher.userId.lastName ?? ""}`
+    : "Not Assigned",
 
-        timeSlot: student.bookings?.[0]?.slotTime ?? "",
+  timeSlot: student.bookings?.[0]?.slotTime ?? "",
 
-        enrolledDate: student.bookings?.[0]?.createdAt
-          ? this.datePipe.transform(student.bookings[0].createdAt, 'MMM d, y')
-          : "",
+  enrolledDate: student.bookings?.[0]?.createdAt
+    ? this.datePipe.transform(
+        student.bookings[0].createdAt,
+        'MMM d, y'
+      )
+    : "",
 
-        _id: student._id
+  _id: student._id
 
-      }));
+}));
 
       this.allStudentList.set(students);
       this.studentLength.set(students.length);

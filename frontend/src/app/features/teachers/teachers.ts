@@ -81,32 +81,58 @@ constructor(private teacherService: TeacherService, private cdr: ChangeDetectorR
   private studServ:StudentService) {}  
 loadTeachers(): void {
 
- if (!this.formattedDate) {
-  return;
-}
+  if (!this.formattedDate) {
+    return;
+  }
 
   console.log('Calling API...');
   console.log(this.formattedDate);
   console.log(this.selectedTime);
 
   this.teacherService
-  .filterTeacherApi( this.formattedDate,
-  this.selectedTime || undefined)
-  .subscribe({
-    next: (res: any) => {
-  console.log("API Response:", res.data);
+    .filterTeacherApi(
+      this.formattedDate,
+      this.selectedTime || undefined
+    )
+    .subscribe({
 
-  this.teachers = [...res.data];
-       this.showTeachers = this.teachers.length > 0;
-  this.cdr.detectChanges();
+      next: (res: any) => {
 
-  console.log(this.teachers);
-},
-    error: (err) => { 
-       this.showTeachers = false;
-      console.error(err);
-    }
-  });
+        console.log("API Response:", res);
+
+        const teachers = res?.data || [];
+
+        this.teachers = teachers.map((teacher:any)=>({
+
+  ...teacher,
+
+  firstName: teacher.firstName ?? "",
+  lastName: teacher.lastName ?? "",
+  email: teacher.email ?? "",
+
+  slots: teacher.slots ?? []
+
+}));
+
+        this.showTeachers = this.teachers.length > 0;
+
+        this.cdr.detectChanges();
+
+        console.log("Filtered Teachers:", this.teachers);
+      },
+
+      error: (err) => {
+
+        this.teachers = [];
+        this.showTeachers = false;
+
+        console.error(
+          "Failed to load teachers:",
+          err.error?.message || err.message
+        );
+      }
+
+    });
 
 }
 

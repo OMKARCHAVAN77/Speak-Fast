@@ -1,5 +1,4 @@
 <div class="page-wrap">
-
   <!-- Header -->
   <div class="page-header">
     <div class="title-block">
@@ -10,11 +9,7 @@
     <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
-        <input
-          matInput
-          type="text"
-          placeholder="Search Teachers..."
-          [(ngModel)]="searchTerm" />
+        <input matInput type="text" placeholder="Search Teachers..." [(ngModel)]="searchTerm" />
       </mat-form-field>
 
       <button mat-flat-button class="add-btn" (click)="openDrawer()">
@@ -26,7 +21,6 @@
 
   <!-- Table card -->
   <div class="table-card">
-
     <!-- Loading state -->
     <div class="state-row" *ngIf="loading">
       <span>Loading teachers…</span>
@@ -60,15 +54,13 @@
           <!-- Name + Avatar -->
           <td class="col-name">
             <div class="name-cell">
-              <img
-                *ngIf="teacher.photo"
-                [src]="teacher.photo"
-                class="avatar avatar-photo"
-                alt="" />
+              <img *ngIf="teacher.photo" [src]="teacher.photo" class="avatar avatar-photo" alt="" />
               <span *ngIf="!teacher.photo" class="avatar">
-                {{ teacher.firstName.charAt(0) }}{{ teacher.lastName.charAt(0) }}
+                {{ teacher.userId.firstName.charAt(0) }}{{ teacher.userId.lastName.charAt(0) }}
               </span>
-              <span class="name-text">{{ teacher.firstName }} {{ teacher.lastName }}</span>
+              <span class="name-text"
+                >{{ teacher.userId.firstName }} {{ teacher.userId.lastName }}</span
+              >
             </div>
           </td>
 
@@ -77,7 +69,7 @@
             <div class="contact-cell">
               <div class="contact-line">
                 <mat-icon class="contact-icon">mail_outline</mat-icon>
-                <span>{{ teacher.email }}</span>
+                <span>{{ teacher.userId.email }}</span>
               </div>
               <div class="contact-line" *ngIf="teacher.contactNumber">
                 <mat-icon class="contact-icon">call</mat-icon>
@@ -93,7 +85,7 @@
           <td class="col-timeslot">
             <div class="timeslot-cell">
               <span *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
-              <span *ngIf="!teacher.slots?.length">-</span>
+              <span *ngIf="!teacher.slots.length">-</span>
             </div>
           </td>
 
@@ -105,21 +97,24 @@
               class="meet-btn"
               [href]="teacher.googleMeetLink"
               target="_blank"
-              rel="noopener">
+              rel="noopener"
+            >
               <mat-icon class="meet-icon">videocam</mat-icon>
               <span>Meet</span>
             </a>
-            <span *ngIf="!teacher.googleMeetLink" class="no-meet">—</span>
+
+            <span *ngIf="!teacher.googleMeetLink" class="no-meet"> — </span>
           </td>
 
           <!-- Action -->
           <td class="col-action">
             <div class="action-cell">
-              <!-- <button
+              <button
                 mat-icon-button
                 class="action-btn edit-btn"
                 matTooltip="Edit"
-                (click)="onEditTeacher(teacher)">
+                (click)="onEditTeacher(teacher)"
+              >
                 <mat-icon>edit</mat-icon>
               </button>
               <button
@@ -128,7 +123,7 @@
                 matTooltip="Delete"
                 >
                 <mat-icon>delete_outline</mat-icon>
-              </button> -->
+              </button>
             </div>
           </td>
         </tr>
@@ -141,8 +136,8 @@
   <app-add-teacher-dialog
     *ngIf="drawerOpen"
     [isOpen]="drawerOpen"
-    (addTeacher)="onTeacherAdded($event)"
-    (closeDrawer)="onDrawerClose()">
+    (addTeacher)="onTeacherAdded()"
+    (closeDrawer)="onDrawerClose()"
+  >
   </app-add-teacher-dialog>
-
 </div>
