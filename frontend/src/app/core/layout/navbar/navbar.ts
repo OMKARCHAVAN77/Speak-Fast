@@ -72,7 +72,7 @@ export class Navbar implements OnInit {
     this.isLoggedin.set(false);
 
 
-    this.router.navigate(['login']);
+    this.router.navigate(['teachers']);
     },2000)
 
   }
