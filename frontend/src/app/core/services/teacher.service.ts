@@ -26,10 +26,17 @@ export interface Teacher {
   slots: any[];
 }
 
+export interface BookedSlot {
+  [key: string]: any;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class TeacherService {
+  addTeacher(teacher: { firstName: string; lastName: string; contactNumber: string; aadharNo: string; email: string; googleMeetLink: string; photo: File | null; startTime: string; slots: BookedSlot[]; }) {
+    throw new Error('Method not implemented.');
+  }
   private baseUrl = `${environment.apiUrl}/teacher`;
 
   constructor(private http: HttpClient) {}
@@ -42,33 +49,7 @@ export class TeacherService {
     );
   }
 
-  // Register Teacher
-  addTeacher(teacher: any): Observable<{ success: boolean; message: string; data?: { user: any; teacher: Teacher } }> {
-    const formData = new FormData();
-
-    formData.append('firstName', teacher.firstName);
-    formData.append('lastName', teacher.lastName);
-    formData.append('email', teacher.email);
-    formData.append('contactNumber', teacher.contactNumber || '');
-    formData.append('aadharNo', teacher.aadharNo || teacher.aadharNumber || '');
-    formData.append('googleMeetLink', teacher.googleMeetLink || '');
-
-    const transformedSlots = teacher.slots.map((s: any) => ({
-      time: s.startTime
-    }));
-
-    formData.append('slots', JSON.stringify(transformedSlots));
-
-    if (teacher.photo) {
-      formData.append('photo', teacher.photo);
-    }
-
-    return this.http.post<{ success: boolean; message: string; data?: { user: any; teacher: Teacher } }>(
-      `${this.baseUrl}/register`,
-      formData,
-      { withCredentials: true }
-    );
-  }
+ 
 
   // Filter Teachers
   filterTeacherApi(date: string, time?: string): Observable<any> {

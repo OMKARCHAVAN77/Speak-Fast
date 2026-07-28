@@ -9,42 +9,294 @@ export const sendForgotPasswordMail = async (
   token
 ) => {
   try {
+    console.log("[forgot-password] sending reset email", {
+      studentEmail,
+      studentName,
+      token,
+    });
+
+    // const resetLink =
+    //   `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
     const resetLink =
-      `${process.env.FRONTEND_URL}/reset-password/${token}`;
+      `${process.env.FRONTEND_URL}/forgotPassword/confirmPassword/${token}`;
+
+    console.log("RESET LINK:", resetLink);
 
     const html = `
-      <h2>Reset Your Password</h2>
+      <!DOCTYPE html>
+      <html lang="en">
 
-      <p>Hello <b>${studentName}</b>,</p>
+      <head>
+      <meta charset="UTF-8">
+      <title>Reset Password</title>
+      </head>
 
-      <p>We received a request to reset your password.</p>
+      <body style="margin:0;padding:0;background:#f4f6fb;font-family:Arial,Helvetica,sans-serif;">
 
-      <p>Click the button below to create a new password.</p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f6fb;padding:30px 0;">
 
-      <br>
+      <tr>
+      <td align="center">
+
+      <table
+      width="650"
+      cellpadding="0"
+      cellspacing="0"
+      style="
+      background:#ffffff;
+      border-radius:12px;
+      overflow:hidden;
+      box-shadow:0 8px 25px rgba(0,0,0,.08);
+      ">
+
+      <!-- HEADER -->
+
+      <tr>
+
+      <td
+      style="
+      background:linear-gradient(90deg,#2563eb,#4f7cff);
+      padding:35px;
+      text-align:center;
+      color:white;
+      ">
+
+      <h1
+      style="
+      margin:0;
+      font-size:34px;
+      font-weight:bold;
+      ">
+      Speak Fast
+      </h1>
+
+      <p
+      style="
+      margin-top:10px;
+      font-size:16px;
+      opacity:.95;
+      ">
+      Reset Your Password
+      </p>
+
+      </td>
+
+      </tr>
+
+      <!-- BODY -->
+
+      <tr>
+
+      <td style="padding:45px;">
+
+      <h2
+      style="
+      margin-top:0;
+      color:#222;
+      ">
+      Hello ${studentName},
+      </h2>
+
+      <p
+      style="
+      font-size:16px;
+      line-height:28px;
+      color:#555;
+      ">
+
+      We received a request to reset the password for your
+      <b>Speak Fast</b> account.
+
+      </p>
+
+      <p
+      style="
+      font-size:16px;
+      line-height:28px;
+      color:#555;
+      ">
+
+      Click the button below to create a new password.
+
+      </p>
+
+      <table width="100%" cellpadding="0" cellspacing="0">
+
+      <tr>
+
+      <td align="center" style="padding:35px 0;">
 
       <a
-        href="${resetLink}"
-        style="
-          background:#2563eb;
-          color:white;
-          padding:12px 25px;
-          text-decoration:none;
-          border-radius:5px;
-        "
-      >
-        Reset Password
+      href="${resetLink}"
+
+      style="
+      background:#2563eb;
+      color:white;
+      text-decoration:none;
+      padding:15px 45px;
+      border-radius:40px;
+      display:inline-block;
+      font-size:17px;
+      font-weight:bold;
+      box-shadow:0 6px 18px rgba(37,99,235,.35);
+      ">
+
+      Reset Password
+
       </a>
 
-      <br><br>
+      </td>
 
-      <p>This link will expire in 1 hour.</p>
+      </tr>
 
-      <p>If you didn't request this, you can safely ignore this email.</p>
+      </table>
 
-      <h3>Speak Fast Team</h3>
-    `;
+      <p
+      style="
+      font-size:15px;
+      color:#666;
+      line-height:26px;
+      ">
+
+      This password reset link will expire in
+      <b>1 hour</b>.
+
+      </p>
+
+      <hr
+      style="
+      border:none;
+      border-top:1px solid #ececec;
+      margin:35px 0;
+      ">
+
+      <p
+      style="
+      font-size:15px;
+      font-weight:bold;
+      color:#333;
+      margin-bottom:10px;
+      ">
+
+      Button not working?
+
+      </p>
+
+      <p
+      style="
+      font-size:14px;
+      color:#666;
+      line-height:24px;
+      word-break:break-all;
+      ">
+
+      Copy and paste the following URL into your browser.
+
+      </p>
+
+      <p
+      style="
+      background:#f7f8fc;
+      padding:15px;
+      border-radius:8px;
+      word-break:break-all;
+      font-size:14px;
+      ">
+
+      <a
+      href="${resetLink}"
+      style="
+      color:#2563eb;
+      text-decoration:none;
+      ">
+
+      ${resetLink}
+
+      </a>
+
+      </p>
+
+      <p
+      style="
+      margin-top:35px;
+      font-size:15px;
+      color:#666;
+      line-height:26px;
+      ">
+
+      If you did not request a password reset, you can safely ignore this email.
+      Your current password will remain unchanged.
+
+      </p>
+
+      </td>
+
+      </tr>
+
+      <!-- FOOTER -->
+
+      <tr>
+
+      <td
+      style="
+      background:#f7f8fb;
+      padding:30px;
+      text-align:center;
+      border-top:1px solid #e8e8e8;
+      ">
+
+      <h3
+      style="
+      margin:0;
+      color:#555;
+      ">
+      Need Help?
+      </h3>
+
+      <p style="margin:12px 0;">
+
+      <a
+      href="mailto:support@speakfast.com"
+      style="
+      color:#2563eb;
+      text-decoration:none;
+      ">
+
+      support@speakfast.com
+
+      </a>
+
+      </p>
+
+      <p
+      style="
+      margin:0;
+      font-size:13px;
+      color:#999;
+      ">
+
+      © ${new Date().getFullYear()} Speak Fast.
+      All Rights Reserved.
+
+      </p>
+
+      </td>
+
+      </tr>
+
+      </table>
+
+      </td>
+
+      </tr>
+
+      </table>
+
+      </body>
+
+      </html>
+      `;
 
     await axios.post(
       "https://api.brevo.com/v3/smtp/email",

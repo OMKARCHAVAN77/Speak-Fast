@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Outpu
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TeacherService } from '../../../../core/services/teacher.service';
+import { AdminService } from '../../../../core/services/admin.service';
 
 interface BookedSlot {
   startTime: string;
@@ -36,18 +37,24 @@ export class AddTeacherDialog implements OnInit {
   teacher = {
     firstName: '',
     lastName: '',
+    email: '',
+    password: '',
+    role:'teacher',
     contactNumber: '',
     aadharNo: '',
-    email: '',
-    googleMeetLink: '',
+    specialization: '',
+    experience: '',
+    qulification : '',
+    bio:'',
     photo: null as File | null,
+    googleMeetLink: '',
     startTime: '',
     slots: [] as BookedSlot[]
   };
 
   constructor(
     private elRef: ElementRef,
-    private teacherService: TeacherService
+    private adminServe: AdminService
   ) {}
 
   ngOnInit(): void {
@@ -180,13 +187,19 @@ export class AddTeacherDialog implements OnInit {
     this.teacher = {
       firstName: '',
       lastName: '',
+      email: '',
+      password: '',
+      role: 'teacher',
       contactNumber: '',
       aadharNo: '',
-      email: '',
-      googleMeetLink: '',
+      specialization: '',
+      experience: '',
+      qulification: '',
+      bio: '',
       photo: null as File | null,
+      googleMeetLink: '',
       startTime: '',
-      slots: []
+      slots: [] as BookedSlot[]
     };
     this.photoFile = null;
     this.photoFileName = '';
@@ -196,6 +209,8 @@ export class AddTeacherDialog implements OnInit {
   }
 
   onSubmit(form: NgForm): void {
+    console.log(this.teacher);
+    
     this.submitError = '';
 
     if (form.invalid) {
@@ -210,7 +225,7 @@ export class AddTeacherDialog implements OnInit {
 
     this.isSubmitting = true;
 
-    this.teacherService.addTeacher(this.teacher).subscribe({
+    this.adminServe.addTeacher(this.teacher).subscribe({
       next: () => {
         this.isSubmitting = false;
         this.addTeacher.emit();
