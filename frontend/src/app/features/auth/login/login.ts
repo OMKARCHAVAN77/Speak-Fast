@@ -147,7 +147,6 @@ logingForm!: FormGroup;
     private snackBar: MatSnackBar,
     private fb: FormBuilder
     ,private toastr: ToastrService,
-    private authServ: AuthSer
   ) {}
 
 
@@ -182,13 +181,14 @@ logingForm!: FormGroup;
       console.log("inside if condition");
 
       // setTimeout(()=>{
-        this.authServ.checkLogin(payload).subscribe({
+        this.http.post(`${environment.apiUrl}/user/login`,payload).subscribe({
           next:(x:any)=>{
             console.log(x.data.user.role);
             this.getRole=x.data.user.role;
-            const loacalStorage =x.data.token;
+            const tokenValue =x.data.token;
             // this.router.navigate('')
-
+              localStorage.setItem('token', tokenValue );
+              localStorage.setItem('roles', this.getRole );
             this.toastr.success(
               'User login successfully!',
               'Success'
@@ -199,7 +199,7 @@ logingForm!: FormGroup;
             }else if(this.getRole === 'teacher'){
               this.router.navigate(['/teachers'])
             }else if(this.getRole === 'admin'){
-              localStorage.setItem('token', loacalStorage );
+
               this.router.navigate(['/admin']);
             }
           },error:(err:any)=>{

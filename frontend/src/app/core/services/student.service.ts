@@ -48,11 +48,11 @@ export class StudentService {
     }
 
     addStudentApi(data:any){
-      return  this.http.post(`${environment.apiUrl}/booking/register-book`,data)
+      return  this.http.post(`${environment.apiUrl}/booking/register-book`,data);
     }
 
     // student forgot password service
-    private baseUrl = "https://speak-fast.onrender.com/api/auth";
+    private baseUrl = `${environment.apiUrl}/auth`;
 
     forgotStudentPassword(body: { email: string }) {
         return this.http.post(`${this.baseUrl}/forgot-password`, body);

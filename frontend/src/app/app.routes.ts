@@ -16,13 +16,14 @@ import { SetPassword } from './features/teachers/set-password/set-password';
 import { LinkSent } from './features/auth/forgot-password/link-sent/link-sent';
 import { Teachers } from './features/teachers/teachers';
 import { inject } from '@angular/core';
+import {  AdminRouteGuard } from './core/Guards/adminRoute.gurard';
 
 
 
 export const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },
     { path: 'home', component: Home },
-    { path: 'admin', component: Admin },
+    { path: 'admin', component: Admin},
     { path: 'teachers', component: Teachers },
     { path: 'registration', component: RegistrationComponent },
     {
@@ -31,7 +32,7 @@ export const routes: Routes = [
             { path: '', redirectTo: 'resetpassword', pathMatch: 'full' },
             { path: 'resetpassword', component: ResetPassword },
             { path: 'sentLink', component: LinkSent },
-            { path: 'confirmPassword', component: ConfirmPassword },
+            { path: 'confirmPassword/:token', component: ConfirmPassword },
             { path: 'passwordChanged', component: PasswordChanged }
 
         ]
@@ -43,5 +44,5 @@ export const routes: Routes = [
     { path: 'courses', component: CourseRecommendation },
     { path: 'payment', component: Payment },
     { path: 'setpassword', component: SetPassword },
-    { path: '**', redirectTo:'login', pathMatch: 'full'}
+    { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
