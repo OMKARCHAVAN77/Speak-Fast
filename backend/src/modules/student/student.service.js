@@ -83,8 +83,8 @@ export const getAllStudentsService = async () => {
         }).
         populate({
              path: "bookings"
-        });;
-
+        }). 
+        sort({ createdAt: -1 });
     return students;
 };
 
