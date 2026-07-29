@@ -6,11 +6,11 @@ import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, R
 })
 
 export class AdminRouteGuard implements CanActivate{
-
+   constructor(private router: Router) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ):boolean | UrlTree {
-      const router = inject(Router);
 
-      
+
+
 
   const token = localStorage.getItem('token');
   const role = localStorage.getItem('roles');
@@ -21,7 +21,7 @@ export class AdminRouteGuard implements CanActivate{
     return true;
   }
 
-  router.navigate(['/login']);
+  this.router.navigate(['/login']);
   return false;
 
 }

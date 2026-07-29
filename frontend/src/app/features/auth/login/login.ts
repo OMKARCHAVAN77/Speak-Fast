@@ -158,8 +158,8 @@ logingForm!: FormGroup;
   formInitializer(){
     this.logingForm= this.fb.group({
       email: ['',[Validators.required,RegistrationValidator.isEmailCorrect]],
-      password:['',[Validators.required]],
-        isChecked:[false,[Validators.requiredTrue]]
+      password:['',[Validators.required]]
+        // isChecked:[false,[Validators.requiredTrue]]
     })
   }
 

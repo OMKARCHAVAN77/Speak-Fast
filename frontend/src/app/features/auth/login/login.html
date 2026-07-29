@@ -47,15 +47,15 @@
       <!-- Remember me / Forgot password -->
       <div class="check-out-wrapper top-row ">
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isChecked">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" >
           <label class="form-check-label" for="exampleCheck1">Remember me</label>
 
-          @if ( logingForm.get('isChecked')?.hasError('required') && logingForm.get('isChecked')?.touched
+          <!-- @if ( logingForm.get('isChecked')?.hasError('required') && logingForm.get('isChecked')?.touched
           ) {
           <small class="text-danger d-block">
             Please check this box.
           </small>
-          }
+          } -->
         </div>
 
 

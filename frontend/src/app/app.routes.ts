@@ -24,7 +24,7 @@ import { TeacherDashbord } from './features/teacher-dashbord/teacher-dashbord';
 export const routes: Routes = [
     { path: '', redirectTo: 'teachers', pathMatch: 'full' },
     { path: 'home', component: Home },
-    { path: 'admin', component: Admin},
+    { path: 'admin', component: Admin,canActivate: [AdminRouteGuard]},
     { path: 'teachers', component: Teachers },
     { path: 'registration', component: RegistrationComponent },
     { path: 'teacherDashbord', component: TeacherDashbord },
