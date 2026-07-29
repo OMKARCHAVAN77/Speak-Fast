@@ -36,7 +36,9 @@ export class Navbar implements OnInit {
   constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar,private toaster: ToastrService, private route: Router) {}
   private logoutUrl = `${environment.apiUrl}/auth/logout`;
   isLoggedin= signal<boolean>(false);
+  isTeachersOn= signal<boolean>(true);
   // isMenuOpen = false;
+   hideUrls: string[]=["/","/teachers"]
 
   ngOnInit(): void {
       const role = localStorage.getItem('role');
@@ -46,6 +48,22 @@ export class Navbar implements OnInit {
 
       console.log("value of status",!!token);
       this.isLoggedin.set(!!token);
+
+      console.log("value of login",this.isLoggedin())
+
+      if(this.isLoggedin()){
+              this.route.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe((event: NavigationEnd) => {
+          const url = event.urlAfterRedirects;
+          console.log(url)
+          const hideNavbar =
+            url === '/' ||
+            url === '/teachers'
+
+          this.isTeachersOn.set(hideNavbar);
+        });
+      }
   }
 
 
