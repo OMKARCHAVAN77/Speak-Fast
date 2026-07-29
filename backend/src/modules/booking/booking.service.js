@@ -5,6 +5,8 @@ import Student from "../student/student.model.js";
 import Teacher from "../teacher/teacher.model.js";
 import Booking from "./booking.model.js";
 
+import whatsappService from "../whatsapp/whatsapp.service.js";
+
 export const registerAndBookService = async (body) => {
 
     const {
@@ -37,6 +39,18 @@ export const registerAndBookService = async (body) => {
 
     if (existingUser) {
         throw new Error("Email already exists");
+    }
+
+    // ===============================
+    // Check Contact Number
+    // ===============================
+
+    const existingStudent = await Student.findOne({
+        contactNumber: contactNumber.toString()
+    });
+
+    if (existingStudent) {
+        throw new Error("Contact number already exists");
     }
 
     // ===============================
@@ -91,7 +105,7 @@ export const registerAndBookService = async (body) => {
 
         userId: user._id,
 
-        contactNumber,
+        contactNumber: contactNumber.toString(),
 
         district,
 
@@ -130,10 +144,38 @@ export const registerAndBookService = async (body) => {
     // ===============================
 
     slot.isBooked = true;
-
     slot.studentId = student._id;
 
     await teacher.save();
+
+    // ===============================
+    // Send WhatsApp Notifications
+    // ===============================
+
+    try {
+
+        await whatsappService.sendStudentMessage({
+            name: `${firstName} ${lastName}`,
+            phone: contactNumber,
+            email
+        });
+
+        await whatsappService.sendTeacherMessage({
+            name: `${firstName} ${lastName}`,
+            phone: contactNumber,
+            email
+        });
+
+    } catch (error) {
+
+        console.error("❌ WhatsApp Notification Failed");
+        console.error(error.response?.data || error.message);
+
+    }
+
+    // ===============================
+    // Return Response
+    // ===============================
 
     return {
 
