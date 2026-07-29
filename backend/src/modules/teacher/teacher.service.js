@@ -493,11 +493,17 @@ export const filterTeachersService = async (date, time) => {
     slotFilter.time = time;
   }
 
-  const teachers = await Teacher.find({
-    slots: {
-      $elemMatch: slotFilter
-    }
-  }).populate({
+  // const teachers = await Teacher.find({
+  //   slots: {
+  //     $elemMatch: slotFilter
+  //   }
+  // }).populate({
+  //   path: "userId",
+  //   select: "firstName lastName email"
+  // });
+
+  const teachers = await Teacher.find()
+  .populate({
     path: "userId",
     select: "firstName lastName email"
   });
@@ -507,22 +513,28 @@ export const filterTeachersService = async (date, time) => {
     .filter((teacher) => teacher.userId) // null userId remove
     .map((teacher) => {
 
-      const matchingSlots = teacher.slots.filter((slot) => {
+      let matchingSlots = teacher.slots.filter((slot) => {
 
         if (time) {
           return (
             slot.date === date &&
             slot.time === time &&
-            slot.isBooked === false
+            // slot.isBooked === false
+            !slot.isBooked
           );
         }
 
         return (
           slot.date === date &&
-          slot.isBooked === false
+          // slot.isBooked === false
+          !slot.isBooked 
         );
 
       });
+
+      if(matchingSlots.length === 0){
+         matchingSlots = teacher.slots.filter(slot => !slot.isBooked);
+      }
 
 
       return {
