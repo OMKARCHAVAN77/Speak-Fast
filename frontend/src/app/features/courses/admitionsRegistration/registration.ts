@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { OCCUPATIONS, QUALIFICATIONS,  } from '../../../core/Shared-common-list/registration-dummy-data';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
@@ -22,18 +23,18 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 
-interface formData{
-          firstName: '',
-          lastName: '',
-          contactNumber: '',
-          email:'',
-          password: '',
+// interface formData{
+//           firstName: '',
+//           lastName: '',
+//           contactNumber: '',
+//           email:'',
+//           password: '',
 
-          district: '',
-          qualification: '',
-          occupation:''
+//           district: '',
+//           qualification: '',
+//           occupation:''
 
-}
+// }
 
 @Component({
   selector: 'app-registration',
@@ -46,7 +47,7 @@ MatIconModule,
 MatSelectModule,
 MatDatepickerModule,
 MatNativeDateModule,
-
+    RouterLink,
     MatAutocompleteModule
 ],
   templateUrl: './registration.html',
@@ -70,7 +71,7 @@ export class RegistrationComponent implements OnInit {
   showOccupationDropdown = false;
   isPasswordHide: boolean = false;
 
-  payLoadFormData!:formData;
+  // payLoadFormData!:formData;
 
   showPassword = false;
   showConfirmPassword = false;

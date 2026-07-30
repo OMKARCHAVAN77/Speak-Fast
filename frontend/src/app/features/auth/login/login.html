@@ -11,7 +11,7 @@
     <h1 class="welcome-heading">Welcome Back!</h1>
     <p class="welcome-subtext">The best English language training institute in Pune</p>
 
-    <form [formGroup]="logingForm">
+    <form [formGroup]="loginForm">
 
 
       <!-- Email -->
@@ -19,10 +19,10 @@
       <div class="email-wrapper">
         <Label id="email-">Email Address</Label>
         <input id="email" type="text" formControlName="email" placeholder="Enter your email here">
-        @if(logingForm.get('email')?.hasError('required') && logingForm.get('email')?.touched){
+        @if(loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched){
         <small class="text-danger">field is required</small>
         }
-        @if(logingForm.get('email')?.hasError('isEmailCorrect') && logingForm.get('email')?.touched){
+        @if(loginForm.get('email')?.hasError('isEmailCorrect') && loginForm.get('email')?.touched){
         <small class="text-danger">Enter your full email id</small>
         }
       </div>
@@ -38,7 +38,7 @@
           <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'" (click)="togglePassword()">
           </i>
         </div>
-        @if(logingForm.get('password')?.hasError('required') && logingForm.get('password')?.touched){
+        @if(loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched){
         <small class="text-danger">field is required</small>
         }
       </div>
@@ -47,10 +47,10 @@
       <!-- Remember me / Forgot password -->
       <div class="check-out-wrapper top-row ">
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" >
-          <label class="form-check-label" for="exampleCheck1">Remember me</label>
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" formControlName="isChecked" >
+          <label class="form-check-label" for="exampleCheck1"  >Remember me</label>
 
-          <!-- @if ( logingForm.get('isChecked')?.hasError('required') && logingForm.get('isChecked')?.touched
+          <!-- @if ( loginForm.get('isChecked')?.hasError('required') && loginForm.get('isChecked')?.touched
           ) {
           <small class="text-danger d-block">
             Please check this box.
@@ -68,7 +68,13 @@
       <!-- Login Button -->
       <button mat-raised-button type="submit" class="btn-login w-100" (click)="submitData()">
         <div class="text-white">
-          Login&nbsp;
+          @if (!isLoaderOn()) {
+            Login  &nbsp; <i class="bi bi-arrow-right"></i>
+          } @else {
+            Logging...
+            <span class="spinner-border spinner-border-sm me-2"></span>
+
+          }
         </div>
       </button>
 
