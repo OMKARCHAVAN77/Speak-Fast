@@ -127,7 +127,7 @@ class WhatsAppService {
 
 Your registration has been completed successfully.
 
-Welcome to Speak Fast English Academy.
+Welcome to Sanket English Academy.
 
 Thank you.`
           }
