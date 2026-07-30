@@ -50,7 +50,7 @@ export class AdminAllStudents implements OnInit {
   getAllStudents() {
   this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
     next: (res: any) => {
-
+      // console.log(res)
      const students = res.data.map((student: any) => ({
 
   firstName: student.userId?.firstName ?? "",
@@ -62,6 +62,8 @@ export class AdminAllStudents implements OnInit {
   email: student.userId?.email ?? "",
 
   plan: student.bookings?.[0]?.courseName ?? "",
+
+  googleMeetLink: student.googleMeetLink,
 
   teacher: student.assignedTeacher?.userId
     ? `${student.assignedTeacher.userId.firstName ?? ""} ${student.assignedTeacher.userId.lastName ?? ""}`
