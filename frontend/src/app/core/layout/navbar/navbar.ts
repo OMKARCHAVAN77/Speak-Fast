@@ -10,10 +10,10 @@ import { environment } from '../../../../environments/environment';
 import { filter, single } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 
-interface NavLink {
-  label: string;
-  active: boolean;
-}
+// interface NavLink {
+//   label: string;
+//   active: boolean;
+// }
 
 @Component({
   selector: 'app-navbar',
@@ -38,37 +38,33 @@ export class Navbar implements OnInit {
   isLoggedin= signal<boolean>(false);
   isTeachersOn= signal<boolean>(true);
   // isMenuOpen = false;
-   hideUrls: string[]=["/","/teachers"]
+  //  hideUrls: string[]=["/","/teachers"]
 
   ngOnInit(): void {
-      const role = localStorage.getItem('role');
-      const token= localStorage.getItem('token');
+      const role = localStorage.getItem('roles') || sessionStorage.getItem('roles');
+      const token= localStorage.getItem('token') || sessionStorage.getItem('token');
 
-      console.log(role," ",token);
+      // console.log(role,"token is -- ",token);
 
-      console.log("value of status",!!token);
+      // console.log("value of status",!!token);
       this.isLoggedin.set(!!token);
 
-      console.log("value of login",this.isLoggedin())
+      // console.log("value of login",this.isLoggedin())
 
-      if(this.isLoggedin()){
-              this.route.events
-        .pipe(filter(event => event instanceof NavigationEnd))
-        .subscribe((event: NavigationEnd) => {
-          const url = event.urlAfterRedirects;
-          console.log(url)
-          const hideNavbar =
-            url === '/' ||
-            url === '/teachers'
+      // if(this.isLoggedin()){
+      //         this.route.events
+      //   .pipe(filter(event => event instanceof NavigationEnd))
+      //   .subscribe((event: NavigationEnd) => {
+      //     const url = event.urlAfterRedirects;
+      //     console.log(url)
+      //     const hideNavbar =
+      //       url === '/' ||
+      //       url === '/teachers'
 
-          this.isTeachersOn.set(hideNavbar);
-        });
-      }
+      //     this.isTeachersOn.set(hideNavbar);
+      //   });
+      // }
   }
-
-
-
-
 
 
   onLogIn():void{
@@ -86,6 +82,9 @@ export class Navbar implements OnInit {
     setTimeout(()=>{
      localStorage.removeItem('token');
     localStorage.removeItem('roles');
+
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('roles');
 
     this.isLoggedin.set(false);
 
