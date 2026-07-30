@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,7 @@ import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
 
 import { TeacherService, Teacher } from '../../../core/services/teacher.service';
 import { AdminService } from '../../../core/services/admin.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-admin-teachers',
@@ -26,7 +27,8 @@ import { AdminService } from '../../../core/services/admin.service';
     MatInputModule,
     MatTooltipModule,
     MatSnackBarModule,
-    AddTeacherDialog
+    AddTeacherDialog,
+    MatProgressBarModule
   ],
   templateUrl: './admin-teachers.html',
   styleUrl: './admin-teachers.css',
@@ -35,7 +37,7 @@ export class AdminTeachers implements OnInit {
 
   searchTerm = '';
   teachers: Teacher[] = [];
-  loading = false;
+  loading = signal(false);
 
   drawerOpen = false;
   teacherBeingEdited: Teacher | null = null;
@@ -51,7 +53,7 @@ export class AdminTeachers implements OnInit {
   }
 
   loadTeachers(): void {
-    this.loading = true;
+        this.loading.set(true);
 
     // this.adminService.getAllTeachers().subscribe({
     //   next: (res: any) => {
@@ -81,13 +83,13 @@ export class AdminTeachers implements OnInit {
 
     console.log('FILTERED TEACHERS:', this.teachers);
 
-    this.loading = false;
+       this.loading.set(false);
     this.cdr.detectChanges();
   },
 
   error: (err: any) => {
     console.error('Failed to load teachers:', err);
-    this.loading = false;
+        this.loading.set(false);
   }
 });
 }
