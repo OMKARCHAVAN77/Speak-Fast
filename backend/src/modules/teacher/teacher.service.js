@@ -144,7 +144,8 @@ export const getAllTeachersService = async () => {
     .populate({
       path: "userId",
       select: "firstName lastName email role isActive"
-    });
+    }).
+     sort({ createdAt: -1 });
 
   return teachers;
 
@@ -254,6 +255,10 @@ export const deleteTeacherService = async (teacherId) => {
 
   // Delete Teacher Profile
   await Teacher.findByIdAndDelete(teacherId);
+
+  // also delete inside user collection
+  const deletedUser = await User.findByIdAndDelete(teacher.userId);
+
 
   // Delete User Account
   await User.findByIdAndDelete(teacher.userId);
@@ -484,70 +489,74 @@ export const filterTeachersService = async (date, time) => {
     throw new Error("Date is required");
   }
 
-  const slotFilter = {
-    date,
-    isBooked: false
-  };
-
-  if (time) {
-    slotFilter.time = time;
-  }
-
-  const teachers = await Teacher.find({
-    slots: {
-      $elemMatch: slotFilter
-    }
-  }).populate({
+  const teachers = await Teacher.find().populate({
     path: "userId",
     select: "firstName lastName email"
   });
 
-
-  const result = teachers
-    .filter((teacher) => teacher.userId) // null userId remove
-    .map((teacher) => {
-
-      const matchingSlots = teacher.slots.filter((slot) => {
-
-        if (time) {
-          return (
-            slot.date === date &&
-            slot.time === time &&
-            slot.isBooked === false
-          );
-        }
-
-        return (
-          slot.date === date &&
-          slot.isBooked === false
-        );
-
-      });
-
-
-      return {
-
-        _id: teacher._id,
-
-        firstName: teacher.userId?.firstName || "",
-
-        lastName: teacher.userId?.lastName || "",
-
-        email: teacher.userId?.email || "",
-
-        photo: teacher.photo,
-
-        slots: matchingSlots
-
-      };
-
-    });
-
-
-  return result.filter(
-    (teacher) => teacher.slots.length > 0
+  // Check if any teacher has slots for the requested date
+  const dateExists = teachers.some(teacher =>
+    teacher.slots.some(slot => slot.date === date)
   );
 
+  const result = teachers
+    .filter(teacher => teacher.userId)
+    .map(teacher => {
+
+      let matchingSlots = [];
+
+      if (dateExists) {
+
+        // Show only requested date slots
+        matchingSlots = teacher.slots.filter(slot => {
+
+          if (slot.date !== date) return false;
+
+          if (slot.isBooked) return false;
+
+          if (time && time.trim() !== "") {
+            return (
+              slot.time.trim().toLowerCase() ===
+              time.trim().toLowerCase()
+            );
+          }
+
+          return true;
+
+        });
+
+      } else {
+
+        // Requested date doesn't exist for any teacher
+        // Show all available slots
+        matchingSlots = teacher.slots.filter(slot => {
+
+          if (slot.isBooked) return false;
+
+          if (time && time.trim() !== "") {
+            return (
+              slot.time.trim().toLowerCase() ===
+              time.trim().toLowerCase()
+            );
+          }
+
+          return true;
+
+        });
+
+      }
+
+      return {
+        _id: teacher._id,
+        firstName: teacher.userId.firstName,
+        lastName: teacher.userId.lastName,
+        email: teacher.userId.email,
+        photo: teacher.photo,
+        slots: matchingSlots
+      };
+
+    })
+    .filter(teacher => teacher.slots.length > 0);
+
+  return result;
 };
-
-

@@ -6,14 +6,14 @@ import { ActivatedRouteSnapshot, CanActivate, GuardResult, MaybeAsync, Router, R
 })
 
 export class AdminRouteGuard implements CanActivate{
-
+   constructor(private router: Router) {}
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ):boolean | UrlTree {
-      const router = inject(Router);
 
-      
 
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('roles');
+
+
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+  const role = localStorage.getItem('roles') ||  sessionStorage.getItem('roles');
 
   if (token && role === 'admin') {
     console.log("is valid");
@@ -21,7 +21,7 @@ export class AdminRouteGuard implements CanActivate{
     return true;
   }
 
-  router.navigate(['/login']);
+  this.router.navigate(['/login']);
   return false;
 
 }
