@@ -145,4 +145,10 @@ export class AdminTeachers implements OnInit {
     this.drawerOpen = false;
     this.teacherBeingEdited = null;
   }
-}
+
+  // delete specific teacher
+  deleteTeacher(){
+    console.log("id clicked");
+    
+  }
+}   

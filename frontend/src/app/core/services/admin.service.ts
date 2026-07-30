@@ -76,4 +76,11 @@ export class AdminService {
     );
   }
 
+
+  // ====================== Delete specific Teacher ============================
+  deleteSpecificTeacher( id: any){
+  return this.http.delete(`http://localhost:3000/api/teacher/${id}`)
+    // http://localhost:3000/api/teacher/6a632cb604a84772af881dbd
+  }
+
 }
