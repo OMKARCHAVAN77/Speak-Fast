@@ -61,6 +61,9 @@ export class AddTeacherDialog {
   ngOnInit(): void {
     this.setDefaultTime();
   }
+  onBrowseClick(event:Event){
+
+  }
 
   private setDefaultTime(): void {
     const now = new Date();
