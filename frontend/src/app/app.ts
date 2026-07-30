@@ -23,7 +23,7 @@ export class App implements OnInit {
   protected readonly title = signal('frontend');
   // isNavbarOn: boolean= true;
   isNavbarOn=signal<boolean>(true);
-  hideUrls: string[]=["/","/login","/forgotPassword/resetpassword","/forgotPassword/sentLink","/forgotPassword/confirmPassword","/forgotPassword/passwordChanged"]
+  hideUrls: string[]=["/login","/forgotPassword/resetpassword","/forgotPassword/sentLink","/forgotPassword/confirmPassword","/forgotPassword/passwordChanged"]
 
   constructor(private actRout: ActivatedRoute, private route: Router){}
 
@@ -35,7 +35,7 @@ this.route.events
     const url = event.urlAfterRedirects;
 
     const hideNavbar =
-      url === '/' ||
+      // url === '/' ||
       url === '/login' ||
       url.startsWith('/forgotPassword');
 
