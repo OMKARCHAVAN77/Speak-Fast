@@ -485,66 +485,31 @@ export const deleteTeacherSlotService = async (slotId) => {
 
 export const filterTeachersService = async (date, time) => {
 
-  if (!date) {
-    throw new Error("Date is required");
-  }
-
   const teachers = await Teacher.find().populate({
     path: "userId",
     select: "firstName lastName email"
   });
 
-  // Check if any teacher has slots for the requested date
-  const dateExists = teachers.some(teacher =>
-    teacher.slots.some(slot => slot.date === date)
-  );
-
   const result = teachers
     .filter(teacher => teacher.userId)
     .map(teacher => {
 
-      let matchingSlots = [];
+      const matchingSlots = teacher.slots.filter(slot => {
 
-      if (dateExists) {
+        // Booked slot नको
+        if (slot.isBooked) return false;
 
-        // Show only requested date slots
-        matchingSlots = teacher.slots.filter(slot => {
+        // Time filter (optional)
+        if (time && time.trim() !== "") {
+          return (
+            slot.time.trim().toLowerCase() ===
+            time.trim().toLowerCase()
+          );
+        }
 
-          if (slot.date !== date) return false;
-
-          if (slot.isBooked) return false;
-
-          if (time && time.trim() !== "") {
-            return (
-              slot.time.trim().toLowerCase() ===
-              time.trim().toLowerCase()
-            );
-          }
-
-          return true;
-
-        });
-
-      } else {
-
-        // Requested date doesn't exist for any teacher
-        // Show all available slots
-        matchingSlots = teacher.slots.filter(slot => {
-
-          if (slot.isBooked) return false;
-
-          if (time && time.trim() !== "") {
-            return (
-              slot.time.trim().toLowerCase() ===
-              time.trim().toLowerCase()
-            );
-          }
-
-          return true;
-
-        });
-
-      }
+        // Time दिला नसेल तर सर्व available slots
+        return true;
+      });
 
       return {
         _id: teacher._id,
