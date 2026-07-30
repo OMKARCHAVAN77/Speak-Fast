@@ -194,7 +194,7 @@ export class AdminTeachers implements OnInit {
 
 // }
 
-async deleteTeacher(id: string) {
+async deleteTeacher(id: string): Promise<void> {
 
   const result = await this.alertService.confirm(
     'Are you sure?',
@@ -204,13 +204,8 @@ async deleteTeacher(id: string) {
     'Cancel'
   );
 
-  if (result.dismiss === Swal.DismissReason.cancel) {
-
-    await this.alertService.error(
-      'Cancelled',
-      'Teacher deletion has been cancelled.'
-    );
-
+  // User clicked Cancel or closed the popup
+  if (!result.isConfirmed) {
     return;
   }
 
