@@ -145,13 +145,8 @@ async onDelete(student: any): Promise<void> {
     'Cancel'
   );
 
-  if (result.dismiss === Swal.DismissReason.cancel) {
-
-    await this.alertService.error(
-      'Cancelled',
-      'Student deletion has been cancelled.'
-    );
-
+  // User clicked Cancel or closed the popup
+  if (!result.isConfirmed) {
     return;
   }
 
@@ -184,7 +179,6 @@ async onDelete(student: any): Promise<void> {
   });
 
 }
-
   onEdit(student: any): void {
     console.log(student);
   }
