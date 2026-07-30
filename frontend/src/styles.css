@@ -14,7 +14,8 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+   font-family: "Quicksand", sans-serif;
 }
 app-root {
   display: block;
@@ -67,5 +68,57 @@ mat-toolbar, .mat-toolbar {
 
 .error-snackbar .mat-mdc-button {
   color: #ffffff !important;
+}
+
+
+/* delete teacher alert */
+.custom-popup {
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.custom-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #222;
+}
+
+.custom-text {
+  font-size: 16px;
+  color: #666;
+}
+
+.custom-confirm-btn {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.custom-confirm-btn:hover {
+  background: #218838;
+}
+
+.custom-cancel-btn {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.custom-cancel-btn:hover {
+  background: #c82333;
 }
 

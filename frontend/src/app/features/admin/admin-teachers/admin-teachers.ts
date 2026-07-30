@@ -15,6 +15,9 @@ import { TeacherService, Teacher } from '../../../core/services/teacher.service'
 import { AdminService } from '../../../core/services/admin.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
+import Swal from 'sweetalert2';
+import { AlertService } from '../../../core/services/alert.service';
+
 @Component({
   selector: 'app-admin-teachers',
   imports: [
@@ -45,7 +48,8 @@ export class AdminTeachers implements OnInit {
   constructor(
     private teacherService: TeacherService,
     private adminService: AdminService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -149,8 +153,90 @@ export class AdminTeachers implements OnInit {
   }
 
   // delete specific teacher
-  deleteTeacher(){
-    console.log("id clicked");
-    
+// async deleteTeacher(id: string) {
+
+//   const confirmed = await this.alertService.confirm(
+//     'Are you sure?',
+//     "Do you really want to delete this teacher?"
+//   );
+
+//   if (!confirmed) {
+//       this.alertService.error(
+//       'Cancelled',
+//       'Teacher deletion has been cancelled.'
+//     );
+//     return;
+//   }
+
+//   this.adminService.deleteSpecificTeacher(id).subscribe({
+
+//     next: () => {
+
+//       this.loadTeachers();
+
+//       this.alertService.success(
+//         'Deleted!',
+//         'Teacher deleted successfully.'
+//       );
+
+//     },
+
+//     error: (err) => {
+
+//       this.alertService.error(
+//         'Error!',
+//         err.error?.message || 'Something went wrong.'
+//       );
+
+//     }
+
+//   });
+
+// }
+
+async deleteTeacher(id: string) {
+
+  const result = await this.alertService.confirm(
+    'Are you sure?',
+    'Do you really want to delete this teacher?',
+    'warning',
+    'Yes, Delete',
+    'Cancel'
+  );
+
+  if (result.dismiss === Swal.DismissReason.cancel) {
+
+    await this.alertService.error(
+      'Cancelled',
+      'Teacher deletion has been cancelled.'
+    );
+
+    return;
   }
+
+  this.adminService.deleteSpecificTeacher(id).subscribe({
+
+    next: () => {
+
+      this.loadTeachers();
+
+      this.alertService.success(
+        'Deleted!',
+        'Teacher deleted successfully.'
+      );
+
+    },
+
+    error: (err: any) => {
+
+      this.alertService.error(
+        'Error!',
+        err.error?.message || 'Something went wrong.'
+      );
+
+    }
+
+  });
+
+}
 }   
