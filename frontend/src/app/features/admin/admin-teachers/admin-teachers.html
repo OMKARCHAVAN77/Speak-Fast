@@ -19,19 +19,24 @@
     </div>
   </div>
 
+
+  
   <!-- Table card -->
   <div class="table-card">
+
+     <mat-progress-bar *ngIf="loading()" mode="indeterminate">
+    </mat-progress-bar>
     <!-- Loading state -->
-    <div class="state-row" *ngIf="loading">
+    <!-- <div class="state-row" *ngIf="loading">
       <span>Loading teachers…</span>
-    </div>
+    </div> -->
 
     <!-- Empty state -->
-    <div class="state-row" *ngIf="!loading && filteredTeachers.length === 0">
+    <div class="state-row" *ngIf="!loading() && filteredTeachers.length === 0">
       <span>No teachers found.</span>
     </div>
 
-    <table class="student-table" *ngIf="!loading && filteredTeachers.length > 0">
+    <table class="student-table" *ngIf="!loading() && filteredTeachers.length > 0">
       <thead>
         <tr>
           <th class="col-name">
