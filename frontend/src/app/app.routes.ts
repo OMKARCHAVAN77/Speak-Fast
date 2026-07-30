@@ -15,22 +15,26 @@ import { adminRoutes } from './features/admin/admin-route.routes';
 import { SetPassword } from './features/teachers/set-password/set-password';
 import { LinkSent } from './features/auth/forgot-password/link-sent/link-sent';
 import { Teachers } from './features/teachers/teachers';
+import { inject } from '@angular/core';
+import {  AdminRouteGuard } from './core/Guards/adminRoute.gurard';
+import { TeacherDashbord } from './features/teacher-dashbord/teacher-dashbord';
 
 
 
 export const routes: Routes = [
-    { path: '', redirectTo: 'login', pathMatch: 'full' },
+    { path: '', redirectTo: 'teachers', pathMatch: 'full' },
     { path: 'home', component: Home },
-    { path: 'admin', component: Admin, children: adminRoutes },
+    { path: 'admin', component: Admin,canActivate: [AdminRouteGuard]},
     { path: 'teachers', component: Teachers },
     { path: 'registration', component: RegistrationComponent },
+    { path: 'teacherDashbord', component: TeacherDashbord },
     {
         path: 'forgotPassword', component: ForgotPassword,
         children: [
             { path: '', redirectTo: 'resetpassword', pathMatch: 'full' },
             { path: 'resetpassword', component: ResetPassword },
             { path: 'sentLink', component: LinkSent },
-            { path: 'confirmPassword', component: ConfirmPassword },
+            { path: 'confirmPassword/:token', component: ConfirmPassword },
             { path: 'passwordChanged', component: PasswordChanged }
 
         ]
@@ -42,5 +46,5 @@ export const routes: Routes = [
     { path: 'courses', component: CourseRecommendation },
     { path: 'payment', component: Payment },
     { path: 'setpassword', component: SetPassword },
-    { path: '**', redirectTo:'login', pathMatch: 'full'}
+    { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

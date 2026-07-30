@@ -56,6 +56,20 @@ const studentSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+studentSchema.virtual("bookings", {
+    ref: "Booking",
+    localField: "_id",
+    foreignField: "studentId"
+});
+
+// Include virtuals in response
+studentSchema.set("toJSON", {
+    virtuals: true
+});
+
+studentSchema.set("toObject", {
+    virtuals: true
+});
 
 // Indexes
 studentSchema.index({ userId: 1 });

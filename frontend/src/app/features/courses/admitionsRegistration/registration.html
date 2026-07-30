@@ -350,7 +350,7 @@
         </div>
 
         <div class="buttons d-flex justify-content-between pt-4 w-100">
-          <button class="back-button shadow-lg" ><i class="bi bi-arrow-left"></i> Back</button>
+          <button class="back-button shadow-lg" routerLink="/courses"><i class="bi bi-arrow-left"></i> Back</button>
 
           <button type="button" class="regi-button shadow-lg " (click)="onSubmit()"  [disabled]="isLoaderOn()"  >
             @if (!isLoaderOn()) {

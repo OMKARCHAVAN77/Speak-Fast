@@ -1,3 +1,4 @@
+import { RouterLink } from '@angular/router';
 import { OCCUPATIONS, QUALIFICATIONS,  } from '../../../core/Shared-common-list/registration-dummy-data';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
@@ -19,9 +20,21 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/registration-dummy-data';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 
+// interface formData{
+//           firstName: '',
+//           lastName: '',
+//           contactNumber: '',
+//           email:'',
+//           password: '',
 
+//           district: '',
+//           qualification: '',
+//           occupation:''
+
+// }
 
 @Component({
   selector: 'app-registration',
@@ -34,7 +47,7 @@ MatIconModule,
 MatSelectModule,
 MatDatepickerModule,
 MatNativeDateModule,
-
+    RouterLink,
     MatAutocompleteModule
 ],
   templateUrl: './registration.html',
@@ -43,10 +56,10 @@ MatNativeDateModule,
 export class RegistrationComponent implements OnInit {
 
 
- districts = MAHARASHTRA_DISTRICTS;
-searchDistrict = '';
-filteredDistricts: string[] = [];
-showDistrictDropdown = false;
+  districts = MAHARASHTRA_DISTRICTS;
+  searchDistrict = '';
+  filteredDistricts: string[] = [];
+  showDistrictDropdown = false;
 
   qualifications = QUALIFICATIONS
   filteredQualifications: string[] = [];
@@ -58,39 +71,43 @@ showDistrictDropdown = false;
   showOccupationDropdown = false;
   isPasswordHide: boolean = false;
 
+  // payLoadFormData!:formData;
 
   showPassword = false;
   showConfirmPassword = false;
 
   registrationForm!: FormGroup;
 
+
+
   isLoaderOn= signal<boolean>(false);
-  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService) {
+  constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService,private route: Router) {
 
   }
 
 
   ngOnInit(): void {
       this.formInitialization();
+
   }
 
-  formInitialization() {
-      this.registrationForm = this.fb.group({
-        firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
-        lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
-        contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
-        email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
-        password: ['',[Validators.required,RegistrationValidator.password]],
-        confirmPassword: ['',Validators.required],
-        district: ['',Validators.required],
-        qualification: ['',Validators.required],
-        occupation: ['',Validators.required]
+    formInitialization() {
+        this.registrationForm = this.fb.group({
+          firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
+          email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
+          password: ['',[Validators.required,RegistrationValidator.password]],
+          confirmPassword: ['',Validators.required],
+          district: ['',Validators.required],
+          qualification: ['',Validators.required],
+          occupation: ['',Validators.required]
 
-      },
-  {
-    validators: RegistrationValidator.passwordChecking
-  });
-  }
+        },
+    {
+      validators: RegistrationValidator.passwordChecking
+    });
+    }
 
 
 
@@ -200,12 +217,25 @@ selectOccupation(occupation: string) {
 }
   onSubmit() {
     console.log("form value is ",this.registrationForm.valid);
+    const { confirmPassword, ...payload } = this.registrationForm.value;
+    //  this.payLoadFormData={...this.registrationForm.value};
+    // console.log("Obervable value ------- ",this.studentServ.getCourseName(),"second ",this.studentServ.getCoursePrice());
+    let val=this.registrationForm.value;
+
+    const payLoadMain = {
+        ...payload,
+        teacherId: this.studentServ.getTeacherId()  ,
+        slotId: this.studentServ.getSlotId(),
+        courseName:this.studentServ.getCourseName(),
+        coursePrice:this.studentServ.getCoursePrice()
+      }
+     console.log("main palyload ",payLoadMain);
 
     if(this.registrationForm.valid){
       this.isLoaderOn.set(true);
 
       setTimeout(()=>{
-        this.studentServ.addStudentApi(this.registrationForm.value).subscribe({
+        this.studentServ.addStudentApi(payLoadMain).subscribe({
           next:(data:any)=>{
             console.log(data.massage)
             this.isLoaderOn.set(false);
@@ -214,10 +244,11 @@ selectOccupation(occupation: string) {
               'Success'
             );
             this.registrationForm.reset();
+            this.route.navigate(['payment']);
           },error:(err:any)=>{
 
             this.isLoaderOn.set(false);
-            console.log(err.m)
+            console.log(err)
 
               this.toastr.error(
                 'Registration failed!',
@@ -227,8 +258,7 @@ selectOccupation(occupation: string) {
         })
       },1000);
 
-      // alert('Registration Successful');
-      console.log(this.registrationForm.value);
+
 
     } else {
 

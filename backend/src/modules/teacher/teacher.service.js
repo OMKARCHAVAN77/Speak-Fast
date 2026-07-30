@@ -39,10 +39,7 @@ export const registerTeacherService = async (body, file) => {
     password,
     contactNumber,
     aadharNo,
-    specialization,
-    qualification,
-    experience,
-    bio,
+    
     googleMeetLink,
     slots
   } = body;
@@ -77,6 +74,7 @@ export const registerTeacherService = async (body, file) => {
   // Hash Password
   const hashedPassword = await bcrypt.hash(password, 10);
 
+
   // Create User
   const user = await User.create({
     firstName,
@@ -84,6 +82,7 @@ export const registerTeacherService = async (body, file) => {
     email: email.toLowerCase(),
     password: hashedPassword,
     role: "teacher",
+    isActive: true
   });
 
   // Generate Reset Token
@@ -104,10 +103,7 @@ export const registerTeacherService = async (body, file) => {
     userId: user._id,
     contactNumber,
     aadharNo,
-    specialization,
-    qualification,
-    experience,
-    bio,
+   
     googleMeetLink,
     photo: media,
      slots: teacherSlots
@@ -148,7 +144,8 @@ export const getAllTeachersService = async () => {
     .populate({
       path: "userId",
       select: "firstName lastName email role isActive"
-    });
+    }).
+     sort({ createdAt: -1 });
 
   return teachers;
 
@@ -194,10 +191,7 @@ export const updateTeacherService = async (teacherId, body) => {
     email,
     contactNumber,
     aadharNo,
-    specialization,
-    qualification,
-    experience,
-    bio,
+   
     googleMeetLink,
     photo,
   } = body;
@@ -231,10 +225,7 @@ export const updateTeacherService = async (teacherId, body) => {
     {
       contactNumber,
       aadharNo,
-      specialization,
-      qualification,
-      experience,
-      bio,
+      
       googleMeetLink,
       photo,
     },
@@ -264,6 +255,10 @@ export const deleteTeacherService = async (teacherId) => {
 
   // Delete Teacher Profile
   await Teacher.findByIdAndDelete(teacherId);
+
+  // also delete inside user collection
+  const deletedUser = await User.findByIdAndDelete(teacher.userId);
+
 
   // Delete User Account
   await User.findByIdAndDelete(teacher.userId);
@@ -490,73 +485,43 @@ export const deleteTeacherSlotService = async (slotId) => {
 
 export const filterTeachersService = async (date, time) => {
 
-  if (!date) {
-    throw new Error("Date is required");
-  }
-
-  const slotFilter = {
-    date,
-    isBooked: false
-  };
-
-  if (time) {
-    slotFilter.time = time;
-  }
-
-  const teachers = await Teacher.find({
-    slots: {
-      $elemMatch: slotFilter
-    }
-  }).populate({
+  const teachers = await Teacher.find().populate({
     path: "userId",
     select: "firstName lastName email"
   });
 
-  // Return only matching slots
-  const result = teachers.map((teacher) => {
+  const result = teachers
+    .filter(teacher => teacher.userId)
+    .map(teacher => {
 
-    const matchingSlots = teacher.slots.filter((slot) => {
+      const matchingSlots = teacher.slots.filter(slot => {
 
-      if (time) {
-        return (
-          slot.date === date &&
-          slot.time === time &&
-          slot.isBooked === false
-        );
-      }
+        // Booked slot नको
+        if (slot.isBooked) return false;
 
-      return (
-        slot.date === date &&
-        slot.isBooked === false
-      );
+        // Time filter (optional)
+        if (time && time.trim() !== "") {
+          return (
+            slot.time.trim().toLowerCase() ===
+            time.trim().toLowerCase()
+          );
+        }
 
-    });
+        // Time दिला नसेल तर सर्व available slots
+        return true;
+      });
 
-    return {
+      return {
+        _id: teacher._id,
+        firstName: teacher.userId.firstName,
+        lastName: teacher.userId.lastName,
+        email: teacher.userId.email,
+        photo: teacher.photo,
+        slots: matchingSlots
+      };
 
-      _id: teacher._id,
+    })
+    .filter(teacher => teacher.slots.length > 0);
 
-      firstName: teacher.userId.firstName,
-
-      lastName: teacher.userId.lastName,
-
-      email: teacher.userId.email,
-
-      specialization: teacher.specialization,
-
-      qualification: teacher.qualification,
-
-      experience: teacher.experience,
-
-      photo: teacher.photo,
-
-      slots: matchingSlots
-
-    };
-
-  });
-
-  return result.filter((teacher) => teacher.slots.length > 0);
+  return result;
 };
-
-

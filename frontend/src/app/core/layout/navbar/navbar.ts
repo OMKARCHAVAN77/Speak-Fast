@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatToolbarModule, MatToolbarRow } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { filter, single } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
-interface NavLink {
-  label: string;
-  active: boolean;
-}
+// interface NavLink {
+//   label: string;
+//   active: boolean;
+// }
 
 @Component({
   selector: 'app-navbar',
@@ -29,56 +31,67 @@ interface NavLink {
 })
 
 
-export class Navbar {
+export class Navbar implements OnInit {
 
-  constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar) {}
+  constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar,private toaster: ToastrService, private route: Router) {}
   private logoutUrl = `${environment.apiUrl}/auth/logout`;
+  isLoggedin= signal<boolean>(false);
+  isTeachersOn= signal<boolean>(true);
+  // isMenuOpen = false;
+  //  hideUrls: string[]=["/","/teachers"]
 
-  isMenuOpen = false;
+  ngOnInit(): void {
+      const role = localStorage.getItem('roles') || sessionStorage.getItem('roles');
+      const token= localStorage.getItem('token') || sessionStorage.getItem('token');
 
-  toggleMenu(): void {
-    this.isMenuOpen = !this.isMenuOpen;
+      // console.log(role,"token is -- ",token);
+
+      // console.log("value of status",!!token);
+      this.isLoggedin.set(!!token);
+
+      // console.log("value of login",this.isLoggedin())
+
+      // if(this.isLoggedin()){
+      //         this.route.events
+      //   .pipe(filter(event => event instanceof NavigationEnd))
+      //   .subscribe((event: NavigationEnd) => {
+      //     const url = event.urlAfterRedirects;
+      //     console.log(url)
+      //     const hideNavbar =
+      //       url === '/' ||
+      //       url === '/teachers'
+
+      //     this.isTeachersOn.set(hideNavbar);
+      //   });
+      // }
   }
 
-  closeMenu(): void {
-    this.isMenuOpen = false;
+
+  onLogIn():void{
+      this.route.navigate(['login']);
+
   }
 
-  onCallNow(): void {
-    window.location.href = 'tel:+10000000000';
-  }
-
-  onLogIn(): void {
-    console.log('Log In clicked');
-  }
 
   onLogout(): void {
-  this.http.post<any>(this.logoutUrl, {}, { withCredentials: true }).subscribe({
-    next: (res) => {
-      // Local storage clear kara
-      localStorage.removeItem('user');
-      localStorage.removeItem('userRole');
 
-      setTimeout(() => this.showToast('Logged out successfully.', 'success'));
+      this.toaster.success(
+        'You have been logged out successfully.',
+        'Success'
+      );
+    setTimeout(()=>{
+     localStorage.removeItem('token');
+    localStorage.removeItem('roles');
 
-      // Login page var parat pathva
-      this.router.navigate(['/login']);
-    },
-    error: (err) => {
-      const message = err?.error?.message || 'Logout failed. Please try again.';
-      setTimeout(() => this.showToast(message, 'error'));
-      console.error('LOGOUT ERROR:', err.status, err.error);
-    }
-  });
-}
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('roles');
 
-private showToast(message: string, type: 'success' | 'error'): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000,
-      panelClass: type === 'error' ? ['toast-error'] : ['toast-success'],
-      horizontalPosition: 'right',
-      verticalPosition: 'top'
-    });
+    this.isLoggedin.set(false);
+
+
+    this.router.navigate(['teachers']);
+    },2000)
+
   }
 
 }

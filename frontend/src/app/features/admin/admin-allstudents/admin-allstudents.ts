@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, computed, signal, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -9,27 +9,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { environment } from '../../../../environments/environment';
-
-
-
-
-interface Student {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-  course: string;
-  enrolled: string;
-  end: string;
-  progress: number;
-  onLeave?: string;
-}
- 
-
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AdminService } from '../../../core/services/admin.service';
 
 @Component({
   selector: 'app-admin-allstudents',
@@ -41,69 +24,132 @@ interface Student {
     MatProgressBarModule,
     MatTooltipModule,
     MatChipsModule,
-  MatFormFieldModule,
-MatInputModule],
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [DatePipe],
   templateUrl: './admin-allstudents.html',
   styleUrl: './admin-allstudents.css',
 })
 export class AdminAllStudents implements OnInit {
   searchTerm = '';
-allStudentList = signal<any[]>([]);
-studentLength = signal<number>(0);
+  selectedDate: Date | null = null;
+  allStudentList = signal<any[]>([]);
+  studentLength = signal<number>(0);
+  students: any;
 
-constructor(private http: HttpClient) {}
+  constructor(private adminServ: AdminService, private datePipe: DatePipe) { }
 
-ngOnInit(): void {
-  this.loadStudents();
+  ngOnInit(): void {
+    this.loadStudents();
+
+  }
+
+  getAllStudents() {
+  this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
+    next: (res: any) => {
+      // console.log(res)
+     const students = res.data.map((student: any) => ({
+
+  firstName: student.userId?.firstName ?? "",
+
+  lastName: student.userId?.lastName ?? "",
+
+  contactNumber: student.contactNumber ?? "",
+
+  email: student.userId?.email ?? "",
+
+  plan: student.bookings?.[0]?.courseName ?? "",
+
+  googleMeetLink: student.googleMeetLink,
+
+  teacher: student.assignedTeacher?.userId
+    ? `${student.assignedTeacher.userId.firstName ?? ""} ${student.assignedTeacher.userId.lastName ?? ""}`
+    : "Not Assigned",
+
+  timeSlot: student.bookings?.[0]?.slotTime ?? "",
+
+  enrolledDate: student.bookings?.[0]?.createdAt
+    ? this.datePipe.transform(
+        student.bookings[0].createdAt,
+        'MMM d, y'
+      )
+    : "",
+
+  _id: student._id
+
+}));
+
+      this.allStudentList.set(students);
+      this.studentLength.set(students.length);
+
+      console.log(this.allStudentList());
+
+    },
+    error: (err) => {
+      console.log(err);
+    }
+  });
 }
 
-loadStudents() {
-  this.http.get<any>(`${environment.apiUrl}/students/getallstudent`)
-    .subscribe({
-      next: (res) => {
-        this.allStudentList.set(res.data);
-        this.studentLength.set(res.data.length);
+  loadStudents() {
+    this.getAllStudents()
 
-        console.log(this.allStudentList());
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    });
   }
 
   get filteredStudents(): any[] {
+    let result = this.allStudentList();
 
-  if (!this.searchTerm.trim()) {
-    return this.allStudentList();
+    const term = this.searchTerm.trim().toLowerCase();
+    if (term) {
+      result = result.filter((student: any) =>
+        student.firstName.toLowerCase().includes(term) ||
+        student.lastName.toLowerCase().includes(term) ||
+        student.email.toLowerCase().includes(term)
+      );
+    }
+
+    if (this.selectedDate) {
+      const formatted = this.datePipe.transform(this.selectedDate, 'MMM d, y');
+      result = result.filter((student: any) => student.enrolledDate === formatted);
+    }
+
+    return result;
   }
 
-  const term = this.searchTerm.toLowerCase();
-
-  return this.allStudentList().filter((student: any) =>
-    student.firstName.toLowerCase().includes(term) ||
-    student.lastName.toLowerCase().includes(term) ||
-    student.email.toLowerCase().includes(term)
-  );
-
+  onDateSelected(date: Date | null): void {
+    this.selectedDate = date;
   }
 
+  clearDate(event: Event): void {
+    event.stopPropagation();
+    this.selectedDate = null;
+  }
 
   onDelete(student: any): void {
 
-  this.allStudentList.update(list =>
-    list.filter(s => s._id !== student._id)
-  );
+    this.allStudentList.update(list =>
+      list.filter(s => s._id !== student._id)
+    );
 
-  this.studentLength.set(this.allStudentList().length);
+    this.studentLength.set(this.allStudentList().length);
   }
 
   onEdit(student: any): void {
     console.log(student);
   }
 
+  onAccept(student: any): void {
+    this.allStudentList.update(list =>
+      list.map(s => s._id === student._id ? { ...s, status: 'paid' } : s)
+    );
+    // API call to confirm/accept the enrollment goes here
+  }
+
   onWhatsApp(student: any): void {
     const phone = student.contactNumber.replace(/[^0-9]/g, '');
     window.open(`https://wa.me/${phone}`, '_blank');
   }
-}  
+}

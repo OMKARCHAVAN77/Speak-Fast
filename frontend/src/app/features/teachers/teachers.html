@@ -10,12 +10,13 @@
 
     <div class="feature-row">
       <div class="feature-chip">
-        <img src="assets/avatar1.jpg" alt="" class="chip-avatar" />
+        <img src="assets/teacher_svgrepo.com.png" alt="" class="chip-avatar" />
         <span>Certified<br />Teacher</span>
       </div>
       <div class="feature-chip">
         <span class="chip-icon-wrap">
-          <mat-icon class="chip-icon">event_available</mat-icon>
+          <!-- <mat-icon class="chip-icon">event_available</mat-icon> -->
+            <img src="assets/calendar_svgrepo.com.png" alt="" class="chip-avatar" />
         </span>
         <span>Flexible<br />Schedules</span>
       </div>
@@ -27,6 +28,7 @@
     <div class="award-card">
       <div class="award-badge">
         <mat-icon>military_tech</mat-icon>
+        
       </div>
       <p class="award-text">
         We have <span class="highlight-inline">50+</span><br />Winning Awards
@@ -41,10 +43,10 @@
       <div class="live-classes-card">
         <span class="live-label">Live Classes</span>
         <div class="avatar-stack">
-          <img src="assets/avatar1.jpg" alt="" />
-          <img src="assets/avatar2.jpg" alt="" />
-          <img src="assets/avatar3.jpg" alt="" />
-          <span class="more-count">+3</span>
+          <img src="assets/circle1.jpg" alt="" />
+          <img src="assets/circle2.jpg" alt="" />
+          <img src="assets/circle3.jpg" alt="" />
+          <span class="more-count">+45</span>
         </div>
       </div>
 
@@ -73,7 +75,7 @@
         <span class="field-value">{{ selectedDate | date: 'dd MMMM yyyy' }}</span>
       </div>
 
-      <input class="hidden-date-input" [matDatepicker]="picker" [value]="selectedDate"
+      <input class="hidden-date-input" [matDatepicker]="picker" [value]="selectedDate" [min]="minDate"
         (dateChange)="onDateChange($event)" readonly />
       <mat-datepicker #picker panelClass="booking-datepicker-panel" (opened)="isDatePickerOpen = true"
         (closed)="isDatePickerOpen = false"></mat-datepicker>
@@ -101,7 +103,7 @@
 
 <!-- ALL TEACHERS -->
 <section class="all-teachers">
-  
+
   <!-- Empty State -->
   <div class="teacher-empty-state" *ngIf="!showTeachers">
     <img src="assets/emptytrainer.png" alt="No Teachers">
@@ -109,7 +111,7 @@
 
   <h2 class="section-title">All Teachers</h2>
   <div class="teacher-grid" *ngIf="showTeachers">
-  
+
     <div class="teacher-card" *ngFor="let teacher of teachers" [class.selected]="selectedTeacherId === teacher._id"
       (click)="selectTeacher(teacher._id)">
       <div class="teacher-photo">
@@ -121,17 +123,23 @@
 
         <div class="slot-grid">
           <div class="slot-grid">
-            <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked">
+            <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked"
+              [class.selected-slot]="
+      selectedTeacherId === teacher._id &&
+      selectedSlotId === slot._id
+  " (click)="selectSlot(teacher._id, slot._id); $event.stopPropagation()">
 
-              {{ slot.time }}
+              {{slot.time}}
 
             </button>
           </div>
         </div>
 
 
-        <button class="book-btn" type="button" (click)="bookSeat(teacher._id); $event.stopPropagation()">
-          <mat-icon class="book-icon">add</mat-icon>
+        <button
+class="book-btn"
+type="button"
+(click)="bookSeat(); $event.stopPropagation()">
           Book Seat
         </button>
       </div>
@@ -140,7 +148,7 @@
 </section>
 <!-- REQUEST SLOT CARD -->
 <section class="request-slot-section">
-  <div class="request-slot-card" >
+  <div class="request-slot-card">
 
     <div class="request-left">
       <div class="request-icon">

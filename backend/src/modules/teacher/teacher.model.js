@@ -3,10 +3,10 @@ import mongoose from "mongoose";
 const slotSchema = new mongoose.Schema(
   {
     date: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    type: String,
+    default: () => new Date().toISOString().split("T")[0], // YYYY-MM-DD
+    required: true
+  },
 
     time: {
       type: String,

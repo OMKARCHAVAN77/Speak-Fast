@@ -19,6 +19,10 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
 
+    slotTime: {
+      type: String,
+    },
+
     courseName: {
       type: String,
       required: true,
