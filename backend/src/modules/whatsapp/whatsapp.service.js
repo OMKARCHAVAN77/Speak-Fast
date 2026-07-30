@@ -98,7 +98,7 @@
 
 // export default new WhatsAppService();
 
-
+console.log("WhatsApp Service Loaded");
 
 import whatsappApi from "../../config/axios.js";
 import env from "../../config/env.js";

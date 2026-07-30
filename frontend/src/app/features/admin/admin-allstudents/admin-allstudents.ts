@@ -39,6 +39,7 @@ export class AdminAllStudents implements OnInit {
   allStudentList = signal<any[]>([]);
   studentLength = signal<number>(0);
   students: any;
+  loading = signal(false);
 
   constructor(private adminServ: AdminService, private datePipe: DatePipe) { }
 
@@ -48,6 +49,7 @@ export class AdminAllStudents implements OnInit {
   }
 
   getAllStudents() {
+    this.loading.set(true);
   this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
     next: (res: any) => {
       // console.log(res)
@@ -84,12 +86,13 @@ export class AdminAllStudents implements OnInit {
 
       this.allStudentList.set(students);
       this.studentLength.set(students.length);
-
+        this.loading.set(false);
       console.log(this.allStudentList());
 
     },
     error: (err) => {
       console.log(err);
+        this.loading.set(false);
     }
   });
 }
