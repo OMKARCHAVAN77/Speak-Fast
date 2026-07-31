@@ -15,6 +15,9 @@ import { TeacherService, Teacher } from '../../../core/services/teacher.service'
 import { AdminService } from '../../../core/services/admin.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
+
+import { AlertService } from '../../../core/services/alert.service';
+
 @Component({
   selector: 'app-admin-teachers',
   imports: [
@@ -48,8 +51,9 @@ export class AdminTeachers implements OnInit {
   constructor(
     private teacherService: TeacherService,
     private adminService: AdminService,
-    private cdr: ChangeDetectorRef
-  ) { }
+    private cdr: ChangeDetectorRef,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.loadTeachers();
@@ -136,4 +140,87 @@ export class AdminTeachers implements OnInit {
     this.drawerOpen = false;
     this.teacherBeingEdited = null;
   }
+
+  // delete specific teacher
+// async deleteTeacher(id: string) {
+
+//   const confirmed = await this.alertService.confirm(
+//     'Are you sure?',
+//     "Do you really want to delete this teacher?"
+//   );
+
+//   if (!confirmed) {
+//       this.alertService.error(
+//       'Cancelled',
+//       'Teacher deletion has been cancelled.'
+//     );
+//     return;
+//   }
+
+//   this.adminService.deleteSpecificTeacher(id).subscribe({
+
+//     next: () => {
+
+//       this.loadTeachers();
+
+//       this.alertService.success(
+//         'Deleted!',
+//         'Teacher deleted successfully.'
+//       );
+
+//     },
+
+//     error: (err) => {
+
+//       this.alertService.error(
+//         'Error!',
+//         err.error?.message || 'Something went wrong.'
+//       );
+
+//     }
+
+//   });
+
+// }
+
+async deleteTeacher(id: string): Promise<void> {
+
+  const result = await this.alertService.confirm(
+    'Are you sure?',
+    'Do you really want to delete this teacher?',
+    'warning',
+    'Yes, Delete',
+    'Cancel'
+  );
+
+  // User clicked Cancel or closed the popup
+  if (!result.isConfirmed) {
+    return;
+  }
+
+  this.adminService.deleteSpecificTeacher(id).subscribe({
+
+    next: () => {
+
+      this.loadTeachers();
+
+      this.alertService.success(
+        'Deleted!',
+        'Teacher deleted successfully.'
+      );
+
+    },
+
+    error: (err: any) => {
+
+      this.alertService.error(
+        'Error!',
+        err.error?.message || 'Something went wrong.'
+      );
+
+    }
+
+  });
+
 }
+}   

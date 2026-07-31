@@ -13,7 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminService } from '../../../core/services/admin.service';
-
+import { AlertService } from '../../../core/services/alert.service';
 @Component({
   selector: 'app-admin-allstudents',
   imports: [
@@ -43,7 +43,9 @@ export class AdminAllStudents implements OnInit {
 
   shareTotalCOunt = output<any>()
 
-  constructor(private adminServ: AdminService, private datePipe: DatePipe) { }
+
+  constructor(private adminServ: AdminService, private datePipe: DatePipe, 
+      private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.loadStudents();
@@ -135,15 +137,51 @@ export class AdminAllStudents implements OnInit {
     this.selectedDate = null;
   }
 
-  onDelete(student: any): void {
+  // delete specifit student alert
+async onDelete(student: any): Promise<void> {
 
-    this.allStudentList.update(list =>
-      list.filter(s => s._id !== student._id)
-    );
+  const result = await this.alertService.confirm(
+    'Are you sure?',
+    'Do you really want to delete this student?',
+    'warning',
+    'Yes, Delete',
+    'Cancel'
+  );
 
-    this.studentLength.set(this.allStudentList().length);
+  // User clicked Cancel or closed the popup
+  if (!result.isConfirmed) {
+    return;
   }
 
+  this.adminServ.deleteSpecificStudent(student._id).subscribe({
+
+    next: () => {
+
+      this.allStudentList.update(list =>
+        list.filter(s => s._id !== student._id)
+      );
+
+      this.studentLength.set(this.allStudentList().length);
+
+      this.alertService.success(
+        'Deleted!',
+        'Student has been deleted successfully.'
+      );
+
+    },
+
+    error: (err: any) => {
+
+      this.alertService.error(
+        'Error!',
+        err.error?.message || 'Failed to delete student.'
+      );
+
+    }
+
+  });
+
+}
   onEdit(student: any): void {
     console.log(student);
   }

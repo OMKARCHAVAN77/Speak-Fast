@@ -76,4 +76,16 @@ export class AdminService {
     );
   }
 
+
+  // ====================== Delete specific Teacher ============================
+  deleteSpecificTeacher( id: any){
+  return this.http.delete(`${environment.apiUrl}/teacher/${id}`)
+  }
+
+
+  // ===============================delete specific student ========================
+  deleteSpecificStudent(id : any){
+    return this.http.delete(`${environment.apiUrl}/student/${id}`)
+  }
+
 }
