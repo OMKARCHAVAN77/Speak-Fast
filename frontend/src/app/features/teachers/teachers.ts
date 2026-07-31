@@ -47,6 +47,9 @@ export class Teachers implements OnInit {
 // Today's date
 selectedDate: Date = new Date();
 
+selectedTeacherId: string | null = null;
+selectedSlotId: string | null = null;
+
 // Disable previous dates
 minDate: Date = new Date();
   selectedTime: string | null = null;
@@ -195,17 +198,29 @@ onDateChange(event: any): void {
 
   // ---------- ALL TEACHERS ----------
   // selectedTeacherId: string | null = 'sakshi-pable';
-  selectedTeacherId: string | null = null;
-selectedSlotId: string | null = null;
+//   selectedTeacherId: string | null = null;
+// selectedSlotId: string | null = null;
 
-selectSlot(teacherId: string, slotId: string) {
+// selectSlot(teacherId: string, slotId: string) {
 
-  this.selectedTeacherId = teacherId;
-  this.selectedSlotId = slotId;
+//   this.selectedTeacherId = teacherId;
+//   this.selectedSlotId = slotId;
 
-  console.log("Teacher :", teacherId);
-  console.log("Slot :", slotId);
+//   console.log("Teacher :", teacherId);
+//   console.log("Slot :", slotId);
 
+// }
+
+selectSlot(teacherId: string, slotId: string): void {
+  if (this.selectedTeacherId === teacherId && this.selectedSlotId === slotId) {
+    this.selectedTeacherId = null;
+    this.selectedSlotId = null;
+  } else {
+    this.selectedTeacherId = teacherId;
+    this.selectedSlotId = slotId;
+  }
+  console.log("Teacher :", this.selectedTeacherId);
+  console.log("Slot :", this.selectedSlotId);
 }
 
 
