@@ -2,7 +2,7 @@ import { RouterLink } from '@angular/router';
 import { OCCUPATIONS, QUALIFICATIONS,  } from '../../../core/Shared-common-list/registration-dummy-data';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, OnInit, signal, viewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -21,7 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MAHARASHTRA_DISTRICTS } from '../../../core/Shared-common-list/registration-dummy-data';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
+import {   ViewChild } from '@angular/core';
 
 // interface formData{
 //           firstName: '',
@@ -53,7 +53,7 @@ MatNativeDateModule,
   templateUrl: './registration.html',
   styleUrl: './registration.css'
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit,AfterViewInit {
 
 
   districts = MAHARASHTRA_DISTRICTS;
@@ -79,6 +79,7 @@ export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
 
 
+  @ViewChild('firstNameInp') firstNameInp!: ElementRef<HTMLInputElement>;
 
   isLoaderOn= signal<boolean>(false);
   constructor(private fb: FormBuilder, private studentServ:StudentService, private http: HttpClient,private toastr: ToastrService,private route: Router) {
@@ -88,7 +89,28 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
       this.formInitialization();
+      this.setFirstLetterUpper();
+  }
 
+  setFirstLetterUpper():void{
+    const controls = ['firstName', 'lastName'];
+
+    controls.forEach(control => {
+      this.registrationForm.get(control)?.valueChanges.subscribe(value => {
+        if (!value) return;
+
+        const formatted =
+          value.charAt(0).toUpperCase() + value.slice(1);
+
+        this.registrationForm.get(control)?.setValue(formatted, {
+          emitEvent: false
+        });
+      });
+     });
+  }
+
+  ngAfterViewInit(): void {
+      this.firstNameInp.nativeElement.focus();
   }
 
     formInitialization() {
@@ -97,8 +119,8 @@ export class RegistrationComponent implements OnInit {
           lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
           contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
           email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
-          password: ['',[Validators.required,RegistrationValidator.password]],
-          confirmPassword: ['',Validators.required],
+          // password: ['',[Validators.required,RegistrationValidator.password]],
+          // confirmPassword: ['',Validators.required],
           district: ['',Validators.required],
           qualification: ['',Validators.required],
           occupation: ['',Validators.required]
@@ -234,7 +256,7 @@ selectOccupation(occupation: string) {
     if(this.registrationForm.valid){
       this.isLoaderOn.set(true);
 
-      setTimeout(()=>{
+
         this.studentServ.addStudentApi(payLoadMain).subscribe({
           next:(data:any)=>{
             console.log(data.massage)
@@ -256,12 +278,11 @@ selectOccupation(occupation: string) {
               );
           }
         })
-      },1000);
+
 
 
 
     } else {
-
       this.registrationForm.markAllAsTouched();
 
     }

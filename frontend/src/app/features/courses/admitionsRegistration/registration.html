@@ -76,7 +76,7 @@
                   First Name <span>*</span>
                 </label>
                 <input type="text" class="form-control custom-input" placeholder="Type your first name"
-                  formControlName="firstName">
+                  formControlName="firstName" #firstNameInp >
                 @if(registrationForm.get('firstName')?.hasError('required') &&
                 registrationForm.get('firstName')?.touched){
                 <small class="text-danger">field is required.</small>
@@ -152,7 +152,7 @@
               </div>
 
               <!-- Password -->
-              <div class="col-md-6 mb-4">
+              <!-- <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">Password</label>
 
                 <div class="position-relative">
@@ -196,10 +196,10 @@
                   </small>
 
                 </div>
-              </div>
+              </div> -->
 
               <!-- Confirm Password -->
-              <div class="col-md-6 mb-4">
+              <!-- <div class="col-md-6 mb-4">
                 <label class="form-label fw-semibold">Confirm Password</label>
                 <input type="password" class="form-control custom-input" placeholder="Confirm password"
                   formControlName="confirmPassword">
@@ -215,7 +215,7 @@
                   Passwords do not match.
                 </small>
                 }
-              </div>
+              </div> -->
 
               <!-- Date of Birth -->
               <!-- <div class="col-md-6 mb-4">
@@ -352,7 +352,7 @@
         <div class="buttons d-flex justify-content-between pt-4 w-100">
           <button class="back-button shadow-lg" routerLink="/courses"><i class="bi bi-arrow-left"></i> Back</button>
 
-          <button type="button" class="regi-button shadow-lg " (click)="onSubmit()"  [disabled]="isLoaderOn()"  >
+          <button type="button" class="regi-button shadow-lg " (click)="onSubmit()"    >
             @if (!isLoaderOn()) {
                 Register
               } @else {
