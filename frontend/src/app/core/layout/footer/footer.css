@@ -13,8 +13,9 @@
   background-position: top  right -567px, bottom -150px left -140px;
   background-size: 65% 100%, 65% 100%;
   color: #333c4d;
-  padding: 40px 32px 24px 32px;
+  padding: 32px 32px 24px 32px;
   position: relative;
+  border-top:1px solid #E9E9E9;
   /* max-width: 1440px; */
 }
 
