@@ -1,5 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, signal, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, computed, signal, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
@@ -12,7 +13,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminService } from '../../../core/services/admin.service';
 import { AlertService } from '../../../core/services/alert.service';
-
 @Component({
   selector: 'app-admin-allstudents',
   imports: [
@@ -40,6 +40,9 @@ export class AdminAllStudents implements OnInit {
   studentLength = signal<number>(0);
   students: any;
   loading = signal(false);
+
+  shareTotalCOunt = output<any>()
+
 
   constructor(private adminServ: AdminService, private datePipe: DatePipe, 
       private alertService: AlertService) { }
@@ -88,6 +91,8 @@ export class AdminAllStudents implements OnInit {
       this.allStudentList.set(students);
       this.studentLength.set(students.length);
         this.loading.set(false);
+
+        this.shareTotalCOunt.emit(students.length)
       console.log(this.allStudentList());
 
     },

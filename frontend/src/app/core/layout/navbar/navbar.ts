@@ -1,3 +1,4 @@
+import { TokenService } from './../../services/token.service';
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule, MatToolbarRow } from '@angular/material/toolbar';
@@ -33,7 +34,9 @@ import { ToastrService } from 'ngx-toastr';
 
 export class Navbar implements OnInit {
 
-  constructor(private router: Router, private http: HttpClient , private snackBar: MatSnackBar,private toaster: ToastrService, private route: Router) {}
+  constructor(private router: Router, private http: HttpClient ,
+               private snackBar: MatSnackBar,private toaster: ToastrService,
+               private route: Router,private tokenServ: TokenService) {}
   private logoutUrl = `${environment.apiUrl}/auth/logout`;
   isLoggedin= signal<boolean>(false);
   isTeachersOn= signal<boolean>(true);
@@ -41,8 +44,8 @@ export class Navbar implements OnInit {
   //  hideUrls: string[]=["/","/teachers"]
 
   ngOnInit(): void {
-      const role = localStorage.getItem('roles') || sessionStorage.getItem('roles');
-      const token= localStorage.getItem('token') || sessionStorage.getItem('token');
+      const role = this.tokenServ.getRoles();
+      const token= this.tokenServ.getToken();
 
       // console.log(role,"token is -- ",token);
 
@@ -79,18 +82,15 @@ export class Navbar implements OnInit {
         'You have been logged out successfully.',
         'Success'
       );
-    setTimeout(()=>{
-     localStorage.removeItem('token');
-    localStorage.removeItem('roles');
-
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('roles');
-
-    this.isLoggedin.set(false);
 
 
-    this.router.navigate(['teachers']);
-    },2000)
+        this.tokenServ.removeToken();
+
+        this.isLoggedin.set(false);
+
+
+        this.router.navigate(['teachers']);
+
 
   }
 
