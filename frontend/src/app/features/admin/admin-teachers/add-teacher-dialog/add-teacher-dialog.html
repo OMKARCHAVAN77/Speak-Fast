@@ -2,22 +2,21 @@
 
 <div class="drawer" [class.drawer-open]="isOpen">
   <div class="drawer-header">
-    <div class="header-left">
-      <mat-icon class="close-icon" (click)="onClose()">close</mat-icon>
-      <span class="drawer-title">Add New Teacher</span>
-    </div>
+    <span class="drawer-title">Add New Teacher</span>
+    <mat-icon class="close-icon" (click)="onClose()">close</mat-icon>
   </div>
 
   <form class="drawer-form" (ngSubmit)="onSubmit(teacherForm)" #teacherForm="ngForm">
     <div class="name-row">
       <div class="name-field">
-        <label class="field-label">First Name</label>
+        <label class="field-label">First Name<span class="required-star">*</span></label>
         <div class="field-box">
           <input
             type="text"
             name="firstName"
             [(ngModel)]="teacher.firstName"
-            placeholder="Tom"
+            (blur)="capitalizeName('firstName')"
+            placeholder="Type your first name"
             class="field-input"
             required
           />
@@ -31,21 +30,21 @@
             type="text"
             name="lastName"
             [(ngModel)]="teacher.lastName"
-            placeholder="Wilson"
+            (blur)="capitalizeName('lastName')"
+            placeholder="Type your last name"
             class="field-input"
-            required
           />
         </div>
       </div>
     </div>
 
-    <label class="field-label">Email</label>
+    <label class="field-label">Email<span class="required-star">*</span></label>
     <div class="field-box">
       <input
         type="email"
         name="email"
         [(ngModel)]="teacher.email"
-        placeholder="tom.wilson@gmail.com"
+        placeholder="abc@gmail.com"
         class="field-input"
         required
         email
@@ -67,21 +66,26 @@
       </div>
 
       <div class="name-field">
-        <label class="field-label">Aadhar No.</label>
+        <label class="field-label">Aadhar No.<span class="required-star">*</span></label>
         <div class="field-box">
           <input
             type="text"
             name="aadharNo"
             [(ngModel)]="teacher.aadharNo"
-            placeholder="1234 5678 9012"
+            placeholder="e.g. 1234 0803 9428"
             class="field-input"
+            required
           />
         </div>
       </div>
     </div>
 
     <label class="field-label">Photo</label>
-    <div class="upload-box" (click)="fileInput.click()" [class.has-file]="photoFileName">
+    <div
+      class="upload-box"
+      (click)="fileInput.click()"
+      [class.has-file]="photoFileName"
+    >
       <input
         #fileInput
         type="file"
@@ -90,14 +94,19 @@
         class="upload-input-hidden"
       />
 
-      <mat-icon class="upload-icon">cloud_upload</mat-icon>
+      <div class="upload-icon-wrap">
+        <mat-icon class="upload-icon">image</mat-icon>
+      </div>
 
       <span class="upload-status" *ngIf="photoFileName">
         <mat-icon class="check-icon">check_circle</mat-icon>
         {{ photoFileName }}
+        <mat-icon class="remove-photo-icon" (click)="removePhoto($event)">close</mat-icon>
       </span>
 
-      <span class="upload-text" *ngIf="!photoFileName"> Click to upload photo </span>
+      <span class="upload-text" *ngIf="!photoFileName">
+        Click to upload photo
+      </span>
     </div>
 
     <label class="field-label">Google Meet Link</label>
@@ -106,27 +115,44 @@
         type="url"
         name="meetLink"
         [(ngModel)]="teacher.googleMeetLink"
-        placeholder="https://meet.google.com/abc-defg-hij"
+        placeholder="https://meet.google.com/xxx-xxxx-xxx"
         class="field-input"
       />
     </div>
 
-    <!-- ===== ADD SLOTS ===== -->
-    <label class="field-label">Add Slots</label>
+    <!-- ===== ADD TIME SLOT ===== -->
+    <label class="field-label">Add Time Slot</label>
     <div class="book-slots-row">
-      <div class="time-chip-wrapper">
+      <div class="time-chip-wrapper" #timeDropdownWrapper>
         <div
           class="time-chip"
           [class.active]="activeField === 'start'"
           (click)="toggleTimeDropdown('start', $event)"
         >
-          {{ teacher.startTime }}
+          <mat-icon class="clock-icon">schedule</mat-icon>
+          <span>   {{ teacher.startTime ? teacher.startTime : 'Select Time' }}</span>
         </div>
         <div
-          class="time-dropdown"
-          *ngIf="activeField === 'start'"
-          (click)="$event.stopPropagation()"
-        >
+        class="time-dropdown"
+        [class.open-up]="openDropdownUp"
+        *ngIf="activeField === 'start'"
+        (click)="$event.stopPropagation()"
+          >
+          <!-- <div class="manual-time-row">
+            <input
+              type="text"
+              name="manualTimeInput"
+              class="manual-time-input"
+              [(ngModel)]="manualTimeInput"
+              placeholder="Select Time"
+              (keyup.enter)="confirmManualTime()"
+            />
+            <button type="button" class="manual-time-confirm" (click)="confirmManualTime()">
+              <mat-icon>check</mat-icon>
+            </button>
+          </div>
+          <div class="manual-time-error" *ngIf="manualTimeError">{{ manualTimeError }}</div> -->
+
           <div
             class="time-slot"
             *ngFor="let slot of timeSlots"
@@ -149,11 +175,11 @@
     <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
       <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
         <mat-icon class="slot-icon">schedule</mat-icon>
-        <span class="slot-text">{{ slot.time}}</span>
+        <span class="slot-text">{{ slot.time }}</span>
         <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
       </div>
     </div>
-    <!-- ===== END BOOK SLOTS ===== -->
+    <!-- ===== END ADD TIME SLOT ===== -->
 
     <!-- ===== SUBMIT ERROR ===== -->
     <div class="slot-error" *ngIf="submitError">{{ submitError }}</div>
