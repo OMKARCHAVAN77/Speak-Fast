@@ -18,7 +18,7 @@
 
       <div class="email-wrapper">
         <Label id="email-">Email Address</Label>
-        <input id="email" type="text" formControlName="email" placeholder="Enter your email here">
+        <input id="email" type="text" #emailTemplateVar formControlName="email" placeholder="Enter your email here">
         @if(loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched){
         <small class="text-danger">field is required</small>
         }
