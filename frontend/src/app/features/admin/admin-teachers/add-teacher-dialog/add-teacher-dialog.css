@@ -1,10 +1,12 @@
 :host {
-  --primary-blue: #0c4a9e;
-  --primary-blue-dark: #0a3d84;
-  --text-dark: #1a1a2e;
+  --primary-blue: #3f6bf0;
+  --primary-blue-dark: #2f57d6;
+  --gradient-start: #3f6bf0;
+  --gradient-end: #8b5cf6;
+  --text-dark: #16182b;
   --text-muted: #9aa0ab;
-  --border-light: #e2e8f0;
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --border-light: #e7e9ee;
+  font-family: 'Quicksand' sans-serif;
 }
 
 /* ============ BACKDROP ============ */
@@ -25,6 +27,16 @@
   visibility: visible;
 }
 
+@media (max-width: 576px) {
+  .toast {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    justify-content: center;
+    font-size: 13.5px;
+  }
+}
+
 /* ============ DRAWER ============ */
 .drawer {
   position: fixed;
@@ -36,15 +48,15 @@
   background: #fff;
   box-shadow: -6px 0 24px rgba(0, 0, 0, 0.18);
   z-index: 1001;
-  padding: 24px 22px;
+  padding: 32px 36px 40px;
   box-sizing: border-box;
   overflow-y: auto;
-  transform: translateX(100%);                       /* starts off-screen right */
-  transition: transform 0.65s cubic-bezier(0.32, 0.72, 0, 1);  /* slow, eased slide */
+  transform: translateX(100%);
+  transition: transform 0.65s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 .drawer-open {
-  transform: translateX(0);                           /* slides right → left into view */
+  transform: translateX(0);
 }
 
 /* ============ HEADER ============ */
@@ -52,120 +64,65 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.drawer-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0F172A;
 }
 
 .close-icon {
   cursor: pointer;
   color: var(--text-dark);
-  font-size: 22px;
-  height: 22px;
-  width: 22px;
+  font-size: 26px;
+  height: 26px;
+  width: 26px;
 }
 
 .close-icon:hover {
   color: var(--primary-blue);
 }
 
-.drawer-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text-dark);
-}
-
-.delete-icon {
-  cursor: pointer;
-  color: #dc2626;
-  font-size: 22px;
-  height: 22px;
-  width: 22px;
-}
-
-.delete-icon:hover {
-  color: #b91c1c;
-}
-
 /* ============ FORM ============ */
-.name-row {
-  display: flex;
-  gap: 30px;
-  width: 100%;
-}
-
-.name-field {
-  flex: 0 0 calc(50% - 15px); /* 15px = half of 30px gap, keeps exact 50/50 split */
-  max-width: calc(50% - 15px);
-  box-sizing: border-box;
-}
-
-.field-box {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 0 12px;
-  height: 44px;
-  transition: border-color 0.2s;
-}
-
-.field-box:focus-within {
-  border-color: var(--primary-blue);
-}
-
-.field-input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13.5px;
-  color: var(--text-dark);
-  background: transparent;
-  height: 100%;
-  width: 100%;
-}
-
-.field-input::placeholder {
-  color: var(--text-muted);
-}
-
-.name-row {
-  display: flex;
-  gap: 30px;
-  width: 100%;
-}
-
-.name-field {
-  flex: 0 0 calc(50% - 15px);
-  max-width: calc(50% - 15px);
-  box-sizing: border-box;
-}
-
 .drawer-form {
   display: flex;
   flex-direction: column;
 }
 
+.name-row {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+}
+
+.name-field {
+  flex: 0 0 calc(50% - 12px);
+  max-width: calc(50% - 12px);
+  box-sizing: border-box;
+}
+
 .field-label {
   display: block;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
+  color: #0F172A;
+  margin: 20px 0 10px;
+}
+
+.required-star {
   color: var(--text-dark);
-  margin: 16px 0 8px;
+  margin-left: 1px;
 }
 
 .field-box {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 0 12px;
-  height: 44px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  padding: 0 18px;
+  height: 50px;
   transition: border-color 0.2s;
 }
 
@@ -177,59 +134,39 @@
   border: none;
   outline: none;
   flex: 1;
-  font-size: 13.5px;
+  font-size: 16px;
   color: var(--text-dark);
   background: transparent;
   height: 100%;
+  width: 100%;
 }
 
 .field-input::placeholder {
   color: var(--text-muted);
 }
 
-.field-select {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13.5px;
-  color: var(--text-dark);
-  background: transparent;
-  height: 100%;
-  appearance: none;
-  -webkit-appearance: none;
-  cursor: pointer;
-}
-
-.field-icon {
-  color: var(--text-muted);
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
-  flex-shrink: 0;
-}
-
-/* upload profile */
-
+/* ============ PHOTO UPLOAD ============ */
 .upload-box {
   position: relative;
-  border: 1.5px dashed #b4bdf5;
-  border-radius: 10px;
-  min-height: 100px;
+  border: 1.5px dashed #c7cdf5;
+  border-radius: 16px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 14px;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
   overflow: hidden;
-  background: #eef1fd;
-  padding: 20px;
+  background: #fafbff;
+  padding: 30px 20px;
 }
 
-.upload-box:hover {
-  border-color: #8891e8;
-  background: #e7ebfc;
+.upload-box:hover,
+.upload-box.drag-over {
+  border-color: var(--primary-blue);
+  background: #f2f4ff;
 }
 
 .upload-box.has-file {
@@ -240,31 +177,46 @@
   display: none;
 }
 
+.upload-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #86a6ff, #6d8bff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .upload-icon {
   color: #fff;
-  background: #004D9B;
-  border-radius: 50%;
-  font-size: 22px;
-  height: 22px;
-  width: 22px;
-  padding: 9px;
-  box-sizing: content-box;
+  font-size: 26px;
+  height: 26px;
+  width: 26px;
 }
 
 .upload-text {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 400;
   color: var(--text-dark);
+}
+
+.browse-link {
+  color: var(--primary-blue);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .upload-status {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13.5px;
-  color: #1a1a2e;
+  font-size: 14px;
+  color: var(--text-dark);
   font-weight: 500;
   max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .upload-status .check-icon {
@@ -275,140 +227,148 @@
   width: 16px;
 }
 
-.upload-status {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13.5px;
-  color: #1a1a2e;
-  font-weight: 500;
-  max-width: 90%;
-}
-
-.upload-status span,
-.upload-status {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.select-box {
+.remove-photo-icon {
+  color: var(--text-muted);
+  font-size: 15px;
+  height: 15px;
+  width: 15px;
   cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: color 0.15s ease, background 0.15s ease;
 }
 
-.textarea-box {
-  height: auto;
-  align-items: flex-start;
-  padding: 10px 12px;
-  position: relative;
+.remove-photo-icon:hover {
+  color: #dc2626;
+  background: #fee2e2;
 }
 
-.field-textarea {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13.5px;
-  color: var(--text-dark);
-  background: transparent;
-  resize: none;
-  font-family: inherit;
-  width: 100%;
-}
-
-.field-textarea::placeholder {
-  color: var(--text-muted);
-}
-
-.textarea-icon {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-}
-
-.field-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-dark);
-  margin: 16px 0 8px;
-}
-
-.field-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid var(--border-light);
-  border-radius: 8px;
-  padding: 0 12px;
-  height: 44px;
-  transition: border-color 0.2s;
-}
-
-.field-box:focus-within {
-  border-color: var(--primary-blue);
-}
-
-.field-input {
-  border: none;
-  outline: none;
-  flex: 1;
-  font-size: 13.5px;
-  color: var(--text-dark);
-  background: transparent;
-  height: 100%;
-}
-
-.field-input::placeholder {
-  color: var(--text-muted);
-}
-
-/* ============ BOOK SLOTS ROW ============ */
+/* ============ ADD TIME SLOT ROW ============ */
 .book-slots-row {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
   margin-bottom: 10px;
 }
 
-/* ============ TIME CHIP ============ */
 .time-chip-wrapper {
   position: relative;
 }
 
 .time-chip {
-  background: #eef1f5;
-  color: var(--text-dark);
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  color: var(--text-muted);
+  padding: 0 16px;
+  height: 54px;
+  width: 137px;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 400;
   cursor: pointer;
   white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.time-chip span {
+  color: var(--text-dark);
+}
+
+.clock-icon {
+  color: var(--text-dark);
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+  margin-left: -6px;
 }
 
 .time-chip:hover {
-  background: #e2e6eb;
+  border-color: #cbd2e6;
 }
 
 .time-chip.active {
-  border-bottom-color: var(--primary-blue);
-  background: #fff;
-  box-shadow: 0 0 0 1px var(--border-light);
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 1px var(--primary-blue);
 }
 
 .time-dropdown {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  width: 140px;
-  max-height: 220px;
+  width: 200px;
+  max-height: 260px;
   overflow-y: auto;
   background: #fff;
   border: 1px solid var(--border-light);
   border-radius: 10px;
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
   z-index: 1002;
+}
+
+.manual-time-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.manual-time-input {
+  flex: 1;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12.5px;
+  color: var(--text-dark);
+  outline: none;
+  min-width: 0;
+}
+
+.manual-time-input:focus {
+  border-color: var(--primary-blue);
+}
+
+.manual-time-input::placeholder {
+  color: var(--text-muted);
+}
+
+.manual-time-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-blue);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.manual-time-confirm mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+.manual-time-confirm:hover {
+  background: var(--primary-blue-dark);
+}
+
+.manual-time-error {
+  font-size: 11px;
+  color: #dc2626;
+  padding: 4px 8px 0;
 }
 
 .time-slot {
@@ -446,15 +406,15 @@
 .add-slot-btn {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   background: var(--primary-blue);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  height: 40px;
-  padding: 0 16px;
-  font-size: 13px;
-  font-weight: 600;
+  border-radius: 30px;
+  height: 54px;
+  padding: 0px 26px 0px 20px;
+  font-size: 15px;
+  font-weight: 500;
   cursor: pointer;
   flex-shrink: 0;
   transition: background 0.15s ease;
@@ -471,7 +431,6 @@
 }
 
 .add-slot-btn:disabled {
-  background: #cbd5e1;
   cursor: not-allowed;
 }
 
@@ -482,50 +441,42 @@
   margin: -2px 0 14px;
 }
 
-/* ============ ADDED SLOTS LIST — compact chips, since only time now ============ */
+/* ============ ADDED SLOTS LIST ============ */
 .added-slots-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: 22px;
 }
 
 .added-slot-item {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: #f5f7fa;
-  border: 1px solid var(--border-light);
-  border-radius: 20px;
-  padding: 6px 10px 6px 12px;
+  gap: 10px;
+  background: #fff;
+  border: 1.5px solid var(--border-light);
+  border-radius: 12px;
+  padding: 14px 18px;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .added-slot-item:hover {
   border-color: var(--primary-blue);
-  background: #eef4fc;
-}
-
-.slot-icon {
-  color: var(--primary-blue);
-  font-size: 15px;
-  height: 15px;
-  width: 15px;
-  flex-shrink: 0;
+  background: #f7f9ff;
 }
 
 .slot-text {
-  font-size: 12.5px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   color: var(--text-dark);
   white-space: nowrap;
 }
 
 .remove-slot-icon {
   color: var(--text-muted);
-  font-size: 15px;
-  height: 15px;
-  width: 15px;
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
   cursor: pointer;
   flex-shrink: 0;
   border-radius: 50%;
@@ -539,24 +490,25 @@
 
 /* ============ SUBMIT ============ */
 .submit-btn {
-  margin-top: 28px;
+  margin-top: 30px;
   width: 100%;
-  height: 48px;
-  background-color: var(--primary-blue);
+  height: 50px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 999px;
   font-weight: 500;
-  font-size: 17px;
+  font-size: 18px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+  transition: opacity 0.15s ease;
 }
 
 .submit-btn:hover {
-  background-color: var(--primary-blue-dark);
+  opacity: 0.92;
 }
 
 .submit-btn:disabled {
@@ -565,11 +517,10 @@
 }
 
 .btn-icon {
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
 }
-
 
 /* ============ TABLET VIEW (≤1024px) ============ */
 @media (max-width: 1024px) {
@@ -582,7 +533,7 @@
 @media (max-width: 768px) {
   .drawer {
     width: 75%;
-    padding: 20px 18px;
+    padding: 26px 24px;
   }
 
   .name-row {
@@ -595,24 +546,23 @@
   }
 
   .drawer-title {
-    font-size: 18px;
+    font-size: 22px;
   }
 
   .field-label {
-    font-size: 13px;
-    margin: 14px 0 6px;
+    font-size: 14px;
+    margin: 16px 0 8px;
   }
 
   .field-box {
-    height: 42px;
+    height: 50px;
   }
 
   .upload-box {
-    min-height: 90px;
-    padding: 16px;
+    min-height: 120px;
+    padding: 22px 16px;
   }
 
-  /* ---- Time dropdown as bottom-sheet ---- */
   .time-dropdown {
     position: fixed;
     top: auto;
@@ -639,30 +589,24 @@
   .drawer {
     width: 100%;
     max-width: 100vw;
-    padding: 18px 16px;
+    padding: 20px 16px;
     border-radius: 0;
   }
 
   .drawer-header {
-    margin-bottom: 18px;
-  }
-
-  .header-left {
-    gap: 8px;
+    margin-bottom: 20px;
   }
 
   .drawer-title {
-    font-size: 16.5px;
+    font-size: 19px;
   }
 
-  .close-icon,
-  .delete-icon {
-    font-size: 20px;
-    height: 20px;
-    width: 20px;
+  .close-icon {
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
   }
 
-  /* Stack name fields vertically on small screens */
   .name-row {
     flex-direction: column;
     gap: 0;
@@ -674,53 +618,51 @@
   }
 
   .field-label {
-    font-size: 12.5px;
-    margin: 12px 0 6px;
+    font-size: 13.5px;
+    margin: 14px 0 6px;
   }
 
   .field-box {
-    height: 42px;
-    padding: 0 10px;
+    height: 46px;
+    padding: 0 12px;
   }
 
-  .field-input,
-  .field-select,
-  .field-textarea {
-    font-size: 13px;
+  .field-input {
+    font-size: 14px;
   }
 
   .upload-box {
-    min-height: 80px;
-    padding: 14px;
-    gap: 8px;
+    min-height: 100px;
+    padding: 18px 14px;
+    gap: 10px;
+  }
+
+  .upload-icon-wrap {
+    width: 44px;
+    height: 44px;
   }
 
   .upload-icon {
-    font-size: 18px;
-    height: 18px;
-    width: 18px;
-    padding: 7px;
+    font-size: 22px;
+    height: 22px;
+    width: 22px;
   }
 
-  .upload-text {
-    font-size: 12px;
-  }
-
+  .upload-text,
   .upload-status {
-    font-size: 12px;
+    font-size: 12.5px;
   }
 
-  /* Book slots row wraps on small screens */
   .book-slots-row {
     flex-wrap: wrap;
   }
 
   .time-chip {
-    padding: 8px 12px;
-    font-size: 12px;
+    height: 48px;
+    padding: 0 12px;
+    font-size: 13px;
   }
 
-  /* ---- Time dropdown bottom-sheet (mobile) ---- */
   .time-dropdown {
     position: fixed;
     top: auto;
@@ -743,36 +685,35 @@
   }
 
   .add-slot-btn {
-    height: 38px;
-    padding: 0 12px;
-    font-size: 12px;
-    flex: 1;
-    justify-content: center;
+    height: 48px;
+    padding: 0 18px;
+    font-size: 13px;
+    flex-shrink: 0;
   }
 
   .added-slot-item {
-    padding: 5px 8px 5px 10px;
+    padding: 10px 14px;
   }
 
   .slot-text {
-    font-size: 11.5px;
+    font-size: 13.5px;
   }
 
   .submit-btn {
-    height: 46px;
-    font-size: 15.5px;
-    margin-top: 22px;
+    height: 52px;
+    font-size: 16px;
+    margin-top: 24px;
   }
 }
 
 /* ============ VERY SMALL MOBILE (≤360px) ============ */
 @media (max-width: 360px) {
   .drawer {
-    padding: 14px 12px;
+    padding: 16px 12px;
   }
 
   .drawer-title {
-    font-size: 15.5px;
+    font-size: 17px;
   }
 
   .time-dropdown {
@@ -783,17 +724,29 @@
     display: none;
   }
 }
-
-/* ============ OPTIONAL: dropdown backdrop (mobile/tablet only) ============ */
-.time-dropdown-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 1999;
+.time-chip-wrapper {
+  position: relative;
 }
 
-@media (min-width: 769px) {
-  .time-dropdown-backdrop {
-    display: none;
-  }
+.time-chip-wrapper {
+  position: relative;
+}
+
+.time-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 200px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+  z-index: 99999;
+}
+
+.time-dropdown.open-up {
+  top: auto;
+  bottom: calc(100% + 8px);
 }
