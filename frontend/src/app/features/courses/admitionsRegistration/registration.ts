@@ -69,12 +69,12 @@ export class RegistrationComponent implements OnInit,AfterViewInit {
   occupations = OCCUPATIONS;
   filteredOccupations: string[] = [];
   showOccupationDropdown = false;
-  isPasswordHide: boolean = false;
+  // isPasswordHide: boolean = false;
 
   // payLoadFormData!:formData;
 
-  showPassword = false;
-  showConfirmPassword = false;
+  // showPassword = false;
+  // showConfirmPassword = false;
 
   registrationForm!: FormGroup;
 
@@ -127,15 +127,15 @@ export class RegistrationComponent implements OnInit,AfterViewInit {
 
         },
     {
-      validators: RegistrationValidator.passwordChecking
+      // validators: RegistrationValidator.passwordChecking
     });
     }
 
 
 
-    togglePassword(){
-      this.isPasswordHide=!this.isPasswordHide;
-    }
+    // togglePassword(){
+    //   this.isPasswordHide=!this.isPasswordHide;
+    // }
 
     filterDistricts() {
     const search =
@@ -239,7 +239,7 @@ selectOccupation(occupation: string) {
 }
   onSubmit() {
     console.log("form value is ",this.registrationForm.valid);
-    const { confirmPassword, ...payload } = this.registrationForm.value;
+    const { ...payload } = this.registrationForm.value;
     //  this.payLoadFormData={...this.registrationForm.value};
     // console.log("Obervable value ------- ",this.studentServ.getCourseName(),"second ",this.studentServ.getCoursePrice());
     let val=this.registrationForm.value;
@@ -290,43 +290,43 @@ selectOccupation(occupation: string) {
   }
 
 
-  get password() {
-    return this.registrationForm.get('password');
-  }
+  // get password() {
+  //   return this.registrationForm.get('password');
+  // }
 
-  get passwordValue(): string {
-    return this.password?.value || '';
-  }
+  // get passwordValue(): string {
+  //   return this.password?.value || '';
+  // }
 
-  hasMinLength(): boolean {
-    return this.passwordValue.length >= 8;
-  }
+  // hasMinLength(): boolean {
+  //   return this.passwordValue.length >= 8;
+  // }
 
-  hasUppercase(): boolean {
-    return /^[A-Z]/.test(this.passwordValue); // First letter uppercase
-  }
+  // hasUppercase(): boolean {
+  //   return /^[A-Z]/.test(this.passwordValue); // First letter uppercase
+  // }
 
-  hasLowercase(): boolean {
-    return /[a-z]/.test(this.passwordValue);
-  }
+  // hasLowercase(): boolean {
+  //   return /[a-z]/.test(this.passwordValue);
+  // }
 
-  hasNumber(): boolean {
-    return /\d/.test(this.passwordValue);
-  }
+  // hasNumber(): boolean {
+  //   return /\d/.test(this.passwordValue);
+  // }
 
-  hasSpecialChar(): boolean {
-    return /[@$!%*?&#^()_\-+=]/.test(this.passwordValue);
-  }
+  // hasSpecialChar(): boolean {
+  //   return /[@$!%*?&#^()_\-+=]/.test(this.passwordValue);
+  // }
 
 
-  isPasswordValid(): boolean {
-    return (
-      this.hasMinLength() &&
-      this.hasUppercase() &&
-      this.hasLowercase() &&
-      this.hasNumber() &&
-      this.hasSpecialChar()
-    );
-  }
+  // isPasswordValid(): boolean {
+  //   return (
+  //     this.hasMinLength() &&
+  //     this.hasUppercase() &&
+  //     this.hasLowercase() &&
+  //     this.hasNumber() &&
+  //     this.hasSpecialChar()
+  //   );
+  // }
 }
 

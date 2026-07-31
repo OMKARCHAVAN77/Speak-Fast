@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, signal, OnInit } from '@angular/core';
+import { Component, computed, signal, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,7 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminService } from '../../../core/services/admin.service';
-
+import { AlertService } from '../../../core/services/alert.service';
 @Component({
   selector: 'app-admin-allstudents',
   imports: [
@@ -39,8 +39,13 @@ export class AdminAllStudents implements OnInit {
   allStudentList = signal<any[]>([]);
   studentLength = signal<number>(0);
   students: any;
+  loading = signal(false);
 
-  constructor(private adminServ: AdminService, private datePipe: DatePipe) { }
+  shareTotalCOunt = output<any>()
+
+
+  constructor(private adminServ: AdminService, private datePipe: DatePipe, 
+      private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.loadStudents();
@@ -48,6 +53,7 @@ export class AdminAllStudents implements OnInit {
   }
 
   getAllStudents() {
+    this.loading.set(true);
   this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
     next: (res: any) => {
       // console.log(res)
@@ -84,12 +90,15 @@ export class AdminAllStudents implements OnInit {
 
       this.allStudentList.set(students);
       this.studentLength.set(students.length);
+        this.loading.set(false);
 
+        this.shareTotalCOunt.emit(students.length)
       console.log(this.allStudentList());
 
     },
     error: (err) => {
       console.log(err);
+        this.loading.set(false);
     }
   });
 }
@@ -128,15 +137,51 @@ export class AdminAllStudents implements OnInit {
     this.selectedDate = null;
   }
 
-  onDelete(student: any): void {
+  // delete specifit student alert
+async onDelete(student: any): Promise<void> {
 
-    this.allStudentList.update(list =>
-      list.filter(s => s._id !== student._id)
-    );
+  const result = await this.alertService.confirm(
+    'Are you sure?',
+    'Do you really want to delete this student?',
+    'warning',
+    'Yes, Delete',
+    'Cancel'
+  );
 
-    this.studentLength.set(this.allStudentList().length);
+  // User clicked Cancel or closed the popup
+  if (!result.isConfirmed) {
+    return;
   }
 
+  this.adminServ.deleteSpecificStudent(student._id).subscribe({
+
+    next: () => {
+
+      this.allStudentList.update(list =>
+        list.filter(s => s._id !== student._id)
+      );
+
+      this.studentLength.set(this.allStudentList().length);
+
+      this.alertService.success(
+        'Deleted!',
+        'Student has been deleted successfully.'
+      );
+
+    },
+
+    error: (err: any) => {
+
+      this.alertService.error(
+        'Error!',
+        err.error?.message || 'Failed to delete student.'
+      );
+
+    }
+
+  });
+
+}
   onEdit(student: any): void {
     console.log(student);
   }
