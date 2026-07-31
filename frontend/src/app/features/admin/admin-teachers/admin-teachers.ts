@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,6 +13,10 @@ import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
 
 import { TeacherService, Teacher } from '../../../core/services/teacher.service';
 import { AdminService } from '../../../core/services/admin.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+import Swal from 'sweetalert2';
+import { AlertService } from '../../../core/services/alert.service';
 
 @Component({
   selector: 'app-admin-teachers',
@@ -26,7 +30,8 @@ import { AdminService } from '../../../core/services/admin.service';
     MatInputModule,
     MatTooltipModule,
     MatSnackBarModule,
-    AddTeacherDialog
+    AddTeacherDialog,
+    MatProgressBarModule
   ],
   templateUrl: './admin-teachers.html',
   styleUrl: './admin-teachers.css',
@@ -35,7 +40,7 @@ export class AdminTeachers implements OnInit {
 
   searchTerm = '';
   teachers: Teacher[] = [];
-  loading = false;
+  loading = signal(false);
 
   drawerOpen = false;
   teacherBeingEdited: Teacher | null = null;
@@ -43,7 +48,8 @@ export class AdminTeachers implements OnInit {
   constructor(
     private teacherService: TeacherService,
     private adminService: AdminService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +57,7 @@ export class AdminTeachers implements OnInit {
   }
 
   loadTeachers(): void {
-    this.loading = true;
+        this.loading.set(true);
 
     // this.adminService.getAllTeachers().subscribe({
     //   next: (res: any) => {
@@ -81,13 +87,13 @@ export class AdminTeachers implements OnInit {
 
     console.log('FILTERED TEACHERS:', this.teachers);
 
-    this.loading = false;
+       this.loading.set(false);
     this.cdr.detectChanges();
   },
 
   error: (err: any) => {
     console.error('Failed to load teachers:', err);
-    this.loading = false;
+        this.loading.set(false);
   }
 });
 }
@@ -145,4 +151,87 @@ export class AdminTeachers implements OnInit {
     this.drawerOpen = false;
     this.teacherBeingEdited = null;
   }
+
+  // delete specific teacher
+// async deleteTeacher(id: string) {
+
+//   const confirmed = await this.alertService.confirm(
+//     'Are you sure?',
+//     "Do you really want to delete this teacher?"
+//   );
+
+//   if (!confirmed) {
+//       this.alertService.error(
+//       'Cancelled',
+//       'Teacher deletion has been cancelled.'
+//     );
+//     return;
+//   }
+
+//   this.adminService.deleteSpecificTeacher(id).subscribe({
+
+//     next: () => {
+
+//       this.loadTeachers();
+
+//       this.alertService.success(
+//         'Deleted!',
+//         'Teacher deleted successfully.'
+//       );
+
+//     },
+
+//     error: (err) => {
+
+//       this.alertService.error(
+//         'Error!',
+//         err.error?.message || 'Something went wrong.'
+//       );
+
+//     }
+
+//   });
+
+// }
+
+async deleteTeacher(id: string): Promise<void> {
+
+  const result = await this.alertService.confirm(
+    'Are you sure?',
+    'Do you really want to delete this teacher?',
+    'warning',
+    'Yes, Delete',
+    'Cancel'
+  );
+
+  // User clicked Cancel or closed the popup
+  if (!result.isConfirmed) {
+    return;
+  }
+
+  this.adminService.deleteSpecificTeacher(id).subscribe({
+
+    next: () => {
+
+      this.loadTeachers();
+
+      this.alertService.success(
+        'Deleted!',
+        'Teacher deleted successfully.'
+      );
+
+    },
+
+    error: (err: any) => {
+
+      this.alertService.error(
+        'Error!',
+        err.error?.message || 'Something went wrong.'
+      );
+
+    }
+
+  });
+
 }
+}   
