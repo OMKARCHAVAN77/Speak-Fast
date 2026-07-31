@@ -1,6 +1,6 @@
 <div class="header-panel">
   <div class="stats-row">
-    <mat-card class="stat-card" *ngFor="let stat of stats">
+    <mat-card class="stat-card" *ngFor="let stat of stats()">
       <div class="icon-tile" [style.background]="stat.iconGradient">
         <mat-icon>{{ stat.icon }}</mat-icon>
       </div>
@@ -31,11 +31,11 @@
   </div>
 
   <div *ngSwitchCase="'teachers'" class="content-panel">
-    <app-admin-teachers></app-admin-teachers>
+    <app-admin-teachers (shareTeacherCount)="teacherCount($event)"></app-admin-teachers>
   </div>
 
   <div *ngSwitchCase="'students'" class="content-panel">
-    <app-admin-allstudents></app-admin-allstudents>
+    <app-admin-allstudents (shareTotalCOunt)="totalStudentCount($event)"></app-admin-allstudents>
   </div>
 
 </section>

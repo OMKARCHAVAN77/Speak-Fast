@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -6,14 +6,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { AdminTeachers } from './admin-teachers/admin-teachers';
 import { AdminRecentEnrollments } from './admin-recent-enrollments-all-student/admin-recent-enrollments';
 import { AdminAllStudents } from './admin-allstudents/admin-allstudents';
-
-interface StatCard {
-  icon: string;
-  iconGradient: string; // css gradient for the icon tile
-  label: string;
-  value: string;
-  sublabel: string;
-}
 
 interface TabItem {
   label: string;
@@ -29,20 +21,33 @@ interface TabItem {
   styleUrls: ['./admin.css']
 })
 export class Admin {
-  stats: StatCard[] = [
+
+  
+studentCount = signal(0);
+teacherCoutn = signal(0)
+  totalStudentCount(count:any){
+    console.log(count)
+    this.studentCount.set(count)
+  }
+
+  teacherCount(count:any){
+    this.teacherCoutn.set(count)
+  }
+
+  stats = computed(()=> [
     {
       icon: 'groups',
       iconGradient: 'linear-gradient(135deg, #6ea8fe 0%, #3b6fe0 100%)',
       label: 'Total Students',
-      value: '1,248',
+      value: this.studentCount(),
       sublabel: '+12% this month'
     },
     {
       icon: 'assignment_ind',
       iconGradient: 'linear-gradient(135deg, #b48af0 0%, #7c4fd6 100%)',
       label: 'Active Teachers',
-      value: '6',
-      sublabel: '5 available'
+      value: this.teacherCoutn(),
+      sublabel: `${this.teacherCoutn()} available`
     },
     {
       icon: 'currency_rupee',
@@ -58,7 +63,7 @@ export class Admin {
       value: '324',
       sublabel: '156 scheduled ahead'
     }
-  ];
+  ]);
 
   tabs: TabItem[] = [
     { label: 'Recent Enrollments', key: 'recent', active: true },
