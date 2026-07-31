@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, computed, signal, OnInit } from '@angular/core';
+import { Component, computed, signal, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -40,6 +40,8 @@ export class AdminAllStudents implements OnInit {
   studentLength = signal<number>(0);
   students: any;
   loading = signal(false);
+
+  shareTotalCOunt = output<any>()
 
   constructor(private adminServ: AdminService, private datePipe: DatePipe) { }
 
@@ -87,6 +89,8 @@ export class AdminAllStudents implements OnInit {
       this.allStudentList.set(students);
       this.studentLength.set(students.length);
         this.loading.set(false);
+
+        this.shareTotalCOunt.emit(students.length)
       console.log(this.allStudentList());
 
     },

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -42,57 +42,46 @@ export class AdminTeachers implements OnInit {
   drawerOpen = false;
   teacherBeingEdited: Teacher | null = null;
 
+  shareTeacherCount = output<any>()
+
+
   constructor(
     private teacherService: TeacherService,
     private adminService: AdminService,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadTeachers();
   }
 
   loadTeachers(): void {
-        this.loading.set(true);
-
-    // this.adminService.getAllTeachers().subscribe({
-    //   next: (res: any) => {
-    //     console.log('TEACHER API RESPONSE:', res);
-    //     console.log(res);
-    //     console.log(res.data);
-
-    //     this.teachers = res.data || [];
-    //     this.loading = false;
-
-    //     this.cdr.detectChanges();
-    //   },
-    //   error: (err: any) => {
-    //     console.error('Failed to load teachers:', err);
-    //     this.loading = false;
-    //   }
-    // });
+    this.loading.set(true);
 
 
     this.adminService.getAllTeachers().subscribe({
-  next: (res: any) => {
-    console.log('TEACHER API RESPONSE:', res);
+      next: (res: any) => {
+        console.log('TEACHER API RESPONSE:', res);
 
-    this.teachers = (res.data || []).filter(
-      (teacher: any) => teacher.userId !== null
-    );
+        this.teachers = (res.data || []).filter(
+          (teacher: any) => teacher.userId !== null
+        );
 
-    console.log('FILTERED TEACHERS:', this.teachers);
+        console.log('FILTERED TEACHERS:', this.teachers);
 
-       this.loading.set(false);
-    this.cdr.detectChanges();
-  },
-
-  error: (err: any) => {
-    console.error('Failed to load teachers:', err);
         this.loading.set(false);
+        this.cdr.detectChanges();
+
+        // teacher cout
+        this.shareTeacherCount.emit(res.total)
+      },
+
+      error: (err: any) => {
+        console.error('Failed to load teachers:', err);
+        this.loading.set(false);
+      }
+    });
   }
-});
-}
 
   onTeacherAdded(): void {
     this.loadTeachers();
