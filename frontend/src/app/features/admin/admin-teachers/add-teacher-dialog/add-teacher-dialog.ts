@@ -15,7 +15,9 @@ interface BookedSlot {
   templateUrl: './add-teacher-dialog.html',
   styleUrls: ['./add-teacher-dialog.css'],
 })
-export class AddTeacherDialog implements OnInit,AfterViewInit {
+export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
+  @Input() teacherData: any = null;   // parent kadun edit sathi teacher yeईल
+  isEditMode = false;
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<void>();
@@ -72,6 +74,34 @@ firstNameInput!: ElementRef<HTMLInputElement>;
   ngOnInit(): void {
   }
 
+   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['teacherData']) {
+      if (this.teacherData) {
+        this.isEditMode = true;
+        console.log('Received teacherData for editing:', this.teacherData);
+        this.patchTeacherData(this.teacherData);
+      } else {
+        this.isEditMode = false;
+        this.resetForm();
+      }
+    }
+  }
+
+  private patchTeacherData(teacher: any): void {
+    this.teacher = {
+      firstName: teacher.userId?.firstName || '',
+      lastName: teacher.userId?.lastName || '',
+      email: teacher.userId?.email || '',
+      password: teacher.userId?.password || '',
+      role: teacher.userId?.role || 'teacher',
+      contactNumber: teacher.contactNumber || '',
+      aadharNo: teacher.aadharNo || '',
+      photo: teacher.photo || null,
+      googleMeetLink: teacher.googleMeetLink || '',
+      startTime: teacher.startTime || '',
+      slots: teacher.slots ? [...teacher.slots] : [],
+    };
+  }
  ngAfterViewInit(): void {
   setTimeout(() => {
     this.firstNameInput?.nativeElement.focus();
@@ -279,9 +309,6 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     this.manualTimeError = '';
     this.setDefaultTime();
   }
-
-
-
   onSubmit(form: NgForm): void {
     this.capitalizeName('firstName');
     this.capitalizeName('lastName');
@@ -302,7 +329,13 @@ firstNameInput!: ElementRef<HTMLInputElement>;
 
     this.isSubmitting = true;
       console.log(this.teacher);
-    this.adminServe.addTeacher(this.teacher).subscribe({
+
+      const apiCall$ = this.isEditMode && this.teacherData
+    ? this.adminServe.updateTeacher(this.teacherData._id, this.teacher)
+    : this.adminServe.addTeacher(this.teacher);
+
+
+    apiCall$.subscribe({
       next: () => {
   this.isSubmitting = false;
 
