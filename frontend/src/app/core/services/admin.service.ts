@@ -69,12 +69,16 @@ export class AdminService {
       message: string;
       data?: { user: any; teacher: Teacher };
     }>(
-      `${environment.apiUrl}/teacher/register`,
-      // 'http://localhost:3000/api/teacher/register',
+      // `${environment.apiUrl}/teacher/register`,
+      'http://localhost:3000/api/teacher/register',
       formData,
       { withCredentials: true }
     );
   }
+
+  updateTeacher(id: string, data: any): Observable<any> {
+  return this.http.put(`${environment.apiUrl}/admin/teachers/${id}`, data);
+}
 
 
   // ====================== Delete specific Teacher ============================

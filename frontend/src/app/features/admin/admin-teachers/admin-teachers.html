@@ -122,7 +122,7 @@
 
   <!-- Add / Edit Teacher Dialog -->
   <!-- Dialog owns its own backdrop + panel internally, driven by [isOpen] -->
-  <app-add-teacher-dialog *ngIf="drawerOpen" [isOpen]="drawerOpen" (addTeacher)="onTeacherAdded()"
+  <app-add-teacher-dialog *ngIf="drawerOpen" [teacherData]="teacherBeingEdited" [isOpen]="drawerOpen" (addTeacher)="onTeacherAdded()"
     (closeDrawer)="onDrawerClose()">
   </app-add-teacher-dialog>
 </div>
