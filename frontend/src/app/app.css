@@ -11,9 +11,16 @@
   --muted: #6b7280;
   display:block;
   font-family:'Quicksand', Arial, Helvetica, sans-serif;
+   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 body{
     background:#f7f9fd;
+}
+
+.page-content {
+  flex: 1;
 }
 
 /* ================= Hero ================= */
