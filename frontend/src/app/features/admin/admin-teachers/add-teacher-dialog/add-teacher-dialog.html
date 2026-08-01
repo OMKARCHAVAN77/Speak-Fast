@@ -185,9 +185,12 @@
     <!-- ===== SUBMIT ERROR ===== -->
     <div class="slot-error" *ngIf="submitError">{{ submitError }}</div>
 
-    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+    <!-- <button type="submit" class="submit-btn" [disabled]="isSubmitting">
       <mat-icon class="btn-icon">{{ isSubmitting ? 'hourglass_empty' : 'add' }}</mat-icon>
       {{ isSubmitting ? 'Adding...' : 'Add Teacher' }}
-    </button>
+    </button> -->
+    <button type="submit" class="submit-btn" [disabled]="isSubmitting">
+  {{ isSubmitting ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update Teacher' : 'Add Teacher') }}
+</button>
   </form>
 </div>
