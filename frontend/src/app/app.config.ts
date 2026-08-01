@@ -10,16 +10,16 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes),
+    provideRouter(routes,),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAnimations(),
-   provideToastr({
-  positionClass: 'toast-top-right',
-  timeOut: 2000,
-  progressBar: false,
-  closeButton: true,
-  preventDuplicates: true,
-  tapToDismiss: true,
-}),
+    provideToastr({
+      positionClass: 'toast-top-right',
+      timeOut: 2000,
+      progressBar: false,
+      closeButton: true,
+      preventDuplicates: true,
+      tapToDismiss: true,
+    }),
   ]
 };

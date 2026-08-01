@@ -33,13 +33,6 @@ export interface Plan {
   learnItems: string[];
 }
 
-// export interface Course {
-//   id: number;
-//   name: string;
-//   originalPrice: number;
-//   discount: number;
-//   finalPrice: number;
-// }
 
 @Component({
   selector: 'app-course-recommendation',
