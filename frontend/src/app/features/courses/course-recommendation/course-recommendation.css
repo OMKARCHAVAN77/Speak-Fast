@@ -6,7 +6,7 @@
 .recommendation-page {
     position: relative;
     overflow: hidden;
-    padding: 64px 48px 96px;
+    padding: 40px 48px 96px;
     background: #ffffff;
 }
 
@@ -44,7 +44,7 @@
     z-index: 1;
     text-align: center;
     max-width: 760px;
-    margin: 0 auto 56px;
+    margin: 0 auto 40px;
     padding: 0 12px;
 }
 
@@ -56,7 +56,7 @@
     color: #201f45;
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     background: #ffffff;
 }
 
@@ -64,7 +64,7 @@
     font-size: 48px;
     font-weight: 700;
     color: #14132b;
-    margin: 0 0 12px;
+    margin: 0 0 8px;
     line-height: 1.2;
 }
 
@@ -141,8 +141,8 @@
 
 .plan-name {
     font-size: 22px;
-    font-weight: 700;
-    color: #14132b;
+    font-weight: 600;
+    color: #0F172A;
     margin: 0 0 10px;
     letter-spacing: 0.3px;
 }
@@ -222,7 +222,9 @@
 
 .info-label {
     font-size: 13px;
-    color: #6a6880;
+    color: #0F172A;
+    text-align: center;
+    font-weight: 500;
 }
 
 .info-value {
@@ -231,17 +233,18 @@
     gap: 6px;
     font-size: 15px;
     font-weight: 600;
-    color: #14132b;
+    color: #0F172A;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin: 0 auto;
 }
 
 .info-value mat-icon {
     font-size: 18px;
     width: 18px;
     height: 18px;
-    color: #6a6880;
+    color: #334155;
     flex-shrink: 0;
 }
 
