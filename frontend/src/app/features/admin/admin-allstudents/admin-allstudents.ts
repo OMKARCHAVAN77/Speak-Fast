@@ -56,7 +56,7 @@ export class AdminAllStudents implements OnInit {
     this.loading.set(true);
   this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
     next: (res: any) => {
-      // console.log(res)
+      console.log(res)
      const students = res.data.map((student: any) => ({
 
   firstName: student.userId?.firstName ?? "",
