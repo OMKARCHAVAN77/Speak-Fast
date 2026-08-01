@@ -21,9 +21,9 @@
 }
 
 .title-count {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: #0F172A;
 }
 
 .header-actions {
@@ -34,6 +34,7 @@
 
 .search-field {
   width: 260px;
+  border:none
 }
 
 .search-icon {
@@ -81,7 +82,8 @@
 
 .search-field input {
   font-size: 16px;
- 
+  color: #475569;
+  font-weight: 500;
 }
 /* Tighten default Material form field spacing */
 ::ng-deep .search-field .mat-mdc-text-field-wrapper {
@@ -104,11 +106,12 @@
   position: relative;
   height: 44px;
   border-radius: 12px !important;
-  border-color: black !important;
-  color: #333;
+  border: 1px solid #E0E0E0;
+  color: #475569;;
   display: flex;
   align-items: center;
   gap: 6px;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -182,9 +185,9 @@
 
 .enrollments-table th {
   text-align: left;
-  font-size: 13px;
-  font-weight: 600;
-  color: #8a8f98;
+  font-size: 16px;
+  font-weight: 700;
+  color: #475569;
   padding: 16px 20px;
   white-space: nowrap;
 }
@@ -213,8 +216,9 @@
 
 .enrollments-table td {
   padding: 14px 20px;
-  font-size: 14px;
-  color: #333;
+  color: #0F172A;
+  font-size: 16px;
+  font-weight: 600;
   vertical-align: middle;
 }
 
@@ -241,9 +245,10 @@
 }
 
 .name-text {
-  font-weight: 500;
-  color: #1a1a1a;
+  font-weight: 700;
+  color: #0F172A;
   white-space: nowrap;
+  font-size: 16px;
 }
 
 /* ---------- Contact column ---------- */
@@ -256,10 +261,11 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #6b7280;
-  font-size: 13px;
+  color: #0F172A;
+  font-size: 16px;
   line-height: 1.8;
   white-space: nowrap;
+  font-weight: 500;
 }
 
 .contact-icon {
@@ -277,15 +283,16 @@
 
 .plan-name {
   font-weight: 600;
-  color: #1a1a1a;
-  font-size: 13.5px;
+  color: #0F172A;
+  font-size: 16px;
 }
 
 .plan-teacher {
-  color: #9aa0a6;
-  font-size: 12.5px;
-  font-style: italic;
+  color: #475569;
+  font-size: 14px;
   margin-top: 2px;
+  font-weight: 500;
+ 
 }
 
 /* ---------- Date / Slot columns ---------- */
@@ -296,6 +303,36 @@
   font-size: 13.5px;
   font-weight: 500;
   white-space: nowrap;
+}
+
+/* class meet link */
+
+/* Meet button */
+.meet-btn {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  background-color: #22a352 !important;
+  color: #ffffff !important;
+  border-radius: 20px !important;
+  padding: 0 16px !important;
+  height: 34px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  line-height: 34px;
+  box-shadow: none !important;
+  text-decoration: none;
+}
+
+.meet-btn .meet-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+.no-meet {
+  color: #b7bcc5;
 }
 
 /* ---------- Action column ---------- */
@@ -373,4 +410,159 @@
 .reject-btn {
   background-color: #ef4444 !important;
   color: #fff !important;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+/* ---------- Tablet: header row + search field adjust ---------- */
+@media (max-width: 900px) {
+  .search-field {
+    width: 220px;
+  }
+}
+
+/* ---------- Mobile: stack header, convert table to cards ---------- */
+@media (max-width: 768px) {
+
+  /* Header row stacks and everything goes full-width */
+  .header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-field,
+  .date-btn {
+    width: 100%;
+  }
+
+  .date-btn {
+    justify-content: flex-start;
+  }
+
+  /* Table card no longer needs horizontal scroll once rows become cards */
+  .table-card {
+    overflow-x: visible;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  /* FIX: table/tbody must also leave table-layout mode — leaving these as
+     display:table / table-row-group while tr/td below are block/flex is
+     invalid table structure and renders inconsistently across browsers. */
+  .enrollments-table,
+  .enrollments-table tbody {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .enrollments-table {
+    min-width: 0;
+  }
+
+  /* Hide the header row visually (still present for accessibility) */
+  .enrollments-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* Each row becomes its own card */
+  .enrollments-table tbody tr {
+    display: block;
+    background: #ffffff;
+    border: 1px solid #eef0f2;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+  }
+
+  .enrollments-table tbody tr:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Every cell: label on top (small, grey), value below — all left-aligned */
+  .enrollments-table td {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px 0;
+    border-bottom: 1px dashed #f0f1f3;
+    text-align: left;
+  }
+
+  .enrollments-table td:last-child {
+    border-bottom: none;
+  }
+
+  /* Label shown via data-label, since thead is visually hidden */
+  .enrollments-table td::before {
+    content: attr(data-label);
+    font-size: 12px;
+    font-weight: 600;
+    color: #8a8f98;
+    text-align: left;
+  }
+
+  .col-contact .contact-line {
+    justify-content: flex-start;
+  }
+
+  .enrollments-table td.col-plan .plan-name,
+  .enrollments-table td.col-plan .plan-teacher {
+    text-align: left;
+  }
+
+  /* Name cell reads better as a card header: no label, sits above everything else */
+  .enrollments-table td.col-name {
+    padding-bottom: 14px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid #f0f1f3;
+  }
+  .enrollments-table td.col-name::before {
+    display: none;
+  }
+
+  /* Action buttons: grouped into a row via the .action-buttons wrapper,
+     sitting below the label like every other cell */
+  .enrollments-table td.col-action {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .action-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .edit-btn {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+
+  .name-text {
+    font-size: 14px;
+  }
 }
