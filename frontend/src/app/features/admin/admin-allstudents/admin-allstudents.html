@@ -92,7 +92,7 @@
 
           <!-- Action -->
           <td class="col-action">
-            <ng-container *ngIf="student.status !== 'pending'; else pendingActions">
+            <ng-container *ngIf="student.status !== 'pending'">
               <button mat-icon-button class="edit-btn" aria-label="Edit" (click)="onEdit(student)">
                 <mat-icon>edit</mat-icon>
               </button>
@@ -101,19 +101,6 @@
               </button>
             </ng-container>
 
-            <ng-template #pendingActions>
-              <div class="pending-block">
-                <span class="pending-badge">Pending</span>
-                <div class="pending-buttons">
-                  <button mat-flat-button class="accept-btn" (click)="onAccept(student)">
-                    Accept
-                  </button>
-                  <button mat-flat-button class="reject-btn" (click)="onDelete(student)">
-                    Reject
-                  </button>
-                </div>
-              </div>
-            </ng-template>
           </td>
         </tr>
       </tbody>

@@ -253,6 +253,19 @@ export const deleteTeacherService = async (teacherId) => {
     throw new Error("Teacher not found");
   }
 
+   // Extract public_id from URL
+  if (teacher.photo) {
+
+    const publicId = teacher.photo
+      .split("/upload/")[1]
+      .replace(/^v\d+\//, "")
+      .replace(/\.[^/.]+$/, "");
+
+    await cloudinary.uploader.destroy(publicId, {
+      invalidate: true
+    });
+  }
+
   // Delete Teacher Profile
   await Teacher.findByIdAndDelete(teacherId);
 

@@ -99,6 +99,9 @@
     </mat-menu>
 
   </div>
+  
+  <mat-progress-bar *ngIf="loading()" mode="indeterminate">
+    </mat-progress-bar>
 </div>
 
 <!-- ALL TEACHERS -->
@@ -123,7 +126,7 @@
 
         <div class="slot-grid">
           <div class="slot-grid">
-            <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked"
+            <!-- <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked"
               [class.selected-slot]="
       selectedTeacherId === teacher._id &&
       selectedSlotId === slot._id
@@ -131,6 +134,11 @@
 
               {{slot.time}}
 
+            </button> -->
+            <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked"
+              [class.selected-slot]="selectedTeacherId === teacher._id && selectedSlotId === slot._id"
+              (click)="$event.stopPropagation(); selectSlot(teacher._id, slot._id)">
+              {{ slot.time }}
             </button>
           </div>
         </div>
