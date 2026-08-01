@@ -12,6 +12,7 @@
         <label class="field-label">First Name<span class="required-star">*</span></label>
         <div class="field-box">
           <input
+            #firstNameInput
             type="text"
             name="firstName"
             [(ngModel)]="teacher.firstName"
@@ -94,9 +95,9 @@
         class="upload-input-hidden"
       />
 
-      <div class="upload-icon-wrap">
-        <mat-icon class="upload-icon">image</mat-icon>
-      </div>
+       <div class="upload-icon-wrap">
+        <span></span>
+      </div> 
 
       <span class="upload-status" *ngIf="photoFileName">
         <mat-icon class="check-icon">check_circle</mat-icon>
@@ -174,7 +175,7 @@
     <!-- ===== ADDED SLOTS LIST ===== -->
     <div class="added-slots-list" *ngIf="teacher.slots.length > 0">
       <div class="added-slot-item" *ngFor="let slot of teacher.slots; let i = index">
-        <mat-icon class="slot-icon">schedule</mat-icon>
+        <!-- <mat-icon class="slot-icon">schedule</mat-icon> -->
         <span class="slot-text">{{ slot.time }}</span>
         <mat-icon class="remove-slot-icon" (click)="removeSlot(i)">close</mat-icon>
       </div>

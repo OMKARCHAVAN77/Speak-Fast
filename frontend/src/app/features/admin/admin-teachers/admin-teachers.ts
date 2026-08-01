@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { ViewChild, ElementRef } from '@angular/core';
 import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
 
 import { TeacherService, Teacher } from '../../../core/services/teacher.service';
@@ -48,6 +48,7 @@ export class AdminTeachers implements OnInit {
 
   shareTeacherCount = output<any>()
 
+  @ViewChild('firstNameInput') firstNameInput!: ElementRef;
 
   constructor(
     private teacherService: TeacherService,
@@ -135,6 +136,10 @@ export class AdminTeachers implements OnInit {
   openDrawer(): void {
     this.teacherBeingEdited = null;
     this.drawerOpen = true;
+
+     setTimeout(() => {
+    this.firstNameInput?.nativeElement.focus();
+  }, 200);
   }
 
   onDrawerClose(): void {
@@ -143,13 +148,20 @@ export class AdminTeachers implements OnInit {
   }
 
   // delete specific teacher
-async deleteTeacher(id: string): Promise<void> {
+async deleteTeacher(teacher: any): Promise<void> {
 
   const scrollPosition = window.scrollY;
 
+  const teacherName =
+    `${teacher.userId?.firstName || ''} ${teacher.userId?.lastName || ''}`.trim();
+
   const result = await this.alertService.confirm(
     'Are you sure?',
-    'This action cannot be undone. Do you really want to delete Anita Rathod ?',
+    `
+      This action cannot be undone.<br>
+      Do you really want to delete<br>
+      <strong>${teacherName}</strong> ?
+    `,
     'warning',
     'Yes, Delete',
     'Cancel'
@@ -160,7 +172,7 @@ async deleteTeacher(id: string): Promise<void> {
     return;
   }
 
-  this.adminService.deleteSpecificTeacher(id).subscribe({
+  this.adminService.deleteSpecificTeacher(teacher._id).subscribe({
 
     next: () => {
 
@@ -186,67 +198,7 @@ async deleteTeacher(id: string): Promise<void> {
     }
 
   });
-
 }
 
-// async deleteTeacher(id: string, name: string): Promise<void> {
-
-//   const scrollPosition = window.scrollY;
-
-//   const result = await Swal.fire({
-//     icon: undefined,
-//     showClass: { popup: '' },
-//     html: `
-//       <p style="font-size:17px; color:#2b2b2b; line-height:1.5; margin:0;">
-//         This action cannot be undone.<br/>
-//         Do you really want to delete <b>${name}</b> ?
-//       </p>
-//     `,
-//     showCancelButton: true,
-//     confirmButtonText: 'Yes, Delete',
-//     cancelButtonText: 'Cancel',
-//     reverseButtons: false,
-//     buttonsStyling: false,
-//     customClass: {
-//       popup: 'swal-custom-popup',
-//       confirmButton: 'swal-btn-delete',
-//       cancelButton: 'swal-btn-cancel',
-//       actions: 'swal-btn-row'
-//     }
-//   });
-
-//   if (!result.isConfirmed) {
-//     window.scrollTo(0, scrollPosition);
-//     return;
-//   }
-
-//   this.adminService.deleteSpecificTeacher(id).subscribe({
-
-//     next: () => {
-
-//       this.loadTeachers();
-
-//       setTimeout(() => {
-//         window.scrollTo(0, scrollPosition);
-//       }, 0);
-
-//       this.alertService.toastSuccess(
-//         'Teacher deleted successfully.'
-//       );
-
-//     },
-
-//     error: (err: any) => {
-
-//       this.alertService.error(
-//         'Error!',
-//         err.error?.message || 'Something went wrong.'
-//       );
-
-//     }
-
-//   });
-
-// }
 
 }   

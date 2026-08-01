@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
       lowercase: true,
+      trim: true,
     },
 
     password: {
@@ -31,20 +32,21 @@ const userSchema = new mongoose.Schema(
       enum: ["student", "teacher", "admin"],
       default: "student",
     },
+
     resetPasswordToken: {
-    type: String,
-    default: null
-},
+      type: String,
+      default: null,
+    },
 
-resetPasswordExpires: {
-    type: Date,
-    default: null
-},
+    resetPasswordExpires: {
+      type: Date,
+      default: null,
+    },
 
-isPasswordSet: {
-    type: Boolean,
-    default: false
-},
+    isPasswordSet: {
+      type: Boolean,
+      default: false,
+    },
 
     isActive: {
       type: Boolean,
@@ -55,5 +57,8 @@ isPasswordSet: {
     timestamps: true,
   }
 );
+
+// Create index for email
+userSchema.index({ email: 1 });
 
 export default mongoose.model("User", userSchema);
