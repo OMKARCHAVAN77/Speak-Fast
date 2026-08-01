@@ -33,7 +33,7 @@ firstNameInput!: ElementRef<HTMLInputElement>;
 
   photoFile: File | null = null;
   photoFileName: string = '';
-  photoPreview!: null;
+  isDragOver = false;
 
   activeField: 'start' | null = null;
   openDropdownUp = false;
@@ -62,7 +62,7 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     photo: null as File | null,
     googleMeetLink: '',
     startTime: '',
-    slots: [] as BookedSlot[]
+    slots: [] as BookedSlot[],
   };
 
  constructor(
@@ -72,6 +72,9 @@ firstNameInput!: ElementRef<HTMLInputElement>;
 ) {}
 
   ngOnInit(): void {
+  }
+  onBrowseClick(event:Event){
+
   }
 
    ngOnChanges(changes: SimpleChanges): void {
@@ -257,7 +260,33 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    this.setPhoto(file);
+  }
 
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      this.setPhoto(file);
+    }
+  }
+
+  private setPhoto(file: File): void {
     this.photoFile = file;
     this.photoFileName = file.name;
     this.teacher.photo = file;
@@ -265,7 +294,6 @@ firstNameInput!: ElementRef<HTMLInputElement>;
 
   removePhoto(event: Event): void {
     event.stopPropagation();
-    this.photoPreview = null;
     this.photoFile = null;
     this.photoFileName = '';
     this.teacher.photo = null;
