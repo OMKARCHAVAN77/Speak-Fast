@@ -1,6 +1,8 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "./user.model.js";
+import Student from "../student/student.model.js";
+import Teacher from "../teacher/teacher.model.js"
 
 export const registerService = async (body) => {
   const {
@@ -67,3 +69,47 @@ export const loginService = async (email, password) => {
         user
     };
 };
+
+export const checkUserEmailContactService = async (email,contactNumber) => {
+
+     const response = {
+         emailExists: false,
+        contactNumberExists: false
+         };
+
+    // check email
+
+    if(email){
+        const user = await User.findOne({
+            email: email.toLowerCase().trim()
+        });
+
+        if(user){
+               response.emailExists = true;
+        }
+    }
+
+    // check contact
+
+    if(contactNumber) {
+        const studentNum = await Student.findOne({
+             contactNumber: contactNumber.trim()
+        })
+
+       if(studentNum) {
+            response.contactNumberExists = true
+       } 
+
+
+       if(!studentNum) {
+        const teacherNum = await Teacher.findOne({
+            contactNumber:contactNumber.trim()
+        });
+
+        if(teacherNum) {
+             response.contactNumberExists = true
+        }
+       }
+    }
+    return response
+}
