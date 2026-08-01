@@ -138,11 +138,58 @@ export class AdminAllStudents implements OnInit {
   }
 
   // delete specifit student alert
+// async onDelete(student: any): Promise<void> {
+
+//   const result = await this.alertService.confirm(
+//     'Are you sure?',
+//     'Do you really want to delete this student?',
+//     'warning',
+//     'Yes, Delete',
+//     'Cancel'
+//   );
+
+//   // User clicked Cancel or closed the popup
+//   if (!result.isConfirmed) {
+//     return;
+//   }
+
+//   this.adminServ.deleteSpecificStudent(student._id).subscribe({
+
+//     next: () => {
+
+//       this.allStudentList.update(list =>
+//         list.filter(s => s._id !== student._id)
+//       );
+
+//       this.studentLength.set(this.allStudentList().length);
+
+//       this.alertService.success(
+//         'Deleted!',
+//         'Student has been deleted successfully.'
+//       );
+
+//     },
+
+//     error: (err: any) => {
+
+//       this.alertService.error(
+//         'Error!',
+//         err.error?.message || 'Failed to delete student.'
+//       );
+
+//     }
+
+//   });
+
+// }
+
 async onDelete(student: any): Promise<void> {
+
+  const scrollPosition = window.scrollY;
 
   const result = await this.alertService.confirm(
     'Are you sure?',
-    'Do you really want to delete this student?',
+    'This action cannot be undone. Do you really want to delete Anita Rathod ?',
     'warning',
     'Yes, Delete',
     'Cancel'
@@ -150,6 +197,7 @@ async onDelete(student: any): Promise<void> {
 
   // User clicked Cancel or closed the popup
   if (!result.isConfirmed) {
+    window.scrollTo(0, scrollPosition);
     return;
   }
 
@@ -157,15 +205,22 @@ async onDelete(student: any): Promise<void> {
 
     next: () => {
 
+      // Remove deleted student from UI
       this.allStudentList.update(list =>
         list.filter(s => s._id !== student._id)
       );
 
+      // Update total count
       this.studentLength.set(this.allStudentList().length);
 
-      this.alertService.success(
-        'Deleted!',
-        'Student has been deleted successfully.'
+      // Keep current scroll position
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition);
+      }, 0);
+
+      // Bottom Toast
+      this.alertService.toastSuccess(
+        'Student deleted successfully.'
       );
 
     },
@@ -182,6 +237,8 @@ async onDelete(student: any): Promise<void> {
   });
 
 }
+
+
   onEdit(student: any): void {
     console.log(student);
   }
