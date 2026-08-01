@@ -15,11 +15,7 @@ interface BookedSlot {
   templateUrl: './add-teacher-dialog.html',
   styleUrls: ['./add-teacher-dialog.css'],
 })
-<<<<<<< HEAD
-export class AddTeacherDialog {
-=======
 export class AddTeacherDialog implements OnInit,AfterViewInit {
->>>>>>> 0d455fb492811be5ab824a7f5600a90fc98290df
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<void>();
