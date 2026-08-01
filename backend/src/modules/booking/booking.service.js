@@ -600,7 +600,14 @@
 //     console.log("✅ registerAndBookService Completed");
 
     
+import User from "../user/user.model.js";
+import Student from "../student/student.model.js";
+import Teacher from "../teacher/teacher.model.js";
+import Booking from "./booking.model.js";
+import crypto from "crypto";
 
+import { sendStudentMail } from "../../utils/sendStudentInvitation.js";
+import whatsappService from "../whatsapp/whatsapp.service.js";
 
 export const registerAndBookService = async (body) => {
   try {
@@ -759,42 +766,55 @@ export const registerAndBookService = async (body) => {
     // ===============================
     // Send WhatsApp
     // ===============================
+// Send WhatsApp
+// ===============================
 
-    try {
-      await whatsappService.sendStudentMessage({
-        name: `${firstName} ${lastName}`,
-        phone: contactNumber,
-        email,
-        district,
-        qualification,
-        occupation,
-        courseName,
-        coursePrice,
-        teacherName: `${teacher.userId.firstName} ${teacher.userId.lastName}`,
-        slotDate: slot.date,
-        slotTime: slot.time,
-        googleMeetLink: teacher.googleMeetLink
-      });
+const whatsappData = {
+  name: `${firstName} ${lastName}`,
+  phone: contactNumber,
+  email,
+  district,
+  qualification,
+  occupation,
+  courseName,
+  coursePrice,
+  teacherName: `${teacher.userId.firstName} ${teacher.userId.lastName}`,
+  slotDate: slot.date,
+  slotTime: slot.time,
+  googleMeetLink: teacher.googleMeetLink
+};
 
-      await whatsappService.sendTeacherMessage({
-        name: `${firstName} ${lastName}`,
-        phone: contactNumber,
-        email,
-        district,
-        qualification,
-        occupation,
-        courseName,
-        coursePrice,
-        teacherName: `${teacher.userId.firstName} ${teacher.userId.lastName}`,
-        slotDate: slot.date,
-        slotTime: slot.time,
-        googleMeetLink: teacher.googleMeetLink
-      });
 
-    } catch (waError) {
-      console.error("WhatsApp Error:", waError.response?.data || waError.message);
-    }
+// Send Student WhatsApp
 
+try {
+
+  await whatsappService.sendStudentMessage(whatsappData);
+
+} catch (error) {
+
+  console.log(
+    "❌ Student WhatsApp Failed:",
+    error.response?.data || error.message
+  );
+
+}
+
+
+// Send Teacher WhatsApp
+
+try {
+
+  await whatsappService.sendTeacherMessage(whatsappData);
+
+} catch (error) {
+
+  console.log(
+    "❌ Teacher WhatsApp Failed:",
+    error.response?.data || error.message
+  );
+
+}
     return {
       message: "Student registered successfully. Please check your email to set your password.",
       user,
