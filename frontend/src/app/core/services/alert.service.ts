@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import Swal, { SweetAlertResult, SweetAlertIcon } from 'sweetalert2';
+import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AlertService {
 
+  // ==============================
+  // Confirm Alert
+  // ==============================
   confirm(
     title: string,
     text: string,
@@ -24,7 +27,11 @@ export class AlertService {
       confirmButtonText,
       cancelButtonText,
 
-      reverseButtons: true,
+      reverseButtons: false,
+
+      heightAuto: false,
+      returnFocus: false,
+      scrollbarPadding: false,
 
       buttonsStyling: false,
 
@@ -37,6 +44,9 @@ export class AlertService {
 
   }
 
+  // ==============================
+  // Success Popup
+  // ==============================
   success(title: string, text: string) {
 
     return Swal.fire({
@@ -54,6 +64,9 @@ export class AlertService {
 
   }
 
+  // ==============================
+  // Error Popup
+  // ==============================
   error(title: string, text: string) {
 
     return Swal.fire({
@@ -71,6 +84,9 @@ export class AlertService {
 
   }
 
+  // ==============================
+  // Info Popup
+  // ==============================
   info(title: string, text: string) {
 
     return Swal.fire({
@@ -84,6 +100,35 @@ export class AlertService {
         popup: 'custom-popup',
         confirmButton: 'custom-confirm-btn'
       }
+    });
+
+  }
+
+  // ==============================
+  // Success Toast
+  // ==============================
+  toastSuccess(message: string) {
+
+    return Swal.fire({
+
+      toast: true,
+
+      position: 'bottom',
+
+      icon: 'success',
+
+      title: message,
+
+      showConfirmButton: false,
+
+      timer: 3000,
+
+      timerProgressBar: true,
+
+      customClass: {
+        popup: 'custom-toast'
+      }
+
     });
 
   }
