@@ -20,11 +20,11 @@
   </div>
 
 
-  
+
   <!-- Table card -->
   <div class="table-card">
 
-     <mat-progress-bar *ngIf="loading()" mode="indeterminate">
+    <mat-progress-bar *ngIf="loading()" mode="indeterminate">
     </mat-progress-bar>
     <!-- Loading state -->
     <!-- <div class="state-row" *ngIf="loading">
@@ -63,12 +63,10 @@
               <span *ngIf="!teacher.photo" class="avatar">
                 {{ teacher.userId.firstName.charAt(0) }}{{ teacher.userId.lastName.charAt(0) }}
               </span>
-              <span class="name-text"
-                >{{ teacher.userId.firstName }} {{ teacher.userId.lastName }}</span
-              >
+              <span class="name-text">{{ teacher.userId.firstName }} {{ teacher.userId.lastName }}</span>
             </div>
           </td>
- 
+
           <!-- Contact -->
           <td class="col-contact">
             <div class="contact-cell">
@@ -96,14 +94,8 @@
 
           <!-- Class / Meet button -->
           <td class="col-class">
-            <a
-              *ngIf="teacher.googleMeetLink"
-              mat-flat-button
-              class="meet-btn"
-              [href]="teacher.googleMeetLink"
-              target="_blank"
-              rel="noopener"
-            >
+            <a *ngIf="teacher.googleMeetLink" mat-flat-button class="meet-btn" [href]="teacher.googleMeetLink"
+              target="_blank" rel="noopener">
               <mat-icon class="meet-icon">videocam</mat-icon>
               <span>Meet</span>
             </a>
@@ -114,18 +106,11 @@
           <!-- Action -->
           <td class="col-action">
             <div class="action-cell">
-              <button
-                mat-icon-button
-                class="action-btn edit-btn"
-                (click)="onEditTeacher(teacher)"
-              >
+              <button mat-icon-button class="action-btn edit-btn" (click)="onEditTeacher(teacher)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                class="action-btn delete-btn"
-                (click)="deleteTeacher(teacher._id)"
-                >
+              <button mat-icon-button class="action-btn delete-btn" type="button" (mousedown)="$event.preventDefault()"
+                (click)="deleteTeacher(teacher)">
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>
@@ -137,11 +122,7 @@
 
   <!-- Add / Edit Teacher Dialog -->
   <!-- Dialog owns its own backdrop + panel internally, driven by [isOpen] -->
-  <app-add-teacher-dialog
-    *ngIf="drawerOpen"
-    [isOpen]="drawerOpen"
-    (addTeacher)="onTeacherAdded()"
-    (closeDrawer)="onDrawerClose()"
-  >
+  <app-add-teacher-dialog *ngIf="drawerOpen" [isOpen]="drawerOpen" (addTeacher)="onTeacherAdded()"
+    (closeDrawer)="onDrawerClose()">
   </app-add-teacher-dialog>
 </div>

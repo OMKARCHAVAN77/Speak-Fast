@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from '../../../../core/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
-
 interface BookedSlot {
   date: string;
   time: string;
@@ -16,12 +15,19 @@ interface BookedSlot {
   templateUrl: './add-teacher-dialog.html',
   styleUrls: ['./add-teacher-dialog.css'],
 })
+<<<<<<< HEAD
 export class AddTeacherDialog {
+=======
+export class AddTeacherDialog implements OnInit,AfterViewInit {
+>>>>>>> 0d455fb492811be5ab824a7f5600a90fc98290df
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<void>();
 
   @ViewChild('timeDropdownWrapper') timeDropdownWrapper!: ElementRef;
+
+  @ViewChild('firstNameInput')
+firstNameInput!: ElementRef<HTMLInputElement>;
 
 
 
@@ -72,6 +78,12 @@ export class AddTeacherDialog {
   onBrowseClick(event:Event){
 
   }
+
+ ngAfterViewInit(): void {
+  setTimeout(() => {
+    this.firstNameInput?.nativeElement.focus();
+  }, 0);
+}
 
   private setDefaultTime(): void {
     const now = new Date();
@@ -208,6 +220,10 @@ export class AddTeacherDialog {
     date: new Date().toISOString().split('T')[0],
     time: this.teacher.startTime
   });
+   // ✅ Reset dropdown after adding slot
+  this.teacher.startTime = '';
+  this.activeField = null;
+  this.openDropdownUp = false;
   }
 
   removeSlot(index: number): void {

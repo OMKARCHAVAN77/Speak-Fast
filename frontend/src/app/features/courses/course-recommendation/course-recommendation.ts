@@ -97,14 +97,26 @@ constructor(private router: Router, private courseserve : CourseService, private
     }
   ];
 
+  // enroll(plan: Plan): void {
+  //   console.log('Enrolling in', plan.name);
+  //   this.courseserve.setPlan(plan);
+  //   this.studServ.setCourseName(plan.name);
+  //   this.studServ.setCoursePrice((plan.price).toString())
+
+  // this.router.navigate(['/registration']);
+  // }
   enroll(plan: Plan): void {
-    console.log('Enrolling in', plan.name);
-    this.courseserve.setPlan(plan);
-    this.studServ.setCourseName(plan.name);
-    this.studServ.setCoursePrice((plan.price).toString())
+
+  this.studServ.setCourseName(plan.name);
+  this.studServ.setCoursePrice(plan.price.toString());
+
+  console.log("COURSE SAVED:", 
+    this.studServ.getCourseName(),
+    this.studServ.getCoursePrice()
+  );
 
   this.router.navigate(['/registration']);
-  }
+}
 
 
 

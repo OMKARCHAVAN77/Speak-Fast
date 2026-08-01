@@ -13,6 +13,7 @@ export interface TeacherUser {
 }
 
 export interface Teacher {
+name: string;
   _id: string;
   userId: TeacherUser;
   contactNumber: string;
