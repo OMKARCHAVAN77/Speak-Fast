@@ -76,49 +76,7 @@ mat-toolbar,
   color: #ffffff !important;
 }
 
-/* delete teacher alert */
-.custom-popup {
-  border-radius: 16px;
-  padding: 25px;
-}
-
-.custom-title {
-  font-size: 26px;
-  font-weight: 700;
-  color: #222;
-}
-
-.custom-text {
-  font-size: 16px;
-  color: #666;
-}
-
-.custom-confirm-btn {
-  background: #FC2821;
-  color: #fff;
-  border: none;
-  padding: 10px 26px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  margin-left: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.custom-cancel-btn {
-  background: #6e7881;
-  color: #fff;
-  border: none;
-  padding: 10px 26px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  margin-right: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
+/*####### delete teacher alert ########*/
 /* Toast Container */
 #toast-container {
   top: 20px !important;
@@ -142,24 +100,108 @@ mat-toolbar,
   background-image: none !important;
 }
 
+/* DELETE CONFIRM POPUP */
+.custom-delete-popup {
+  max-width: calc(100% - 30px) !important;
+  padding: 24px 30px 30px !important;
+  border-radius: 24px !important;
+  box-sizing: border-box !important;
+}
+
+/* WARNING ICON */
+.custom-delete-icon {
+  width: 58px !important;
+  height: 58px !important;
+  min-width: 58px !important;
+  min-height: 58px !important;
+  margin: 0 auto 14px !important;
+  border-width: 3px !important;
+  box-sizing: border-box !important;
+}
+
+/* ARE YOU SURE TITLE */
+.custom-delete-title {
+  margin: 0 0 12px !important;
+  padding: 0 !important;
+  font-size: 32px !important;
+  line-height: 1.2 !important;
+  font-weight: 600 !important;
+  color: #151b30 !important;
+  text-align: center !important;
+}
+
+/* DELETE MESSAGE */
+.custom-delete-text {
+  margin: 0 auto 24px !important;
+  padding: 0 !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  color: #151b30 !important;
+  text-align: center !important;
+}
+
+/* Teacher Name */
+.custom-delete-text strong {
+  font-weight: 700 !important;
+  color: #151b30 !important;
+}
+
+/* BUTTON WRAPPER */
+.custom-delete-actions {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* COMMON BUTTON */
+.custom-delete-actions button {
+  min-width: 118px !important;
+  height: 42px !important;
+  padding: 8px 20px !important;
+  margin: 0 !important;
+  border-radius: 8px !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  box-sizing: border-box !important;
+}
+
+/* YES DELETE BUTTON */
+.custom-confirm-btn {
+  background: #FC2821 !important;
+  color: #ffffff !important;
+  border: 1px solid #FC2821 !important;
+}
+
+/* CANCEL BUTTON */
+.custom-cancel-btn {
+  background: #ffffff !important;
+  color: #111111 !important;
+  border: 1px solid #111111 !important;
+}
+
+/* BODY / SCROLL */
+body.swal2-height-auto {
+  height: 100% !important;
+}
+
+body.swal2-shown {
+  overflow-y: auto !important;
+  padding-right: 0 !important;
+}
+
+/* SUCCESS TOAST */
 .custom-toast {
   border-radius: 14px !important;
   padding: 16px !important;
   font-size: 15px !important;
 }
 
-body.swal2-height-auto{
-    height:100% !important;
-}
-
-body.swal2-shown{
-    overflow-y:auto !important;
-    padding-right:0 !important;
-}
-
-.swal2-actions {
-  gap: 15px;
-}
+/* #############################################################################*/
 
 /* Success Toast */
 #toast-container > .toast-success {

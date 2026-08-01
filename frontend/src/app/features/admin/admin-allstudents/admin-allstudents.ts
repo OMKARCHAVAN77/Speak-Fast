@@ -138,58 +138,19 @@ export class AdminAllStudents implements OnInit {
   }
 
   // delete specifit student alert
-// async onDelete(student: any): Promise<void> {
-
-//   const result = await this.alertService.confirm(
-//     'Are you sure?',
-//     'Do you really want to delete this student?',
-//     'warning',
-//     'Yes, Delete',
-//     'Cancel'
-//   );
-
-//   // User clicked Cancel or closed the popup
-//   if (!result.isConfirmed) {
-//     return;
-//   }
-
-//   this.adminServ.deleteSpecificStudent(student._id).subscribe({
-
-//     next: () => {
-
-//       this.allStudentList.update(list =>
-//         list.filter(s => s._id !== student._id)
-//       );
-
-//       this.studentLength.set(this.allStudentList().length);
-
-//       this.alertService.success(
-//         'Deleted!',
-//         'Student has been deleted successfully.'
-//       );
-
-//     },
-
-//     error: (err: any) => {
-
-//       this.alertService.error(
-//         'Error!',
-//         err.error?.message || 'Failed to delete student.'
-//       );
-
-//     }
-
-//   });
-
-// }
-
 async onDelete(student: any): Promise<void> {
 
   const scrollPosition = window.scrollY;
 
+  const studentName = `${student.firstName || ''} ${student.lastName || ''}`.trim();
+
   const result = await this.alertService.confirm(
     'Are you sure?',
-    'This action cannot be undone. Do you really want to delete Anita Rathod ?',
+    `
+      This action cannot be undone.<br>
+      Do you really want to delete<br>
+      <strong>${studentName}</strong> ?
+    `,
     'warning',
     'Yes, Delete',
     'Cancel'
@@ -235,7 +196,6 @@ async onDelete(student: any): Promise<void> {
     }
 
   });
-
 }
 
 
