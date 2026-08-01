@@ -98,9 +98,9 @@ const teacherSchema = new mongoose.Schema(
 );
 
 // Indexes
-teacherSchema.index({ userId: 1 });
-teacherSchema.index({ contactNumber: 1 });
-teacherSchema.index({ aadharNo: 1 });
+// teacherSchema.index({ userId: 1 });
+// teacherSchema.index({ contactNumber: 1 });
+// teacherSchema.index({ aadharNo: 1 });
 
 const Teacher = mongoose.model("Teacher", teacherSchema);
 

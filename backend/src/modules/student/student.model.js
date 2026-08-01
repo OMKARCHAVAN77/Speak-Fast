@@ -72,8 +72,8 @@ studentSchema.set("toObject", {
 });
 
 // Indexes
-studentSchema.index({ userId: 1 });
-studentSchema.index({ contactNumber: 1 });
+// studentSchema.index({ userId: 1 });
+// studentSchema.index({ contactNumber: 1 });
 
 const Student = mongoose.model("Student", studentSchema);
 
