@@ -1,11 +1,14 @@
 :host {
   display: block;
-  font-family: 'Quicksand' sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 /* 
 .page-wrap {
   padding: 24px;
 } */
+
+/* delete teacher alert */
+
 
 /* Header */
 .page-header {

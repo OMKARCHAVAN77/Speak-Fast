@@ -27,6 +27,16 @@
   visibility: visible;
 }
 
+@media (max-width: 576px) {
+  .toast {
+    top: 16px;
+    left: 16px;
+    right: 16px;
+    justify-content: center;
+    font-size: 13.5px;
+  }
+}
+
 /* ============ DRAWER ============ */
 .drawer {
   position: fixed;
@@ -217,6 +227,22 @@
   width: 16px;
 }
 
+.remove-photo-icon {
+  color: var(--text-muted);
+  font-size: 15px;
+  height: 15px;
+  width: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.remove-photo-icon:hover {
+  color: #dc2626;
+  background: #fee2e2;
+}
+
 /* ============ ADD TIME SLOT ROW ============ */
 .book-slots-row {
   display: flex;
@@ -228,7 +254,6 @@
 
 .time-chip-wrapper {
   position: relative;
-  flex: 1;
 }
 
 .time-chip {
@@ -239,6 +264,7 @@
   color: var(--text-muted);
   padding: 0 16px;
   height: 54px;
+  width: 137px;
   border: 1.5px solid var(--border-light);
   border-radius: 12px;
   font-size: 15px;
@@ -257,6 +283,7 @@
   font-size: 20px;
   height: 20px;
   width: 20px;
+  margin-left: -6px;
 }
 
 .time-chip:hover {
@@ -272,14 +299,76 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  width: 160px;
-  max-height: 220px;
+  width: 200px;
+  max-height: 260px;
   overflow-y: auto;
   background: #fff;
   border: 1px solid var(--border-light);
   border-radius: 10px;
   box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
   z-index: 1002;
+}
+
+.manual-time-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+}
+
+.manual-time-input {
+  flex: 1;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 12.5px;
+  color: var(--text-dark);
+  outline: none;
+  min-width: 0;
+}
+
+.manual-time-input:focus {
+  border-color: var(--primary-blue);
+}
+
+.manual-time-input::placeholder {
+  color: var(--text-muted);
+}
+
+.manual-time-confirm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-blue);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.manual-time-confirm mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+}
+
+.manual-time-confirm:hover {
+  background: var(--primary-blue-dark);
+}
+
+.manual-time-error {
+  font-size: 11px;
+  color: #dc2626;
+  padding: 4px 8px 0;
 }
 
 .time-slot {
@@ -317,13 +406,13 @@
 .add-slot-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 2px;
   background: var(--primary-blue);
   color: #fff;
   border: none;
   border-radius: 30px;
   height: 54px;
-  padding: 0 26px;
+  padding: 0px 26px 0px 20px;
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
@@ -634,4 +723,30 @@
   .add-slot-btn span {
     display: none;
   }
+}
+.time-chip-wrapper {
+  position: relative;
+}
+
+.time-chip-wrapper {
+  position: relative;
+}
+
+.time-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 200px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.16);
+  z-index: 99999;
+}
+
+.time-dropdown.open-up {
+  top: auto;
+  bottom: calc(100% + 8px);
 }

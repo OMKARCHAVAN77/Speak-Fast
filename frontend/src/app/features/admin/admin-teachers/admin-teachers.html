@@ -19,19 +19,24 @@
     </div>
   </div>
 
+
+  
   <!-- Table card -->
   <div class="table-card">
+
+     <mat-progress-bar *ngIf="loading()" mode="indeterminate">
+    </mat-progress-bar>
     <!-- Loading state -->
-    <div class="state-row" *ngIf="loading">
+    <!-- <div class="state-row" *ngIf="loading">
       <span>Loading teachers…</span>
-    </div>
+    </div> -->
 
     <!-- Empty state -->
-    <div class="state-row" *ngIf="!loading && filteredTeachers.length === 0">
+    <div class="state-row" *ngIf="!loading() && filteredTeachers.length === 0">
       <span>No teachers found.</span>
     </div>
 
-    <table class="student-table" *ngIf="!loading && filteredTeachers.length > 0">
+    <table class="student-table" *ngIf="!loading() && filteredTeachers.length > 0">
       <thead>
         <tr>
           <th class="col-name">
@@ -63,7 +68,7 @@
               >
             </div>
           </td>
-
+ 
           <!-- Contact -->
           <td class="col-contact">
             <div class="contact-cell">
@@ -112,7 +117,6 @@
               <button
                 mat-icon-button
                 class="action-btn edit-btn"
-                matTooltip="Edit"
                 (click)="onEditTeacher(teacher)"
               >
                 <mat-icon>edit</mat-icon>
@@ -120,7 +124,7 @@
               <button
                 mat-icon-button
                 class="action-btn delete-btn"
-                matTooltip="Delete"
+                (click)="deleteTeacher(teacher._id)"
                 >
                 <mat-icon>delete_outline</mat-icon>
               </button>

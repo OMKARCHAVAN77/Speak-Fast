@@ -1,5 +1,6 @@
 <div class="enrollments-wrapper">
 
+
   <!-- Header row -->
   <div class="header-row">
     <div class="title-count">{{ studentLength() }} total enrollments</div>
@@ -7,11 +8,7 @@
     <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
-        <input
-          matInput
-          type="text"
-          placeholder="Search Students..."
-          [(ngModel)]="searchTerm" />
+        <input matInput type="text" placeholder="Search Students..." [(ngModel)]="searchTerm" />
       </mat-form-field>
 
       <button mat-stroked-button class="date-btn" (click)="picker.open()">
@@ -19,12 +16,8 @@
         <span>{{ selectedDate ? (selectedDate | date:'MMM d, y') : 'Select Date' }}</span>
         <mat-icon *ngIf="selectedDate" class="clear-date-icon" (click)="clearDate($event)">close</mat-icon>
 
-        <input
-          [matDatepicker]="picker"
-          [ngModel]="selectedDate"
-          (dateChange)="onDateSelected($event.value)"
-          class="hidden-date-input"
-        />
+        <input [matDatepicker]="picker" [ngModel]="selectedDate" (dateChange)="onDateSelected($event.value)"
+          class="hidden-date-input" />
         <mat-datepicker #picker></mat-datepicker>
       </button>
     </div>
@@ -32,7 +25,12 @@
 
   <!-- Table -->
   <div class="table-card">
+    <mat-progress-bar *ngIf="loading()" mode="indeterminate">
+    </mat-progress-bar>
+
+
     <table class="enrollments-table">
+
       <thead>
         <tr>
           <th class="col-name">
@@ -50,6 +48,8 @@
           <th class="col-action">Action</th>
         </tr>
       </thead>
+      <!-- loader added -->
+
 
       <tbody>
         <tr *ngFor="let student of filteredStudents">
@@ -92,46 +92,15 @@
 
           <!-- Action -->
           <td class="col-action">
-            <ng-container *ngIf="student.status !== 'pending'; else pendingActions">
-              <button
-                mat-icon-button
-                class="edit-btn"
-                aria-label="Edit"
-                (click)="onEdit(student)"
-              >
+            <ng-container *ngIf="student.status !== 'pending'">
+              <button mat-icon-button class="edit-btn" aria-label="Edit" (click)="onEdit(student)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button
-                mat-icon-button
-                class="delete-btn"
-                aria-label="Delete"
-                (click)="onDelete(student)"
-              >
+              <button mat-icon-button class="delete-btn" aria-label="Delete" (click)="onDelete(student)">
                 <mat-icon>delete</mat-icon>
               </button>
             </ng-container>
 
-            <ng-template #pendingActions>
-              <div class="pending-block">
-                <span class="pending-badge">Pending</span>
-                <div class="pending-buttons">
-                  <button
-                    mat-flat-button
-                    class="accept-btn"
-                    (click)="onAccept(student)"
-                  >
-                    Accept
-                  </button>
-                  <button
-                    mat-flat-button
-                    class="reject-btn"
-                    (click)="onDelete(student)"
-                  >
-                    Reject
-                  </button>
-                </div>
-              </div>
-            </ng-template>
           </td>
         </tr>
       </tbody>

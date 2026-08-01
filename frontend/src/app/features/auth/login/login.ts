@@ -1,6 +1,9 @@
+import { AuthSer } from './../../../core/services/auth.service';
+import { environment } from './../../../../environments/environment';
+import { TokenService } from './../../../core/services/token.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormGroup, FormsModule, NgForm, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -10,10 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
-import { environment } from '../../../../environments/environment';
 import { RegistrationValidator } from '../../../core/Validators/regist_validators.validator';
 import { ToastrService } from 'ngx-toastr';
-import { AuthSer } from '../../../core/services/auth.service';
 
 
 
@@ -25,10 +26,11 @@ import { AuthSer } from '../../../core/services/auth.service';
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule, RouterLink, ReactiveFormsModule],
+    providers:[AuthSer],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit {
+export class Login implements OnInit ,AfterViewInit{
 
 
 
@@ -38,6 +40,8 @@ export class Login implements OnInit {
   getRole!:string;
   isLoaderOn=signal<boolean>(false);
 
+  @ViewChild('emailTemplateVar') emailTemp!:ElementRef<HTMLInputElement>
+
 
 loginForm!: FormGroup;
   constructor(
@@ -46,12 +50,18 @@ loginForm!: FormGroup;
     private snackBar: MatSnackBar,
     private fb: FormBuilder,
     private toastr: ToastrService,
+    private tokeServ: TokenService,
+    private authService:AuthSer
   ) {}
 
 
 
   ngOnInit(): void {
       this.formInitializer();
+  }
+
+  ngAfterViewInit(): void {
+      this.emailTemp.nativeElement.focus();
   }
 
   formInitializer(){
@@ -72,43 +82,41 @@ loginForm!: FormGroup;
 
 
 
-  submitData(){
+  submitData():void{
     const{isChecked, ...payload}={...this.loginForm.value }
-    // console.log("inside submi .. ",this.loginForm.value," single value ", isChecked)
-    // console.log("inside submi value .. ",this.loginForm.valid);
+
     if(this.loginForm.valid){
-      // console.log("inside if condition");
       this.isLoaderOn.set(true);
-        this.http.post(`${environment.apiUrl}/user/login`,payload).subscribe({
+        this.authService.checkLogin(payload).subscribe({
           next:(x:any)=>{
             // console.log(x.data.user.role);
             this.getRole=x.data.user.role;
             const tokenValue =x.data.token;
+
             // this.router.navigate('')
             if(isChecked){
-              localStorage.setItem('token', tokenValue );
-              localStorage.setItem('roles', this.getRole );
+
+              this.tokeServ.setLocalStorageTokes(tokenValue,this.getRole);
             }else{
-              sessionStorage.setItem('token', tokenValue );
-              sessionStorage.setItem('roles', this.getRole );
+
+              this.tokeServ.setSessionStorageTokes(tokenValue,this.getRole)
             }
             this.isLoaderOn.set(false);
             this.toastr.success(
               'login successfully!',
               'Success'
             );
-            setTimeout(()=>{
+
 
                   // this.loginForm.reset();
-                  if(this.getRole === 'student'){
-                    this.router.navigate(['/student-achievement'])
-                  }else if(this.getRole === 'teacher'){
-                    this.router.navigate(['/teacherDashbord'])
-                  }else if(this.getRole === 'admin'){
+            if(this.getRole === 'student'){
+              this.router.navigate(['/student-achievement'])
+            }else if(this.getRole === 'teacher'){
+              this.router.navigate(['/teacherDashbord'])
+            }else if(this.getRole === 'admin'){
+              this.router.navigate(['/admin']);
+            }
 
-                    this.router.navigate(['/admin']);
-                  }
-            },1000)
 
           },error:(err:any)=>{
 

@@ -1,3 +1,4 @@
+import { TokenService } from './../../core/services/token.service';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -138,7 +139,7 @@ loadTeachers(): void {
 
 
   timeSlots: string[] = [
-    
+
   '12:00am', '12:15am', '12:30am', '12:45am',
   '01:00am', '01:15am', '01:30am', '01:45am',
   '02:00am', '02:15am', '02:30am', '02:45am',
@@ -164,7 +165,7 @@ loadTeachers(): void {
   '10:00pm', '10:15pm', '10:30pm', '10:45pm',
   '11:00pm', '11:15pm', '11:30pm', '11:45pm'
 ];
- 
+
 
 onDateChange(event: any): void {
 
