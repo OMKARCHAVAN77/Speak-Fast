@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
+import { ViewChild, ElementRef } from '@angular/core';
 import { AddTeacherDialog } from './add-teacher-dialog/add-teacher-dialog';
 
 import { TeacherService, Teacher } from '../../../core/services/teacher.service';
@@ -47,6 +47,7 @@ export class AdminTeachers implements OnInit {
 
   shareTeacherCount = output<any>()
 
+  @ViewChild('firstNameInput') firstNameInput!: ElementRef;
 
   constructor(
     private teacherService: TeacherService,
@@ -134,6 +135,10 @@ export class AdminTeachers implements OnInit {
   openDrawer(): void {
     this.teacherBeingEdited = null;
     this.drawerOpen = true;
+
+     setTimeout(() => {
+    this.firstNameInput?.nativeElement.focus();
+  }, 200);
   }
 
   onDrawerClose(): void {
