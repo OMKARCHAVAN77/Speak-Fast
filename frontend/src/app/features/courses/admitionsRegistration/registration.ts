@@ -87,9 +87,16 @@ export class RegistrationComponent implements OnInit {
 
 
   ngOnInit(): void {
-      this.formInitialization();
 
-  }
+  this.formInitialization();
+
+  console.log(
+    "REGISTRATION RECEIVED:",
+    this.studentServ.getCourseName(),
+    this.studentServ.getCoursePrice()
+  );
+
+}
 
     formInitialization() {
         this.registrationForm = this.fb.group({

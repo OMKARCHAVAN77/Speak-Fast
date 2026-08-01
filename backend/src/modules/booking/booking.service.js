@@ -272,13 +272,20 @@ export const registerAndBookService = async (body) => {
 
     console.log("3️⃣ Finding Teacher...");
 
-    const teacher = await Teacher.findById(teacherId);
+    const teacher = await Teacher.findById(teacherId).populate({
+        path: "userId",
+        select: "firstName lastName email"
+    });
 
     if (!teacher) {
         throw new Error("Teacher not found");
     }
 
     console.log("✅ Teacher Found");
+    console.log("Teacher User:", teacher.userId);
+    console.log("Teacher First Name:", teacher.userId.firstName);
+    console.log("Teacher Last Name:", teacher.userId.lastName);
+    console.log("Google Meet Link:", teacher.googleMeetLink);
 
 
     // ===============================
@@ -369,13 +376,20 @@ export const registerAndBookService = async (body) => {
 
     console.log("8️⃣ Updating Slot...");
 
-    slot.isBooked = true;
-    slot.studentId = student._id;
-
-    await teacher.save();
+    await Teacher.updateOne(
+        {
+            _id: teacherId,
+            "slots._id": slotId
+        },
+        {
+            $set: {
+                "slots.$.isBooked": true,
+                "slots.$.studentId": student._id
+            }
+        }
+    );
 
     console.log("✅ Slot Updated");
-
 
     // ===============================
     // Send WhatsApp Notifications
@@ -388,7 +402,16 @@ export const registerAndBookService = async (body) => {
         await whatsappService.sendStudentMessage({
             name: `${firstName} ${lastName}`,
             phone: contactNumber,
-            email
+            email,
+            district,
+            qualification,
+            occupation,
+            courseName,
+            coursePrice,
+            teacherName: `${teacher.userId.firstName} ${teacher.userId.lastName}`,
+            slotDate: slot.date,
+            slotTime: slot.time,
+            googleMeetLink: teacher.googleMeetLink
         });
 
         console.log("✅ Student WhatsApp Sent");
@@ -399,8 +422,21 @@ export const registerAndBookService = async (body) => {
         await whatsappService.sendTeacherMessage({
             name: `${firstName} ${lastName}`,
             phone: contactNumber,
-            email
+            email,
+            district,
+            qualification,
+            occupation,
+            courseName,
+            coursePrice,
+            teacherName: `${teacher.userId.firstName} ${teacher.userId.lastName}`,
+
+            slotDate: slot.date,
+            slotTime: slot.time,
+
+            googleMeetLink: teacher.googleMeetLink
+
         });
+
 
         console.log("✅ Teacher WhatsApp Sent");
 

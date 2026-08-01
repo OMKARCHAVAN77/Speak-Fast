@@ -109,6 +109,8 @@ class WhatsAppService {
 
     try {
 
+      console.log("📦 Student Payload:", student);
+
       const phone = student.phone.toString().startsWith("91")
         ? student.phone.toString()
         : `91${student.phone}`;
@@ -123,13 +125,29 @@ class WhatsAppService {
           type: "text",
 
           text: {
-            body: `Hello ${student.name},
+            body: `🎉 Hello ${student.name},
 
 Your registration has been completed successfully.
 
-Welcome to Sanket English Academy.
+📚 Course: ${student.courseName}
+💰 Course Fees: ₹${student.coursePrice}
 
-Thank you.`
+👨‍🏫 Teacher: ${student.teacherName}
+
+🗓️ Class Date: ${student.slotDate}
+🕒 Class Time: ${student.slotTime}
+
+📍 District: ${student.district}
+
+🎓 Qualification: ${student.qualification}
+💼 Occupation: ${student.occupation}
+
+🔗 Google Meet Link:
+${student.googleMeetLink}
+
+Thank you for choosing SpeakFast English Academy.
+
+We look forward to helping you improve your English. 😊`
           }
         }
       );
@@ -155,6 +173,11 @@ Thank you.`
 
     try {
 
+      console.log("📦 Teacher Payload:", student);
+      
+      console.log("Teacher Number from env:", env.TEACHER_WHATSAPP_NUMBER);
+      console.log("Phone Number ID:", env.WHATSAPP_PHONE_NUMBER_ID);
+
       const response = await whatsappApi.post(
         `/${env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
         {
@@ -165,11 +188,24 @@ Thank you.`
           type: "text",
 
           text: {
-            body: `New Student Registered
+            body: `📢 New Student Registration
 
-Name: ${student.name}
-Phone: ${student.phone}
-Email: ${student.email}`
+      👤 Name : ${student.name}
+      📞 Phone : ${student.phone}
+      📧 Email : ${student.email}
+
+      📚 Course : ${student.courseName}
+      💰 Fees : ₹${student.coursePrice}
+
+      📅 Slot Date : ${student.slotDate}
+      🕒 Slot Time : ${student.slotTime}
+
+      📍 District : ${student.district}
+      🎓 Qualification : ${student.qualification}
+      💼 Occupation : ${student.occupation}
+
+      🔗 Google Meet :
+      ${student.googleMeetLink}`
           }
         }
       );
