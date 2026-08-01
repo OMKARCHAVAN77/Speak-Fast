@@ -305,6 +305,7 @@
    BOOKING CARD
    ============================================================ */
 .booking-card {
+  padding: 16px 16px 0 16px;
   max-width: 1200px;
   margin: -140px auto 48px;
   background: #fff;
@@ -781,13 +782,8 @@
     
 /* } */
 .selected-slot{
-
-    background:#ff6b35 !important;
-
+    background:#4A84FA !important;
     color:white !important;
-
-    border:2px solid #ff6b35;
-
 }
 
 .slot-chip{

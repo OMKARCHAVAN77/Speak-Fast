@@ -1,5 +1,5 @@
 import { TokenService } from './../../core/services/token.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { TeacherService } from '../../core/services/teacher.service';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentService } from '../../core/services/student.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 interface Slot {
   _id: string;
@@ -38,14 +39,19 @@ interface Teacher {
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMenuModule
+    MatMenuModule,
+    MatProgressBarModule
   ],
   templateUrl: './teachers.html',
   styleUrls: ['./teachers.css']
 })
 export class Teachers implements OnInit {
+  loading = signal(false);
 // Today's date
 selectedDate: Date = new Date();
+
+selectedTeacherId: string | null = null;
+selectedSlotId: string | null = null;
 
 // Disable previous dates
 minDate: Date = new Date();
@@ -81,10 +87,12 @@ constructor(private teacherService: TeacherService, private cdr: ChangeDetectorR
    private router: Router,
   private studServ:StudentService) {}
 loadTeachers(): void {
-
   if (!this.formattedDate) {
+    this.loading.set(false);
     return;
   }
+
+  this.loading.set(true);
 
   console.log('Calling API...');
   console.log(this.formattedDate);
@@ -96,45 +104,37 @@ loadTeachers(): void {
       this.selectedTime || undefined
     )
     .subscribe({
-
       next: (res: any) => {
-
-        console.log("API Response:", res);
+        console.log('API Response:', res);
 
         const teachers = res?.data || [];
 
-        this.teachers = teachers.map((teacher:any)=>({
-
-  ...teacher,
-
-  firstName: teacher.firstName ?? "",
-  lastName: teacher.lastName ?? "",
-  email: teacher.email ?? "",
-
-  slots: teacher.slots ?? []
-
-}));
+        this.teachers = teachers.map((teacher: any) => ({
+          ...teacher,
+          firstName: teacher.firstName ?? '',
+          lastName: teacher.lastName ?? '',
+          email: teacher.email ?? '',
+          slots: teacher.slots ?? []
+        }));
 
         this.showTeachers = this.teachers.length > 0;
-
+        this.loading.set(false);
         this.cdr.detectChanges();
 
-        console.log("Filtered Teachers:", this.teachers);
+        console.log('Filtered Teachers:', this.teachers);
       },
 
       error: (err) => {
-
+        this.loading.set(false);
         this.teachers = [];
         this.showTeachers = false;
 
         console.error(
-          "Failed to load teachers:",
+          'Failed to load teachers:',
           err.error?.message || err.message
         );
       }
-
     });
-
 }
 
 
@@ -195,17 +195,29 @@ onDateChange(event: any): void {
 
   // ---------- ALL TEACHERS ----------
   // selectedTeacherId: string | null = 'sakshi-pable';
-  selectedTeacherId: string | null = null;
-selectedSlotId: string | null = null;
+//   selectedTeacherId: string | null = null;
+// selectedSlotId: string | null = null;
 
-selectSlot(teacherId: string, slotId: string) {
+// selectSlot(teacherId: string, slotId: string) {
 
-  this.selectedTeacherId = teacherId;
-  this.selectedSlotId = slotId;
+//   this.selectedTeacherId = teacherId;
+//   this.selectedSlotId = slotId;
 
-  console.log("Teacher :", teacherId);
-  console.log("Slot :", slotId);
+//   console.log("Teacher :", teacherId);
+//   console.log("Slot :", slotId);
 
+// }
+
+selectSlot(teacherId: string, slotId: string): void {
+  if (this.selectedTeacherId === teacherId && this.selectedSlotId === slotId) {
+    this.selectedTeacherId = null;
+    this.selectedSlotId = null;
+  } else {
+    this.selectedTeacherId = teacherId;
+    this.selectedSlotId = slotId;
+  }
+  console.log("Teacher :", this.selectedTeacherId);
+  console.log("Slot :", this.selectedSlotId);
 }
 
 
