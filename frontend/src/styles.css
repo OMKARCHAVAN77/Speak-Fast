@@ -5,7 +5,8 @@
    font-family: "Quicksand", sans-serif;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   overflow-x: hidden;
 }
@@ -20,10 +21,10 @@ app-root {
   margin: 0;
   padding: 0;
 }
-mat-toolbar, .mat-toolbar {
+mat-toolbar,
+.mat-toolbar {
   width: 100%;
 }
-
 
 .toast-error {
   background-color: #dc2626 !important;
@@ -39,7 +40,6 @@ mat-toolbar, .mat-toolbar {
 .toast-success .mdc-snackbar__label {
   color: white !important;
 }
-
 
 .success-snackbar .mdc-snackbar__surface {
   background-color: #2e7d32 !important;
@@ -67,7 +67,6 @@ mat-toolbar, .mat-toolbar {
   color: #ffffff !important;
 }
 
-
 /* delete teacher alert */
 .custom-popup {
   border-radius: 16px;
@@ -86,7 +85,7 @@ mat-toolbar, .mat-toolbar {
 }
 
 .custom-confirm-btn {
-  background: #28a745;
+  background: #FC2821;
   color: #fff;
   border: none;
   padding: 10px 26px;
@@ -95,15 +94,11 @@ mat-toolbar, .mat-toolbar {
   font-weight: 600;
   margin-left: 10px;
   cursor: pointer;
-  transition: .3s;
-}
-
-.custom-confirm-btn:hover {
-  background: #218838;
+  transition: 0.3s;
 }
 
 .custom-cancel-btn {
-  background: #dc3545;
+  background: #6e7881;
   color: #fff;
   border: none;
   padding: 10px 26px;
@@ -112,10 +107,165 @@ mat-toolbar, .mat-toolbar {
   font-weight: 600;
   margin-right: 10px;
   cursor: pointer;
-  transition: .3s;
+  transition: 0.3s;
 }
 
-.custom-cancel-btn:hover {
-  background: #c82333;
+/* Toast Container */
+#toast-container {
+  top: 20px !important;
+  right: 20px !important;
 }
 
+/* Main Toast */
+#toast-container > .ngx-toastr {
+  position: relative !important;
+  width: 640px !important;
+  min-height: 100px !important;
+  padding: 0 60px 0 95px !important;
+  display: flex;
+  align-items: center;
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+  font-size: 20px;
+  font-weight: 600;
+  background-image: none !important;
+}
+
+.custom-toast {
+  border-radius: 14px !important;
+  padding: 16px !important;
+  font-size: 15px !important;
+}
+
+body.swal2-height-auto{
+    height:100% !important;
+}
+
+body.swal2-shown{
+    overflow-y:auto !important;
+    padding-right:0 !important;
+}
+
+.swal2-actions {
+  gap: 15px;
+}
+
+/* Success Toast */
+#toast-container > .toast-success {
+  border-left: 6px solid #1da879;
+}
+
+/* Success Icon */
+#toast-container > .toast-success::before {
+  content: '✓';
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #1da879;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+/* Error Toast */
+#toast-container > .toast-error {
+  border-left: 6px solid #f0a82f;
+}
+
+/* Error Icon */
+#toast-container > .toast-error::before {
+  content: '✕';
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f0a82f;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* Toast Title */
+.toast-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+/* Toast Message */
+.toast-message {
+  font-size: 17px;
+  font-weight: 500;
+}
+
+/* Close Button Right Side */
+#toast-container > .ngx-toastr .toast-close-button {
+  position: absolute !important;
+
+  right: 18px !important;
+
+  top: 50% !important;
+
+  transform: translateY(-50%) !important;
+
+  color: #999 !important;
+
+  opacity: 1 !important;
+
+  font-size: 28px !important;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+/* Hover Effect */
+#toast-container > .ngx-toastr .toast-close-button:hover {
+  color: #333 !important;
+}
+
+/* Hide Progress Bar */
+.toast-progress {
+  display: none !important;
+}
+
+/* Material Snackbar */
+.toast-error {
+  background-color: #f0a82f !important;
+  color: white !important;
+}
+
+.toast-success {
+  background-color: #1da879 !important;
+  color: white !important;
+}
+
+.toast-error .mdc-snackbar__label,
+.toast-success .mdc-snackbar__label {
+  color: white !important;
+}
+
+#toast-container {
+  z-index: 999999 !important;
+}
+
+.toast-container {
+  z-index: 999999 !important;
+}
