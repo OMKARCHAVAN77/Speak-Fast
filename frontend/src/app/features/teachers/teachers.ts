@@ -209,10 +209,12 @@ selectSlot(teacherId: string, slotId: string) {
 
 
 
-  selectTeacher(id: string): void {
-    this.selectedTeacherId = id;
-
+ selectTeacher(id: string): void {
+  if (this.selectedTeacherId !== id) {
+    this.selectedSlotId = null;   // वेगळा teacher card क्लिक झाला की जुना slot selection clear कर
   }
+  this.selectedTeacherId = id;
+}
 
 bookSeat() {
 
