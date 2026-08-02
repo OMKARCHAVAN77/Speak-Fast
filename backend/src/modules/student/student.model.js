@@ -13,25 +13,32 @@ const studentSchema = new mongoose.Schema(
     contactNumber: {
       type: String,
       required: true,
+      unique: true,
+      trim: true,
     },
 
     district: {
       type: String,
       required: true,
+      trim: true,
     },
 
     qualification: {
       type: String,
       required: true,
+      trim: true,
     },
 
     occupation: {
       type: String,
       required: true,
+      trim: true,
     },
+
     googleMeetLink: {
       type: String,
-      default: ""
+      default: "",
+      trim: true,
     },
 
     assignedTeacher: {
@@ -39,11 +46,11 @@ const studentSchema = new mongoose.Schema(
       ref: "Teacher",
       default: null,
     },
-    
-      isActive: {
+
+    isActive: {
       type: Boolean,
       default: true,
-    }
+    },
   },
   {
     timestamps: true,
@@ -63,6 +70,10 @@ studentSchema.set("toJSON", {
 studentSchema.set("toObject", {
     virtuals: true
 });
+
+// Indexes
+// studentSchema.index({ userId: 1 });
+// studentSchema.index({ contactNumber: 1 });
 
 const Student = mongoose.model("Student", studentSchema);
 

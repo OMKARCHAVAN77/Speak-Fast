@@ -1,75 +1,57 @@
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
-
-    {
-
-        studentId: {
-
-            type: mongoose.Schema.Types.ObjectId,
-
-            ref: "Student",
-
-            required: true
-
-        },
-
-        teacherId: {
-
-            type: mongoose.Schema.Types.ObjectId,
-
-            ref: "Teacher",
-
-            required: true
-
-        },
-
-        slotId: {
-
-            type: mongoose.Schema.Types.ObjectId,
-
-            required: true
-
-        },
-
-        slotTime: {
-            type:String
-        },
-
-        courseName: {
-
-            type: String,
-
-            required: true
-
-        },
-
-        coursePrice: {
-
-            type: Number,
-
-            required: true
-
-        },
-
-        status: {
-
-            type: String,
-
-            enum: ["Booked", "Completed", "Cancelled"],
-
-            default: "Booked"
-
-        }
-
+  {
+    studentId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Student",
+      required: true,
     },
 
-    {
+    teacherId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Teacher",
+      required: true,
+    },
 
-        timestamps: true
+    slotId: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+    },
 
-    }
+    slotTime: {
+      type: String,
+    },
 
+    courseName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    coursePrice: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+
+    status: {
+      type: String,
+      enum: ["Booked", "Completed", "Cancelled"],
+      default: "Booked",
+    },
+  },
+  {
+    timestamps: true,
+  }
 );
 
-export default mongoose.model("Booking", bookingSchema);
+// Indexes
+bookingSchema.index({ studentId: 1 });
+bookingSchema.index({ teacherId: 1 });
+bookingSchema.index({ slotId: 1 });
+bookingSchema.index({ status: 1 });
+
+const Booking = mongoose.model("Booking", bookingSchema);
+
+export default Booking;

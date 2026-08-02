@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,23 +33,16 @@ export interface Plan {
   learnItems: string[];
 }
 
-// export interface Course {
-//   id: number;
-//   name: string;
-//   originalPrice: number;
-//   discount: number;
-//   finalPrice: number;
-// }
 
 @Component({
   selector: 'app-course-recommendation',
-  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule,RouterModule,RouterLink],
+  imports: [CommonModule, MatIconModule, MatButtonModule, MatCardModule, RouterModule, RouterLink],
   templateUrl: './course-recommendation.html',
   styleUrl: './course-recommendation.css',
 })
 export class CourseRecommendation {
 
-constructor(private router: Router, private courseserve : CourseService, private studServ: StudentService){}
+  constructor(private router: Router, private courseserve: CourseService, private studServ: StudentService) { }
 
   plans: Plan[] = [
     {
@@ -104,13 +97,24 @@ constructor(private router: Router, private courseserve : CourseService, private
     }
   ];
 
-  enroll(plan: Plan): void {
-    console.log('Enrolling in', plan.name);
-    this.courseserve.setPlan(plan);
-    this.studServ.setCourseName(plan.name);
-    this.studServ.setCoursePrice((plan.price).toString())
+  // enroll(plan: Plan): void {
+  //   console.log('Enrolling in', plan.name);
+  //   this.courseserve.setPlan(plan);
+  //   this.studServ.setCourseName(plan.name);
+  //   this.studServ.setCoursePrice((plan.price).toString())
 
-  this.router.navigate(['/registration']);
+  // this.router.navigate(['/registration']);
+  // }
+  enroll(plan: Plan): void {
+
+    this.studServ.setCourseName(plan.name);
+    this.studServ.setCoursePrice(plan.price.toString());
+
+    console.log("COURSE SAVED:",
+      this.studServ.getCourseName(),
+      this.studServ.getCoursePrice()
+    );
+    this.router.navigate(['/registration']);
   }
 
 

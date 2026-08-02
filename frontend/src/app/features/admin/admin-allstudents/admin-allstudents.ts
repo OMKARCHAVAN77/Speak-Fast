@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, computed, signal, OnInit, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -28,6 +27,7 @@ import { AlertService } from '../../../core/services/alert.service';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
+     
   ],
   providers: [DatePipe],
   templateUrl: './admin-allstudents.html',
@@ -56,7 +56,7 @@ export class AdminAllStudents implements OnInit {
     this.loading.set(true);
   this.adminServ.getAllStudentsOnAdminDashboard().subscribe({
     next: (res: any) => {
-      // console.log(res)
+      console.log(res)
      const students = res.data.map((student: any) => ({
 
   firstName: student.userId?.firstName ?? "",
@@ -140,9 +140,17 @@ export class AdminAllStudents implements OnInit {
   // delete specifit student alert
 async onDelete(student: any): Promise<void> {
 
+  const scrollPosition = window.scrollY;
+
+  const studentName = `${student.firstName || ''} ${student.lastName || ''}`.trim();
+
   const result = await this.alertService.confirm(
     'Are you sure?',
-    'Do you really want to delete this student?',
+    `
+      This action cannot be undone.<br>
+      Do you really want to delete<br>
+      <strong>${studentName}</strong> ?
+    `,
     'warning',
     'Yes, Delete',
     'Cancel'
@@ -150,6 +158,7 @@ async onDelete(student: any): Promise<void> {
 
   // User clicked Cancel or closed the popup
   if (!result.isConfirmed) {
+    window.scrollTo(0, scrollPosition);
     return;
   }
 
@@ -157,15 +166,22 @@ async onDelete(student: any): Promise<void> {
 
     next: () => {
 
+      // Remove deleted student from UI
       this.allStudentList.update(list =>
         list.filter(s => s._id !== student._id)
       );
 
+      // Update total count
       this.studentLength.set(this.allStudentList().length);
 
-      this.alertService.success(
-        'Deleted!',
-        'Student has been deleted successfully.'
+      // Keep current scroll position
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition);
+      }, 0);
+
+      // Bottom Toast
+      this.alertService.toastSuccess(
+        'Student deleted successfully.'
       );
 
     },
@@ -180,8 +196,9 @@ async onDelete(student: any): Promise<void> {
     }
 
   });
-
 }
+
+
   onEdit(student: any): void {
     console.log(student);
   }

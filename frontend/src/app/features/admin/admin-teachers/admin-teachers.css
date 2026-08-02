@@ -1,6 +1,6 @@
 :host {
   display: block;
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Quicksand', sans-serif;
 }
 /* 
 .page-wrap {
@@ -335,3 +335,4 @@
 .drawer-panel.open {
   right: 0;
 }
+

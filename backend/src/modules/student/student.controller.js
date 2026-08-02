@@ -8,42 +8,6 @@ import {
 
 
 // ==========================================
-// Register Student he logic me booking folder madhe ahe
-// ==========================================
-// export const registerStudent = async (req, res) => {
-
-//     try {
-
-//         const student = await registerStudentService(
-//             req.body
-//         );
-
-//         return res.status(201).json({
-
-//             success: true,
-
-//             message: "Student registered successfully.",
-
-//             data: student
-
-//         });
-
-//     } catch (error) {
-
-//         return res.status(400).json({
-
-//             success: false,
-
-//             message: error.message
-
-//         });
-
-//     }
-
-// };
-
-
-// ==========================================
 // Get All Students
 // ==========================================
 export const getAllStudents = async (req, res) => {

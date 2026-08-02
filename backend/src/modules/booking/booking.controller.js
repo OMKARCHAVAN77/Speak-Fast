@@ -1,30 +1,16 @@
 import {
-
     registerAndBookService
-
 } from "./booking.service.js";
-
-
 
 // ===================================
 // Register Student + Booking
 // ===================================
 
-export const registerAndBook = async (
-
-    req,
-
-    res
-
-) => {
+export const registerAndBook = async (req, res) => {
 
     try {
 
-        const booking = await registerAndBookService(
-
-            req.body
-
-        );
+        const booking = await registerAndBookService(req.body);
 
         return res.status(201).json({
 
@@ -36,9 +22,10 @@ export const registerAndBook = async (
 
         });
 
-    }
+    } catch (error) {
 
-    catch (error) {
+        console.error("❌ Register & Booking Error");
+        console.error(error);
 
         return res.status(400).json({
 

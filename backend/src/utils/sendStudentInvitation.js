@@ -337,7 +337,7 @@ export const sendStudentMail = async (
       }
     );
 
-    console.log("✅ Teacher Invitation Email Sent");
+    console.log("✅ Student Invitation Email Sent");
   } catch (error) {
     console.log("❌ Email Error");
 
