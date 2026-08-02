@@ -171,10 +171,14 @@
 
 /* ---------- Table card ---------- */
 
+.tbody-row{
+  border-top: 2px solid #E0E0E0 ;
+}
+
 .table-card {
   background: #ffffff;
   border-radius: 12px;
-  border: 1px solid #eef0f2;
+  /* border: 1px solid #eef0f2; */
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   overflow-x: auto;
 }
@@ -317,13 +321,12 @@
 .meet-btn {
   display: inline-flex !important;
   align-items: center;
-  gap: 6px;
   background-color: #22a352 !important;
   color: #ffffff !important;
   border-radius: 20px !important;
-  padding: 0 16px !important;
+  padding: 0 14px !important;
   height: 34px;
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 500;
   text-transform: none;
   line-height: 34px;
