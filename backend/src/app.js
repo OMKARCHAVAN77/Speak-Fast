@@ -16,9 +16,10 @@ const app = express();
 // Middlewares
 // ===================================
 
-app.use(cors());
+// app.use(cors());
 const allowedOrigins = [
   "http://localhost:4200",
+  "https://speak-fast.vercel.app",
   process.env.FRONTEND_URL
 ];
 
