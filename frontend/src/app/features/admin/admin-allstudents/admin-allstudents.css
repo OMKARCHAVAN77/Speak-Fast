@@ -34,7 +34,6 @@
 
 .search-field {
   width: 260px;
-  border:none
 }
 
 .search-icon {
@@ -45,6 +44,13 @@
 .filter-icon {
   color: #6b7280;
   cursor: pointer;
+}
+/* search student button */
+.search-field ::ng-deep .mdc-notched-outline__leading,
+.search-field ::ng-deep .mdc-notched-outline__notch,
+.search-field ::ng-deep .mdc-notched-outline__trailing {
+  border-color: #E0E0E0 !important;
+  border-width: 1px !important;
 }
 
 .search-field ::ng-deep .mat-mdc-form-field-subscript-wrapper {
