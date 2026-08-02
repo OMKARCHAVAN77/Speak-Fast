@@ -16,7 +16,7 @@ export class AdminRouteGuard implements CanActivate{
   // const token = localStorage.getItem('token') || sessionStorage.getItem('token');
   // const role = localStorage.getItem('roles') ||  sessionStorage.getItem('roles');
 
-  const token = this.tokenServ.getRoles();
+  const token = this.tokenServ.getToken();
   const role = this.tokenServ.getRoles();
 
   if (token && role === 'admin') {

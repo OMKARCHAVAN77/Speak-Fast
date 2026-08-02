@@ -118,7 +118,7 @@ export class RegistrationComponent implements OnInit,AfterViewInit {
           firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
           lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
           contactNumber: ['',[Validators.required ,RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
-          email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect]],
+          email: ['',[Validators.required,RegistrationValidator.noSpaceValidator,RegistrationValidator.isEmailCorrect], [RegistrationValidator]],
           // password: ['',[Validators.required,RegistrationValidator.password]],
           // confirmPassword: ['',Validators.required],
           district: ['',Validators.required],
