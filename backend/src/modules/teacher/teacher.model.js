@@ -54,11 +54,11 @@ const teacherSchema = new mongoose.Schema(
       trim: true,
     },
 
-    specialization: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // specialization: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
     experience: {
       type: Number,
@@ -66,17 +66,17 @@ const teacherSchema = new mongoose.Schema(
       min: 0,
     },
 
-    qualification: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    // qualification: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
 
-    bio: {
-      type: String,
-      default: "",
-      trim: true,
-    },
+    // bio: {
+    //   type: String,
+    //   default: "",
+    //   trim: true,
+    // },
 
     photo: {
       type: String,
