@@ -12,15 +12,6 @@ import {
 
 const router = express.Router();
 
-
-// ==========================================
-// Student Registration he logic me booking folder madhe ahe
-// ==========================================
-// router.post(
-//     "/register",
-//     registerStudent
-// );
-
 // get all student
 router.get("/",authenticate,authorize("admin"), getAllStudents);
 

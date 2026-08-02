@@ -1,6 +1,7 @@
 import {
   registerService,
   loginService,
+  checkUserEmailContactService
 } from "./user.service.js";
 
 export const register = async (req, res) => {
@@ -47,3 +48,22 @@ export const login = async (req, res) => {
     }
 
 };
+
+export const checkUserEmailContactExits = async (req,res) => {
+  try{
+    const { email, contactNumber } = req.body;
+
+    const result = await checkUserEmailContactService(email, contactNumber);
+
+    return res.status(200).json({
+      success: true,
+      data: result
+    });
+
+  }catch(error){
+      return res.status(400).json({
+        success: false,
+        message: error.message
+      })
+  }
+}

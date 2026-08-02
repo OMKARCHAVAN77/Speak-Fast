@@ -3,64 +3,6 @@ import bcrypt from "bcryptjs";
 import User from "../user/user.model.js";
 import Student from "./student.model.js";
 
-// =======================================
-// Register Student Service he logic me booking folder madhe ahe
-// =======================================
-// export const registerStudentService = async (body) => {
-
-//     const {
-//         firstName,
-//         lastName,
-//         email,
-//         password,
-//         confirmPassword,
-//         contactNumber,
-//         district,
-//         qualification,
-//         occupation
-//     } = body;
-
-//     // Password Match
-//     if (password !== confirmPassword) {
-//         throw new Error("Password and Confirm Password do not match");
-//     }
-
-//     // Check Email Already Exists
-//     const existingUser = await User.findOne({
-//         email: email.toLowerCase()
-//     });
-
-//     if (existingUser) {
-//         throw new Error("Email already registered");
-//     }
-
-//     // Hash Password
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     // Create User
-//     const user = await User.create({
-//         firstName,
-//         lastName,
-//         email: email.toLowerCase(),
-//         password: hashedPassword,
-//         role: "student"
-//     });
-
-//     // Create Student Profile
-//     const student = await Student.create({
-//         userId: user._id,
-//         contactNumber,
-//         district,
-//         qualification,
-//         occupation
-//     });
-
-//     return {
-//         user,
-//         student
-//     };
-// };
-
 
 // ==========================================
 // Get All Students

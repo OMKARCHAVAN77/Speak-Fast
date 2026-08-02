@@ -1,10 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from '../../../../core/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
-
 interface BookedSlot {
   date: string;
   time: string;
@@ -16,12 +15,17 @@ interface BookedSlot {
   templateUrl: './add-teacher-dialog.html',
   styleUrls: ['./add-teacher-dialog.css'],
 })
-export class AddTeacherDialog implements OnInit {
+export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
+  @Input() teacherData: any = null;   // parent kadun edit sathi teacher yeईल
+  isEditMode = false;
   @Input() isOpen = false;
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<void>();
 
   @ViewChild('timeDropdownWrapper') timeDropdownWrapper!: ElementRef;
+
+  @ViewChild('firstNameInput')
+firstNameInput!: ElementRef<HTMLInputElement>;
 
 
 
@@ -29,7 +33,7 @@ export class AddTeacherDialog implements OnInit {
 
   photoFile: File | null = null;
   photoFileName: string = '';
-  photoPreview!: null;
+  isDragOver = false;
 
   activeField: 'start' | null = null;
   openDropdownUp = false;
@@ -58,7 +62,7 @@ export class AddTeacherDialog implements OnInit {
     photo: null as File | null,
     googleMeetLink: '',
     startTime: '',
-    slots: [] as BookedSlot[]
+    slots: [] as BookedSlot[],
   };
 
  constructor(
@@ -69,6 +73,43 @@ export class AddTeacherDialog implements OnInit {
 
   ngOnInit(): void {
   }
+  onBrowseClick(event:Event){
+
+  }
+
+   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['teacherData']) {
+      if (this.teacherData) {
+        this.isEditMode = true;
+        console.log('Received teacherData for editing:', this.teacherData);
+        this.patchTeacherData(this.teacherData);
+      } else {
+        this.isEditMode = false;
+        this.resetForm();
+      }
+    }
+  }
+
+  private patchTeacherData(teacher: any): void {
+    this.teacher = {
+      firstName: teacher.userId?.firstName || '',
+      lastName: teacher.userId?.lastName || '',
+      email: teacher.userId?.email || '',
+      password: teacher.userId?.password || '',
+      role: teacher.userId?.role || 'teacher',
+      contactNumber: teacher.contactNumber || '',
+      aadharNo: teacher.aadharNo || '',
+      photo: teacher.photo || null,
+      googleMeetLink: teacher.googleMeetLink || '',
+      startTime: teacher.startTime || '',
+      slots: teacher.slots ? [...teacher.slots] : [],
+    };
+  }
+ ngAfterViewInit(): void {
+  setTimeout(() => {
+    this.firstNameInput?.nativeElement.focus();
+  }, 0);
+}
 
   private setDefaultTime(): void {
     const now = new Date();
@@ -205,6 +246,10 @@ export class AddTeacherDialog implements OnInit {
     date: new Date().toISOString().split('T')[0],
     time: this.teacher.startTime
   });
+   // ✅ Reset dropdown after adding slot
+  this.teacher.startTime = '';
+  this.activeField = null;
+  this.openDropdownUp = false;
   }
 
   removeSlot(index: number): void {
@@ -215,7 +260,33 @@ export class AddTeacherDialog implements OnInit {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+    this.setPhoto(file);
+  }
 
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragOver = false;
+
+    const file = event.dataTransfer?.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      this.setPhoto(file);
+    }
+  }
+
+  private setPhoto(file: File): void {
     this.photoFile = file;
     this.photoFileName = file.name;
     this.teacher.photo = file;
@@ -223,7 +294,6 @@ export class AddTeacherDialog implements OnInit {
 
   removePhoto(event: Event): void {
     event.stopPropagation();
-    this.photoPreview = null;
     this.photoFile = null;
     this.photoFileName = '';
     this.teacher.photo = null;
@@ -267,9 +337,6 @@ export class AddTeacherDialog implements OnInit {
     this.manualTimeError = '';
     this.setDefaultTime();
   }
-
-
-
   onSubmit(form: NgForm): void {
     this.capitalizeName('firstName');
     this.capitalizeName('lastName');
@@ -290,7 +357,13 @@ export class AddTeacherDialog implements OnInit {
 
     this.isSubmitting = true;
       console.log(this.teacher);
-    this.adminServe.addTeacher(this.teacher).subscribe({
+
+      const apiCall$ = this.isEditMode && this.teacherData
+    ? this.adminServe.updateTeacher(this.teacherData._id, this.teacher)
+    : this.adminServe.addTeacher(this.teacher);
+
+
+    apiCall$.subscribe({
       next: () => {
   this.isSubmitting = false;
 

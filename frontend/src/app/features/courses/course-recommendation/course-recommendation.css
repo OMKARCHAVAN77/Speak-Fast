@@ -6,7 +6,7 @@
 .recommendation-page {
     position: relative;
     overflow: hidden;
-    padding: 64px 48px 96px;
+    padding: 40px 48px 96px;
     background: #ffffff;
 }
 
@@ -44,7 +44,8 @@
     z-index: 1;
     text-align: center;
     max-width: 760px;
-    margin: 0 auto 56px;
+    margin: 0 auto 40px;
+    padding: 0 12px;
 }
 
 .pill-badge {
@@ -55,7 +56,7 @@
     color: #201f45;
     font-size: 14px;
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     background: #ffffff;
 }
 
@@ -63,7 +64,7 @@
     font-size: 48px;
     font-weight: 700;
     color: #14132b;
-    margin: 0 0 12px;
+    margin: 0 0 8px;
     line-height: 1.2;
 }
 
@@ -89,14 +90,7 @@
     gap: 28px;
     max-width: 1320px;
     margin: 0 auto;
-    align-items: start;
-}
-
-@media (max-width: 1100px) {
-    .plans-grid {
-        grid-template-columns: 1fr;
-        max-width: 480px;
-    }
+    align-items: stretch;
 }
 
 /* ---------- Plan card ---------- */
@@ -109,7 +103,9 @@
     border: 1px solid #ececf4;
     box-shadow: 0 10px 30px rgba(20, 19, 43, 0.06);
     background: #ffffff;
-    height: 725px;
+    height: auto;
+    min-height: 725px;
+    box-sizing: border-box;
 }
 
 .plan-card:hover {
@@ -118,18 +114,14 @@
     transform: translateY(-1px) scale(1.02);
     cursor: pointer;
 }
+
 .plan-card {
     border: 2px solid transparent;
-    transition: 
-    transform 0.5s ease,
-    box-shadow 0.5s ease,
-    border-color 0.5s ease;
+    transition:
+        transform 0.5s ease,
+        box-shadow 0.5s ease,
+        border-color 0.5s ease;
 }
-
-/* .plan-card.featured {
-    box-shadow: 0 14px 36px rgba(106, 92, 245, 0.18);
-    transform: translateY(-8px);
-} */
 
 .badge {
     position: absolute;
@@ -149,8 +141,8 @@
 
 .plan-name {
     font-size: 22px;
-    font-weight: 700;
-    color: #14132b;
+    font-weight: 600;
+    color: #0F172A;
     margin: 0 0 10px;
     letter-spacing: 0.3px;
 }
@@ -207,6 +199,7 @@
     font-weight: 700;
     padding: 6px 12px;
     border-radius: 999px;
+    white-space: nowrap;
 }
 
 /* ---------- Info boxes ---------- */
@@ -218,6 +211,7 @@
 
 .info-box {
     flex: 1;
+    min-width: 0;
     border: 1px solid #e6e5ef;
     border-radius: 12px;
     padding: 10px 16px;
@@ -228,7 +222,9 @@
 
 .info-label {
     font-size: 13px;
-    color: #6a6880;
+    color: #0F172A;
+    text-align: center;
+    font-weight: 500;
 }
 
 .info-value {
@@ -237,14 +233,19 @@
     gap: 6px;
     font-size: 15px;
     font-weight: 600;
-    color: #14132b;
+    color: #0F172A;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 auto;
 }
 
 .info-value mat-icon {
     font-size: 18px;
     width: 18px;
     height: 18px;
-    color: #6a6880;
+    color: #334155;
+    flex-shrink: 0;
 }
 
 .info-value.no-icon {
@@ -320,4 +321,165 @@
     font-size: 20px;
     width: 20px;
     height: 20px;
+}
+
+/* =====================================================
+   RESPONSIVE BREAKPOINTS
+   ===================================================== */
+
+/* ---- Large tablets / small laptops (2 columns) ---- */
+@media (max-width: 1180px) {
+    .plans-grid {
+        grid-template-columns: repeat(2, minmax(280px, 1fr));
+        max-width: 900px;
+    }
+
+    .recommendation-page {
+        padding: 56px 32px 80px;
+    }
+}
+
+/* ---- Tablets (single column, comfortable) ---- */
+@media (max-width: 860px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+        gap: 24px;
+    }
+
+    .page-title {
+        font-size: 38px;
+    }
+
+    .page-subtitle {
+        font-size: 16.5px;
+    }
+
+    .bg-books {
+        width: 300px;
+        opacity: 0.6;
+    }
+
+    .plan-card {
+        min-height: 0;
+    }
+}
+
+/* ---- Mobile landscape / large phones ---- */
+@media (max-width: 600px) {
+    .recommendation-page {
+        padding: 48px 20px 64px;
+    }
+
+    .bg-blob {
+        width: 340px;
+        height: 340px;
+        top: -100px;
+        left: -140px;
+    }
+
+    .bg-books {
+        width: 170px;
+        max-width: 42vw;
+        opacity: 0.45;
+    }
+
+    .page-header {
+        margin-bottom: 40px;
+    }
+
+    .page-title {
+        font-size: 30px;
+    }
+
+    .page-subtitle {
+        font-size: 15.5px;
+    }
+
+    .pill-badge {
+        font-size: 13px;
+        padding: 7px 18px;
+    }
+
+    .plans-grid {
+        max-width: 100%;
+        gap: 20px;
+    }
+
+    .plan-card {
+        padding: 56px 20px 24px;
+        border-radius: 16px;
+    }
+
+    .plan-card.featured {
+        padding-top: 56px;
+    }
+
+    .badge {
+        top: 18px;
+        left: 20px;
+    }
+
+    .plan-name {
+        font-size: 20px;
+    }
+
+    .price-current {
+        font-size: 23px;
+    }
+
+    .price-original {
+        font-size: 15px;
+    }
+
+    .info-boxes {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .enroll-btn {
+        height: 48px;
+        font-size: 15px;
+    }
+}
+
+/* ---- Small phones ---- */
+@media (max-width: 380px) {
+    .recommendation-page {
+        padding: 40px 14px 48px;
+    }
+
+    .bg-books {
+        width: 130px;
+        max-width: 38vw;
+        opacity: 0.35;
+    }
+
+    .page-title {
+        font-size: 26px;
+    }
+
+    .plan-card {
+        padding: 48px 16px 20px;
+    }
+
+    .price-row {
+        gap: 8px;
+    }
+
+    .discount-chip {
+        font-size: 11.5px;
+        padding: 5px 10px;
+    }
+}
+
+/* ---- Fine-grained: avoid overlap when browser text scaling is large ---- */
+@media (max-width: 340px) {
+    .page-title {
+        font-size: 22px;
+    }
+
+    .plan-name {
+        font-size: 18px;
+    }
 }

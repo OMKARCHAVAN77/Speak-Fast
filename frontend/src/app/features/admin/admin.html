@@ -1,6 +1,7 @@
 <div class="header-panel">
   <div class="stats-row">
-    <mat-card class="stat-card" *ngFor="let stat of stats()">
+    <mat-card class="stat-card" [class.glass-card]="i >= 2"
+  *ngFor="let stat of stats(); let i = index">
       <div class="icon-tile" [style.background]="stat.iconGradient">
         <mat-icon>{{ stat.icon }}</mat-icon>
       </div>

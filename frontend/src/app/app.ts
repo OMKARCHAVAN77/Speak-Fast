@@ -26,22 +26,22 @@ export class App implements OnInit {
   isNavbarOn=signal<boolean>(true);
   hideUrls: string[]=["/login","/setpassword","/forgotPassword/resetpassword","/forgotPassword/sentLink","/forgotPassword/confirmPassword","/forgotPassword/passwordChanged"]
 
-  constructor(private actRout: ActivatedRoute, private route: Router){}
+  constructor(private actRout: ActivatedRoute, private route: Router) { }
 
   ngOnInit(): void {
-      console.log("router url is ",this.actRout.snapshot.url)
-this.route.events
-  .pipe(filter(event => event instanceof NavigationEnd))
-  .subscribe((event: NavigationEnd) => {
-    const url = event.urlAfterRedirects;
+    console.log("router url is ", this.actRout.snapshot.url)
+    this.route.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const url = event.urlAfterRedirects;
 
-    const hideNavbar =
-      // url === '/' ||
-      url === '/login' ||
-      url.startsWith('/forgotPassword');
+        const hideNavbar =
+          // url === '/' ||
+          url === '/login' ||
+          url.startsWith('/forgotPassword');
 
-    this.isNavbarOn.set(!hideNavbar);
-  });
+        this.isNavbarOn.set(!hideNavbar);
+      });
 
 
 

@@ -45,6 +45,7 @@
             End <mat-icon class="sort-icon">unfold_more</mat-icon>
           </th>
           <th class="col-slot">Time Slot</th>
+          <th class="col-action">Class</th>
           <th class="col-action">Action</th>
         </tr>
       </thead>
@@ -54,7 +55,7 @@
       <tbody>
         <tr *ngFor="let student of filteredStudents">
           <!-- Name -->
-          <td class="col-name">
+          <td class="col-name" data-label="Name">
             <div class="name-cell">
               <div class="avatar">
                 {{ (student.firstName?.charAt(0) || '') + (student.lastName?.charAt(0) || '') }}
@@ -64,7 +65,7 @@
           </td>
 
           <!-- Contact -->
-          <td class="col-contact">
+          <td class="col-contact" data-label="Contact">
             <div class="contact-line">
               <mat-icon class="contact-icon">mail</mat-icon>
               <span>{{ student.email }}</span>
@@ -76,32 +77,51 @@
           </td>
 
           <!-- Plan -->
-          <td class="col-plan">
+          <td class="col-plan" data-label="Plan">
             <div class="plan-name">{{ student.plan }}</div>
             <div class="plan-teacher">with {{ student.teacher }}</div>
           </td>
 
           <!-- Enrolled -->
-          <td class="col-date">{{ student.enrolledDate }}</td>
+          <td class="col-date" data-label="Enrolled">{{ student.enrolledDate }}</td>
 
           <!-- End -->
-          <td class="col-date">{{ student.endDate }}</td>
+          <td class="col-date" data-label="End">{{ student.endDate }}</td>
 
           <!-- Time Slot -->
-          <td class="col-slot">{{ student.timeSlot }}</td>
+          <td class="col-slot" data-label="Time Slot">{{ student.timeSlot }}</td>
+
+            <!-- Class / Meet button -->
+          <td class="col-class" data-label="Class">
+            <a
+              *ngIf="student.googleMeetLink"
+              mat-flat-button
+              class="meet-btn"
+              [href]="student.googleMeetLink"
+              target="_blank"
+              rel="noopener"
+            >
+              <mat-icon class="meet-icon">videocam</mat-icon>
+              <span>Meet</span>
+            </a>
+
+            <span *ngIf="!student.googleMeetLink" class="no-meet"> — </span>
+          </td>
 
           <!-- Action -->
-          <td class="col-action">
+          <td class="col-action" data-label="Action">
             <ng-container *ngIf="student.status !== 'pending'">
               <button mat-icon-button class="edit-btn" aria-label="Edit" (click)="onEdit(student)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button class="delete-btn" aria-label="Delete" (click)="onDelete(student)">
+              <button mat-icon-button class="delete-btn" aria-label="Delete" type="" (click)="onDelete(student)">
                 <mat-icon>delete</mat-icon>
               </button>
             </ng-container>
 
           </td>
+
+           
         </tr>
       </tbody>
     </table>

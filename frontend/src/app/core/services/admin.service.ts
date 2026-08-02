@@ -76,6 +76,10 @@ export class AdminService {
     );
   }
 
+  updateTeacher(id: string, data: any): Observable<any> {
+  return this.http.put(`${environment.apiUrl}/admin/teachers/${id}`, data);
+}
+
 
   // ====================== Delete specific Teacher ============================
   deleteSpecificTeacher( id: any){
