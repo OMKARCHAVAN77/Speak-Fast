@@ -48,3 +48,4 @@ export const routes: Routes = [
     { path: 'setpassword', component: SetPassword },
     { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
+  
