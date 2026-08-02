@@ -31,22 +31,35 @@
 }
 
 /* ============================================================
-   TOP BACKGROUND WRAPPER (full-bleed circle + centered content)
+   TOP BACKGROUND WRAPPER
    ============================================================ */
 .top-bg-wrapper {
   position: relative;
   width: 100%;
-  overflow: hidden;
 }
 
-/* Full-bleed decorative circle — touches the page's right edge */
+.top-bg-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1298px;
+  margin: 0 auto;
+  overflow: hidden;      /* circle आता इथे confined — दोन्ही sections cover होतील */
+}
+
+/* ---------- CENTERED HERO ---------- */
+.hero-centered {
+  position: relative;
+  padding: 23px 27px 0px;
+  text-align: center;
+  /* overflow: hidden इथून काढलं */
+}
+
 .top-bg-circle {
   position: absolute;
-  top: -40px;
-  right: 0;
-  width: 900px;
-  height: 480px;
-  max-width: 45vw;
+  top: -60px;
+  right: -20px;
+  width: clamp(180px, 26vw, 420px);
+  height: clamp(180px, 26vw, 420px);
   background-image: url('../../../assets/Group1.png');
   background-repeat: no-repeat;
   background-position: right center;
@@ -55,21 +68,9 @@
   pointer-events: none;
 }
 
-/* Actual content stays centered within max-width, on top of the circle */
-.top-bg-inner {
+.pill-badge {
   position: relative;
   z-index: 1;
-  max-width: 1298px;
-  margin: 0 auto;
-}
-
-/* ---------- CENTERED HERO ---------- */
-.hero-centered {
-  padding: 40px 32px 20px;
-  text-align: center;
-}
-
-.pill-badge {
   border: 1.5px solid var(--brand-purple);
   color: var(--brand-purple);
   background: #fff;
@@ -80,6 +81,8 @@
   cursor: default;
 }
 .hero-title-centered {
+  position: relative;
+  z-index: 1;
   font-size: 30px;
   font-weight: 800;
   margin: 14px 0 0;
@@ -88,18 +91,17 @@
   color: var(--brand-blue-text);
 }
 
-/* ============================================================
-   BOOKING CARD
-   ============================================================ */
+/* booking-card ला z-index:4 आधीच आहे, त्यामुळे card वरच राहील, circle फक्त पाठीमागे दिसेल */
 .booking-card {
-  max-width: 1136px;      /* हा आकडा कमी-जास्त करून width adjust कर */
+  position: relative;
+  z-index: 4;
+  max-width: 1195px;
   margin: 24px auto 32px;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
-
 .booking-title {
   font-size: 18px;
   font-weight: 700;
@@ -257,13 +259,13 @@
 .all-teachers {
   max-width: 1298px;
   margin: 0 auto 40px;
-  padding: 0 32px;
+  padding: 0 47px;
 }
 
 .section-title {
   font-size: 20px;
   font-weight: 800;
-  margin: 0 46 20px;
+  margin: 0 16px 20px;
   color: var(--ink);
 }
 
@@ -369,9 +371,9 @@
   cursor: not-allowed;
 }
 .selected-slot {
-  background: #ff6b35 !important;
+  background: var(--brand-blue-text) !important;   /* #4c5fe0 — orange ऐवजी solid blue */
   color: #fff !important;
-  border: 2px solid #ff6b35;
+  border: 2px solid var(--brand-blue-text);
 }
 
 .book-btn {
@@ -380,9 +382,9 @@
   flex-shrink: 0;
   margin-top: auto;
   border: none;
-  border-radius: 999px;
-  background: #f1f1f6;
-  color: #b4b4c2;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #4a5ae0, #7b3fe4);   /* darker, richer blue→purple */
+  color: #fff;
   font-family: 'Quicksand', sans-serif;
   font-size: 13px;
   font-weight: 700;
@@ -390,13 +392,13 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  cursor: not-allowed;
+  cursor: pointer;
   transition: all 0.15s ease;
 }
-.book-btn:not(:disabled) {
-  background: linear-gradient(90deg, var(--brand-blue-text), var(--brand-purple));
-  color: #fff;
-  cursor: pointer;
+.book-btn:disabled {
+  background: #f1f1f6;
+  color: #b4b4c2;
+  cursor: not-allowed;
 }
 .book-btn:not(:disabled):hover {
   filter: brightness(1.05);
@@ -441,7 +443,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4F8DFE, #7A4DFF);
+  background: linear-gradient(135deg, #6a2fd0, #5c26c4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -471,16 +473,31 @@
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
+  .top-bg-circle {
+    width: clamp(140px, 32vw, 280px);
+    height: clamp(140px, 32vw, 280px);
+    top: -40px;
+  }
   .teacher-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .booking-card {
+    max-width: 92%;
   }
 }
 
 @media (max-width: 560px) {
+  .top-bg-circle {
+    opacity: 0.6;
+    width: 40vw;
+    height: 40vw;
+    top: -30px;
+  }
   .hero-title-centered {
     font-size: 26px;
   }
   .booking-card {
+    max-width: 100%;
     padding: 20px;
     border-radius: 16px;
   }
@@ -503,5 +520,18 @@
   }
   .request-btn {
     width: 100%;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 400px) {
+  .top-bg-circle {
+    display: none;
+  }
+  .hero-centered {
+    padding: 28px 16px 16px;
+  }
+  .booking-card {
+    padding: 16px;
   }
 }
