@@ -91,12 +91,14 @@
         </div>
       </div>
 
-      <button class="book-btn" type="button"
-        [disabled]="!(selectedTeacherId === teacher._id && selectedSlotId)"
-        (click)="bookSeat(); $event.stopPropagation()">
-        <mat-icon class="book-icon">add</mat-icon>
-        Book Seat
-      </button>
+   <button class="book-btn"
+  [class.slot-chosen]="selectedTeacherId === teacher._id && selectedSlotId"
+  [disabled]="!(selectedTeacherId === teacher._id && selectedSlotId)"
+  type="button"
+  (click)="bookSeat(); $event.stopPropagation()">
+  <mat-icon class="book-icon">add</mat-icon>
+  Book Seat
+</button>
     </div>
   </div>
 </section>
