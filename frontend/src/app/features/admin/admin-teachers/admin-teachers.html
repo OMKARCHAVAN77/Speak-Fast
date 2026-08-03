@@ -85,9 +85,16 @@
           <td class="col-aadhar">{{ teacher.aadharNo || '-' }}</td>
 
           <!-- Time Slot -->
-          <td class="col-timeslot">
+          <!-- <td class="col-timeslot">
             <div class="timeslot-cell">
               <span *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
+              <span *ngIf="!teacher.slots.length">-</span>
+            </div>
+          </td> -->
+
+          <td class="col-timeslot">
+            <div class="timeslot-cell">
+              <span class="slot-badge" *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
               <span *ngIf="!teacher.slots.length">-</span>
             </div>
           </td>
@@ -122,7 +129,7 @@
 
   <!-- Add / Edit Teacher Dialog -->
   <!-- Dialog owns its own backdrop + panel internally, driven by [isOpen] -->
-  <app-add-teacher-dialog *ngIf="drawerOpen" [teacherData]="teacherBeingEdited" [isOpen]="drawerOpen" (addTeacher)="onTeacherAdded()"
-    (closeDrawer)="onDrawerClose()">
+  <app-add-teacher-dialog *ngIf="drawerOpen" [teacherData]="teacherBeingEdited" [isOpen]="drawerOpen"
+    (addTeacher)="onTeacherAdded()" (closeDrawer)="onDrawerClose()">
   </app-add-teacher-dialog>
 </div>

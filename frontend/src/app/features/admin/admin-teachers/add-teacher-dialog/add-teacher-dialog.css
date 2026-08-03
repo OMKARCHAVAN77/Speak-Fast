@@ -11,7 +11,7 @@
 
 /* ============ BACKDROP ============ */
 .backdrop {
-  position: fixed;
+  position: fixed; 
   inset: 0;
   background: rgba(20, 20, 30, 0.45);
   backdrop-filter: blur(4px);
