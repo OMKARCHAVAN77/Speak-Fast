@@ -1,3 +1,4 @@
+import { SetPassword } from './features/teachers/set-password/set-password';
 import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Route, Router, RouterOutlet } from '@angular/router';
 import { Navbar } from './core/layout/navbar/navbar';
@@ -22,8 +23,8 @@ import { CommonModule } from '@angular/common';
 export class App implements OnInit {
   protected readonly title = signal('frontend');
   // isNavbarOn: boolean= true;
-  isNavbarOn = signal<boolean>(true);
-  hideUrls: string[] = ["/login", "/forgotPassword/resetpassword", "/forgotPassword/sentLink", "/forgotPassword/confirmPassword", "/forgotPassword/passwordChanged"]
+  isNavbarOn=signal<boolean>(true);
+  hideUrls: string[]=["/login","/setpassword","/forgotPassword/resetpassword","/forgotPassword/sentLink","/forgotPassword/confirmPassword","/forgotPassword/passwordChanged"]
 
   constructor(private actRout: ActivatedRoute, private route: Router) { }
 

@@ -139,25 +139,11 @@
         *ngIf="activeField === 'start'"
         (click)="$event.stopPropagation()"
           >
-          <!-- <div class="manual-time-row">
-            <input
-              type="text"
-              name="manualTimeInput"
-              class="manual-time-input"
-              [(ngModel)]="manualTimeInput"
-              placeholder="Select Time"
-              (keyup.enter)="confirmManualTime()"
-            />
-            <button type="button" class="manual-time-confirm" (click)="confirmManualTime()">
-              <mat-icon>check</mat-icon>
-            </button>
-          </div>
-          <div class="manual-time-error" *ngIf="manualTimeError">{{ manualTimeError }}</div> -->
 
           <div
             class="time-slot"
             *ngFor="let slot of timeSlots"
-            [class.selected]="slot === teacher.startTime"
+            [class.selected]="slot === teacher.startTime "
             (click)="selectTime('start', slot)"
           >
             {{ slot }}
@@ -184,11 +170,6 @@
 
     <!-- ===== SUBMIT ERROR ===== -->
     <div class="slot-error" *ngIf="submitError">{{ submitError }}</div>
-
-    <!-- <button type="submit" class="submit-btn" [disabled]="isSubmitting">
-      <mat-icon class="btn-icon">{{ isSubmitting ? 'hourglass_empty' : 'add' }}</mat-icon>
-      {{ isSubmitting ? 'Adding...' : 'Add Teacher' }}
-    </button> -->
     <button type="submit" class="submit-btn" [disabled]="isSubmitting">
   {{ isSubmitting ? (isEditMode ? 'Updating...' : 'Adding...') : (isEditMode ? 'Update Teacher' : 'Add Teacher') }}
 </button>

@@ -1,3 +1,5 @@
+import { contactNumberExists } from './../../../core/Validators/contactNumberExist.Validator';
+import { isEmailExist } from './../../../core/Validators/emailExist.validator';
 import { RouterLink } from '@angular/router';
 import { OCCUPATIONS, QUALIFICATIONS, } from '../../../core/Shared-common-list/registration-dummy-data';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
@@ -82,7 +84,10 @@ export class RegistrationComponent implements OnInit, AfterViewInit {
   @ViewChild('firstNameInp') firstNameInp!: ElementRef<HTMLInputElement>;
 
   isLoaderOn = signal<boolean>(false);
-  constructor(private fb: FormBuilder, private studentServ: StudentService, private http: HttpClient, private toastr: ToastrService, private route: Router) {
+  constructor(private fb: FormBuilder, private studentServ: StudentService,
+               private http: HttpClient, private toastr: ToastrService,
+               private route: Router,private emailExistService: isEmailExist,
+               private contactNumberService: contactNumberExists ) {
 
   }
 
@@ -118,20 +123,26 @@ setFirstLetterUpper(): void {
 ngAfterViewInit(): void {
   this.firstNameInp.nativeElement.focus();
 }
-  
 
 
-  formInitialization() {
-    this.registrationForm = this.fb.group({
-      firstName: ['', [Validators.required, RegistrationValidator.noSpaceValidator]],
-      lastName: ['', [Validators.required, RegistrationValidator.noSpaceValidator]],
-      contactNumber: ['', [Validators.required, RegistrationValidator.noSpaceValidator, RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]],
-      email: ['', [Validators.required, RegistrationValidator.noSpaceValidator, RegistrationValidator.isEmailCorrect]],
-      // password: ['',[Validators.required,RegistrationValidator.password]],
-      // confirmPassword: ['',Validators.required],
-      district: ['', Validators.required],
-      qualification: ['', Validators.required],
-      occupation: ['', Validators.required]
+
+    formInitialization() {
+        this.registrationForm = this.fb.group({
+          firstName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          lastName: ['',[Validators.required,RegistrationValidator.noSpaceValidator]],
+          contactNumber: ['',
+                            [Validators.required ,RegistrationValidator.noSpaceValidator,
+                            RegistrationValidator.mobileNumber, RegistrationValidator.numberOnly]
+                            , [this.contactNumberService.contactNumberExists()]],
+          email: ['',
+            [Validators.required,RegistrationValidator.noSpaceValidator,
+              RegistrationValidator.isEmailCorrect],
+             [this.emailExistService.emailExists()]],
+          // password: ['',[Validators.required,RegistrationValidator.password]],
+          // confirmPassword: ['',Validators.required],
+          district: ['',Validators.required],
+          qualification: ['',Validators.required],
+          occupation: ['',Validators.required]
 
     },
       {
@@ -271,7 +282,7 @@ ngAfterViewInit(): void {
           this.isLoaderOn.set(false);
           this.toastr.success(
             'User registered successfully!',
-            'Success'
+            
           );
           this.registrationForm.reset();
           this.route.navigate(['payment']);
@@ -282,7 +293,7 @@ ngAfterViewInit(): void {
 
           this.toastr.error(
             'Registration failed!',
-            'Error'
+            
           );
         }
       })

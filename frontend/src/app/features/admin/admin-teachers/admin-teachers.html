@@ -9,7 +9,7 @@
     <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
-        <input matInput type="text" placeholder="Search Teachers..." [(ngModel)]="searchTerm" />
+        <input matInput type="text" placeholder="Search Teachers..." [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
       </mat-form-field>
 
       <button mat-flat-button class="add-btn" (click)="openDrawer()">
@@ -55,7 +55,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let teacher of filteredTeachers">
+        <tr *ngFor="let teacher of paginatedTeachers">
           <!-- Name + Avatar -->
           <td class="col-name">
             <div class="name-cell">
@@ -85,9 +85,16 @@
           <td class="col-aadhar">{{ teacher.aadharNo || '-' }}</td>
 
           <!-- Time Slot -->
-          <td class="col-timeslot">
+          <!-- <td class="col-timeslot">
             <div class="timeslot-cell">
               <span *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
+              <span *ngIf="!teacher.slots.length">-</span>
+            </div>
+          </td> -->
+
+          <td class="col-timeslot">
+            <div class="timeslot-cell">
+              <span class="slot-badge" *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
               <span *ngIf="!teacher.slots.length">-</span>
             </div>
           </td>
@@ -120,9 +127,31 @@
     </table>
   </div>
 
+   <!-- Pagination -->
+    <div class="pagination-bar" *ngIf="!loading() && filteredTeachers.length > 0">
+      <button mat-icon-button class="page-arrow" [disabled]="currentPage() === 1" (click)="prevPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <ng-container *ngFor="let page of pageNumbers">
+        <span *ngIf="page === '...'" class="page-ellipsis">...</span>
+        <button
+          *ngIf="page !== '...'"
+          class="page-number"
+          [class.active]="page === currentPage()"
+          (click)="goToPage(page)">
+          {{ page }}
+        </button>
+      </ng-container>
+
+      <button mat-icon-button class="page-arrow" [disabled]="currentPage() === totalPages" (click)="nextPage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
   <!-- Add / Edit Teacher Dialog -->
   <!-- Dialog owns its own backdrop + panel internally, driven by [isOpen] -->
-  <app-add-teacher-dialog *ngIf="drawerOpen" [teacherData]="teacherBeingEdited" [isOpen]="drawerOpen" (addTeacher)="onTeacherAdded()"
-    (closeDrawer)="onDrawerClose()">
+  <app-add-teacher-dialog *ngIf="drawerOpen" [teacherData]="teacherBeingEdited" [isOpen]="drawerOpen"
+    (addTeacher)="onTeacherAdded()" (closeDrawer)="onDrawerClose()">
   </app-add-teacher-dialog>
 </div>
