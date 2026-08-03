@@ -55,10 +55,6 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     role:'teacher',
     contactNumber: '',
     aadharNo: '',
-    // specialization: '',
-    // experience: '',
-    // qulification : '',
-    // bio:'',
     photo: null as File | null,
     googleMeetLink: '',
     startTime: '',
@@ -320,10 +316,6 @@ firstNameInput!: ElementRef<HTMLInputElement>;
       role: 'teacher',
       contactNumber: '',
       aadharNo: '',
-      // specialization: '',
-      // experience: '',
-      // qulification: '',
-      // bio: '',
       photo: null as File | null,
       googleMeetLink: '',
       startTime: '',
@@ -335,7 +327,7 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     this.submitError = '';
     this.manualTimeInput = '';
     this.manualTimeError = '';
-    this.setDefaultTime();
+
   }
   onSubmit(form: NgForm): void {
     this.capitalizeName('firstName');
