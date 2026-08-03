@@ -6,13 +6,33 @@
 
 }
 
-.top-banner{
+.top-banner {
+    position: relative;
     width: 100%;
-    height: 220px;               /* Adjust as needed */
-    background-image: url('../../../../assets/student-registration-banner.png');
+    height: 220px;
+    background-image: url('../../../../assets/registrationBackgroundImage.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.top-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.5); /* White overlay */
+}
+
+.top-banner h1,
+.top-banner p {
+    position: relative;
+    z-index: 1;
 }
 
 h1{
@@ -27,6 +47,7 @@ h1{
 
 .top-banner h1 span{
           background:linear-gradient(90.47deg, #4687FB 0%, #9050E0 100%);
+
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -269,6 +290,7 @@ padding-left: 16px;
 font-family: Quicksand;
 font-weight: 600;
 font-style: SemiBold;
+background-color: #FFFFFF;
 font-size: 18px;
 line-height: 100%;
 letter-spacing: 0%;

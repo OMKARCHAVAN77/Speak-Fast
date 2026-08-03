@@ -14,7 +14,7 @@ import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, RouterLink } from '@angular/router';
 import { RegistrationValidator } from '../../../core/Validators/regist_validators.validator';
-import { ToastrService } from 'ngx-toastr';
+import { provideToastr, ToastrService } from 'ngx-toastr';
 
 
 
@@ -26,7 +26,7 @@ import { ToastrService } from 'ngx-toastr';
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule, RouterLink, ReactiveFormsModule],
-    providers:[AuthSer],
+    providers:[AuthSer,],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -68,7 +68,7 @@ loginForm!: FormGroup;
     this.loginForm= this.fb.group({
       email: ['',[Validators.required,RegistrationValidator.isEmailCorrect]],
       password:['',[Validators.required]],
-        isChecked:[false]
+      isChecked:[false]
     })
   }
 
@@ -106,6 +106,8 @@ loginForm!: FormGroup;
               'login successfully!',
               'Success'
             );
+
+
 
 
                   // this.loginForm.reset();
