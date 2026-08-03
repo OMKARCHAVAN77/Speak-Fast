@@ -282,7 +282,7 @@ ngAfterViewInit(): void {
           this.isLoaderOn.set(false);
           this.toastr.success(
             'User registered successfully!',
-            'Success'
+            
           );
           this.registrationForm.reset();
           this.route.navigate(['payment']);
@@ -293,7 +293,7 @@ ngAfterViewInit(): void {
 
           this.toastr.error(
             'Registration failed!',
-            'Error'
+            
           );
         }
       })

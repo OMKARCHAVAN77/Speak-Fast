@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAnimations(),
    provideToastr({
-  positionClass: 'toast-bottom-left',
+  positionClass: 'toast-bottom-center',
   timeOut: 2000,
   progressBar: false,
   closeButton: true,

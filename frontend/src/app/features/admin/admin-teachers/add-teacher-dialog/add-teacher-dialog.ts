@@ -372,7 +372,7 @@ firstNameInput!: ElementRef<HTMLInputElement>;
   this.toastr.success(
     'New teacher added successfully.',"",{
       timeOut: 3000,
-      positionClass: 'toast-top-right'
+      positionClass: 'toast-bottom-center'
     }
   );
 
