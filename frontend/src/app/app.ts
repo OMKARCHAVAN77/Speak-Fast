@@ -41,6 +41,13 @@ export class App implements OnInit {
           url.startsWith('/forgotPassword');
 
         this.isNavbarOn.set(!hideNavbar);
+
+        // 👇 scroll-to-top fix (zoneless timing issue)
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            window.scrollTo(0, 0);
+          });
+        });
       });
 
 
@@ -48,5 +55,3 @@ export class App implements OnInit {
   }
 
 }
-
-
