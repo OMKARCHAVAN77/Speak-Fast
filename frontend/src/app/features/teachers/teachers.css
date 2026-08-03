@@ -385,7 +385,7 @@
    After a slot is selected (.slot-chosen): gradient, clickable. */
 .book-btn {
   width: 100%;
-  max-width: 283px;
+  max-width: 290px;
   align-self: flex-end;   /* center ऐवजी उजवीकडे */
   padding: 0 24px;
   height: 42px;
