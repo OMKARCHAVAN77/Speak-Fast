@@ -13,13 +13,13 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes,),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     provideAnimations(),
-    provideToastr({
-      positionClass: 'toast-top-right',
-      timeOut: 2000,
-      progressBar: false,
-      closeButton: true,
-      preventDuplicates: true,
-      tapToDismiss: true,
-    }),
+   provideToastr({
+  positionClass: 'toast-bottom-left',
+  timeOut: 2000,
+  progressBar: false,
+  closeButton: true,
+  preventDuplicates: true,
+  tapToDismiss: true,
+}),
   ]
 };
