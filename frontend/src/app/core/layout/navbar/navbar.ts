@@ -47,26 +47,8 @@ export class Navbar implements OnInit {
       const role = this.tokenServ.getRoles();
       const token= this.tokenServ.getToken();
 
-      // console.log(role,"token is -- ",token);
-
-      // console.log("value of status",!!token);
       this.isLoggedin.set(!!token);
 
-      // console.log("value of login",this.isLoggedin())
-
-      // if(this.isLoggedin()){
-      //         this.route.events
-      //   .pipe(filter(event => event instanceof NavigationEnd))
-      //   .subscribe((event: NavigationEnd) => {
-      //     const url = event.urlAfterRedirects;
-      //     console.log(url)
-      //     const hideNavbar =
-      //       url === '/' ||
-      //       url === '/teachers'
-
-      //     this.isTeachersOn.set(hideNavbar);
-      //   });
-      // }
   }
 
 
@@ -80,7 +62,7 @@ export class Navbar implements OnInit {
 
       this.toaster.success(
         'You have been logged out successfully.',
-        'Success'
+        
       );
 
 

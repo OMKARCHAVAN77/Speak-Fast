@@ -69,24 +69,27 @@ mat-toolbar,
 
 /*####### delete teacher alert ########*/
 /* Toast Container */
-#toast-container {
-  top: 20px !important;
-  right: 20px !important;
+/* Toast Container */
+#toast-container.toast-bottom-center {
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: 20px !important;
+  transform: translateX(-50%) !important;
 }
-
 /* Main Toast */
 #toast-container > .ngx-toastr {
   position: relative !important;
-  width: 640px !important;
-  min-height: 100px !important;
-  padding: 0 60px 0 95px !important;
+  width: 400px !important;
+  min-height: 60px !important;
+  padding: 12px 45px 12px 60px !important;
   display: flex;
   align-items: center;
-  border-radius: 20px !important;
+  border-radius: 12px !important;
   background: #ffffff !important;
   color: #1e293b !important;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
-  font-size: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  font-size: 15px !important;
   font-weight: 600;
   background-image: none !important;
 }
@@ -203,18 +206,18 @@ body.swal2-shown {
 #toast-container > .toast-success::before {
   content: '✓';
   position: absolute;
-  left: 24px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #1da879;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 18px;
   font-weight: bold;
 }
 
@@ -227,54 +230,45 @@ body.swal2-shown {
 #toast-container > .toast-error::before {
   content: '✕';
   position: absolute;
-  left: 24px;
+  left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: #f0a82f;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 18px;
   font-weight: bold;
 }
 
 /* Toast Title */
 .toast-title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 /* Toast Message */
 .toast-message {
-  font-size: 17px;
+  font-size: 14px;
   font-weight: 500;
 }
 
 /* Close Button Right Side */
 #toast-container > .ngx-toastr .toast-close-button {
   position: absolute !important;
-
-  right: 18px !important;
-
+  right: 12px !important;
   top: 50% !important;
-
   transform: translateY(-50%) !important;
-
   color: #999 !important;
-
   opacity: 1 !important;
-
-  font-size: 28px !important;
-
+  font-size: 20px !important;
   font-weight: 400;
-
   line-height: 1;
-
   cursor: pointer;
 }
 
