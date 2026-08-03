@@ -1,10 +1,12 @@
 import axios from "axios";
-import env from "./env.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const whatsappApi = axios.create({
-  baseURL: `https://graph.facebook.com/${env.WHATSAPP_API_VERSION}`,
+  baseURL: `https://graph.facebook.com/${process.env.WHATSAPP_API_VERSION}`,
   headers: {
-    Authorization: `Bearer ${env.WHATSAPP_ACCESS_TOKEN}`,
+    Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
     "Content-Type": "application/json",
   },
 });
