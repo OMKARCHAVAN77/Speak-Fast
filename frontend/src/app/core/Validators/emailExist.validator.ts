@@ -21,7 +21,8 @@ import {
 })
 export class isEmailExist {
 
-  private http = inject(HttpClient);
+  // private http = inject(HttpClient);
+  constructor(private http: HttpClient){}
 
   emailExists(): AsyncValidatorFn {
 
@@ -31,20 +32,26 @@ export class isEmailExist {
         return of(null);
       }
 
-     return timer(500).pipe(
-      switchMap(() =>
-        this.http.post<{ exists: boolean }>(
-          'http://localhost:3000/api/user/check-userMailContactExits',
-          {
-            email: control.value
-          }
-        )
-      ),
-      map(response =>
-        response.exists ? { emailExists: true } : null
-      ),
-      catchError(() => of(null))
-    );
+      return timer(500).pipe(
+        switchMap(() =>
+          this.http.post<{
+            success: boolean;
+            data: {
+              emailExists: boolean;
+              contactNumberExists: boolean;
+            };
+          }>(
+            'http://localhost:3000/api/user/check-userMailContactExits',
+            {
+              email: control.value
+            }
+          )
+        ),
+        map(response =>
+          response.data.emailExists ? { emailExists: true } : null
+        ),
+        catchError(() => of(null))
+      );
     };
   }
 }

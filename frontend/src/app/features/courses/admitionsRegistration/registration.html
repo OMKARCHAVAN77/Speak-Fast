@@ -1,28 +1,53 @@
-<div class="registration-page" >
+<div class="registration-page">
 
   <div class="top-banner  d-flex flex-column justify-content-center align-items-center">
     <h1> Complete<span> your registration </span> </h1>
     <p>Just one more step to start your English learning journey!</p>
   </div>
 
-  <div class="container form-section" >
+  <div class="container form-section">
     <!-- Your cards and registration form -->
-    <div class="row cards-section"  >
+    <div class="row cards-section">
       <div class="col-lg-6 mb-4">
         <div class="left-card">
           <!-- Left Content -->
-          <div class="feature-card mb-4">
+          <div class=" mb-4">
             <div class="d-flex align-items-center">
-              <div class="icon-box">
-                <img src="../../../../assets/trophy-first_icon.com.png" alt="">
+              <div class="w-100" >
+                <img src="../../../../assets/SpeakFastAwarded.png" alt="" style="width: 100%;border-radius: 14px;">
               </div>
-              <p class="mb-0 ms-3">
+
+              <div class="w-100 mx-2"  >
+
+                              <h2 style="font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 16px;
+margin-bottom: 8px;
+color: #0F172A;
+" >Pune’s Absolute Best in Spoken English Classes</h2>
+
+                <p style="font-family: Quicksand;
+      font-weight: 500;
+      font-style: Medium;
+      font-size: 12px;
+        line-height: 100%;
+        letter-spacing: 0%;
+      color: #0F172A;
+      text-align: left;
+" >
+                  Proudly awarded "The Best English Language Training Institute in Pune" from actress Vaani Kapoor for our commitment to student fluency and career transformation.
+<br> Speaking in English is now easy with our engaging & practical  training. Join our spoken English course today.
+                </p>
+              </div>
+              <!-- <p class="mb-0 ms-3">
                 Awarded as "The best English language training institute in Pune"
-              </p>
+              </p> -->
+
             </div>
           </div>
 
-          <div class="feature-card mb-4">
+          <div class=" mb-4" >
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/learning-student_svgrepo.com (1).png" alt="">
@@ -31,16 +56,16 @@
             </div>
           </div>
 
-          <div class="feature-card mb-4">
+          <!-- <div class=" mb-4">
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/reading-student_icon.png" alt="">
               </div>
               <p class="mb-0 ms-3">100% Practical Learning</p>
             </div>
-          </div>
+          </div> -->
 
-          <div class="feature-card mb-4">
+          <div class="my-3 pt-3  " style="border-top: 2px solid #F3F3F3 ;" >
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/teacher_icon.png" alt="">
@@ -49,7 +74,7 @@
             </div>
           </div>
 
-          <div class="feature-card">
+          <div class="py-3" style="border-top: 2px solid #F3F3F3 ; border-bottom: 2px solid #F3F3F3; margin-bottom: 30px;">
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/video-call-webcam_icon.png" alt="">
@@ -76,7 +101,7 @@
                   First Name <span>*</span>
                 </label>
                 <input type="text" class="form-control custom-input" placeholder="Type your first name"
-                  formControlName="firstName" #firstNameInp >
+                  formControlName="firstName" #firstNameInp>
                 @if(registrationForm.get('firstName')?.hasError('required') &&
                 registrationForm.get('firstName')?.touched){
                 <small class="text-danger">field is required.</small>
@@ -132,6 +157,17 @@
                   enter number only
                 </small>
                 }
+                @if (registrationForm.get('contactNumber')?.pending) {
+                <small class="text-primary">
+                  Checking contactNumber...
+                </small>
+                }
+
+                @if (registrationForm.get('contactNumber')?.hasError('contactNumberExists')) {
+                <small class="text-danger">
+                  Contact Number already exists.
+                </small>
+                }
 
               </div>
 
@@ -146,8 +182,20 @@
                 @if(registrationForm.get('email')?.hasError('noSpace') && registrationForm.get('email')?.dirty){
                 <small class="text-danger">Spaces are not allowed.</small>
                 }
-                @if(registrationForm.get('email')?.hasError('isEmailCorrect') && registrationForm.get('email')?.touched){
+                @if(registrationForm.get('email')?.hasError('isEmailCorrect') &&
+                registrationForm.get('email')?.touched){
                 <small class="text-danger">Enter your full email id</small>
+                }
+                @if (registrationForm.get('email')?.pending) {
+                <small class="text-primary">
+                  Checking email...
+                </small>
+                }
+
+                @if (registrationForm.get('email')?.hasError('emailExists')) {
+                <small class="text-danger">
+                  Email already exists.
+                </small>
                 }
               </div>
 
@@ -352,14 +400,14 @@
         <div class="buttons d-flex justify-content-between pt-4 w-100">
           <button class="back-button shadow-lg" routerLink="/courses"><i class="bi bi-arrow-left"></i> Back</button>
 
-          <button type="button" class="regi-button shadow-lg " (click)="onSubmit()"    >
+          <button type="button" class="regi-button shadow-lg " (click)="onSubmit()">
             @if (!isLoaderOn()) {
-                Register
-              } @else {
-                <span class="spinner-border spinner-border-sm me-2"></span>
-                Registering...
-              }
-            </button>
+            Register
+            } @else {
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Registering...
+            }
+          </button>
         </div>
 
 
