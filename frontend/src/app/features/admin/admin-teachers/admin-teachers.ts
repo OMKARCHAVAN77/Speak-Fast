@@ -48,6 +48,10 @@ export class AdminTeachers implements OnInit {
 
   shareTeacherCount = output<any>()
 
+  // pagination
+  pageSize = 10;
+  currentPage = signal(1);
+
   @ViewChild('firstNameInput') firstNameInput!: ElementRef;
 
   constructor(
@@ -133,6 +137,57 @@ export class AdminTeachers implements OnInit {
     return this.teachers.length;
   }
 
+  // pagination getters
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredTeachers.length / this.pageSize));
+  }
+
+  get paginatedTeachers(): Teacher[] {
+    const start = (this.currentPage() - 1) * this.pageSize;
+    return this.filteredTeachers.slice(start, start + this.pageSize);
+  }
+
+  get pageNumbers(): (number | string)[] {
+    const total = this.totalPages;
+    const current = this.currentPage();
+    const pages: (number | string)[] = [];
+
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) pages.push(i);
+      return pages;
+    }
+
+    pages.push(1, 2, 3);
+
+    if (current > 4 && current < total - 2) {
+      pages.push('...', current);
+    } else {
+      pages.push('...');
+    }
+
+    pages.push(total - 1, total);
+
+    return pages;
+  }
+
+  goToPage(page: number | string): void {
+    if (typeof page !== 'number') return;
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage.set(page);
+  }
+
+  prevPage(): void {
+    if (this.currentPage() > 1) this.currentPage.set(this.currentPage() - 1);
+  }
+
+  nextPage(): void {
+    if (this.currentPage() < this.totalPages) this.currentPage.set(this.currentPage() + 1);
+  }
+
+  onSearchChange(): void {
+    this.currentPage.set(1);
+  }
+
   openDrawer(): void {
     this.teacherBeingEdited = null;
     this.drawerOpen = true;
@@ -201,4 +256,4 @@ async deleteTeacher(teacher: any): Promise<void> {
 }
 
 
-}   
+}
