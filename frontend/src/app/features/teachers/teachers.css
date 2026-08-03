@@ -31,7 +31,7 @@
 }
 
 /* ============================================================
-   TOP BACKGROUND WRAPPER
+   TOP BACKGROUND WRAPPER (circle covers hero + booking-card)
    ============================================================ */
 .top-bg-wrapper {
   position: relative;
@@ -43,15 +43,7 @@
   z-index: 1;
   max-width: 1298px;
   margin: 0 auto;
-  overflow: hidden;      /* circle आता इथे confined — दोन्ही sections cover होतील */
-}
-
-/* ---------- CENTERED HERO ---------- */
-.hero-centered {
-  position: relative;
-  padding: 23px 27px 0px;
-  text-align: center;
-  /* overflow: hidden इथून काढलं */
+  overflow: hidden;
 }
 
 .top-bg-circle {
@@ -66,6 +58,13 @@
   background-size: contain;
   z-index: 0;
   pointer-events: none;
+}
+
+/* ---------- CENTERED HERO ---------- */
+.hero-centered {
+  position: relative;
+  padding: 20px 14px 20px;
+  text-align: center;
 }
 
 .pill-badge {
@@ -91,17 +90,20 @@
   color: var(--brand-blue-text);
 }
 
-/* booking-card ला z-index:4 आधीच आहे, त्यामुळे card वरच राहील, circle फक्त पाठीमागे दिसेल */
+/* ============================================================
+   BOOKING CARD
+   ============================================================ */
 .booking-card {
   position: relative;
   z-index: 4;
   max-width: 1195px;
-  margin: 24px auto 32px;
+  margin: 0px auto 32px;
   background: #fff;
   border-radius: 24px;
   box-shadow: 0px 6px 24px rgba(0, 0, 0, 0.1);
   padding: 20px;
 }
+
 .booking-title {
   font-size: 18px;
   font-weight: 700;
@@ -258,14 +260,14 @@
    ============================================================ */
 .all-teachers {
   max-width: 1298px;
-  margin: 0 auto 40px;
-  padding: 0 47px;
+  margin: 2px auto 40px;
+  padding: 0 32px;
 }
 
 .section-title {
   font-size: 20px;
   font-weight: 800;
-  margin: 0 16px 20px;
+  margin: -15px 28px 13px;
   color: var(--ink);
 }
 
@@ -370,21 +372,29 @@
   opacity: 0.45;
   cursor: not-allowed;
 }
+
+/* Selected time-slot chip — solid blue */
 .selected-slot {
-  background: var(--brand-blue-text) !important;   /* #4c5fe0 — orange ऐवजी solid blue */
+  background: var(--brand-blue-text) !important;
   color: #fff !important;
   border: 2px solid var(--brand-blue-text);
 }
 
+/* ---------- BOOK SEAT BUTTON ----------
+   Default: white/outline, not clickable.
+   After a slot is selected (.slot-chosen): gradient, clickable. */
 .book-btn {
-  width: 100%;
-  height: 42px;
+  width: auto;
+  min-width: 140px;
+  align-self: center;      /* स्लॉट्सच्या खाली मध्यभागी */
+  padding: 0 24px;
+  height: 38px;             /* थोडं कमी उंचीही */
   flex-shrink: 0;
   margin-top: auto;
-  border: none;
+  border: 1.5px solid var(--border-gray);
   border-radius: 12px;
-  background: linear-gradient(90deg, #4a5ae0, #7b3fe4);   /* darker, richer blue→purple */
-  color: #fff;
+  background: #fff;
+  color: var(--muted);
   font-family: 'Quicksand', sans-serif;
   font-size: 13px;
   font-weight: 700;
@@ -392,22 +402,30 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  cursor: pointer;
+  cursor: not-allowed;
+  pointer-events: none;
   transition: all 0.15s ease;
 }
-.book-btn:disabled {
-  background: #f1f1f6;
-  color: #b4b4c2;
-  cursor: not-allowed;
-}
-.book-btn:not(:disabled):hover {
-  filter: brightness(1.05);
-}
-.book-icon {
+
+.book-btn .book-icon {
   font-size: 16px;
   width: 16px;
   height: 16px;
-  color: inherit;
+  color: var(--muted);
+}
+
+.book-btn.slot-chosen {
+  border: none;
+  background: linear-gradient(90deg, #4a5ae0, #7b3fe4);
+  color: #fff;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.book-btn.slot-chosen .book-icon {
+  color: #fff;
+}
+.book-btn.slot-chosen:hover {
+  filter: brightness(1.05);
 }
 
 /* ===============================
@@ -443,7 +461,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6a2fd0, #5c26c4);
+  background: linear-gradient(135deg, #4F8DFE, #7A4DFF);
   display: flex;
   align-items: center;
   justify-content: center;
