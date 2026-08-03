@@ -2,13 +2,6 @@
   display: block;
   font-family: 'Quicksand', sans-serif;
 }
-/* 
-.page-wrap {
-  padding: 24px;
-} */
-
-/* delete teacher alert */
-
 
 /* Header */
 .page-header {
@@ -174,14 +167,6 @@
 .col-action { width: 12%; text-align: left; }
 
 /* Body rows */
-/* .student-table tbody td {
-  padding: 16px 12px;
-  border-bottom: 1px solid #eef0f3;
-  color: #2b2f38;
-  font-size: 14px;
-  vertical-align: middle;
-} */
-
 .student-table tbody td {
   padding: 16px 12px;
   border-bottom: 1px solid #eef0f3;
@@ -252,14 +237,6 @@
 }
 
 /* Time slot cell */
-/* .timeslot-cell {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 13px;
-  color: #2b2f38;
-} */
-
 .timeslot-cell {
   display: grid;
   grid-template-columns: repeat(2, minmax(60px, auto));
@@ -297,7 +274,6 @@
 }
 
 .meet-btn .meet-icon {
-  /* font-size: 16px; */
   height: 16px;
   width: 16px;
   margin-right: 4px;
