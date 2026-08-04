@@ -212,10 +212,10 @@ color: #475569;
     box-shadow: none;
 }
 
-.custom-input:focus {
+/* .custom-input:focus {
     border-color: #6c63ff;
     box-shadow: 0 0 0 0.15rem rgba(108, 99, 255, 0.15);
-}
+} */
 
 .form-select.custom-input {
     padding-right: 2.5rem;
@@ -297,10 +297,16 @@ letter-spacing: 0%;
 }
 
 input.ng-invalid.ng-dirty,
-input.ng-invalid.ng-touched{
+input.ng-invalid.ng-touched {
     border: 1px solid #dc3545;
   box-shadow: 0 0 8px rgba(220, 53, 69, 0.8);
 }
+
+input.ng-pending{
+  border: 1px solid #e9e039 !important;
+  box-shadow: 0 0 8px rgba(228, 235, 126, 0.8) !important;
+}
+
 
 /* .form-control.ng-valid.ng-touched {
   border-color: #32dc6b !important;
