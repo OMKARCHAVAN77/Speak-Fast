@@ -75,7 +75,7 @@ export class isEmailExist {
               contactNumberExists: boolean;
             };
           }>(
-            'http://localhost:3000/api/user/check-userMailContactExits',
+            `${environment.apiUrl}/user/check-userMailContactExits`,
             {
               email: control.value
             }
