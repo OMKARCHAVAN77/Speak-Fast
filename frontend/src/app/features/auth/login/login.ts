@@ -30,7 +30,7 @@ import { provideToastr, ToastrService } from 'ngx-toastr';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit ,AfterViewInit{
+export class Login implements OnInit {
 
 
 
@@ -40,7 +40,7 @@ export class Login implements OnInit ,AfterViewInit{
   getRole!:string;
   isLoaderOn=signal<boolean>(false);
 
-  @ViewChild('emailTemplateVar') emailTemp!:ElementRef<HTMLInputElement>
+
 
 
 loginForm!: FormGroup;
@@ -60,9 +60,7 @@ loginForm!: FormGroup;
       this.formInitializer();
   }
 
-  ngAfterViewInit(): void {
-      this.emailTemp.nativeElement.focus();
-  }
+
 
   formInitializer(){
     this.loginForm= this.fb.group({
@@ -104,7 +102,7 @@ loginForm!: FormGroup;
             this.isLoaderOn.set(false);
             this.toastr.success(
               'login successfully!',
-              
+
             );
 
 
@@ -126,7 +124,7 @@ loginForm!: FormGroup;
             this.isLoaderOn.set(false);
               this.toastr.error(
                 'login failed!',
-                
+
               );
 
 
