@@ -8,7 +8,7 @@
     <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
-        <input matInput type="text" placeholder="Search Students..." [(ngModel)]="searchTerm" />
+        <input matInput type="text" placeholder="Search Students..." [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
       </mat-form-field>
 
       <button mat-stroked-button class="date-btn" (click)="picker.open()">
@@ -53,7 +53,7 @@
 
 
       <tbody>
-        <tr *ngFor="let student of filteredStudents" class="tbody-row">
+        <tr *ngFor="let student of paginatedStudents" class="tbody-row">
           <!-- Name -->
           <td class="col-name" data-label="Name">
             <div class="name-cell">
@@ -93,14 +93,13 @@
 
             <!-- Class / Meet button -->
           <td class="col-class" data-label="Class">
-            <a
-              *ngIf="student.googleMeetLink"
+            
+            <a *ngIf="student.googleMeetLink"
               mat-flat-button
               class="meet-btn"
               [href]="student.googleMeetLink"
               target="_blank"
-              rel="noopener"
-            >
+              rel="noopener">
               <mat-icon class="meet-icon">videocam</mat-icon>
               <span>Meet</span>
             </a>
@@ -126,4 +125,25 @@
       </tbody>
     </table>
   </div>
+    <!-- Pagination -->
+    <div class="pagination-bar" *ngIf="!loading() && filteredStudents.length > 0">
+      <button mat-icon-button class="page-arrow" [disabled]="currentPage() === 1" (click)="prevPage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+
+      <ng-container *ngFor="let page of pageNumbers">
+        <span *ngIf="page === '...'" class="page-ellipsis">...</span>
+        <button
+          *ngIf="page !== '...'"
+          class="page-number"
+          [class.active]="page === currentPage()"
+          (click)="goToPage(page)">
+          {{ page }}
+        </button>
+      </ng-container>
+
+      <button mat-icon-button class="page-arrow" [disabled]="currentPage() === totalPages" (click)="nextPage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
 </div>

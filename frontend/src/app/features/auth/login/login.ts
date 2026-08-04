@@ -104,7 +104,7 @@ loginForm!: FormGroup;
             this.isLoaderOn.set(false);
             this.toastr.success(
               'login successfully!',
-              'Success'
+              
             );
 
 
@@ -126,7 +126,7 @@ loginForm!: FormGroup;
             this.isLoaderOn.set(false);
               this.toastr.error(
                 'login failed!',
-                'Error'
+                
               );
 
 

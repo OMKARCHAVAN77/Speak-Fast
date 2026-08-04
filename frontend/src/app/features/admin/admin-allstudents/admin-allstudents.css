@@ -229,7 +229,7 @@
   color: #0F172A;
   font-size: 16px;
   font-weight: 600;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 /* ---------- Name column ---------- */
@@ -419,6 +419,60 @@
 .reject-btn {
   background-color: #ef4444 !important;
   color: #fff !important;
+}
+
+/* Pagination */
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px 0 8px;
+}
+
+.page-arrow {
+  width: 34px !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  color: #6b7280;
+}
+
+.page-arrow mat-icon {
+  font-size: 20px;
+  height: 20px;
+  width: 20px;
+}
+
+.page-arrow:disabled {
+  color: #d1d5db;
+}
+
+.page-number {
+  min-width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #4a4f58;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.page-number:hover:not(.active) {
+  background: #f2f3f5;
+}
+
+.page-number.active {
+  background: #1f2329;
+  color: #ffffff;
+}
+
+.page-ellipsis {
+  color: #b7bcc5;
+  font-size: 13px;
+  padding: 0 2px;
 }
 
 /* =====================================================

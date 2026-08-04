@@ -43,6 +43,9 @@ export class AdminAllStudents implements OnInit {
 
   shareTotalCOunt = output<any>()
 
+  // pagination
+  pageSize = 10;
+  currentPage = signal(1);
 
   constructor(private adminServ: AdminService, private datePipe: DatePipe, 
       private alertService: AlertService) { }
@@ -128,13 +131,66 @@ export class AdminAllStudents implements OnInit {
     return result;
   }
 
+  // pagination getters
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredStudents.length / this.pageSize));
+  }
+
+  get paginatedStudents(): any[] {
+    const start = (this.currentPage() - 1) * this.pageSize;
+    return this.filteredStudents.slice(start, start + this.pageSize);
+  }
+
+  get pageNumbers(): (number | string)[] {
+    const total = this.totalPages;
+    const current = this.currentPage();
+    const pages: (number | string)[] = [];
+
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) pages.push(i);
+      return pages;
+    }
+
+    pages.push(1, 2, 3);
+
+    if (current > 4 && current < total - 2) {
+      pages.push('...', current);
+    } else {
+      pages.push('...');
+    }
+
+    pages.push(total - 1, total);
+
+    return [...new Set(pages)];
+  }
+
+  goToPage(page: number | string): void {
+    if (typeof page !== 'number') return;
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage.set(page);
+  }
+
+  prevPage(): void {
+    if (this.currentPage() > 1) this.currentPage.set(this.currentPage() - 1);
+  }
+
+  nextPage(): void {
+    if (this.currentPage() < this.totalPages) this.currentPage.set(this.currentPage() + 1);
+  }
+
+  onSearchChange(): void {
+    this.currentPage.set(1);
+  }
+
   onDateSelected(date: Date | null): void {
     this.selectedDate = date;
+    this.currentPage.set(1);
   }
 
   clearDate(event: Event): void {
     event.stopPropagation();
     this.selectedDate = null;
+    this.currentPage.set(1);
   }
 
   // delete specifit student alert
