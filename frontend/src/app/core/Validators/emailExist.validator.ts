@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { Injectable, inject } from '@angular/core';
 import {
   AbstractControl,
@@ -22,6 +23,7 @@ import {
 export class isEmailExist {
 
   // private http = inject(HttpClient);
+
   constructor(private http: HttpClient){}
 
   emailExists(): AsyncValidatorFn {
@@ -41,7 +43,7 @@ export class isEmailExist {
               contactNumberExists: boolean;
             };
           }>(
-            'http://localhost:3000/api/user/check-userMailContactExits',
+            `${environment.apiUrl}/user/check-userMailContactExits`,
             {
               email: control.value
             }
