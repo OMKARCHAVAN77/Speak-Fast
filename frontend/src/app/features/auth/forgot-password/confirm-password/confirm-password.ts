@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { environment } from '../../../../../environments/environment';
 import { StudentService } from '../../../../core/services/student.service';
+import { RegistrationValidator } from '../../../../core/Validators/regist_validators.validator';
 
 @Component({
   selector: 'app-confirm-password',
@@ -16,11 +17,13 @@ import { StudentService } from '../../../../core/services/student.service';
 export class ConfirmPassword {
 
   showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   token: string | null = null;
-  email: string | null = null;
-  errorMessage = '';
 
-  form: FormGroup;
+
+  isLoaderOn=signal<boolean>(false);
+
+  confirmPasswordForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -28,74 +31,95 @@ export class ConfirmPassword {
     private router: Router,
     private studentService: StudentService
   ) {
-    this.form = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
+    this.confirmPasswordForm = this.fb.group({
+      password: ['',[Validators.required,RegistrationValidator.password]],
+      confirmPassword: ['',[Validators.required,RegistrationValidator.passwordChecking]]
+    },
+     {
+      validators: RegistrationValidator.passwordChecking
     });
   }
 
-  ngOnInit() {
-    this.token = this.route.snapshot.paramMap.get('token'); 
-    // this.token = this.route.snapshot.queryParamMap.get('token');
-    // this.email = this.route.snapshot.queryParamMap.get('email');
-  }
+
 
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
-  //   onSubmit() {
-  //     this.errorMessage = '';
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
-  //     if (this.form.invalid) return;
+  onSubmit(){
 
-  //     const { password, confirmPassword } = this.form.value;
+    if (this.confirmPasswordForm.valid) {
+      console.log(this.confirmPasswordForm.value)
+      this.isLoaderOn.set(true);
 
-  //     if (password !== confirmPassword) {
-  //       this.errorMessage = 'Passwords do not match.';
-  //       return;
-  //     }
+      this.route.paramMap.subscribe(params => {
+        this.token = params.get('token');
 
-  //     this.http.post(`${environment.apiUrl}/students/reset-password`, {
-  //   token: this.token,
-  //   email: this.email,
-  //   newPassword: password,
-  // }).subscribe({
-  //   next: () => {
-  //     this.router.navigate(['/forgotPassword/passwordChanged']);
-  //   },
-  //   error: (err) => {
-  //     this.errorMessage = err?.error?.message || 'Something went wrong. Try again.';
-  //   },
-  // });
-  //   }
+        if (!this.token) {
 
+          this.isLoaderOn.set(false);
+          return;
+        }
 
-onSubmit() {
-    this.errorMessage = '';
-
-    if (this.form.invalid) return;
-
-    const { password, confirmPassword } = this.form.value;
-
-    if (password !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match.';
-      return;
-    }
-
-    if (!this.token) {
-      this.errorMessage = 'Invalid or missing token.';
-      return;
-    }
-
-    this.studentService.resetStudentPassword(this.token, { password, confirmPassword })
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/forgotPassword/passwordChanged']);
-        },
-        error: (err) => {
-          this.errorMessage = err?.error?.message || 'Something went wrong. Try again.';
-        },
+        this.studentService
+          .resetStudentPassword(this.token, this.confirmPasswordForm.value)
+          .subscribe({
+            next: () => {
+              this.isLoaderOn.set(false);
+              this.router.navigate(['/forgotPassword/passwordChanged']);
+            },
+            error: () =>{
+              this.isLoaderOn.set(false);
+            }
+          });
       });
+
+
+    } else {
+      this.confirmPasswordForm.markAllAsTouched();
+    }
+  }
+
+  get password() {
+    return this.confirmPasswordForm.get('password');
+  }
+
+  get passwordValue(): string {
+    return this.password?.value || '';
+  }
+
+  hasMinLength(): boolean {
+    return this.passwordValue.length >= 8;
+  }
+
+  hasUppercase(): boolean {
+    return /(?=.*[A-Z])/.test(this.passwordValue);
+  }
+
+  hasLowercase(): boolean {
+    return /[a-z]/.test(this.passwordValue);
+  }
+
+  hasNumber(): boolean {
+    return /\d/.test(this.passwordValue);
+  }
+
+  hasSpecialChar(): boolean {
+    return /[@$!%*?&#^();"'{}_\-+~=<>?,.]/.test(this.passwordValue);
+  }
+
+
+  isPasswordValid(): boolean {
+    return (
+      this.hasMinLength() &&
+      this.hasUppercase() &&
+      this.hasLowercase() &&
+      this.hasNumber() &&
+      this.hasSpecialChar()
+    );
   }
 }

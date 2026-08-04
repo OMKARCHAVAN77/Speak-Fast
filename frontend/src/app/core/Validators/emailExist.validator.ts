@@ -54,4 +54,36 @@ export class isEmailExist {
       );
     };
   }
+
+
+    emailExistsForgotPass(): AsyncValidatorFn {
+
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+
+      if (!control.value) {
+        return of(null);
+      }
+
+      return timer(500).pipe(
+        switchMap(() =>
+          this.http.post<{
+            success: boolean;
+            data: {
+              emailExists: boolean;
+              contactNumberExists: boolean;
+            };
+          }>(
+            'http://localhost:3000/api/user/check-userMailContactExits',
+            {
+              email: control.value
+            }
+          )
+        ),
+        map(response =>
+          response.data.emailExists ? null : { emailExistsForgotPass: true }
+        ),
+        catchError(() => of(null))
+      );
+    };
+  }
 }

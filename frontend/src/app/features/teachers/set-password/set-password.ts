@@ -15,8 +15,14 @@ import { environment } from '../../../../environments/environment';
 export class SetPassword implements OnInit {
 
   showPassword = false;
+  showPasswordConfirm = false;
+
   togglePassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  togglePasswordConfirm() {
+    this.showPasswordConfirm = !this.showPasswordConfirm;
   }
 
   email: string = '';
@@ -55,6 +61,7 @@ export class SetPassword implements OnInit {
       validators: RegistrationValidator.passwordChecking
     })
   }
+
   onSubmit(): void {
 
     this.isLoading.set(true);
