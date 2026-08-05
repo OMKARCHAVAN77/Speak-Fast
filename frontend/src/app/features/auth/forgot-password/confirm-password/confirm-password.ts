@@ -32,6 +32,7 @@ export class ConfirmPassword {
     private studentService: StudentService
   ) {
     this.confirmPasswordForm = this.fb.group({
+      email: [localStorage.getItem('forgotEmailId')],
       password: ['',[Validators.required,RegistrationValidator.password]],
       confirmPassword: ['',[Validators.required,RegistrationValidator.passwordChecking]]
     },
@@ -52,6 +53,8 @@ export class ConfirmPassword {
 
   onSubmit(){
 
+    const { email , ...Payload} = this.confirmPasswordForm.value;
+
     if (this.confirmPasswordForm.valid) {
       console.log(this.confirmPasswordForm.value)
       this.isLoaderOn.set(true);
@@ -66,12 +69,14 @@ export class ConfirmPassword {
         }
 
         this.studentService
-          .resetStudentPassword(this.token, this.confirmPasswordForm.value)
+          .resetStudentPassword(this.token, Payload)
           .subscribe({
             next: () => {
               this.isLoaderOn.set(false);
-              this.router.navigate(['/forgotPassword/passwordChanged']);
+              localStorage.removeItem('forgotEmailId')
               localStorage.setItem('status','password changed Sccussfully');
+              this.router.navigate(['/forgotPassword/passwordChanged']);
+
             },
             error: () =>{
               this.isLoaderOn.set(false);
