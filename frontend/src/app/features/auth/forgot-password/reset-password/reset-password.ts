@@ -70,7 +70,7 @@ emailFieldVar!: ElementRef<HTMLInputElement>;
           this.isLoaderOn.set(false);
           // this.alertServ.success("Success"," your mail will receive change password link ");
           this.frogotstudentserve.setEmailForgotPass(this.restPasswordForm.get('email')?.value);
-          
+          localStorage.setItem('forgotEmailId',this.restPasswordForm.get('email')?.value)
           this.toster.success("change password link sent on your email")
           this.router.navigate(['/forgotPassword/sentLink']);
         },

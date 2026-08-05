@@ -9,6 +9,7 @@ import { registerAppScopedDispatcher } from '@angular/core/primitives/event-disp
 import { filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { PasswordChanged } from "./features/auth/forgot-password/password-changed/password-changed";
+import { ConfirmPassword } from "./features/auth/forgot-password/confirm-password/confirm-password";
 // import { Teachers } from './features/teachers/teachers';
 // import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 // import { Questions } from './features/grammer/questions/questions';

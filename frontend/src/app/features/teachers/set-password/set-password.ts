@@ -43,17 +43,20 @@ export class SetPassword implements OnInit {
 
 
   ngOnInit(): void {
-    this.initializeForm();
+
       this.route.queryParams.subscribe(params => {
       this.token = params['token'] || '';
       this.email = params['email'] || '';
     });
+
+     this.initializeForm();
   }
 
 
   initializeForm(): void{
 
     this.setPasswordForm = this.fb.group({
+      email: [this.email],
       password: ['',[Validators.required,RegistrationValidator.password]],
       confirmPassword: ['',[Validators.required]]
     },
@@ -65,7 +68,7 @@ export class SetPassword implements OnInit {
   onSubmit(): void {
 
     this.isLoading.set(true);
-    const payload = {...this.setPasswordForm.value};
+    const {email,...payload} = this.setPasswordForm.value;
 
 
 
