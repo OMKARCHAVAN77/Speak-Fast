@@ -18,7 +18,7 @@ import { ConfirmPassword } from "./features/auth/forgot-password/confirm-passwor
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Footer, Navbar, SetPassword, ConfirmPassword],
+  imports: [RouterOutlet, CommonModule, Footer, Navbar],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
