@@ -71,6 +71,7 @@ export class ConfirmPassword {
             next: () => {
               this.isLoaderOn.set(false);
               this.router.navigate(['/forgotPassword/passwordChanged']);
+              localStorage.setItem('status','password changed Sccussfully');
             },
             error: () =>{
               this.isLoaderOn.set(false);

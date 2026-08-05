@@ -60,77 +60,6 @@ emailFieldVar!: ElementRef<HTMLInputElement>;
 
   resetPassword(): void {
 
-    // Email Validation
-  //   if (!this.emailVal || this.emailVal.trim() === "") {
-
-  //     this.snackBar.open(
-  //       "Please enter your registered email.",
-  //       "Close",
-  //       {
-  //         duration: 3000,
-  //         horizontalPosition: "right",
-  //         verticalPosition: "top",
-  //         panelClass: ["error-snackbar"]
-  //       }
-  //     );
-
-  //     return;
-  //   }
-
-  //   const body = {
-  //     email: this.emailVal.trim()
-  //   };
-
-  //   this.frogotstudentserve
-  //     .forgotStudentPassword(body)
-  //     .subscribe({
-
-  //     next: (response: any) => {
-
-  //       console.log("Forgot Password Success", response);
-
-  //       this.snackBar.open(
-  //         response.message || "Password reset link sent successfully.",
-  //         "Close",
-  //         {
-  //           duration: 4000,
-  //           horizontalPosition: "right",
-  //           verticalPosition: "top",
-  //           panelClass: ["success-snackbar"]
-  //         }
-  //       );
-
-  //       setTimeout(() => {
-  //         this.router.navigate(['/fogotPassword/sentLink']);
-  //       }, 4000);
-
-  //     },
-
-  //       error: (err: any) => {
-
-  //         console.log("Forgot Password Error", err);
-
-  //         this.snackBar.open(
-
-  //           err?.error?.message ||
-
-  //           "Unable to send reset password link.",
-
-  //           "Close",
-
-  //           {
-  //             duration: 3000,
-  //             horizontalPosition: "right",
-  //             verticalPosition: "top",
-  //             panelClass: ["error-snackbar"]
-  //           }
-
-  //         );
-
-  //       }
-
-  //     });
-
 
     if(this.restPasswordForm.valid){
         this.isLoaderOn.set(true);
@@ -140,6 +69,8 @@ emailFieldVar!: ElementRef<HTMLInputElement>;
         next: (response: any) => {
           this.isLoaderOn.set(false);
           // this.alertServ.success("Success"," your mail will receive change password link ");
+          this.frogotstudentserve.setEmailForgotPass(this.restPasswordForm.get('email')?.value);
+          
           this.toster.success("change password link sent on your email")
           this.router.navigate(['/forgotPassword/sentLink']);
         },
