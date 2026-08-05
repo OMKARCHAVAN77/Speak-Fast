@@ -8,6 +8,7 @@ import { StudentAchievement } from './features/students/student-achievement/stud
 import { registerAppScopedDispatcher } from '@angular/core/primitives/event-dispatch';
 import { filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { PasswordChanged } from "./features/auth/forgot-password/password-changed/password-changed";
 // import { Teachers } from './features/teachers/teachers';
 // import { GrammerAssignment } from './features/grammer/grammer-assignment/grammer-assignment';
 // import { Questions } from './features/grammer/questions/questions';

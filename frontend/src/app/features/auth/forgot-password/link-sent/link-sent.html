@@ -9,6 +9,6 @@
 <p class="welcome-subtext">Your password reset link may take up to 10 minutes to arrive. If you don't see it shortly, you can also try resending the request..</p>
 
 <div>
-  <a >Re-send request in</a>
+  <a  [class.disabled-link]="isResendDisabled" (click)="resendLink()" (click)="startTimer()" >Re-send request in</a>
   <span>{{time()}}</span>
 </div>
