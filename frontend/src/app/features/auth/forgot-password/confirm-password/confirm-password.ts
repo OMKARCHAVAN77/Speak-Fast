@@ -1,6 +1,7 @@
+import { AlertService } from './../../../../core/services/alert.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, signal } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
@@ -14,13 +15,13 @@ import { RegistrationValidator } from '../../../../core/Validators/regist_valida
   templateUrl: './confirm-password.html',
   styleUrl: './confirm-password.css',
 })
-export class ConfirmPassword {
+export class ConfirmPassword implements OnInit{
 
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
   token: string | null = null;
 
-
+  getMailLocal: string = localStorage.getItem('forgotEmailId') ?? '';
   isLoaderOn=signal<boolean>(false);
 
   confirmPasswordForm!: FormGroup;
@@ -29,10 +30,21 @@ export class ConfirmPassword {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private alertServ: AlertService
   ) {
+
+  }
+
+  ngOnInit(): void {
+
+    this.initalizeForm();
+  }
+
+
+  initalizeForm():void{
     this.confirmPasswordForm = this.fb.group({
-      email: [localStorage.getItem('forgotEmailId')],
+      email: [this.getMailLocal],
       password: ['',[Validators.required,RegistrationValidator.password]],
       confirmPassword: ['',[Validators.required,RegistrationValidator.passwordChecking]]
     },
@@ -40,8 +52,6 @@ export class ConfirmPassword {
       validators: RegistrationValidator.passwordChecking
     });
   }
-
-
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -73,13 +83,15 @@ export class ConfirmPassword {
           .subscribe({
             next: () => {
               this.isLoaderOn.set(false);
-              localStorage.removeItem('forgotEmailId')
+              localStorage.removeItem('forgotEmailId');
               localStorage.setItem('status','password changed Sccussfully');
+              this.alertServ.toasterSuccess('Your password reset successfully')
               this.router.navigate(['/forgotPassword/passwordChanged']);
 
             },
             error: () =>{
               this.isLoaderOn.set(false);
+              this.alertServ.tosterUnsuccess('please try after 2 minutes...')
             }
           });
       });

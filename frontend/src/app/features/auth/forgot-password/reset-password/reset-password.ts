@@ -71,13 +71,14 @@ emailFieldVar!: ElementRef<HTMLInputElement>;
           // this.alertServ.success("Success"," your mail will receive change password link ");
           this.frogotstudentserve.setEmailForgotPass(this.restPasswordForm.get('email')?.value);
           localStorage.setItem('forgotEmailId',this.restPasswordForm.get('email')?.value)
-          this.toster.success("change password link sent on your email")
+          this.alertServ.tosterInfo('Please check you email');
           this.router.navigate(['/forgotPassword/sentLink']);
         },
 
         error: (_error: Error)=>{
                     this.isLoaderOn.set(false);
           // this.alertServ.error("","please try after some time...");
+          this.alertServ.tosterUnsuccess('Try after sometime...!')
         }
       })
 
