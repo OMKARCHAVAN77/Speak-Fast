@@ -23,7 +23,7 @@ export class LinkSent implements OnInit{
   }
 
   ngOnInit(): void {
-      if(localStorage.getItem('status')){
+      if(localStorage.getItem('status') === 'success'){
         localStorage.removeItem('status');
         this.route.navigate(['/login']);
       }
