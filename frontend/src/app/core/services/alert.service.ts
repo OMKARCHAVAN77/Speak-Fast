@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 // import { Injectable } from '@angular/core';
 // import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
 
@@ -147,6 +148,9 @@ import Swal, {
 })
 export class AlertService {
 
+  constructor(private toster: ToastrService){}
+
+
   // ==============================
   // Confirm Alert
   // ==============================
@@ -271,30 +275,43 @@ export class AlertService {
   // ==============================
   // Success Toast
   // ==============================
-  toastSuccess(message: string) {
+  // toastSuccess(message: string) {
 
-    return Swal.fire({
+  //   return Swal.fire({
 
-      toast: true,
+  //     toast: true,
 
-      position: 'bottom',
+  //     position: 'bottom',
 
-      icon: 'success',
+  //     icon: 'success',
 
-      title: message,
+  //     title: message,
 
-      showConfirmButton: false,
+  //     showConfirmButton: false,
 
-      timer: 3000,
+  //     timer: 3000,
 
-      timerProgressBar: true,
+  //     timerProgressBar: true,
 
-      customClass: {
-        popup: 'custom-toast'
-      }
+  //     customClass: {
+  //       popup: 'custom-toast'
+  //     }
 
-    });
+  //   });
 
+  // }
+
+
+  toasterSuccess(message: string){
+    this.toster.success(message)
+  }
+
+  tosterUnsuccess(message: string){
+    this.toster.error(message)
+  }
+
+  tosterInfo(message: string){
+    this.toster.info(message)
   }
 
 }

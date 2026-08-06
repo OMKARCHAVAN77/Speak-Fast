@@ -237,7 +237,7 @@ async deleteTeacher(teacher: any): Promise<void> {
         window.scrollTo(0, scrollPosition);
       }, 0);
 
-      this.alertService.toastSuccess(
+      this.alertService.toasterSuccess(
         'Teacher deleted successfully.'
       );
 

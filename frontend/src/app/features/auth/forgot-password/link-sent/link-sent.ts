@@ -1,3 +1,4 @@
+import { AlertService } from './../../../../core/services/alert.service';
 import { Router } from '@angular/router';
 import { StudentService } from './../../../../core/services/student.service';
 import { CommonModule } from '@angular/common';
@@ -17,7 +18,7 @@ export class LinkSent implements OnInit{
   private totalSeconds = 90;
   isResendDisabled = true;
 
-  constructor(private frogotstudentserve :StudentService, private route: Router) {
+  constructor(private frogotstudentserve :StudentService, private route: Router, private alertServ: AlertService) {
     this.startTimer();
   }
 
@@ -65,14 +66,15 @@ export class LinkSent implements OnInit{
         .forgotStudentPassword(Payload)
         .subscribe({
         next: (response: any) => {
-          console.log("mail sent once again...");
-          // this.alertServ.success("Success"," your mail will receive change password link ");
-          // this.toster.success("change password link sent on your email")
+          console.log("mail sent once again...",Payload);
+
+          this.alertServ.tosterInfo('link sent again on your email');
         },
 
         error: (_error: Error)=>{
                     // this.isLoaderOn.set(false);
           // this.alertServ.error("","please try after some time...");
+          this.alertServ.tosterUnsuccess('try after some time')
         }
       })
   }

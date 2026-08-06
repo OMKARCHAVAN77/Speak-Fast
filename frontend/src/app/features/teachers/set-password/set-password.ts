@@ -1,3 +1,4 @@
+import { AlertService } from './../../../core/services/alert.service';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
@@ -38,7 +39,8 @@ export class SetPassword implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertServ: AlertService
   ) {}
 
 
@@ -79,13 +81,14 @@ export class SetPassword implements OnInit {
         next: (res) => {
         this.isLoading.set(false);
           // this.successMessage = res.message || 'Password set successfully';
-
+            this.alertServ.toasterSuccess('login successful');
             this.router.navigate(['/login']);
 
         },
         error: (err) => {
         this.isLoading.set(false);
           // this.errorMessage = err.error?.message || 'Something went wrong';
+          this.alertServ.tosterUnsuccess('Try after some time');
         }
       });
     }else{
