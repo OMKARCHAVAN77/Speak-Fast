@@ -84,7 +84,7 @@ export class ConfirmPassword implements OnInit{
             next: () => {
               this.isLoaderOn.set(false);
               localStorage.removeItem('forgotEmailId');
-              localStorage.setItem('status','password changed Sccussfully');
+              localStorage.setItem('status', 'success');
               this.alertServ.toasterSuccess('Your password reset successfully')
               this.router.navigate(['/forgotPassword/passwordChanged']);
 
