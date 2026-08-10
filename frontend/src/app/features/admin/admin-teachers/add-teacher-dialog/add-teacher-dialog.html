@@ -53,32 +53,89 @@
     </div>
 
     <div class="name-row">
-      <div class="name-field">
-        <label class="field-label">Contact Number</label>
-        <div class="field-box">
-          <input
-            type="tel"
-            name="contactNumber"
-            [(ngModel)]="teacher.contactNumber"
-            placeholder="+91 98765 43210"
-            class="field-input"
-          />
-        </div>
-      </div>
+    <div class="name-field">
+  <label class="field-label">
+    Contact Number<span class="required-star">*</span>
+  </label>
+
+  <div class="field-box">
+    <input
+      type="tel"
+      name="contactNumber"
+      [(ngModel)]="teacher.contactNumber"
+      placeholder="9876543210"
+      class="field-input"
+      required
+      minlength="10"
+      maxlength="10"
+      pattern="^[6-9][0-9]{9}$"
+      (keydown)="allowOnlyNumbers($event)"
+      (input)="onNumberInput($event, 'contactNumber')"
+      #contactNumber="ngModel"
+    />
+  </div>
+
+  <div
+    class="slot-error"
+    *ngIf="contactNumber.invalid && contactNumber.touched"
+  >
+    <span *ngIf="contactNumber.errors?.['required']">
+      Contact number is required.
+    </span>
+
+    <span
+      *ngIf="
+        contactNumber.errors?.['pattern'] ||
+        contactNumber.errors?.['minlength'] ||
+        contactNumber.errors?.['maxlength']
+      "
+    >
+      Enter a valid 10-digit mobile number.
+    </span>
+  </div>
+</div>
 
       <div class="name-field">
-        <label class="field-label">Aadhar No.<span class="required-star">*</span></label>
-        <div class="field-box">
-          <input
-            type="text"
-            name="aadharNo"
-            [(ngModel)]="teacher.aadharNo"
-            placeholder="e.g. 1234 0803 9428"
-            class="field-input"
-            required
-          />
-        </div>
-      </div>
+  <label class="field-label">
+    Aadhar No.<span class="required-star">*</span>
+  </label>
+
+  <div class="field-box">
+    <input
+      type="text"
+      name="aadharNo"
+      [(ngModel)]="teacher.aadharNo"
+      placeholder="e.g. 123408039428"
+      class="field-input"
+      required
+      minlength="12"
+      maxlength="12"
+      pattern="^[0-9]{12}$"
+      (keydown)="allowOnlyNumbers($event)"
+      (input)="onNumberInput($event, 'aadharNo')"
+      #aadharNo="ngModel"
+    />
+  </div>
+
+  <div
+    class="slot-error"
+    *ngIf="aadharNo.invalid && aadharNo.touched"
+  >
+    <span *ngIf="aadharNo.errors?.['required']">
+      Aadhar number is required.
+    </span>
+
+    <span
+      *ngIf="
+        aadharNo.errors?.['pattern'] ||
+        aadharNo.errors?.['minlength'] ||
+        aadharNo.errors?.['maxlength']
+      "
+    >
+      Aadhar number must contain exactly 12 digits.
+    </span>
+  </div>
+</div>
     </div>
 
     <label class="field-label">Photo</label>
