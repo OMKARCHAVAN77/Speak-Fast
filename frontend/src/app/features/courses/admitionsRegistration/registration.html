@@ -12,41 +12,28 @@
         <div class="left-card">
           <!-- Left Content -->
           <div class=" mb-4">
-            <div class="d-flex align-items-center">
-              <div class="w-100">
-                <img src="../../../../assets/SpeakFastAwardedbyVaniKapoor.jpg" alt=""
-                  style="width: 100%;border-radius: 14px;">
+            <div class="card mb-3" >
+              <div class="row g-0 align-items-center">
+                <!-- Image Column: full width on mobile, half width on medium screens and above -->
+                <div class="award-image-wrapper col-12 col-md-6 ">
+                  <img src="../../../../assets/SpeakFastAwardedbyVaniKapoor.jpg"
+                    class="img-fluid w-100" alt="SpeakFast Awarded by Vaani Kapoor">
+                </div>
+
+                <!-- Content Column: full width on mobile, half width on medium screens and above -->
+                <div class="col-12 col-md-6">
+                  <div class="card-body">
+                    <h5 class="card-title" >
+                      Pune’s Absolute Best in Spoken English Classes
+                    </h5>
+
+                    <p class="card-text" >
+Proudly awarded "The Best English Language Training Institute in Pune" from actress Vaani Kapoor for our commitment to student fluency and career transformation.
+<br> Speaking in English is now easy with our engaging & practical training. Join our spoken English course today.
+                    </p>
+                  </div>
+                </div>
               </div>
-
-              <div class="w-100 mx-2">
-
-                <h2 style="font-family: Quicksand;
-font-weight: 600;
-font-style: SemiBold;
-font-size: 16px;
-margin-bottom: 8px;
-color: #0F172A;
-">Pune’s Absolute Best in Spoken English Classes</h2>
-
-                <p style="font-family: Quicksand;
-      font-weight: 500;
-      font-style: Medium;
-      font-size: 12px;
-        line-height: 100%;
-        letter-spacing: 0%;
-      color: #0F172A;
-      text-align: left;
-">
-                  Proudly awarded "The Best English Language Training Institute in Pune" from actress Vaani Kapoor for
-                  our commitment to student fluency and career transformation.
-                  <br> Speaking in English is now easy with our engaging & practical  training. Join our spoken English
-                  course today.
-                </p>
-              </div>
-              <!-- <p class="mb-0 ms-3">
-                Awarded as "The best English language training institute in Pune"
-              </p> -->
-
             </div>
           </div>
 
@@ -108,9 +95,8 @@ color: #0F172A;
                   formControlName="firstName" #firstNameInp>
                 @if(registrationForm.get('firstName')?.hasError('required') &&
                 registrationForm.get('firstName')?.touched){
-                <small class="text-danger">field is required.</small>
-                }
-                @if(registrationForm.get('firstName')?.hasError('noSpace') && registrationForm.get('firstName')?.dirty){
+                <small class="text-danger">Field is required.</small>
+                }@else if(registrationForm.get('firstName')?.hasError('noSpace') && registrationForm.get('firstName')?.dirty){
                 <small class="text-danger">Spaces are not allowed.</small>
                 }
               </div>
@@ -122,9 +108,8 @@ color: #0F172A;
                   formControlName="lastName">
                 @if(registrationForm.get('lastName')?.hasError('required') &&
                 registrationForm.get('lastName')?.touched){
-                <small class="text-danger">field is required.</small>
-                }
-                @if(registrationForm.get('lastName')?.hasError('noSpace') && registrationForm.get('lastName')?.dirty){
+                <small class="text-danger">Field is required.</small>
+                }@else if(registrationForm.get('lastName')?.hasError('noSpace') && registrationForm.get('lastName')?.dirty){
                 <small class="text-danger">Spaces are not allowed.</small>
                 }
               </div>
@@ -138,36 +123,29 @@ color: #0F172A;
                   formControlName="contactNumber">
                 @if(registrationForm.get('contactNumber')?.hasError('required') &&
                 registrationForm.get('contactNumber')?.touched){
-                <small class="text-danger">field is required.</small>
-                }
-                @if(registrationForm.get('contactNumber')?.hasError('noSpace') &&
+                <small class="text-danger">Field is required.</small>
+                }@else if(registrationForm.get('contactNumber')?.hasError('noSpace') &&
                 registrationForm.get('contactNumber')?.dirty){
                 <small class="text-danger">Spaces are not allowed.</small>
-                }
-                @if (
+                }@else if (
                 registrationForm.get('contactNumber')?.hasError('mobileNumber') &&
                 registrationForm.get('contactNumber')?.touched
                 ) {
                 <small class="text-danger">
-                  enter 10 digit your mobile number
+                  Enter 10 digit your mobile number
                 </small>
-                }
-
-                @if (
+                }@else if (
                 registrationForm.get('contactNumber')?.hasError('numberOnly') &&
                 registrationForm.get('contactNumber')?.dirty
                 ) {
                 <small class="text-danger">
-                  enter number only
+                  Enter number only
                 </small>
-                }
-                @if (registrationForm.get('contactNumber')?.pending) {
+                }@else if (registrationForm.get('contactNumber')?.pending) {
                 <small class="text-primary">
                   Checking contactNumber...
                 </small>
-                }
-
-                @if (registrationForm.get('contactNumber')?.hasError('contactNumberExists')) {
+                }@else if (registrationForm.get('contactNumber')?.hasError('contactNumberExists')) {
                 <small class="text-danger">
                   Contact Number already exists.
                 </small>
@@ -344,7 +322,7 @@ color: #0F172A;
                 registrationForm.get('qualification')?.touched
                 ) {
                 <small class="text-danger">
-                  Please select your district.
+                  Please select your qualification.
                 </small>
                 }
               </div>
@@ -387,7 +365,7 @@ color: #0F172A;
                 registrationForm.get('occupation')?.touched
                 ) {
                 <small class="text-danger">
-                  Please select your district.
+                  Please select your occupation.
                 </small>
                 }
               </div>
@@ -400,9 +378,9 @@ color: #0F172A;
         </div>
 
         <div class="buttons d-flex justify-content-between pt-4 w-100">
-          <button class="back-button shadow-lg" routerLink="/courses"><i class="bi bi-arrow-left"></i> Back</button>
+          <button class="back-button shadow-lg col-4" routerLink="/courses"><i class="bi bi-arrow-left"></i> Back</button>
 
-          <button type="button" class="regi-button shadow-lg " (click)="onSubmit()">
+          <button type="button" class="regi-button shadow-lg col-4" (click)="onSubmit()">
             @if (!isLoaderOn()) {
             Register
             } @else {
