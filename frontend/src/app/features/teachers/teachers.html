@@ -10,7 +10,7 @@
     </section>
 
     <!-- BOOKING CARD -->
-    <div class="booking-card">
+    <!-- <div class="booking-card">
       <h3 class="booking-title">When do you want to start</h3>
 
       <div class="booking-fields">
@@ -42,7 +42,51 @@
           </button>
         </mat-menu>
       </div>
+    </div> -->
+
+    <div class="booking-card">
+  <h3 class="booking-title">When do you want to start</h3>
+
+  <div class="booking-fields">
+    <div class="field-box date-box" [class.picker-open]="isDatePickerOpen" (click)="picker.open()">
+      <mat-icon class="field-icon">calendar_today</mat-icon>
+      <div class="field-text">
+        <span class="field-label">Date</span>
+        <span class="field-value">{{ selectedDate | date: 'dd MMMM yyyy' }}</span>
+      </div>
+      <input class="hidden-date-input" [matDatepicker]="picker" [value]="selectedDate" [min]="minDate"
+        (dateChange)="onDateChange($event)" readonly />
+      <mat-datepicker #picker panelClass="booking-datepicker-panel" (opened)="isDatePickerOpen = true"
+        (closed)="isDatePickerOpen = false"></mat-datepicker>
     </div>
+
+    <div class="field-box time-box" [class.menu-open]="isTimeMenuOpen" [matMenuTriggerFor]="timeMenu"
+      (menuOpened)="isTimeMenuOpen = true" (menuClosed)="isTimeMenuOpen = false">
+      <mat-icon class="field-icon time-icon">schedule</mat-icon>
+      <div class="field-text">
+        <span class="field-value" [class.placeholder]="!selectedTime">
+          {{ selectedTime || 'Select Time' }}
+        </span>
+      </div>
+    </div>
+
+    <mat-menu #timeMenu="matMenu" class="booking-time-menu">
+      <button mat-menu-item *ngFor="let slot of timeSlots" (click)="selectTime(slot)">
+        {{ slot }}
+      </button>
+    </mat-menu>
+
+    <button
+      type="button"
+      class="reset-filter-btn"
+      [disabled]="!selectedDate && !selectedTime"
+      (click)="resetFilters()"
+      matTooltip="Reset filter"
+    >
+      <mat-icon class="reset-icon">filter_alt_off</mat-icon>
+    </button>
+  </div>
+</div>
 
   </div>
 </div>
