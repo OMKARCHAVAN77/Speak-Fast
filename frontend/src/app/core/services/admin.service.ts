@@ -77,7 +77,7 @@ export class AdminService {
   }
 
   updateTeacher(id: string, data: any): Observable<any> {
-  return this.http.put(`${environment.apiUrl}/admin/teachers/${id}`, data);
+  return this.http.put(`${environment.apiUrl}/teacher/${id}`, data);
 }
 
 
