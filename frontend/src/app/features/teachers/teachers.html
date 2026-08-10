@@ -1,9 +1,6 @@
 <div class="top-bg-wrapper">
   <div class="top-bg-inner">
 
-    <!-- circle आता इथे, दोन्ही sections (hero + booking-card) च्या मागे -->
-    <div class="top-bg-circle"></div>
-
     <!-- CENTERED HERO -->
     <section class="hero-centered">
       <button class="pill-badge" type="button">Find Your Perfect Teacher</button>
@@ -11,7 +8,6 @@
         <span class="highlight">One-on-One</span> Training
       </h1>
     </section>
-
 
     <!-- BOOKING CARD -->
     <div class="booking-card">
@@ -49,15 +45,11 @@
     </div>
 
   </div>
-  
- 
 </div>
 
 <div class="progressbar">
-     <mat-progress-bar *ngIf="loading()" mode="indeterminate" class="card-bottom-progress">
-    </mat-progress-bar>
+  <mat-progress-bar *ngIf="loading()" mode="indeterminate" class="card-bottom-progress"></mat-progress-bar>
 </div>
-
 
 <!-- ALL TEACHERS -->
 <section class="all-teachers">
@@ -91,14 +83,14 @@
         </div>
       </div>
 
-   <button class="book-btn"
-  [class.slot-chosen]="selectedTeacherId === teacher._id && selectedSlotId"
-  [disabled]="!(selectedTeacherId === teacher._id && selectedSlotId)"
-  type="button"
-  (click)="bookSeat(); $event.stopPropagation()">
-  <mat-icon class="book-icon">add</mat-icon>
-  Book Seat
-</button>
+      <button class="book-btn"
+        [class.slot-chosen]="selectedTeacherId === teacher._id && selectedSlotId"
+        [disabled]="!(selectedTeacherId === teacher._id && selectedSlotId)"
+        type="button"
+        (click)="bookSeat(); $event.stopPropagation()">
+        <mat-icon class="book-icon">add</mat-icon>
+        Book Seat
+      </button>
     </div>
   </div>
 </section>

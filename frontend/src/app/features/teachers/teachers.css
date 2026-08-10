@@ -46,12 +46,15 @@
   overflow: hidden;
 }
 
-.top-bg-circle {
+/* Group1.png circle — proportionally responsive on every screen size,
+   never distorts because width/height scale together via aspect-ratio */
+.top-bg-inner::before {
+  content: '';
   position: absolute;
-  top: -60px;
-  right: -20px;
-  width: clamp(180px, 26vw, 420px);
-  height: clamp(180px, 26vw, 420px);
+  top: -40px;
+  right: 0;
+  width: clamp(220px, 45vw, 900px);
+  aspect-ratio: 900 / 480;
   background-image: url('../../../assets/Group1.png');
   background-repeat: no-repeat;
   background-position: right center;
@@ -386,7 +389,7 @@
 .book-btn {
   width: 100%;
   max-width: 290px;
-  align-self: flex-end;   /* center ऐवजी उजवीकडे */
+  align-self: flex-end;
   padding: 0 24px;
   height: 42px;
   flex-shrink: 0;
@@ -491,11 +494,6 @@
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 900px) {
-  .top-bg-circle {
-    width: clamp(140px, 32vw, 280px);
-    height: clamp(140px, 32vw, 280px);
-    top: -40px;
-  }
   .teacher-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -505,12 +503,6 @@
 }
 
 @media (max-width: 560px) {
-  .top-bg-circle {
-    opacity: 0.6;
-    width: 40vw;
-    height: 40vw;
-    top: -30px;
-  }
   .hero-title-centered {
     font-size: 26px;
   }
@@ -539,17 +531,7 @@
   .request-btn {
     width: 100%;
   }
-}
-
-/* Small mobile */
-@media (max-width: 400px) {
-  .top-bg-circle {
-    display: none;
-  }
-  .hero-centered {
-    padding: 28px 16px 16px;
-  }
-  .booking-card {
-    padding: 16px;
+  .top-bg-inner::before {
+    opacity: 0.6;
   }
 }
