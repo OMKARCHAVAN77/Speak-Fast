@@ -62,36 +62,54 @@
   <h2 class="section-title" *ngIf="showTeachers">All Teachers</h2>
 
   <div class="teacher-grid" *ngIf="showTeachers">
-    <div class="teacher-card" *ngFor="let teacher of teachers" [class.selected]="selectedTeacherId === teacher._id"
+    <div class="teacher-card" *ngFor="let teacher of paginatedTeachers"
+      [class.selected]="selectedTeacherId === teacher._id"
       (click)="selectTeacher(teacher._id)">
 
-      <div class="teacher-top">
-        <div class="teacher-photo">
-          <img [src]="teacher.photo ? teacher.photo : 'assets/default-user.png'" [alt]="teacher.firstName">
-        </div>
-
-        <div class="teacher-info">
-          <p class="teacher-name">{{ teacher.firstName }} {{ teacher.lastName }}</p>
-
-          <div class="slot-grid">
-            <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked"
-              [class.selected-slot]="selectedTeacherId === teacher._id && selectedSlotId === slot._id"
-              (click)="selectSlot(teacher._id, slot._id); $event.stopPropagation()">
-              {{ slot.time }}
-            </button>
-          </div>
-        </div>
+      <div class="teacher-photo-full">
+        <img [src]="teacher.photo ? teacher.photo : 'assets/default-user.png'" [alt]="teacher.firstName">
       </div>
 
-      <button class="book-btn"
-        [class.slot-chosen]="selectedTeacherId === teacher._id && selectedSlotId"
-        [disabled]="!(selectedTeacherId === teacher._id && selectedSlotId)"
-        type="button"
-        (click)="bookSeat(); $event.stopPropagation()">
-        <mat-icon class="book-icon">add</mat-icon>
-        Book Seat
-      </button>
+      <div class="teacher-card-body">
+        <p class="teacher-name">{{ teacher.firstName }} {{ teacher.lastName }}</p>
+        <p class="slot-hint" *ngIf="errorTeacherId === teacher._id">
+          Kindly Please Select the Slot First
+        </p>
+
+        <div class="slot-grid">
+          <button class="slot-chip" *ngFor="let slot of teacher.slots" [disabled]="slot.isBooked"
+            [class.selected-slot]="selectedTeacherId === teacher._id && selectedSlotId === slot._id"
+            (click)="selectSlot(teacher._id, slot._id); $event.stopPropagation()">
+            {{ slot.time }}
+          </button>
+        </div>
+
+        <button class="book-btn"
+          [class.slot-chosen]="selectedTeacherId === teacher._id && selectedSlotId"
+          type="button"
+          (click)="onBookSeatClick(teacher._id); $event.stopPropagation()">
+          <mat-icon class="book-icon">add</mat-icon>
+          Book Seat
+        </button>
+      </div>
     </div>
+  </div>
+
+  <!-- PAGINATION -->
+  <div class="pagination" *ngIf="showTeachers && totalPages > 1">
+    <button class="page-nav" type="button" [disabled]="currentPage === 1" (click)="prevPage()">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <button class="page-number" type="button" *ngFor="let p of pageNumbers"
+      [class.active]="p === currentPage"
+      (click)="goToPage(p)">
+      {{ p }}
+    </button>
+
+    <button class="page-nav" type="button" [disabled]="currentPage === totalPages" (click)="nextPage()">
+      <mat-icon>chevron_right</mat-icon>
+    </button>
   </div>
 </section>
 
