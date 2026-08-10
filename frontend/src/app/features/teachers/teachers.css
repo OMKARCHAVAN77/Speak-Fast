@@ -41,13 +41,12 @@
 .top-bg-inner {
   position: relative;
   z-index: 1;
-  max-width: 1298px;
+  max-width: 1600px;
   margin: 0 auto;
   overflow: hidden;
 }
 
-/* Group1.png circle — proportionally responsive on every screen size,
-   never distorts because width/height scale together via aspect-ratio */
+/* Group1.png circle — proportionally responsive on every screen size */
 .top-bg-inner::before {
   content: '';
   position: absolute;
@@ -99,7 +98,7 @@
 .booking-card {
   position: relative;
   z-index: 4;
-  max-width: 1195px;
+  max-width: min(1500px, 94%);
   margin: 0px auto 32px;
   background: #fff;
   border-radius: 24px;
@@ -262,7 +261,7 @@
    ALL TEACHERS
    ============================================================ */
 .all-teachers {
-  max-width: 1298px;
+  max-width: 1600px;
   margin: 2px auto 40px;
   padding: 0 32px;
 }
@@ -442,7 +441,7 @@
 
 .request-slot-card {
   width: 95%;
-  max-width: 1200px;
+  max-width: 1550px;
   background: #F8F9FF;
   border: 1px solid #E5E7EB;
   border-radius: 18px;
@@ -493,6 +492,27 @@
 }
 
 /* ---------- RESPONSIVE ---------- */
+
+/* Large / very wide screens — 4 cards per row, wider containers */
+@media (min-width: 1600px) {
+  .top-bg-inner,
+  .all-teachers {
+    max-width: 1900px;
+  }
+  .booking-card {
+    max-width: min(1800px, 94%);
+  }
+  .request-slot-card {
+    max-width: 1850px;
+  }
+  .teacher-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .teacher-card {
+    max-width: 460px;
+  }
+}
+
 @media (max-width: 900px) {
   .teacher-grid {
     grid-template-columns: repeat(2, 1fr);
