@@ -12,6 +12,7 @@ export class StudentService {
      soltId = new BehaviorSubject<String|null>(null);
      courseName = new BehaviorSubject<String|null>(null);
      coursePrice = new BehaviorSubject<String|null>(null);
+     emailId = new BehaviorSubject<string>(  sessionStorage.getItem('forgotPassEmail') ?? '');
 
     constructor(private http:HttpClient){}
 
@@ -49,6 +50,15 @@ export class StudentService {
 
     addStudentApi(data:any){
       return  this.http.post(`${environment.apiUrl}/booking/register-book`,data);
+    }
+
+    getEmailForgotPass(): string  {
+      return this.emailId.getValue();
+    }
+
+    setEmailForgotPass(data : string){
+      sessionStorage.setItem('forgotPassEmail',data);
+      this.emailId.next(data)
     }
 
     // student forgot password service

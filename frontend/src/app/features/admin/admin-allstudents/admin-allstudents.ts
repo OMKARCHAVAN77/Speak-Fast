@@ -27,7 +27,7 @@ import { AlertService } from '../../../core/services/alert.service';
     MatInputModule,
     MatDatepickerModule,
     MatNativeDateModule,
-     
+
   ],
   providers: [DatePipe],
   templateUrl: './admin-allstudents.html',
@@ -47,7 +47,7 @@ export class AdminAllStudents implements OnInit {
   pageSize = 10;
   currentPage = signal(1);
 
-  constructor(private adminServ: AdminService, private datePipe: DatePipe, 
+  constructor(private adminServ: AdminService, private datePipe: DatePipe,
       private alertService: AlertService) { }
 
   ngOnInit(): void {
@@ -236,7 +236,7 @@ async onDelete(student: any): Promise<void> {
       }, 0);
 
       // Bottom Toast
-      this.alertService.toastSuccess(
+      this.alertService.toasterSuccess(
         'Student deleted successfully.'
       );
 

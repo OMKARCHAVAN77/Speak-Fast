@@ -13,19 +13,20 @@
           <!-- Left Content -->
           <div class=" mb-4">
             <div class="d-flex align-items-center">
-              <div class="w-100" >
-                <img src="../../../../assets/SpeakFastAwarded.png" alt="" style="width: 100%;border-radius: 14px;">
+              <div class="w-100">
+                <img src="../../../../assets/SpeakFastAwardedbyVaniKapoor.jpg" alt=""
+                  style="width: 100%;border-radius: 14px;">
               </div>
 
-              <div class="w-100 mx-2"  >
+              <div class="w-100 mx-2">
 
-                              <h2 style="font-family: Quicksand;
+                <h2 style="font-family: Quicksand;
 font-weight: 600;
 font-style: SemiBold;
 font-size: 16px;
 margin-bottom: 8px;
 color: #0F172A;
-" >Pune’s Absolute Best in Spoken English Classes</h2>
+">Pune’s Absolute Best in Spoken English Classes</h2>
 
                 <p style="font-family: Quicksand;
       font-weight: 500;
@@ -35,9 +36,11 @@ color: #0F172A;
         letter-spacing: 0%;
       color: #0F172A;
       text-align: left;
-" >
-                  Proudly awarded "The Best English Language Training Institute in Pune" from actress Vaani Kapoor for our commitment to student fluency and career transformation.
-<br> Speaking in English is now easy with our engaging & practical  training. Join our spoken English course today.
+">
+                  Proudly awarded "The Best English Language Training Institute in Pune" from actress Vaani Kapoor for
+                  our commitment to student fluency and career transformation.
+                  <br> Speaking in English is now easy with our engaging & practical  training. Join our spoken English
+                  course today.
                 </p>
               </div>
               <!-- <p class="mb-0 ms-3">
@@ -47,7 +50,7 @@ color: #0F172A;
             </div>
           </div>
 
-          <div class=" mb-4" >
+          <div class=" mb-4">
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/learning-student_svgrepo.com (1).png" alt="">
@@ -65,7 +68,7 @@ color: #0F172A;
             </div>
           </div> -->
 
-          <div class="my-3 pt-3  " style="border-top: 2px solid #F3F3F3 ;" >
+          <div class="my-3 pt-3  " style="border-top: 2px solid #F3F3F3 ;">
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/teacher_icon.png" alt="">
@@ -74,7 +77,8 @@ color: #0F172A;
             </div>
           </div>
 
-          <div class="py-3" style="border-top: 2px solid #F3F3F3 ; border-bottom: 2px solid #F3F3F3; margin-bottom: 30px;">
+          <div class="py-3"
+            style="border-top: 2px solid #F3F3F3 ; border-bottom: 2px solid #F3F3F3; margin-bottom: 30px;">
             <div class="d-flex align-items-center">
               <div class="icon-box">
                 <img src="../../../../assets/video-call-webcam_icon.png" alt="">
@@ -176,23 +180,21 @@ color: #0F172A;
                 <label class="form-label fw-semibold">Email</label>
                 <input type="email" class="form-control custom-input" placeholder="example@gmail.com"
                   formControlName="email">
-                @if(registrationForm.get('email')?.hasError('required') && registrationForm.get('email')?.touched){
-                <small class="text-danger">field is required.</small>
-                }
-                @if(registrationForm.get('email')?.hasError('noSpace') && registrationForm.get('email')?.dirty){
+                @if (registrationForm.get('email')?.hasError('required') && registrationForm.get('email')?.touched) {
+                <small class="text-danger">Field is required.</small>
+
+                } @else if (registrationForm.get('email')?.hasError('noSpace')) {
                 <small class="text-danger">Spaces are not allowed.</small>
-                }
-                @if(registrationForm.get('email')?.hasError('isEmailCorrect') &&
-                registrationForm.get('email')?.touched){
-                <small class="text-danger">Enter your full email id</small>
-                }
-                @if (registrationForm.get('email')?.pending) {
+
+                } @else if (registrationForm.get('email')?.hasError('isEmailCorrect')) {
+                <small class="text-danger">Enter a valid email address.</small>
+
+                } @else if (registrationForm.get('email')?.pending) {
                 <small class="text-primary">
                   Checking email...
                 </small>
-                }
 
-                @if (registrationForm.get('email')?.hasError('emailExists')) {
+                } @else if (registrationForm.get('email')?.hasError('emailExists')) {
                 <small class="text-danger">
                   Email already exists.
                 </small>

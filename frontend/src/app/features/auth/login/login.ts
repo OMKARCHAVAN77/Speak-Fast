@@ -1,3 +1,4 @@
+import { AlertService } from './../../../core/services/alert.service';
 import { AuthSer } from './../../../core/services/auth.service';
 import { environment } from './../../../../environments/environment';
 import { TokenService } from './../../../core/services/token.service';
@@ -30,7 +31,7 @@ import { provideToastr, ToastrService } from 'ngx-toastr';
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
-export class Login implements OnInit ,AfterViewInit{
+export class Login implements OnInit {
 
 
 
@@ -40,7 +41,7 @@ export class Login implements OnInit ,AfterViewInit{
   getRole!:string;
   isLoaderOn=signal<boolean>(false);
 
-  @ViewChild('emailTemplateVar') emailTemp!:ElementRef<HTMLInputElement>
+
 
 
 loginForm!: FormGroup;
@@ -51,7 +52,8 @@ loginForm!: FormGroup;
     private fb: FormBuilder,
     private toastr: ToastrService,
     private tokeServ: TokenService,
-    private authService:AuthSer
+    private authService:AuthSer,
+    private alertServ: AlertService
   ) {}
 
 
@@ -60,9 +62,7 @@ loginForm!: FormGroup;
       this.formInitializer();
   }
 
-  ngAfterViewInit(): void {
-      this.emailTemp.nativeElement.focus();
-  }
+
 
   formInitializer(){
     this.loginForm= this.fb.group({
@@ -102,11 +102,12 @@ loginForm!: FormGroup;
               this.tokeServ.setSessionStorageTokes(tokenValue,this.getRole)
             }
             this.isLoaderOn.set(false);
-            this.toastr.success(
-              'login successfully!',
-              
-            );
+            // this.toastr.success(
+            //   'login successfully!',
 
+            // );
+
+            this.alertServ.toasterSuccess('logged in successfully')
 
 
 
@@ -124,10 +125,7 @@ loginForm!: FormGroup;
 
             // console.log(err)
             this.isLoaderOn.set(false);
-              this.toastr.error(
-                'login failed!',
-                
-              );
+            this.alertServ.tosterUnsuccess('Try after some time ')
 
 
           }

@@ -1,11 +1,13 @@
+import { AlertService } from './../../../../core/services/alert.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, signal, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators, } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { environment } from '../../../../../environments/environment';
 import { StudentService } from '../../../../core/services/student.service';
+import { RegistrationValidator } from '../../../../core/Validators/regist_validators.validator';
 
 @Component({
   selector: 'app-confirm-password',
@@ -13,89 +15,129 @@ import { StudentService } from '../../../../core/services/student.service';
   templateUrl: './confirm-password.html',
   styleUrl: './confirm-password.css',
 })
-export class ConfirmPassword {
+export class ConfirmPassword implements OnInit{
 
   showPassword: boolean = false;
+  showConfirmPassword: boolean = false;
   token: string | null = null;
-  email: string | null = null;
-  errorMessage = '';
 
-  form: FormGroup;
+  getMailLocal: string = localStorage.getItem('forgotEmailId') ?? '';
+  isLoaderOn=signal<boolean>(false);
+
+  confirmPasswordForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private studentService: StudentService
+    private studentService: StudentService,
+    private alertServ: AlertService
   ) {
-    this.form = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-    });
+
   }
 
-  ngOnInit() {
-    this.token = this.route.snapshot.paramMap.get('token'); 
-    // this.token = this.route.snapshot.queryParamMap.get('token');
-    // this.email = this.route.snapshot.queryParamMap.get('email');
+  ngOnInit(): void {
+
+    this.initalizeForm();
+  }
+
+
+  initalizeForm():void{
+    this.confirmPasswordForm = this.fb.group({
+      email: [this.getMailLocal],
+      password: ['',[Validators.required,RegistrationValidator.password]],
+      confirmPassword: ['',[Validators.required,RegistrationValidator.passwordChecking]]
+    },
+     {
+      validators: RegistrationValidator.passwordChecking
+    });
   }
 
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
-  //   onSubmit() {
-  //     this.errorMessage = '';
+  toggleConfirmPassword() {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 
-  //     if (this.form.invalid) return;
+  onSubmit(){
 
-  //     const { password, confirmPassword } = this.form.value;
+    const { email , ...Payload} = this.confirmPasswordForm.value;
 
-  //     if (password !== confirmPassword) {
-  //       this.errorMessage = 'Passwords do not match.';
-  //       return;
-  //     }
+    if (this.confirmPasswordForm.valid) {
+      console.log(this.confirmPasswordForm.value)
+      this.isLoaderOn.set(true);
 
-  //     this.http.post(`${environment.apiUrl}/students/reset-password`, {
-  //   token: this.token,
-  //   email: this.email,
-  //   newPassword: password,
-  // }).subscribe({
-  //   next: () => {
-  //     this.router.navigate(['/forgotPassword/passwordChanged']);
-  //   },
-  //   error: (err) => {
-  //     this.errorMessage = err?.error?.message || 'Something went wrong. Try again.';
-  //   },
-  // });
-  //   }
+      this.route.paramMap.subscribe(params => {
+        this.token = params.get('token');
 
+        if (!this.token) {
 
-onSubmit() {
-    this.errorMessage = '';
+          this.isLoaderOn.set(false);
+          return;
+        }
 
-    if (this.form.invalid) return;
+        this.studentService
+          .resetStudentPassword(this.token, Payload)
+          .subscribe({
+            next: () => {
+              this.isLoaderOn.set(false);
+              localStorage.removeItem('forgotEmailId');
+              localStorage.setItem('status', 'success');
+              this.alertServ.toasterSuccess('Your password reset successfully')
+              this.router.navigate(['/forgotPassword/passwordChanged']);
 
-    const { password, confirmPassword } = this.form.value;
-
-    if (password !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match.';
-      return;
-    }
-
-    if (!this.token) {
-      this.errorMessage = 'Invalid or missing token.';
-      return;
-    }
-
-    this.studentService.resetStudentPassword(this.token, { password, confirmPassword })
-      .subscribe({
-        next: () => {
-          this.router.navigate(['/forgotPassword/passwordChanged']);
-        },
-        error: (err) => {
-          this.errorMessage = err?.error?.message || 'Something went wrong. Try again.';
-        },
+            },
+            error: () =>{
+              this.isLoaderOn.set(false);
+              this.alertServ.tosterUnsuccess('please try after 2 minutes...')
+            }
+          });
       });
+
+
+    } else {
+      this.confirmPasswordForm.markAllAsTouched();
+    }
+  }
+
+  get password() {
+    return this.confirmPasswordForm.get('password');
+  }
+
+  get passwordValue(): string {
+    return this.password?.value || '';
+  }
+
+  hasMinLength(): boolean {
+    return this.passwordValue.length >= 8;
+  }
+
+  hasUppercase(): boolean {
+    return /(?=.*[A-Z])/.test(this.passwordValue);
+  }
+
+  hasLowercase(): boolean {
+    return /[a-z]/.test(this.passwordValue);
+  }
+
+  hasNumber(): boolean {
+    return /\d/.test(this.passwordValue);
+  }
+
+  hasSpecialChar(): boolean {
+    return /[@$!%*?&#^();"'{}_\-+~=<>?,.]/.test(this.passwordValue);
+  }
+
+
+  isPasswordValid(): boolean {
+    return (
+      this.hasMinLength() &&
+      this.hasUppercase() &&
+      this.hasLowercase() &&
+      this.hasNumber() &&
+      this.hasSpecialChar()
+    );
   }
 }

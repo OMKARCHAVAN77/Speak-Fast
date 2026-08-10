@@ -1,3 +1,4 @@
+import { AlertService } from './../../../core/services/alert.service';
 import { RegistrationValidator } from './../../../core/Validators/regist_validators.validator';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, signal } from '@angular/core';
@@ -15,8 +16,14 @@ import { environment } from '../../../../environments/environment';
 export class SetPassword implements OnInit {
 
   showPassword = false;
+  showPasswordConfirm = false;
+
   togglePassword() {
     this.showPassword = !this.showPassword;
+  }
+
+  togglePasswordConfirm() {
+    this.showPasswordConfirm = !this.showPasswordConfirm;
   }
 
   email: string = '';
@@ -32,22 +39,26 @@ export class SetPassword implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private alertServ: AlertService
   ) {}
 
 
   ngOnInit(): void {
-    this.initializeForm();
+
       this.route.queryParams.subscribe(params => {
       this.token = params['token'] || '';
       this.email = params['email'] || '';
     });
+
+     this.initializeForm();
   }
 
 
   initializeForm(): void{
 
     this.setPasswordForm = this.fb.group({
+      email: [this.email],
       password: ['',[Validators.required,RegistrationValidator.password]],
       confirmPassword: ['',[Validators.required]]
     },
@@ -55,10 +66,11 @@ export class SetPassword implements OnInit {
       validators: RegistrationValidator.passwordChecking
     })
   }
+
   onSubmit(): void {
 
     this.isLoading.set(true);
-    const payload = {...this.setPasswordForm.value};
+    const {email,...payload} = this.setPasswordForm.value;
 
 
 
@@ -69,13 +81,14 @@ export class SetPassword implements OnInit {
         next: (res) => {
         this.isLoading.set(false);
           // this.successMessage = res.message || 'Password set successfully';
-
+            this.alertServ.toasterSuccess('login successful');
             this.router.navigate(['/login']);
 
         },
         error: (err) => {
         this.isLoading.set(false);
           // this.errorMessage = err.error?.message || 'Something went wrong';
+          this.alertServ.tosterUnsuccess('Try after some time');
         }
       });
     }else{

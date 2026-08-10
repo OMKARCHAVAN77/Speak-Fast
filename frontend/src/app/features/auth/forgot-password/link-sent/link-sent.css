@@ -30,6 +30,26 @@ letter-spacing: -1%;
 color:#0F172A
 }
 
+.disabled-link {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+
+  /* font-family: Quicksand;
+font-weight: 600;
+font-style: SemiBold;
+font-size: 20px;
+line-height: 100%;
+letter-spacing: -1%;
+text-decoration: underline;
+text-decoration-style: solid;
+text-decoration-thickness: 0%;
+text-decoration-skip-ink: auto; */
+/* color: #0F172A; */
+
+
+}
+
 .email-wrapper {
   margin-bottom: 24px;
 }
@@ -68,8 +88,10 @@ letter-spacing: -1%;
 text-decoration: underline ;
 
   text-decoration: underline;
-  text-decoration-color: black;
+  text-decoration-color: #0F172A;
+
   margin-right: 10px;
+  cursor: pointer;
 }
 span{
   font-family: Quicksand;

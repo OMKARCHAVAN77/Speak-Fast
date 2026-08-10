@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from "@angular/forms";
 import { catchError, map, Observable, of, switchMap, timer } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class contactNumberExists{
               contactNumberExists: boolean;
             };
           }>(
-            'http://localhost:3000/api/user/check-userMailContactExits',
+            `${environment.apiUrl}/user/check-userMailContactExits`,
             {
               contactNumber: control.value
             }
