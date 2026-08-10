@@ -48,6 +48,7 @@ export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
 
   photoFile: File | null = null;
   photoFileName: string = '';
+  photoPreviewUrl: string | null = null;   // 🔹 NEW
   isDragOver = false;
 
   activeField: 'start' | null = null;
@@ -119,6 +120,15 @@ export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
       startTime: teacher.startTime || '',
       slots: teacher.slots ? [...teacher.slots] : [],
     };
+
+    // 🔹 NEW: existing photo असेल तर तिचा preview दाखवा
+    if (teacher.photo) {
+      this.photoPreviewUrl = teacher.photo;
+      this.photoFileName = teacher.photo.split('/').pop() || 'Uploaded photo';
+    } else {
+      this.photoPreviewUrl = null;
+      this.photoFileName = '';
+    }
   }
 
   ngAfterViewInit(): void {
@@ -491,6 +501,13 @@ export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
     this.photoFileName = file.name;
 
     this.teacher.photo = file;
+
+       // 🔹 NEW: नवीन file चा local preview तयार करा
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.photoPreviewUrl = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   removePhoto(event: Event): void {
@@ -500,6 +517,8 @@ export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
     this.photoFile = null;
 
     this.photoFileName = '';
+
+    this.photoPreviewUrl = null;   // 🔹 NEW
 
     this.teacher.photo = null;
   }
@@ -539,6 +558,8 @@ export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
     this.photoFile = null;
 
     this.photoFileName = '';
+
+    this.photoPreviewUrl = null;   // 🔹 NEW
 
     this.slotError = '';
 
