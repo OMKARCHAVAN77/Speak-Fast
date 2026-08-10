@@ -1,9 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { AdminService } from '../../../../core/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
+
 interface BookedSlot {
   date: string;
   time: string;
@@ -16,18 +29,20 @@ interface BookedSlot {
   styleUrls: ['./add-teacher-dialog.css'],
 })
 export class AddTeacherDialog implements OnInit, OnChanges, AfterViewInit {
-  @Input() teacherData: any = null;   // parent kadun edit sathi teacher yeईल
+
+  @Input() teacherData: any = null;
   isEditMode = false;
+
   @Input() isOpen = false;
+
   @Output() closeDrawer = new EventEmitter<void>();
   @Output() addTeacher = new EventEmitter<void>();
 
-  @ViewChild('timeDropdownWrapper') timeDropdownWrapper!: ElementRef;
+  @ViewChild('timeDropdownWrapper')
+  timeDropdownWrapper!: ElementRef;
 
   @ViewChild('firstNameInput')
-firstNameInput!: ElementRef<HTMLInputElement>;
-
-
+  firstNameInput!: ElementRef<HTMLInputElement>;
 
   aadharOptions = ['Verified', 'Not Verified', 'Pending'];
 
@@ -37,7 +52,9 @@ firstNameInput!: ElementRef<HTMLInputElement>;
 
   activeField: 'start' | null = null;
   openDropdownUp = false;
+
   timeSlots: string[] = this.generateTimeSlots();
+
   manualTimeInput = '';
   manualTimeError = '';
 
@@ -46,13 +63,12 @@ firstNameInput!: ElementRef<HTMLInputElement>;
   isSubmitting = false;
   submitError = '';
 
-
   teacher = {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
-    role:'teacher',
+    role: 'teacher',
     contactNumber: '',
     aadharNo: '',
     photo: null as File | null,
@@ -61,23 +77,26 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     slots: [] as BookedSlot[],
   };
 
- constructor(
-  private elRef: ElementRef,
-  private adminServe: AdminService,
-  private toastr: ToastrService
-) {}
+  constructor(
+    private elRef: ElementRef,
+    private adminServe: AdminService,
+    private toastr: ToastrService
+  ) {}
 
-  ngOnInit(): void {
-  }
-  onBrowseClick(event:Event){
+  ngOnInit(): void {}
 
-  }
+  onBrowseClick(event: Event): void {}
 
-   ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes['teacherData']) {
       if (this.teacherData) {
         this.isEditMode = true;
-        console.log('Received teacherData for editing:', this.teacherData);
+
+        console.log(
+          'Received teacherData for editing:',
+          this.teacherData
+        );
+
         this.patchTeacherData(this.teacherData);
       } else {
         this.isEditMode = false;
@@ -101,46 +120,121 @@ firstNameInput!: ElementRef<HTMLInputElement>;
       slots: teacher.slots ? [...teacher.slots] : [],
     };
   }
- ngAfterViewInit(): void {
-  setTimeout(() => {
-    this.firstNameInput?.nativeElement.focus();
-  }, 0);
-}
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.firstNameInput?.nativeElement.focus();
+    }, 0);
+  }
+
+  // =========================================================
+  // NUMBER VALIDATION
+  // =========================================================
+
+  /**
+   * Keyboard वरून फक्त numbers allow करतो.
+   */
+  allowOnlyNumbers(event: KeyboardEvent): void {
+
+    const allowedKeys = [
+      'Backspace',
+      'Delete',
+      'Tab',
+      'ArrowLeft',
+      'ArrowRight',
+      'Home',
+      'End'
+    ];
+
+    if (allowedKeys.includes(event.key)) {
+      return;
+    }
+
+    if (!/^[0-9]$/.test(event.key)) {
+      event.preventDefault();
+    }
+  }
+
+  /**
+   * Paste केल्यावरसुद्धा फक्त numbers ठेवतो.
+   *
+   * Contact Number -> maximum 10 digits
+   * Aadhar Number  -> maximum 12 digits
+   */
+  onNumberInput(
+    event: Event,
+    field: 'contactNumber' | 'aadharNo'
+  ): void {
+
+    const input = event.target as HTMLInputElement;
+
+    const numbersOnly = input.value.replace(/\D/g, '');
+
+    if (field === 'contactNumber') {
+
+      this.teacher.contactNumber = numbersOnly.slice(0, 10);
+
+    } else {
+
+      this.teacher.aadharNo = numbersOnly.slice(0, 12);
+    }
+  }
+
+  // =========================================================
+  // TIME
+  // =========================================================
 
   private setDefaultTime(): void {
     const now = new Date();
+
     const roundedStart = this.roundToNext15Min(now);
-    this.teacher.startTime = this.formatTime12h(roundedStart);
+
+    this.teacher.startTime =
+      this.formatTime12h(roundedStart);
   }
 
   private roundToNext15Min(date: Date): Date {
     const ms = 1000 * 60 * 15;
-    return new Date(Math.ceil(date.getTime() / ms) * ms);
+
+    return new Date(
+      Math.ceil(date.getTime() / ms) * ms
+    );
   }
 
   private formatTime12h(date: Date): string {
+
     let hours = date.getHours();
+
     const minutes = date.getMinutes();
 
     const period = hours < 12 ? 'AM' : 'PM';
 
     hours = hours % 12;
-    if (hours === 0) hours = 12;
+
+    if (hours === 0) {
+      hours = 12;
+    }
 
     const hh = String(hours).padStart(2, '0');
+
     const mm = String(minutes).padStart(2, '0');
 
     return `${hh}:${mm}${period}`;
   }
 
   private generateTimeSlots(): string[] {
+
     const slots: string[] = [];
 
     for (let h = 0; h < 24; h++) {
+
       const period = h < 12 ? 'AM' : 'PM';
 
       let hour12 = h % 12;
-      if (hour12 === 0) hour12 = 12;
+
+      if (hour12 === 0) {
+        hour12 = 12;
+      }
 
       const hh = String(hour12).padStart(2, '0');
 
@@ -150,150 +244,269 @@ firstNameInput!: ElementRef<HTMLInputElement>;
     return slots;
   }
 
- toggleTimeDropdown(field: 'start', event: Event): void {
-  event.stopPropagation();
+  toggleTimeDropdown(
+    field: 'start',
+    event: Event
+  ): void {
 
-  this.activeField = this.activeField === field ? null : field;
+    event.stopPropagation();
 
-  this.manualTimeInput = '';
-  this.manualTimeError = '';
+    this.activeField =
+      this.activeField === field
+        ? null
+        : field;
 
-  setTimeout(() => {
-    const dropdown = document.querySelector('.time-dropdown') as HTMLElement;
-    const chip = document.querySelector('.time-chip') as HTMLElement;
+    this.manualTimeInput = '';
+    this.manualTimeError = '';
 
-    if (dropdown && chip) {
-      const chipRect = chip.getBoundingClientRect();
-      const dropdownHeight = dropdown.offsetHeight;
+    setTimeout(() => {
 
-      const windowHeight = window.innerHeight;
+      const dropdown =
+        document.querySelector(
+          '.time-dropdown'
+        ) as HTMLElement;
 
-      const spaceBottom = windowHeight - chipRect.bottom;
-      const spaceTop = chipRect.top;
+      const chip =
+        document.querySelector(
+          '.time-chip'
+        ) as HTMLElement;
 
-      this.openDropdownUp =
-        spaceBottom < dropdownHeight && spaceTop > dropdownHeight;
-    }
-  }, 50);
-}
+      if (dropdown && chip) {
 
-  selectTime(field: 'start', slot: string): void {
+        const chipRect =
+          chip.getBoundingClientRect();
+
+        const dropdownHeight =
+          dropdown.offsetHeight;
+
+        const windowHeight =
+          window.innerHeight;
+
+        const spaceBottom =
+          windowHeight - chipRect.bottom;
+
+        const spaceTop =
+          chipRect.top;
+
+        this.openDropdownUp =
+          spaceBottom < dropdownHeight &&
+          spaceTop > dropdownHeight;
+      }
+
+    }, 50);
+  }
+
+  selectTime(
+    field: 'start',
+    slot: string
+  ): void {
+
     this.teacher.startTime = slot;
+
     this.activeField = null;
   }
 
- capitalizeName(field: 'firstName' | 'lastName'): void {
-  if (this.teacher[field]) {
-    this.teacher[field] = this.teacher[field]
-      .trim()
-      .toLowerCase()
-      .replace(/\b\w/g, (char: string) => char.toUpperCase());
+  capitalizeName(
+    field: 'firstName' | 'lastName'
+  ): void {
+
+    if (this.teacher[field]) {
+
+      this.teacher[field] =
+        this.teacher[field]
+          .trim()
+          .toLowerCase()
+          .replace(
+            /\b\w/g,
+            (char: string) =>
+              char.toUpperCase()
+          );
+    }
   }
-}
 
   confirmManualTime(): void {
+
     this.manualTimeError = '';
 
-    const raw = this.manualTimeInput.trim();
-    const match = raw.match(/^(1[0-2]|0?[1-9]):([0-5][0-9])\s*(am|pm)$/i);
+    const raw =
+      this.manualTimeInput.trim();
+
+    const match =
+      raw.match(
+        /^(1[0-2]|0?[1-9]):([0-5][0-9])\s*(am|pm)$/i
+      );
 
     if (!match) {
-      this.manualTimeError = 'Enter a valid time, e.g. 09:15AM.';
+
+      this.manualTimeError =
+        'Enter a valid time, e.g. 09:15AM.';
+
       return;
     }
 
-    const hh = match[1].padStart(2, '0');
-    const mm = match[2];
-    const period = match[3].toUpperCase();
+    const hh =
+      match[1].padStart(2, '0');
 
-    this.teacher.startTime = `${hh}:${mm}${period}`;
+    const mm = match[2];
+
+    const period =
+      match[3].toUpperCase();
+
+    this.teacher.startTime =
+      `${hh}:${mm}${period}`;
+
     this.manualTimeInput = '';
+
     this.activeField = null;
   }
 
-  @HostListener('document:click', ['$event'])
+  @HostListener(
+    'document:click',
+    ['$event']
+  )
   onDocumentClick(event: Event): void {
-    if (!this.elRef.nativeElement.contains(event.target)) {
+
+    if (
+      !this.elRef.nativeElement.contains(
+        event.target
+      )
+    ) {
       this.activeField = null;
     }
   }
+
+  // =========================================================
+  // SLOTS
+  // =========================================================
 
   canAddSlot(): boolean {
     return !!this.teacher.startTime;
   }
 
   addSlot(): void {
+
     this.slotError = '';
 
     if (!this.canAddSlot()) {
-      this.slotError = 'Select a start time first.';
+
+      this.slotError =
+        'Select a start time first.';
+
       return;
     }
 
-    const isDuplicate = this.teacher.slots.some(
-      s => s.time === this.teacher.startTime
-    );
+    const isDuplicate =
+      this.teacher.slots.some(
+        s =>
+          s.time ===
+          this.teacher.startTime
+      );
+
     if (isDuplicate) {
-      this.slotError = 'This time slot has already been added.';
+
+      this.slotError =
+        'This time slot has already been added.';
+
       return;
     }
 
     this.teacher.slots.push({
-    date: new Date().toISOString().split('T')[0],
-    time: this.teacher.startTime
-  });
-   // ✅ Reset dropdown after adding slot
-  this.teacher.startTime = '';
-  this.activeField = null;
-  this.openDropdownUp = false;
+      date:
+        new Date()
+          .toISOString()
+          .split('T')[0],
+
+      time:
+        this.teacher.startTime
+    });
+
+    this.teacher.startTime = '';
+
+    this.activeField = null;
+
+    this.openDropdownUp = false;
   }
 
   removeSlot(index: number): void {
     this.teacher.slots.splice(index, 1);
   }
 
+  // =========================================================
+  // PHOTO
+  // =========================================================
+
   onPhotoSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    if (!file) return;
+
+    const input =
+      event.target as HTMLInputElement;
+
+    const file =
+      input.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
     this.setPhoto(file);
   }
 
   onDragOver(event: DragEvent): void {
+
     event.preventDefault();
     event.stopPropagation();
+
     this.isDragOver = true;
   }
 
   onDragLeave(event: DragEvent): void {
+
     event.preventDefault();
     event.stopPropagation();
+
     this.isDragOver = false;
   }
 
   onDrop(event: DragEvent): void {
+
     event.preventDefault();
     event.stopPropagation();
+
     this.isDragOver = false;
 
-    const file = event.dataTransfer?.files?.[0];
-    if (file && file.type.startsWith('image/')) {
+    const file =
+      event.dataTransfer?.files?.[0];
+
+    if (
+      file &&
+      file.type.startsWith('image/')
+    ) {
       this.setPhoto(file);
     }
   }
 
   private setPhoto(file: File): void {
+
     this.photoFile = file;
+
     this.photoFileName = file.name;
+
     this.teacher.photo = file;
   }
 
   removePhoto(event: Event): void {
+
     event.stopPropagation();
+
     this.photoFile = null;
+
     this.photoFileName = '';
+
     this.teacher.photo = null;
   }
+
+  // =========================================================
+  // CLOSE / RESET
+  // =========================================================
 
   onClose(): void {
     this.closeDrawer.emit();
@@ -308,6 +521,7 @@ firstNameInput!: ElementRef<HTMLInputElement>;
   }
 
   private resetForm(): void {
+
     this.teacher = {
       firstName: '',
       lastName: '',
@@ -321,71 +535,145 @@ firstNameInput!: ElementRef<HTMLInputElement>;
       startTime: '',
       slots: [] as BookedSlot[]
     };
+
     this.photoFile = null;
+
     this.photoFileName = '';
+
     this.slotError = '';
+
     this.submitError = '';
+
     this.manualTimeInput = '';
+
     this.manualTimeError = '';
 
+    this.isSubmitting = false;
   }
+
+  // =========================================================
+  // SUBMIT
+  // =========================================================
+
   onSubmit(form: NgForm): void {
+
     this.capitalizeName('firstName');
+
     this.capitalizeName('lastName');
 
     console.log(this.teacher);
-    
+
     this.submitError = '';
 
+    // Form validation
     if (form.invalid) {
+
       form.control.markAllAsTouched();
+
       return;
     }
 
+    // Extra mobile validation
+    if (
+      !/^[6-9][0-9]{9}$/.test(
+        this.teacher.contactNumber
+      )
+    ) {
+
+      this.submitError =
+        'Please enter a valid 10-digit mobile number.';
+
+      this.toastr.error(
+        this.submitError
+      );
+
+      return;
+    }
+
+    // Extra Aadhaar validation
+    if (
+      !/^[0-9]{12}$/.test(
+        this.teacher.aadharNo
+      )
+    ) {
+
+      this.submitError =
+        'Please enter a valid 12-digit Aadhar number.';
+
+      this.toastr.error(
+        this.submitError
+      );
+
+      return;
+    }
+
+    // Slot validation
     if (this.teacher.slots.length === 0) {
-      this.slotError = 'Add at least one slot before submitting.';
+
+      this.slotError =
+        'Add at least one slot before submitting.';
+
       return;
     }
 
     this.isSubmitting = true;
-      console.log(this.teacher);
 
-      const apiCall$ = this.isEditMode && this.teacherData
-    ? this.adminServe.updateTeacher(this.teacherData._id, this.teacher)
-    : this.adminServe.addTeacher(this.teacher);
+    console.log(this.teacher);
 
+    const apiCall$ =
+      this.isEditMode && this.teacherData
+        ? this.adminServe.updateTeacher(
+            this.teacherData._id,
+            this.teacher
+          )
+        : this.adminServe.addTeacher(
+            this.teacher
+          );
 
     apiCall$.subscribe({
+
       next: () => {
-  this.isSubmitting = false;
 
-  this.addTeacher.emit();
+        this.isSubmitting = false;
 
-  this.toastr.success(
-    'New teacher added successfully.',"",{
-      timeOut: 3000,
-      positionClass: 'toast-bottom-center'
-    }
-  );
+        this.addTeacher.emit();
 
-  this.resetForm();
+        this.toastr.success(
+          this.isEditMode
+            ? 'Teacher updated successfully.'
+            : 'New teacher added successfully.',
+          '',
+          {
+            timeOut: 3000,
+            positionClass:
+              'toast-bottom-center'
+          }
+        );
 
-  setTimeout(() => {
-    this.onClose();
-  }, 3000);
-},
-     error: (err: any) => {
-  this.isSubmitting = false;
+        this.resetForm();
 
-  this.submitError =
-    err?.error?.message || 'Failed to add teacher. Please try again.';
+        setTimeout(() => {
+          this.onClose();
+        }, 3000);
+      },
 
-  this.toastr.error(
-    this.submitError,
-  );
+      error: (err: any) => {
 
-  console.error('Add teacher failed:', err);
-}
+        this.isSubmitting = false;
+
+        this.submitError =
+          err?.error?.message ||
+          'Failed to add teacher. Please try again.';
+
+        this.toastr.error(
+          this.submitError
+        );
+
+        console.error(
+          'Add teacher failed:',
+          err
+        );
+      }
     });
   }
 }
