@@ -147,7 +147,7 @@ export class Teachers implements OnInit {
           }));
 
           this.showTeachers = this.teachers.length > 0;
-          this.currentPage = 1; // नवीन results आले की page 1 वर रीसेट
+          this.currentPage = 1;
           this.loading.set(false);
           this.cdr.detectChanges();
 
@@ -190,17 +190,23 @@ export class Teachers implements OnInit {
     this.loadTeachers();
   }
 
-  selectSlot(teacherId: string, slotId: string): void {
-    if (this.selectedTeacherId === teacherId && this.selectedSlotId === slotId) {
-      this.selectedTeacherId = null;
-      this.selectedSlotId = null;
-    } else {
-      this.selectedTeacherId = teacherId;
-      this.selectedSlotId = slotId;
-    }
-    console.log('Teacher :', this.selectedTeacherId);
-    console.log('Slot :', this.selectedSlotId);
+ selectSlot(teacherId: string, slotId: string): void {
+  if (this.selectedTeacherId === teacherId && this.selectedSlotId === slotId) {
+    this.selectedTeacherId = null;
+    this.selectedSlotId = null;
+  } else {
+    this.selectedTeacherId = teacherId;
+    this.selectedSlotId = slotId;
   }
+
+ 
+  if (this.errorTeacherId === teacherId) {
+    this.errorTeacherId = null;
+  }
+
+  console.log('Teacher :', this.selectedTeacherId);
+  console.log('Slot :', this.selectedSlotId);
+}
 
   selectTeacher(id: string): void {
     if (this.selectedTeacherId !== id) {
@@ -209,7 +215,7 @@ export class Teachers implements OnInit {
     this.selectedTeacherId = id;
   }
 
-  // Book Seat क्लिक झाल्यावर — स्लॉट select नसेल तर hint red flash करतो
+  
   onBookSeatClick(teacherId: string): void {
     const slotChosen = this.selectedTeacherId === teacherId && this.selectedSlotId;
 
