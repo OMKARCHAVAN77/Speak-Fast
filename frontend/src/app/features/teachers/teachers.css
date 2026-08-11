@@ -26,8 +26,10 @@
 }
 
 ::ng-deep .booking-time-menu,
+::ng-deep .booking-time-menu .mat-mdc-menu-item,
+::ng-deep .booking-time-menu .mat-mdc-menu-item .mdc-list-item__primary-text,
 ::ng-deep .booking-time-menu * {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', sans-serif !important;
 }
 
 /* ============================================================
