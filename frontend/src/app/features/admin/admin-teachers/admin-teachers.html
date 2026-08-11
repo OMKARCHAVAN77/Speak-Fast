@@ -9,7 +9,13 @@
     <div class="header-actions">
       <mat-form-field appearance="outline" class="search-field">
         <mat-icon matPrefix class="search-icon">search</mat-icon>
-        <input matInput type="text" placeholder="Search Teachers..." [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" />
+        <input
+          matInput
+          type="text"
+          placeholder="Search Teachers..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+        />
       </mat-form-field>
 
       <button mat-flat-button class="add-btn" (click)="openDrawer()">
@@ -19,24 +25,17 @@
     </div>
   </div>
 
-
-
   <!-- Table card -->
   <div class="table-card">
+    <mat-progress-bar *ngIf="loading()" mode="indeterminate"> </mat-progress-bar>
 
-    <mat-progress-bar *ngIf="loading()" mode="indeterminate">
-    </mat-progress-bar>
-    <!-- Loading state -->
-    <!-- <div class="state-row" *ngIf="loading">
-      <span>Loading teachers…</span>
-    </div> -->
 
     <!-- Empty state -->
     <div class="state-row" *ngIf="!loading() && filteredTeachers.length === 0">
       <span>No teachers found.</span>
     </div>
 
-    <table class="student-table" *ngIf="!loading() && filteredTeachers.length > 0">
+    <table class="student-table" *ngIf="loading() ||filteredTeachers.length > 0">
       <thead>
         <tr>
           <th class="col-name">
@@ -63,7 +62,9 @@
               <span *ngIf="!teacher.photo" class="avatar">
                 {{ teacher.userId.firstName.charAt(0) }}{{ teacher.userId.lastName.charAt(0) }}
               </span>
-              <span class="name-text">{{ teacher.userId.firstName }} {{ teacher.userId.lastName }}</span>
+              <span class="name-text"
+                >{{ teacher.userId.firstName }} {{ teacher.userId.lastName }}</span
+              >
             </div>
           </td>
 
@@ -94,15 +95,23 @@
 
           <td class="col-timeslot">
             <div class="timeslot-cell">
-              <span class="slot-badge" *ngFor="let slot of teacher.slots">{{ slot.time || slot.startTime }}</span>
+              <span class="slot-badge" *ngFor="let slot of teacher.slots">{{
+                slot.time || slot.startTime
+              }}</span>
               <span *ngIf="!teacher.slots.length">-</span>
             </div>
           </td>
 
           <!-- Class / Meet button -->
           <td class="col-class">
-            <a *ngIf="teacher.googleMeetLink" mat-flat-button class="meet-btn" [href]="teacher.googleMeetLink"
-              target="_blank" rel="noopener">
+            <a
+              *ngIf="teacher.googleMeetLink"
+              mat-flat-button
+              class="meet-btn"
+              [href]="teacher.googleMeetLink"
+              target="_blank"
+              rel="noopener"
+            >
               <mat-icon class="meet-icon">videocam</mat-icon>
               <span>Meet</span>
             </a>
@@ -116,8 +125,13 @@
               <button mat-icon-button class="action-btn edit-btn" (click)="onEditTeacher(teacher)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button class="action-btn delete-btn" type="button" (mousedown)="$event.preventDefault()"
-                (click)="deleteTeacher(teacher)">
+              <button
+                mat-icon-button
+                class="action-btn delete-btn"
+                type="button"
+                (mousedown)="$event.preventDefault()"
+                (click)="deleteTeacher(teacher)"
+              >
                 <mat-icon>delete_outline</mat-icon>
               </button>
             </div>
@@ -127,31 +141,47 @@
     </table>
   </div>
 
-   <!-- Pagination -->
-    <div class="pagination-bar" *ngIf="!loading() && filteredTeachers.length > 0">
-      <button mat-icon-button class="page-arrow" [disabled]="currentPage() === 1" (click)="prevPage()">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
+  <!-- Pagination -->
+  <div class="pagination-bar" *ngIf="!loading() && filteredTeachers.length > 0">
+    <button
+      mat-icon-button
+      class="page-arrow"
+      [disabled]="currentPage() === 1"
+      (click)="prevPage()"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
 
-      <ng-container *ngFor="let page of pageNumbers">
-        <span *ngIf="page === '...'" class="page-ellipsis">...</span>
-        <button
-          *ngIf="page !== '...'"
-          class="page-number"
-          [class.active]="page === currentPage()"
-          (click)="goToPage(page)">
-          {{ page }}
-        </button>
-      </ng-container>
-
-      <button mat-icon-button class="page-arrow" [disabled]="currentPage() === totalPages" (click)="nextPage()">
-        <mat-icon>chevron_right</mat-icon>
+    <ng-container *ngFor="let page of pageNumbers">
+      <span *ngIf="page === '...'" class="page-ellipsis">...</span>
+      <button
+        *ngIf="page !== '...'"
+        class="page-number"
+        [class.active]="page === currentPage()"
+        (click)="goToPage(page)"
+      >
+        {{ page }}
       </button>
-    </div>
+    </ng-container>
+
+    <button
+      mat-icon-button
+      class="page-arrow"
+      [disabled]="currentPage() === totalPages"
+      (click)="nextPage()"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </div>
 
   <!-- Add / Edit Teacher Dialog -->
   <!-- Dialog owns its own backdrop + panel internally, driven by [isOpen] -->
-  <app-add-teacher-dialog *ngIf="drawerOpen" [teacherData]="teacherBeingEdited" [isOpen]="drawerOpen"
-    (addTeacher)="onTeacherAdded()" (closeDrawer)="onDrawerClose()">
+  <app-add-teacher-dialog
+    *ngIf="drawerOpen"
+    [teacherData]="teacherBeingEdited"
+    [isOpen]="drawerOpen"
+    (addTeacher)="onTeacherAdded()"
+    (closeDrawer)="onDrawerClose()"
+  >
   </app-add-teacher-dialog>
 </div>

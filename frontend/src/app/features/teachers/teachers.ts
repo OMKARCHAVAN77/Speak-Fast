@@ -246,4 +246,17 @@ export class Teachers implements OnInit {
 
     this.router.navigate(['/courses']);
   }
+
+  // reset filter
+  resetFilters(): void {
+    this.selectedDate = new Date();
+    this.selectedTime = null;
+    this.isDatePickerOpen = false;
+    this.isTimeMenuOpen = false;
+    this.formattedDate = this.formatDate(this.selectedDate);
+
+    // If you emit changes elsewhere (e.g. on dateChange/selectTime), fire that here too
+    // this.onFiltersReset?.emit();
+    this.loadTeachers();
+  }
 }

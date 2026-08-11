@@ -305,3 +305,17 @@ body.swal2-shown {
 .toast-container {
   z-index: 999999 !important;
 }
+
+
+mat-progress-bar {
+  --mdc-linear-progress-active-indicator-color: #005eeb !important;
+  --mdc-linear-progress-track-color: #E9E9E9 !important;
+}
+
+::ng-deep mat-progress-bar .mdc-linear-progress__bar-inner {
+  border-color: #005eeb !important;
+}
+
+::ng-deep mat-progress-bar .mdc-linear-progress__buffer-bar {
+  background-color: #E9E9E9 !important;
+}

@@ -90,6 +90,7 @@ letter-spacing: 0%;
     min-height: 500px;
 }
 
+
 .feature-card{
     background:#fff;
     border-radius:18px;
@@ -142,6 +143,32 @@ letter-spacing: 0%;
     font-weight:500;
     color:#444;
 }
+
+ /* speakfast award css  */
+  .card{
+    border: none;
+  }
+
+  .award-image-wrapper img{
+    border-radius: 14px;
+  }
+
+  .card-title {
+              font-family: Quicksand;
+          font-weight: 600;
+          font-size: 16px;
+          line-height: 100%;
+          letter-spacing: 0%;
+  }
+  .card-text {
+              font-family: Quicksand;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 100%;
+          letter-spacing: 0%;
+          text-align: left;
+          color: #0F172A;
+  }
 
 
 .form-label {
@@ -254,15 +281,11 @@ color: #475569;
 }
 
 .regi-button{
- width: 210px;
-height: 38px;
-gap: 4px;
+ /* width: 210px; */
+height: 46px;
+/* gap: 4px; */
 opacity: 1;
-padding: 8px 24px;
-/* padding-top: 8px;
-padding-right: 24px;
-padding-bottom: 8px;
-padding-left: 24px; */
+
 border-radius: 50px;
 background: linear-gradient(90.47deg, #4687FB 0%, #9050E0 100%);
 color: white;
@@ -277,16 +300,16 @@ letter-spacing: 0%;
 }
 
 .back-button {
- width: 210px;
-height: 38px;
+
+height: 46px;
 /* gap: 4px; */
 opacity: 1;
 border-radius: 50px;
 border-width: 1px;
-padding-top: 8px;
+/* padding-top: 8px;
 padding-right: 16px;
 padding-bottom: 8px;
-padding-left: 16px;
+padding-left: 16px; */
 font-family: Quicksand;
 font-weight: 600;
 font-style: SemiBold;
@@ -416,7 +439,7 @@ input.ng-pending{
         text-align: center;
     }
 
-    .top-banner h1 {
+    .top-banner h1, .top-banner h1 span{
         font-size: 26px;
 
     }
