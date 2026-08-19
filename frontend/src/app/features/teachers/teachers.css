@@ -395,7 +395,7 @@
   font-size: 10.5px;
   font-weight: 700;
   color: #e53935;
-  margin: -4px 0 0;
+  margin: 4px 0 0;  
 }
 .slot-hint.hint-error {
   color: #e53935;
